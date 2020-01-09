@@ -15,12 +15,32 @@ fireEvent('dbFunction', {
 ```
 
 ## DB Queries
+### Query
 ```javascript
 import { query } from 'pitcher-vue-sdk/ti/api/query'
 
 query('select * from tbl_event_v1').then(e => window.console.log(e))
 ```
+### ContextQuery
 
+Context query uses handlebars template syntax. It needs the config vuex store module installed and loadConfig function be called before first run.
+This give it all the table names as context. Extra context can be supplied.
+
+```javascript
+ import { contextQuery } from 'pitcher-vue-sdk/ti/api/query'
+
+ export default {
+     methods: {
+        ...mapActions(['loadConfig']),
+
+    },
+    created () {           
+        this.loadConfig().then(() => {
+             contextQuery("select * from {{ Console }} where id='{{ id }}'", {id:1})
+        })
+    }
+}
+```
 ## getParameters
 
 in your store/index.js add params as a module:
