@@ -1,4 +1,45 @@
 # VueJS Tools for Pitcher Impact
+
+## Ti.App.fireEvent
+
+```javascript
+import Ti from '@/api/ti'
+
+Ti.App.fireEvent('dbFunction', {
+    'query': query,
+    'pType': 'query',
+    'db': 'pitcher',
+    'errorFunc': 'onDbFunctionError',
+    'qID': query_counter
+}).then(function (result) {
+    ...
+})
+```
+
+## DB Queries
+```javascript
+import { query } from '@/api/query'
+
+query('select * from tbl_event_v1').then(e => window.console.log(e))
+```
+
+## getParameters
+
+in your store/index.js add params as a module:
+ ```javascript   
+    import params from '@/modules/params'
+    
+    export default new Vuex.Store({
+        state,
+        mutations,
+        actions,
+        getters,
+        modules: {
+            params,
+        }
+    })
+```
+
 ## Semantic Modal Module.
 - [Modal Mixin](#modal-mixin)
 
