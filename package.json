@@ -11,5 +11,8 @@
   "bugs": {
     "url": "https://github.com/PitcherAG/pitcher-vue-sdk/issues"
   },
-  "homepage": "https://github.com/PitcherAG/pitcher-vue-sdk#readme"
+  "homepage": "https://github.com/PitcherAG/pitcher-vue-sdk#readme",
+  "dependencies": {
+    "handlebars": "^4.6.0"
+  }
 }

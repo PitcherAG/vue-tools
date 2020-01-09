@@ -1,37 +1,39 @@
 export default {
-    state: {
-        params: Object
-    },
+    state: {},
     getters: {
-        account: state => state.params ? state.params.account : null,
-        contacts: state => state.params ? state.params.contacts : null
+        account: state => state.account ? state.account : null,
+        contacts: state => state.contacts ? state.contacts : null
     },
     actions: {
-        getParams ({ commit }) {
+        getParams({ commit }) {
             return new Promise(resolve => {
                 if (process.env.VUE_APP_PARAMS) {
-                    let params = JSON.parse(process.env.VUE_APP_PARAMS)
-                    commit('setParams', params)
-                    resolve(params)
+                    let params = JSON.parse(process.env.VUE_APP_PARAMS);
+                    commit('setParams', params);
+                    resolve(params);
                 } else if (typeof window.params === 'undefined') {
                     let interval = setInterval(() => {
                         if (typeof window.params !== 'undefined') {
-                            clearInterval(interval)
-                            commit('setParams', window.params)
-                            resolve(window.params)
+                            clearInterval(interval);
+                            commit('setParams', window.params);
+                            resolve(window.params);
                         }
-                    }, 100)
+                    }, 100);
                 } else {
-                    commit('setParams', window.params)
-                    resolve(window.params)
+                    commit('setParams', window.params);
+                    resolve(window.params);
                 }
-            })
+            });
 
         }
     },
     mutations: {
-        setParams (state, payload) {
-            state.params = payload
+        setParams(state, payload) {
+            for (let a in payload) {
+                if (payload.hasOwnProperty(a)) {
+                    state[a] = payload[a];
+                }
+            }
         },
     }
-}
+};

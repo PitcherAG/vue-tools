@@ -1,4 +1,4 @@
-import {fireEvent} from "./event";
+import { fireEvent } from './event';
 
 let cache = {};
 let cacheEnabled = false;
@@ -12,7 +12,7 @@ function cacheQuery(query, result) {
 }
 
 function clearCache() {
-    cache = {}
+    cache = {};
 }
 
 function hasCached(query) {
@@ -25,62 +25,54 @@ function hasCached(query) {
 
 function query(query, db = 'pitcher') {
     return new Promise((resolve, reject) => {
-        if (hasCached(query)){
+        if (hasCached(query)) {
             return resolve(cache[query].result);
         }
-
         fireEvent('dbFunction', {
-                db: 'pitcher',
-                pType: 'query',
-                query: query,
-            })
-            .then(function (e) {
-                let result = [];
+            db: 'pitcher',
+            pType: 'query',
+            query: query,
+        }).then(function(e) {
+            let result = [];
+            if (e.error) {
+                reject(new Error(e.error));
+            }
+            for (let i = 0; i < e.results.length; i++) {
+                let res = e.results[i];
+                let obj = {};
 
-                if (e.error) {
-                    reject(new Error(e.error))
-                }
+                for (let j = 0; j < e.columns.length; j++) {
+                    let column = e.columns[j];
 
-                for (let i = 0; i < e.results.length; i++) {
-                    let res = e.results[i];
-                    let obj = {};
+                    if (column === 'extraField') {
+                        let o = JSON.parse(res[j]);
 
-                    for (let j = 0; j < e.columns.length; j++) {
-                        let column = e.columns[j];
-
-                        if (column === 'extraField') {
-                            let o = JSON.parse(res[j]);
-
-                            for (let n in o) {
-                                if (o.hasOwnProperty(n)) {
-                                    obj[n] = o[n];
-                                }
-                            }
-                        } else {
-                            if (typeof res[j] == 'undefined') {
-                                obj[column] = null
-                            } else {
-                                obj[column] = res[j]
+                        for (let n in o) {
+                            if (o.hasOwnProperty(n)) {
+                                obj[n] = o[n];
                             }
                         }
+                    } else {
+                        if (typeof res[j] == 'undefined') {
+                            obj[column] = null;
+                        } else {
+                            obj[column] = res[j];
+                        }
                     }
-
-                    result.push(obj)
                 }
-
-                if (cacheEnabled) {
-                    cacheQuery(query, result);
-                }
-
-                resolve(result)
-            })
-            .catch(reject)
-    })
+                result.push(obj);
+            }
+            if (cacheEnabled) {
+                cacheQuery(query, result);
+            }
+            resolve(result);
+        }).catch(reject);
+    });
 }
 
 export {
     cacheEnabled,
     cacheTimeout,
     clearCache,
-    query
+    query,
 };

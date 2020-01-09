@@ -27,7 +27,7 @@ function fireEvent(name, params) {
                 try {
                     resolve(JSON.parse(res));
                 } catch (e) {
-                    reject('Invalid JSON')
+                    reject('Invalid JSON');
                 }
             } else {
                 resolve(res);
