@@ -50,7 +50,8 @@ function query(query, db = 'pitcher') {
                         let column = e.columns[j];
 
                         if (column === 'extraField') {
-                            let o = JSON.parse(res[j])
+                            let o = JSON.parse(res[j]);
+
                             for (let n in o) {
                                 if (o.hasOwnProperty(n)) {
                                     obj[n] = o[n];
