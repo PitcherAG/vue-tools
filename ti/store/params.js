@@ -1,10 +1,8 @@
 export default {
-    state: {
-        params: Object
-    },
+    state: {},
     getters: {
-        account: state => state.params ? state.params.account : null,
-        contacts: state => state.params ? state.params.contacts : null
+        account: state => state.account ? state.account : null,
+        contacts: state => state.contacts ? state.contacts : null
     },
     actions: {
         getParams ({ commit }) {
@@ -31,7 +29,9 @@ export default {
     },
     mutations: {
         setParams (state, payload) {
-            state.params = payload
+            for (let a in payload) {
+                state[a] = payload[a]
+            }
         },
     }
 }
