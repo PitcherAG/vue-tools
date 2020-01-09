@@ -61,7 +61,7 @@ in your store/index.js add params as a module:
     })
 ```
 
-## Semantic Modal Module.
+## Semantic UI
 - [Modal Mixin](#modal-mixin)
 
 ### Modal Mixin
@@ -76,7 +76,7 @@ Example Component:
 ```
 
 ```javascript
-import modal from "pit-vue-tools/semantic/mixins/modal";
+import modal from "pitcher-vue-sdk/semantic/mixins/modal";
 
 export default {
     name: "SomeModal",
