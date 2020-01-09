@@ -2,15 +2,15 @@ import {fireEvent} from "./event";
 
 let cache = {};
 
-function clearDBCache() {
-    cache = {}
-}
-
 function cacheResult(query, result) {
     cache[query] = {
         result: result,
         time: Date.now()
     };
+}
+
+function clearCache() {
+    cache = {}
 }
 
 function hasCached(query) {
