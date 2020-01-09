@@ -4,7 +4,7 @@ let cache = {};
 let cacheEnabled = true;
 let cacheTimeout = 500;
 
-function cacheResult(query, result) {
+function cacheQuery(query, result) {
     cache[query] = {
         result: result,
         time: Date.now()
@@ -69,7 +69,7 @@ function query(query, db = 'pitcher') {
                 }
 
                 if (cacheEnabled) {
-                    cacheResult(query, result);
+                    cacheQuery(query, result);
                 }
 
                 resolve(result)
