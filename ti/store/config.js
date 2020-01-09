@@ -26,7 +26,7 @@ export default {
         }
     },
     actions: {
-        loadConfig ({ commit }) {
+        loadConfig({ commit }) {
             return new Promise(resolve => {
                 fireEvent('getAppConfig', {}).then(result => {
                         commit('setConfig', result)
@@ -37,7 +37,7 @@ export default {
         }
     },
     mutations: {
-        setConfig (state, payload) {
+        setConfig(state, payload) {
             for (let a in payload) {
                 state[a] = payload[a]
             }

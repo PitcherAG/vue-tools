@@ -5,7 +5,7 @@ export default {
         contacts: state => state.contacts ? state.contacts : null
     },
     actions: {
-        getParams ({ commit }) {
+        getParams({ commit }) {
             return new Promise(resolve => {
                 if (process.env.VUE_APP_PARAMS) {
                     let params = JSON.parse(process.env.VUE_APP_PARAMS)
@@ -28,9 +28,11 @@ export default {
         }
     },
     mutations: {
-        setParams (state, payload) {
+        setParams(state, payload) {
             for (let a in payload) {
-                state[a] = payload[a]
+                if (payload.hasOwnProperty(a)) {
+                    state[a] = payload[a]
+                }
             }
         },
     }
