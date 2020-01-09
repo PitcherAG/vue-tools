@@ -1,7 +1,7 @@
 import {fireEvent} from "./event";
 
 let cache = {};
-let cacheEnabled = true;
+let cacheEnabled = false;
 let cacheTimeout = 500;
 
 function cacheQuery(query, result) {
