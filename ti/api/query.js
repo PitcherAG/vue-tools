@@ -16,7 +16,8 @@ function clearCache() {
 }
 
 function hasCached(query) {
-    return !query.toLowerCase().includes('delete')
+    return cacheEnabled
+        && !query.toLowerCase().includes('delete')
         && !query.toLowerCase().includes('insert')
         && cache.hasOwnProperty(query)
         && cache[query].time + cacheTimeout > Date.now();
@@ -24,10 +25,8 @@ function hasCached(query) {
 
 function query(query, db = 'pitcher') {
     return new Promise((resolve, reject) => {
-        if (cacheEnabled) {
-            if (hasCached(query)){
-                return resolve(cache[query].result);
-            }
+        if (hasCached(query)){
+            return resolve(cache[query].result);
         }
 
         fireEvent('dbFunction', {
