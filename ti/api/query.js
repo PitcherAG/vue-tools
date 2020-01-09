@@ -29,8 +29,6 @@ export function query(query, db = 'pitcher') {
             if (hasCached(query)){
                 return resolve(cache[query].result);
             }
-        } else {
-            cache = {}
         }
 
         fireEvent('dbFunction', {
