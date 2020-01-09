@@ -6,20 +6,28 @@ function clearDBCache() {
     cache = {}
 }
 
+function cacheResult(query, result) {
+    cache[query] = {
+        result: result,
+        time: Date.now()
+    };
+}
+
+function hasCached(query) {
+    return !query.toLowerCase().includes('delete')
+        && !query.toLowerCase().includes('insert')
+        && cache.hasOwnProperty(query)
+        && cache[query].time + cacheTimeout > Date.now();
+}
+
+export let cacheEnabled = true;
 export let cacheTimeout = 500;
-export let enableDBCache = true;
 
 export function query(query, db = 'pitcher') {
     return new Promise((resolve, reject) => {
-        if (enableDBCache
-            && !query.toLowerCase().includes('delete')
-            && !query.toLowerCase().includes('insert')) {
-
-            if (cache[query]) {
-                if (cache[query].time + cacheTimeout > Date.now()) {
-                    resolve(cache[query].result);
-                    return
-                }
+        if (cacheEnabled) {
+            if (hasCached(query)){
+                return resolve(cache[query].result);
             }
         } else {
             cache = {}
@@ -62,7 +70,11 @@ export function query(query, db = 'pitcher') {
 
                     result.push(obj)
                 }
-                cache[query] = {result: result, time: Date.now()};
+
+                if (cacheEnabled) {
+                    cacheResult(query, result);
+                }
+
                 resolve(result)
             })
             .catch(reject)
