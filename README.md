@@ -38,7 +38,7 @@ in your store/index.js add params as a module:
     })
 ```
 
-## Semantic Modal Module.
+## Semantic UI
 - [Modal Mixin](#modal-mixin)
 
 ### Modal Mixin
