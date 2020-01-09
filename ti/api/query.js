@@ -61,8 +61,12 @@ export function query(query, db = 'pitcher') {
 
                 result.push(obj)
             }
-            cache[query] = {result: result, time: Date.now()};
-            resolve(result)
+            cache[query] = {
+                result: result, 
+                time: Date.now()
+            };
+            
+            resolve(result);
         }).catch(reject)
     })
 }
