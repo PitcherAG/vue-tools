@@ -2,9 +2,9 @@ import { fireEvent } from './event'
 import Handlebars from 'handlebars'
 import Config from '../store/config'
 
-let cache = {}
-let cacheEnabled = false
-let cacheTimeout = 500
+let cache = {};
+let cacheEnabled = false;
+let cacheTimeout = 500;
 
 function cacheQuery (query, result) {
     cache[query] = {
