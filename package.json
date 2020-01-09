@@ -1,0 +1,15 @@
+{
+  "name": "pit-vue-tools",
+  "version": "1.0.0",
+  "description": "VueJS Development Tools for the use in Pitcher Impact",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PitcherAG/vue-tools.git"
+  },
+  "author": "Pitcher AG",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PitcherAG/vue-tools/issues"
+  },
+  "homepage": "https://github.com/PitcherAG/vue-tools#readme"
+}
