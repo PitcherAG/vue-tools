@@ -9,7 +9,7 @@ fireEvent('dbFunction', {
     'query': query,
     'pType': 'query',
     'db': 'pitcher',
-}).then(function (result) {
+}).then((result) => {
     ...
 })
 ```
