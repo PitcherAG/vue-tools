@@ -1,7 +1,7 @@
-export let source = 'modal';
-export let fireEventCount = 0;
+let source = 'modal';
+let fireEventCount = 0;
 
-export function fireEvent(name, params) {
+function fireEvent(name, params) {
     return new Promise((resolve, reject) => {
         let eventID = fireEventCount++;
 
@@ -17,7 +17,7 @@ export function fireEvent(name, params) {
         params.errorFunc = errorCallback;
         params.source = this.source;
 
-        function cleanupEvent() {
+        function destroyEvent() {
             delete window[callback];
             delete window[errorCallback];
         }
@@ -33,12 +33,12 @@ export function fireEvent(name, params) {
                 resolve(res);
             }
 
-            cleanupEvent();
+            destroyEvent();
         };
 
         window[errorCallback] = (error) => {
             reject(error);
-            cleanupEvent();
+            destroyEvent();
         };
 
         if (window.hasOwnProperty('Ti')) {
@@ -48,3 +48,9 @@ export function fireEvent(name, params) {
         }
     });
 }
+
+export {
+    fireEvent,
+    fireEventCount,
+    source
+};

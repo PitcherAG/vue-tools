@@ -1,6 +1,8 @@
 import {fireEvent} from "./event";
 
 let cache = {};
+let cacheEnabled = true;
+let cacheTimeout = 500;
 
 function cacheResult(query, result) {
     cache[query] = {
@@ -20,10 +22,7 @@ function hasCached(query) {
         && cache[query].time + cacheTimeout > Date.now();
 }
 
-export let cacheEnabled = true;
-export let cacheTimeout = 500;
-
-export function query(query, db = 'pitcher') {
+function query(query, db = 'pitcher') {
     return new Promise((resolve, reject) => {
         if (cacheEnabled) {
             if (hasCached(query)){
@@ -78,3 +77,10 @@ export function query(query, db = 'pitcher') {
             .catch(reject)
     })
 }
+
+export {
+    cacheEnabled,
+    cacheTimeout,
+    clearCache,
+    query
+};
