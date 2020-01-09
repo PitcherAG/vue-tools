@@ -2,9 +2,9 @@ import { fireEvent } from './event'
 import Handlebars from 'handlebars'
 import Config from '../store/config'
 
-let cache = {};
-let cacheEnabled = false;
-let cacheTimeout = 500;
+let cache = {}
+let cacheEnabled = false
+let cacheTimeout = 500
 
 function cacheQuery (query, result) {
     cache[query] = {
@@ -72,10 +72,14 @@ function query (query, db = 'pitcher') {
     })
 }
 
-function contextQuery (query, context) {
+function contextQuery (query, context, db) {
     let template = Handlebars.compile(query)
     let d = Config.getters.tableDict(Config.state)
-    console.log(template(d))
+    for (let a in context) {
+        d[a] = context[a]
+    }
+    let q = template(d)
+    return query(q, db)
 }
 
 export {
