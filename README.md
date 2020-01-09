@@ -3,14 +3,12 @@
 ## Ti.App.fireEvent
 
 ```javascript
-import Ti from '@/api/ti'
+import { fireEvent } from 'pitcher-vue-sdk/ti/api/event'
 
-Ti.App.fireEvent('dbFunction', {
+fireEvent('dbFunction', {
     'query': query,
     'pType': 'query',
     'db': 'pitcher',
-    'errorFunc': 'onDbFunctionError',
-    'qID': query_counter
 }).then(function (result) {
     ...
 })
@@ -18,7 +16,7 @@ Ti.App.fireEvent('dbFunction', {
 
 ## DB Queries
 ```javascript
-import { query } from '@/api/query'
+import { query } from 'pitcher-vue-sdk/ti/api/query'
 
 query('select * from tbl_event_v1').then(e => window.console.log(e))
 ```
@@ -27,7 +25,7 @@ query('select * from tbl_event_v1').then(e => window.console.log(e))
 
 in your store/index.js add params as a module:
  ```javascript   
-    import params from '@/modules/params'
+    import params from 'pitcher-vue-sdk/ti/store/params'
     
     export default new Vuex.Store({
         state,
