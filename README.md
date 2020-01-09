@@ -21,6 +21,9 @@ import { query } from 'pitcher-vue-sdk/ti/api/query'
 
 query('select * from tbl_event_v1').then(e => window.console.log(e))
 ```
+
+
+
 ### ContextQuery
 
 Context query uses handlebars template syntax. It needs the config vuex store module installed and loadConfig function be called before first run.
@@ -44,7 +47,7 @@ This give it all the table names as context. Extra context can be supplied.
 ## getParameters
 
 in your store/index.js add params as a module:
- ```javascript   
+ ```javascript
     import params from 'pitcher-vue-sdk/ti/store/params'
     
     export default new Vuex.Store({

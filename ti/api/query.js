@@ -3,7 +3,7 @@ import Handlebars from 'handlebars'
 import Config from '../store/config'
 
 let cache = {}
-let cacheEnabled = true
+let cacheEnabled = false
 let cacheTimeout = 500
 
 function cacheQuery (query, result) {
@@ -71,23 +71,6 @@ function query (query, db = 'pitcher') {
         }).catch(reject)
     })
 }
-
-/*
- import { contextQuery } from 'pitcher-vue-sdk/ti/api/query'
-
- contextQuery example:
-         methods: {
-            ...mapActions(['loadConfig']),
-
-        },
-        created () {
-            let self = this
-
-            this.loadConfig().then(() => {
-                 contextQuery("select * from {{ Console }} where id='{{ id }}', {id:1})
-            })
-        }
- */
 
 function contextQuery (query, context) {
     let template = Handlebars.compile(query)
