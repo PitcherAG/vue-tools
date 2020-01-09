@@ -1,23 +1,21 @@
 import { fireEvent } from './event'
-import Handlebars from 'handlebars'
-import Config from '../store/config'
 
 let cache = {}
 let cacheEnabled = false
 let cacheTimeout = 500
 
-function cacheQuery (query, result) {
+function cacheQuery(query, result) {
     cache[query] = {
         result: result,
         time: Date.now()
     }
 }
 
-function clearCache () {
+function clearCache() {
     cache = {}
 }
 
-function hasCached (query) {
+function hasCached(query) {
     return cacheEnabled
         && !query.toLowerCase().includes('delete')
         && !query.toLowerCase().includes('insert')
@@ -25,7 +23,7 @@ function hasCached (query) {
         && cache[query].time + cacheTimeout > Date.now()
 }
 
-function query (query, db = 'pitcher') {
+function query(query, db = 'pitcher') {
     return new Promise((resolve, reject) => {
         if (hasCached(query)) {
             return resolve(cache[query].result)
@@ -34,7 +32,7 @@ function query (query, db = 'pitcher') {
             db: 'pitcher',
             pType: 'query',
             query: query,
-        }).then(function (e) {
+        }).then(function(e) {
             let result = []
             if (e.error) {
                 reject(new Error(e.error))
@@ -72,20 +70,9 @@ function query (query, db = 'pitcher') {
     })
 }
 
-function contextQuery (query, context, db) {
-    let template = Handlebars.compile(query)
-    let d = Config.getters.tableDict(Config.state)
-    for (let a in context) {
-        d[a] = context[a]
-    }
-    let q = template(d)
-    return query(q, db)
-}
-
 export {
     cacheEnabled,
     cacheTimeout,
     clearCache,
     query,
-    contextQuery
 }
