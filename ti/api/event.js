@@ -1,56 +1,56 @@
-let source = 'modal'
-let fireEventCount = 0
+let source = 'modal';
+let fireEventCount = 0;
 
 function fireEvent(name, params) {
     return new Promise((resolve, reject) => {
-        let eventID = fireEventCount++
+        let eventID = fireEventCount++;
 
-        const callback = `fireEventCB${eventID}`
-        const errorCallback = `fireEventErrorCB${eventID}`
+        const callback = `fireEventCB${eventID}`;
+        const errorCallback = `fireEventErrorCB${eventID}`;
 
         if (!params) {
-            params = {}
+            params = {};
         }
 
-        params.callBackFunc = callback
-        params.callBack = callback
-        params.errorFunc = errorCallback
-        params.source = source
+        params.callBackFunc = callback;
+        params.callBack = callback;
+        params.errorFunc = errorCallback;
+        params.source = source;
 
         function destroyEvent() {
-            delete window[callback]
-            delete window[errorCallback]
+            delete window[callback];
+            delete window[errorCallback];
         }
 
         window[callback] = (res) => {
             if (res.startsWith('{') || res.startsWith('[')) {
                 try {
-                    resolve(JSON.parse(res))
+                    resolve(JSON.parse(res));
                 } catch (e) {
-                    reject('Invalid JSON')
+                    reject('Invalid JSON');
                 }
             } else {
-                resolve(res)
+                resolve(res);
             }
 
-            destroyEvent()
-        }
+            destroyEvent();
+        };
 
         window[errorCallback] = (error) => {
-            reject(error)
-            destroyEvent()
-        }
+            reject(error);
+            destroyEvent();
+        };
 
         if (window.hasOwnProperty('Ti')) {
-            window.Ti.App.fireEvent(name, params)
+            window.Ti.App.fireEvent(name, params);
         } else {
-            reject('Ti not found')
+            reject('Ti not found');
         }
-    })
+    });
 }
 
 export {
     fireEvent,
     fireEventCount,
     source
-}
+};
