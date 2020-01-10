@@ -1,5 +1,6 @@
 import Handlebars from 'handlebars'
 import Config from '../store/config'
+import { query as oQuery } from './query'
 
 function contextQuery(query, context, db = null) {
     let template = Handlebars.compile(query)
@@ -12,7 +13,7 @@ function contextQuery(query, context, db = null) {
     }
 
     let q = template(d)
-    return query(q, db)
+    return oQuery(q, db)
 }
 
 export {
