@@ -32,8 +32,9 @@ function query(query, db = null) {
 
         fireEvent('dbFunction', {
                 db: db ? db : defaultDatabase,
+                iosMode: true,
                 pType: 'query',
-                query: query,
+                query: query
             })
             .then(function (e) {
                 let result = [];
@@ -65,8 +66,10 @@ function query(query, db = null) {
                             }
                         }
                     }
+
                     result.push(obj);
                 }
+
                 if (cacheEnabled) {
                     cacheQuery(query, result);
                 }
