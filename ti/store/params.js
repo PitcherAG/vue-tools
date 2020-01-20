@@ -1,8 +1,11 @@
 export default {
-    state: {},
+    state: {
+    },
     getters: {
         account: state => state.account ? state.account : null,
-        contacts: state => state.contacts ? state.contacts : null
+        contacts: state => state.contacts ? state.contacts : null,
+        user: state => state.salesForceUser ? state.salesForceUser : null,
+        locale: state => state.salesForceUser ? state.salesForceUser.LanguageLocaleKey : null,
     },
     actions: {
         getParams({ commit }) {
