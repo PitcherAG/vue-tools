@@ -1,21 +1,22 @@
 {
-  "name": "pitcher-vue-sdk",
-  "version": "1.0.2",
-  "description": "VueJS Development Tools for the use in Pitcher Impact",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PitcherAG/pitcher-vue-sdk.git"
-  },
-  "scripts": {
-    "linksdk": "npm link"
-  },
-  "author": "Pitcher AG",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/PitcherAG/pitcher-vue-sdk/issues"
-  },
-  "homepage": "https://github.com/PitcherAG/pitcher-vue-sdk#readme",
-  "dependencies": {
-    "handlebars": "^4.6.0"
-  }
+    "name": "pitcher-vue-sdk",
+    "version": "1.0.2",
+    "description": "VueJS Development Tools for the use in Pitcher Impact",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/PitcherAG/pitcher-vue-sdk.git"
+    },
+    "scripts": {
+        "linksdk": "npm link"
+    },
+    "author": "Pitcher AG",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/PitcherAG/pitcher-vue-sdk/issues"
+    },
+    "homepage": "https://github.com/PitcherAG/pitcher-vue-sdk#readme",
+    "dependencies": {
+        "handlebars": "^4.6.0",
+        "pinia": "0.0.5"
+    }
 }
