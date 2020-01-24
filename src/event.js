@@ -2,6 +2,7 @@ let source = 'modal'
 let fireEventCount = 0
 
 function fireEvent(name, params) {
+    console.log('fire event '+name)
     return new Promise((resolve, reject) => {
         let eventID = fireEventCount++
 
