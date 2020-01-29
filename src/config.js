@@ -1,5 +1,5 @@
-import { fireEvent } from './db/event'
 import { createStore } from 'pinia'
+import { fireEvent } from './event'
 
 export const useConfigStore = createStore({
     id: 'config',
@@ -16,6 +16,19 @@ export const useConfigStore = createStore({
                 let table = state.customCaches[i]
                 d[table.sfObjectName] = table.tableToCache
                 d[table.objectName] = table.tableToCache
+            }
+            return d
+
+        },
+        getCacheDict: (state) => {
+            let d = {}
+            if (!state.customCaches) {
+                return d
+            }
+            for (let i = 0; i < state.customCaches.length; i++) {
+                let table = state.customCaches[i]
+                d[table.sfObjectName] = table
+                d[table.objectName] = table
             }
             return d
 
