@@ -7,7 +7,8 @@
         "url": "git+https://github.com/PitcherAG/pitcher-vue-sdk.git"
     },
     "scripts": {
-        "linksdk": "npm link"
+        "yarn link": "yarn link",
+        "npm link": "npm link"
     },
     "author": "Pitcher AG",
     "license": "MIT",

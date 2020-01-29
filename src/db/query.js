@@ -1,4 +1,4 @@
-import { fireEvent } from './event'
+import { fireEvent } from '../event'
 
 let cache = {}
 let cacheEnabled = false

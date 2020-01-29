@@ -2,7 +2,6 @@ let source = 'modal'
 let fireEventCount = 0
 
 function fireEvent(name, params) {
-    console.log('fire event '+name)
     return new Promise((resolve, reject) => {
         let eventID = fireEventCount++
 
@@ -16,6 +15,7 @@ function fireEvent(name, params) {
         params.callBackFunc = callback
         params.callBack = callback
         params.errorFunc = errorCallback
+        params.emptyFunction = errorCallback
         params.source = source
 
         function destroyEvent() {
