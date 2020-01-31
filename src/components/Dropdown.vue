@@ -1,8 +1,9 @@
 <template>
-    <div :class="classList">
+    <div :class="classList" ref="dropdown">
         <input type="hidden" v-model="value">
         <i class="dropdown icon"></i>
-        <div class="default text">{{ defaultText }}</div>
+        <div class="text" v-show="value"></div>
+        <div class="default" v-show="!value">{{ defaultText }}</div>
         <div class="menu">
             <div class="item" v-for="(option, index) in list" :key="index"
                  :data-value="option.value" :data-text="option.text"
@@ -12,6 +13,8 @@
     </div>
 </template>
 <script>
+    import { computed, onMounted, onUpdated } from '@vue/composition-api'
+
     export default {
         props: {
             addClass: {
@@ -23,17 +26,15 @@
             defaultText: {
                 required: true
             },
-
             options: {
                 required: true
             },
-            textFiled: {
+            textField: {
                 default: 'text'
             },
-            valueFiled: {
+            valueField: {
                 default: 'value'
             },
-
             action: {
                 type: String,
                 default: 'activate'
@@ -43,39 +44,27 @@
             }
         },
 
-        mounted() {
-            this.$nextTick(() => {
-                this.initDropdown()
-            })
-        },
-
-        updated() {
-            this.$nextTick(() => {
-                this.initDropdown()
-            })
-        },
-
-        computed: {
-            classList: function() {
+        setup(props, attrs) {
+            const classList = computed(() => {
                 let cls = 'ui dropdown '
-                if(this.addClass){
-                    cls += this.addClass
-                }else{
+                if (props.addClass) {
+                    cls += props.addClass
+                } else {
                     cls += 'selection'
                 }
                 return cls
-            },
+            })
 
-            list: function() {
-                if (!this.options) {
+            const list = computed(() => {
+                if (!props.options) {
                     console.error('options is null')
                 }
 
-                return this.options.map((option) => {
+                return props.options.map((option) => {
                     if (option.constructor === Object) {
                         return {
-                            text: option[this.textFiled],
-                            value: option[this.valueFiled]
+                            text: option[props.textField],
+                            value: option[props.valueField]
                         }
                     } else {
                         return {
@@ -84,22 +73,33 @@
                         }
                     }
                 })
-            }
-        },
+            })
 
-        methods: {
-            initDropdown: function() {
-                const self = this,
-                    settings = $.extend({
-                        action: this.action,
-                        onChange: function(value, text) {
-                            self.$emit('input', value)
-                            self.$emit('dropdown-selected', text)
-                        }
-                    }, this.setting)
+            const initDropdown = () => {
 
-                $(this.$el).dropdown(settings)
+                const settings = $.extend({
+                    action: props.action,
+                    onChange: function(value, text) {
+                        attrs.emit('input', value)
+                        attrs.emit('dropdown-selected', text)
+                    }
+                }, props.setting)
+
+                $(attrs.refs.dropdown).dropdown(settings)
             }
+            onMounted(() => {
+                initDropdown()
+            })
+            onUpdated(() => {
+                initDropdown()
+            })
+            return { classList, list, initDropdown }
         }
     }
 </script>
+
+<style scoped>
+    .default {
+        color: rgba(191, 191, 191, .87) !important;
+    }
+</style>
