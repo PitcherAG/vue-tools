@@ -1,5 +1,4 @@
 import { createStore } from 'pinia'
-import { computed } from '@vue/composition-api'
 
 window.getParameters = function(text) {
     window.params = JSON.parse(text)
@@ -11,11 +10,19 @@ export const useParamsStore = createStore({
         account: null,
         contacts: null,
         salesForceUser: null,
-       // locale: computed(() => state.salesForceUser ? state.salesForceUser.LanguageLocaleKey : null)
+        // locale: computed(() => state.salesForceUser ? state.salesForceUser.LanguageLocaleKey : null)
     }),
     getters: {
         locale: (state, getters) => {
             return state.salesForceUser ? state.salesForceUser.LanguageLocaleKey.split('_').join('-') : null
+        },
+        context: (state) => {
+            return {
+                Account: state.account,
+                Contact: state.contact,
+                Contacts: state.contacts,
+                User: state.user
+            }
         }
     }
 })

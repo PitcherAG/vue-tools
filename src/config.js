@@ -1,5 +1,5 @@
-import { createStore } from 'pinia'
 import { fireEvent } from './event'
+import { createStore } from 'pinia'
 
 export const useConfigStore = createStore({
     id: 'config',
@@ -56,6 +56,12 @@ export function loadConfig() {
                     objectName: 'Call',
                     sfObjectName: 'Call',
                     tableToCache: 'tbl_calls',
+                    query: ''
+                })
+                result.customCaches.push({
+                    objectName: 'User',
+                    sfObjectName: 'User',
+                    tableToCache: 'tbl_crm_users',
                     query: ''
                 })
                 store.patch(result)

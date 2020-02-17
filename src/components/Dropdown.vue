@@ -50,7 +50,10 @@
                 if (props.addClass) {
                     cls += props.addClass
                 } else {
-                    cls += 'selection'
+                    cls += 'selection '
+                }
+                if (props.options.length > 10) {
+                    cls += ' search'
                 }
                 return cls
             })
