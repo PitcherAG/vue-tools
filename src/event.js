@@ -15,6 +15,7 @@ function fireEvent(name, params) {
         params.callBackFunc = callback
         params.callBack = callback
         params.errorFunc = errorCallback
+        params.emptyFunction = errorCallback
         params.source = source
 
         function destroyEvent() {

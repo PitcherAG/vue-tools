@@ -1,4 +1,4 @@
-import { fireEvent } from './event'
+import { fireEvent } from '../event'
 
 let cache = {}
 let cacheEnabled = false
@@ -50,11 +50,10 @@ function query(query, db = null) {
                     for (let j = 0; j < e.columns.length; j++) {
                         let column = e.columns[j]
 
-                        if (column === 'extraField') {
+                        if (column === 'extraField' || column === 'account' || column === 'eventJSON' || column === 'contact' || column === 'user') {
                             let o = JSON.parse(res[j])
-
                             for (let n in o) {
-                                if (o.hasOwnProperty(n)) {
+                                if (o.hasOwnProperty(n) && n !== 'attributes') {
                                     obj[n] = o[n]
                                 }
                             }
@@ -69,11 +68,9 @@ function query(query, db = null) {
 
                     result.push(obj)
                 }
-
                 if (cacheEnabled) {
                     cacheQuery(query, result)
                 }
-
                 resolve(result)
             })
             .catch(reject)
