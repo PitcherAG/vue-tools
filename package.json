@@ -9,7 +9,7 @@
   "scripts": {
     "yarn link": "yarn link",
     "npm link": "npm link",
-    "publish": "npm publish"
+    "npm publish": "npm publish"
   },
   "author": "Pitcher AG",
   "license": "MIT",
