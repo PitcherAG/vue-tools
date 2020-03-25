@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/PitcherAG/pitcher-vue-sdk#readme",
   "dependencies": {
+    "@vue/composition-api": "^0.3.4",
     "handlebars": "^4.6.0",
     "pinia": "0.0.5"
   }
