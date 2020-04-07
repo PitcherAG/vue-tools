@@ -1,5 +1,4 @@
-# VueJS Tools for Pitcher Impact
-
+# Pitcher VUS SDK
 Please open pull request if you want to change something
 
 ## Ti.App.fireEvent
