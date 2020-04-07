@@ -1,4 +1,4 @@
-# Pitcher VUS SDK
+# Pitcher VUE.JS SDK
 Please open pull request if you want to change something
 
 ## Ti.App.fireEvent
