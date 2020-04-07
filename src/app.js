@@ -1,5 +1,6 @@
 import { fireEvent } from './event'
 import { getFilesWithKeyword } from './files'
+import { PLATFORM } from './platform'
 
 export function closeModal() {
     fireEvent('closeOpenModal')
@@ -49,13 +50,27 @@ export async function launchFileWithKeyword(keyword, params) {
     }
     const file = files[0]
     const fileUrl = file.vUrl.replace('.zip', '').replace('zip/', '') + '/index.html'
+    if (PLATFORM === 'ANDROID') {
+        loadWebPageFromFolder(fileUrl, file.body, file.ID, params)
+    } else {
+        launchContentWithID(file.ID, params)
+    }
 
-    loadWebPageFromFolder(fileUrl, file.body, file.ID, params)
 }
 
 export function launchFileWithID(id) {
     fireEvent('launchFileWithID', {
         'fileID': id,
+    })
+}
+
+export function launchContentWithID(id, params, subId = 0, currentID, forceChange = false) {
+    fireEvent('launchContentWithID', {
+        'fileID': id,
+        'parameters': params,
+        subId,
+        currentID,
+        forceChange
     })
 }
 
