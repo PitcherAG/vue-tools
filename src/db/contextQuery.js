@@ -24,6 +24,9 @@ export async function contextQuery(query, context, db = null) {
     if (params.salesForceUser) {
         tableDict.user = params.salesForceUser
     }
+    if (params.user) {
+        tableDict.user = params.user
+    }
     if (params.locale) {
         tableDict.locale = params.locale
     }
@@ -33,7 +36,7 @@ export async function contextQuery(query, context, db = null) {
         const result = await oQuery(q, db)
         return result
     } catch (e) {
-        console.error(query, tableDict)
+        console.error(q, tableDict)
         throw e
     }
 

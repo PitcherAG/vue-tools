@@ -1,6 +1,7 @@
 import { renderContext } from './renderContext'
 import { trimChar } from './trim'
 import { launchFileWithID, launchFileWithKeyword } from '../app'
+import { PLATFORM } from '../platform'
 
 
 export function openLink(link, context) {
@@ -20,9 +21,17 @@ export function openLink(link, context) {
     let params = trimChar(url.search, '/', false)
     params = trimChar(params, '?', false)
     params = JSON.parse('{"' + decodeURI(params.replace(/&/g, '","').replace(/=/g, '":"')) + '"}')
+    for(const a in params){
+        window.localStorage[a] = params[a]
+    }
 
     if (url.protocol === 'pitcher:') {
-        const filename = trimChar(url.pathname, '/')
+        let filename
+        if(PLATFORM==='ANDROID') {
+            filename = trimChar(url.pathname, '/')
+        }else{
+            filename = url.hostname
+        }
         if (isNaN(filename)) {
             const p = launchFileWithKeyword(filename, params)
         } else {
