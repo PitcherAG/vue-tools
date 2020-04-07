@@ -167,6 +167,8 @@
                 }),
             })
 
+            const name = ref()
+
             watch(() => [props.objectType],
                 async () => {
                     if (!props.objectType) {
@@ -329,11 +331,9 @@
                 if (validationError.value) {
                     return
                 }
-
-                console.trace()
                 const q = 'select * from {{' + props.objectType + '}} where Id=\'{{ id }}\''
                 const data = await contextQuery(q, { 'id': props.id })
-
+                name.value = data.Name
                 state.loadedObj = data[0]
                 for (const field of state.fields) {
                     state.obj[field.name].value = data[0][field.name]
@@ -366,7 +366,7 @@
                     ...state.result,
                     ...extra
                 }
-                if (state.recordTypeId) {
+                if (state.recordTypeId && state.recordTypes.length > 1) {
                     for (const t of state.recordTypes) {
                         if (t.recordTypeId === state.recordTypeId) {
                             obj.RecordType = {
@@ -381,15 +381,6 @@
                 }
                 obj.LastModifiedDate = new Date().toISOString()
                 obj.ignoreFields.push('LastModifiedDate')
-                for (let a in obj) {
-                    if (obj[a] === null || typeof obj[a] == 'undefined') {
-                        if (!obj.fieldsToNull) {
-                            obj.fieldsToNull = []
-                        }
-                        //obj.fieldsToNull.push(a)
-                        delete obj[a]
-                    }
-                }
                 obj.objectType = props.objectType
                 if (props.id) {
                     obj.Id = props.id
@@ -407,7 +398,7 @@
             }
 
             return {
-                state, save, validate, clear, validationError, validationErrorTitle, validationErrorDescription
+                state, save, validate, clear, validationError, validationErrorTitle, validationErrorDescription, name
             }
         }
     }
