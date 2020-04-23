@@ -24,14 +24,22 @@ export function startPrecall() {
 
 export function searchPitcherFile(q) {
     return fireEvent('searchPitcherFile', {
-        'extra': q,
-        'body': q,
-        'keywords': q,
-        'rangeCheck': true
+        extra: q,
+        body: q,
+        keywords: q,
+        rangeCheck: true
     })
 }
 
-export function loadWebPageFromFolder(fileURL, title, fileID, parameter, showBar = false, folderName = 'zip', allowPortrait = false,) {
+export function loadWebPageFromFolder(
+    fileURL,
+    title,
+    fileID,
+    parameter,
+    showBar = false,
+    folderName = 'zip',
+    allowPortrait = false
+) {
     fireEvent('loadWebPageFromFolder', {
         urlValue: fileURL,
         title: title,
@@ -49,25 +57,31 @@ export async function launchFileWithKeyword(keyword, params) {
         alert(files.length + ' files found for keyword: ' + keyword)
     }
     const file = files[0]
-    const fileUrl = file.vUrl.replace('.zip', '').replace('zip/', '') + '/index.html'
+    const fileUrl =
+        file.vUrl.replace('.zip', '').replace('zip/', '') + '/index.html'
     if (PLATFORM === 'ANDROID') {
         loadWebPageFromFolder(fileUrl, file.body, file.ID, params)
     } else {
         launchContentWithID(file.ID, params)
     }
-
 }
 
 export function launchFileWithID(id) {
     fireEvent('launchFileWithID', {
-        'fileID': id,
+        fileID: id
     })
 }
 
-export function launchContentWithID(id, params, subId = 0, currentID, forceChange = false) {
+export function launchContentWithID(
+    id,
+    params,
+    subId = 0,
+    currentID,
+    forceChange = false
+) {
     fireEvent('launchContentWithID', {
-        'fileID': id,
-        'parameters': params,
+        fileID: id,
+        parameters: params,
         subId,
         currentID,
         forceChange
@@ -75,13 +89,26 @@ export function launchContentWithID(id, params, subId = 0, currentID, forceChang
 }
 
 export function saveObject(obj) {
-
-    const ignores = ['CurrencyIsoCode', 'attributes', 'CreatedById', 'CreatedDate', 'IsDeleted', 'LastActivityDate', 'LastModifiedById', 'LastModifiedDate', 'SystemModstamp']
+    const ignores = [
+        'CurrencyIsoCode',
+        'attributes',
+        'CreatedById',
+        'CreatedDate',
+        'IsDeleted',
+        'LastActivityDate',
+        'LastModifiedById',
+        'LastModifiedDate',
+        'SystemModstamp'
+    ]
     if (!obj.ignoreFields) {
         obj.ignoreFields = []
     }
     for (const a in obj) {
-        if ((obj[a] && obj[a].attributes) || a.indexOf('111') > -1 || a.endsWith('__r')) {
+        if (
+            (obj[a] && obj[a].attributes) ||
+            a.indexOf('111') > -1 ||
+            a.endsWith('__r')
+        ) {
             if (obj.ignoreFields.indexOf(a) === -1) {
                 obj.ignoreFields.push(a)
             }
@@ -125,11 +152,11 @@ export function saveObject(obj) {
 
 export function getSchema(objectName) {
     const desc = objectName + '_desc'
-    return fireEvent('getFromHTML', { id: desc, 'useSFDCDB': true })
+    return fireEvent('getFromHTML', { id: desc, useSFDCDB: true })
 }
 
 export function getLayout(objectName, objectTypeId) {
     const desc = objectName + '_' + objectTypeId + '_layout'
     console.log(desc)
-    return fireEvent('getFromHTML', { id: desc, 'useSFDCDB': true })
+    return fireEvent('getFromHTML', { id: desc, useSFDCDB: true })
 }

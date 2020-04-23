@@ -2,7 +2,6 @@ import { useConfigStore } from '../config'
 import { query } from './query'
 import { execBool } from '../utils/contextExec'
 
-
 export class Field {
     referenceTo = []
 
@@ -14,8 +13,11 @@ export class Field {
         this.parentObjectType = objectType
         this.references = []
         this.required = !obj.nillable || obj.nameField
-        this.valid = function(value) {
-            if (self.type === 'boolean' && value === true || value === false) {
+        this.valid = function (value) {
+            if (
+                (self.type === 'boolean' && value === true) ||
+                value === false
+            ) {
                 return true
             }
             if (!value && self.required) {
@@ -34,7 +36,9 @@ export class Field {
             for (const reference of this.referenceTo) {
                 const targetTable = store.getCacheDict.value[reference]
                 if (!targetTable) {
-                    window.console.warn('referenced object not found: ' + reference)
+                    window.console.warn(
+                        'referenced object not found: ' + reference
+                    )
                     return
                 }
                 this.load(targetTable, sourceTable, reference)

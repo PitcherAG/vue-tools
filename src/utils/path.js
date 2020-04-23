@@ -26,6 +26,4 @@ function getPath(obj, path, ignoreRoot = false) {
 }
 
 export default getPath
-export {
-    removeRoot
-}
+export { removeRoot }

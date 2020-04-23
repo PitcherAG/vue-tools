@@ -50,8 +50,4 @@ function fireEvent(name, params) {
     })
 }
 
-export {
-    fireEvent,
-    fireEventCount,
-    source
-}
+export { fireEvent, fireEventCount, source }

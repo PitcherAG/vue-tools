@@ -1,5 +1,5 @@
 if (!Date.prototype.adjustDate) {
-    Date.prototype.adjustDate = function(days) {
+    Date.prototype.adjustDate = function (days) {
         let date
         days = days || 0
 
