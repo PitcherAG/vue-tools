@@ -6,10 +6,12 @@
     "type": "git",
     "url": "git+https://github.com/PitcherAG/pitcher-vue-sdk.git"
   },
+  "main": "src",
   "scripts": {
     "yarn link": "yarn link",
     "npm link": "npm link",
-    "npm publish": "npm publish"
+    "npm publish": "npm publish",
+    "build": "rimraf ./dist && babel src -d dist"
   },
   "author": "Pitcher AG",
   "license": "MIT",
@@ -18,8 +20,15 @@
   },
   "homepage": "https://github.com/PitcherAG/pitcher-vue-sdk#readme",
   "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/preset-env": "^7.9.5",
     "@vue/composition-api": "^0.3.4",
     "handlebars": "^4.6.0",
     "pinia": "0.0.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "rimraf": "^3.0.2"
   }
 }
