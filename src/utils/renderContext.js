@@ -5,7 +5,4 @@ function renderContext(str, context) {
     return template(context)
 }
 
-export {
-    renderContext
-}
-
+export { renderContext }
