@@ -38,7 +38,7 @@ function query(query, db = null) {
             pType: 'query',
             query: query
         })
-            .then(function (e) {
+            .then(function(e) {
                 let result = []
 
                 if (e.error) {

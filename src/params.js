@@ -1,6 +1,6 @@
 import { createStore } from 'pinia'
 
-window.getParameters = function (text) {
+window.getParameters = function(text) {
     window.params = JSON.parse(text)
 }
 
@@ -27,7 +27,7 @@ export const useParamsStore = createStore({
                 ? state.user.LanguageLocaleKey.split('_')[0].toLowerCase()
                 : null
         },
-        context: (state) => {
+        context: state => {
             return {
                 Account: state.account,
                 Contact: state.contact,
@@ -40,7 +40,7 @@ export const useParamsStore = createStore({
 
 export function loadParams() {
     const store = useParamsStore()
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
         if (process.env.VUE_APP_PARAMS) {
             // for testing
             let preParams = JSON.parse(process.env.VUE_APP_PARAMS)

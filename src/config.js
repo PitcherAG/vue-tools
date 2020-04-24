@@ -7,7 +7,7 @@ export const useConfigStore = createStore({
         customCaches: null
     }),
     getters: {
-        getTableDict: (state) => {
+        getTableDict: state => {
             let d = {}
             if (!state.customCaches) {
                 return d
@@ -19,7 +19,7 @@ export const useConfigStore = createStore({
             }
             return d
         },
-        getCacheDict: (state) => {
+        getCacheDict: state => {
             let d = {}
             if (!state.customCaches) {
                 return d
@@ -36,8 +36,8 @@ export const useConfigStore = createStore({
 
 export function loadConfig() {
     const store = useConfigStore()
-    return new Promise((resolve) => {
-        fireEvent('getAppConfig', {}).then((result) => {
+    return new Promise(resolve => {
+        fireEvent('getAppConfig', {}).then(result => {
             result.customCaches.push({
                 objectName: 'Account',
                 sfObjectName: 'Account',
