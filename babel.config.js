@@ -1,4 +1,3 @@
 module.exports = {
-  presets: ["@babel/preset-env"],
-  plugins: ["@babel/plugin-proposal-class-properties"]
-};
+    presets: ['@vue/cli-plugin-babel/preset']
+}
