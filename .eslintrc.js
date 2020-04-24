@@ -5,7 +5,8 @@ module.exports = {
     },
     globals: {
         $: true,
-        Ti: true
+        Ti: true,
+        PLATFORM: true
     },
     extends: ['plugin:vue/essential', 'eslint:recommended', '@vue/prettier'],
     parserOptions: {
