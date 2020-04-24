@@ -1,5 +1,5 @@
 export function watchLocalStorage(name) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const storage = window.localStorage
         const oldValue = storage.getItem(name)
 
