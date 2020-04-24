@@ -22,9 +22,7 @@ export const useParamsStore = createStore({
         },
         language: (state, getters) => {
             return state.salesForceUser
-                ? state.salesForceUser.LanguageLocaleKey.split(
-                      '_'
-                  )[0].toLowerCase()
+                ? state.salesForceUser.LanguageLocaleKey.split('_')[0].toLowerCase()
                 : state.user
                 ? state.user.LanguageLocaleKey.split('_')[0].toLowerCase()
                 : null

@@ -9,10 +9,7 @@ export function formatDate(date, showYear = true) {
         options = { month: 'short', day: '2-digit' }
     }
     if (date.match(/\d{13}/)) {
-        return new Date(Number(date)).toLocaleDateString(
-            params.locale.value,
-            options
-        )
+        return new Date(Number(date)).toLocaleDateString(params.locale.value, options)
     }
     return new Date(date).toLocaleDateString(params.locale.value, options)
 }
