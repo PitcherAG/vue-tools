@@ -1,6 +1,6 @@
 {
   "name": "@pitcher/vue-sdk",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "VueJS Development Tools for the use in Pitcher Impact",
   "repository": {
     "type": "git",
@@ -23,9 +23,9 @@
   "dependencies": {
     "@vue/composition-api": "^0.3.4",
     "core-js": "^3.6.4",
-    "vue": "^2.6.11",
-    "handlebars": "^4.6.0",
-    "pinia": "0.0.5"
+    "handlebars": "^4.7.6",
+    "pinia": "0.0.5",
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

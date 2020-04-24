@@ -28,7 +28,8 @@ function hasCached(query) {
 
 function query(query, db = null) {
     return new Promise((resolve, reject) => {
-        if (hasCached(query)) {
+        if (hasCached(query) && cacheEnabled) {
+            console.log('cache hit')
             return resolve(cache[query].result)
         }
 
@@ -40,11 +41,9 @@ function query(query, db = null) {
         })
             .then(function(e) {
                 let result = []
-
                 if (e.error) {
                     reject(new Error(e.error))
                 }
-
                 for (let i = 0; i < e.results.length; i++) {
                     let res = e.results[i]
                     let obj = {}
@@ -73,7 +72,6 @@ function query(query, db = null) {
                             }
                         }
                     }
-
                     result.push(obj)
                 }
                 if (cacheEnabled) {
