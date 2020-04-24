@@ -1,5 +1,4 @@
-# VueJS Tools for Pitcher Impact
-
+# Pitcher VUE.JS SDK
 Please open pull request if you want to change something
 
 ## Ti.App.fireEvent
@@ -11,7 +10,7 @@ fireEvent('dbFunction', {
     'query': query,
     'pType': 'query',
     'db': 'pitcher',
-}).then(function (result) {
+}).then((result) => {
     ...
 })
 ```

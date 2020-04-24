@@ -17,11 +17,13 @@ function clearCache() {
 }
 
 function hasCached(query) {
-    return cacheEnabled
-        && !query.toLowerCase().includes('delete')
-        && !query.toLowerCase().includes('insert')
-        && cache.hasOwnProperty(query)
-        && cache[query].time + cacheTimeout > Date.now()
+    return (
+        cacheEnabled &&
+        !query.toLowerCase().includes('delete') &&
+        !query.toLowerCase().includes('insert') &&
+        cache.hasOwnProperty(query) &&
+        cache[query].time + cacheTimeout > Date.now()
+    )
 }
 
 function query(query, db = null) {
@@ -73,10 +75,4 @@ function query(query, db = null) {
     })
 }
 
-export {
-    cacheEnabled,
-    cacheTimeout,
-    clearCache,
-    defaultDatabase,
-    query
-}
+export { cacheEnabled, cacheTimeout, clearCache, defaultDatabase, query }

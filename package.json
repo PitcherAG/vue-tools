@@ -1,23 +1,46 @@
 {
-    "name": "pitcher-vue-sdk",
-    "version": "1.0.2",
-    "description": "VueJS Development Tools for the use in Pitcher Impact",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/PitcherAG/pitcher-vue-sdk.git"
-    },
-    "scripts": {
-        "yarn link": "yarn link",
-        "npm link": "npm link"
-    },
-    "author": "Pitcher AG",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/PitcherAG/pitcher-vue-sdk/issues"
-    },
-    "homepage": "https://github.com/PitcherAG/pitcher-vue-sdk#readme",
-    "dependencies": {
-        "handlebars": "^4.6.0",
-        "pinia": "0.0.5"
-    }
+  "name": "@pitcher/vue-sdk",
+  "version": "1.0.4",
+  "description": "VueJS Development Tools for the use in Pitcher Impact",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PitcherAG/pitcher-vue-sdk.git"
+  },
+  "author": "Pitcher AG",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PitcherAG/pitcher-vue-sdk/issues"
+  },
+  "homepage": "https://github.com/PitcherAG/pitcher-vue-sdk#readme",
+  "main": "src",
+  "scripts": {
+    "yarn link": "yarn link",
+    "npm link": "npm link",
+    "npm publish": "npm publish",
+    "build": "rimraf ./dist && babel src -d dist",
+    "lint": "eslint ./src --fix"
+  },
+  "dependencies": {
+    "@vue/composition-api": "^0.3.4",
+    "core-js": "^3.6.4",
+    "vue": "^2.6.11",
+    "handlebars": "^4.6.0",
+    "pinia": "0.0.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@vue/cli-plugin-babel": "~4.3.0",
+    "@vue/cli-plugin-eslint": "~4.3.0",
+    "@vue/cli-service": "~4.3.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "sass": "^1.26.3",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.11"
+  }
 }

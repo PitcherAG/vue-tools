@@ -2,7 +2,6 @@ import { createStore } from 'pinia'
 import { getSchema } from '../app'
 import { Field } from './sfdcField'
 
-
 export const useSchemaStore = createStore({
     id: 'schema',
     state: () => ({})
