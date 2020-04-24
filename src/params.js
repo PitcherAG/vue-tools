@@ -50,7 +50,7 @@ export function loadParams() {
             let count = 0
             let interval = setInterval(() => {
                 count++
-                if (typeof window.params !== 'undefined' || count===10) {
+                if (typeof window.params !== 'undefined' || count === 10) {
                     clearInterval(interval)
                     store.patch(window.params)
                     resolve(store.state)
