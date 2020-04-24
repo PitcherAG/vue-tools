@@ -57,8 +57,7 @@ export async function launchFileWithKeyword(keyword, params) {
         alert(files.length + ' files found for keyword: ' + keyword)
     }
     const file = files[0]
-    const fileUrl =
-        file.vUrl.replace('.zip', '').replace('zip/', '') + '/index.html'
+    const fileUrl = file.vUrl.replace('.zip', '').replace('zip/', '') + '/index.html'
     if (PLATFORM === 'ANDROID') {
         loadWebPageFromFolder(fileUrl, file.body, file.ID, params)
     } else {
@@ -72,13 +71,7 @@ export function launchFileWithID(id) {
     })
 }
 
-export function launchContentWithID(
-    id,
-    params,
-    subId = 0,
-    currentID,
-    forceChange = false
-) {
+export function launchContentWithID(id, params, subId = 0, currentID, forceChange = false) {
     fireEvent('launchContentWithID', {
         fileID: id,
         parameters: params,
@@ -104,11 +97,7 @@ export function saveObject(obj) {
         obj.ignoreFields = []
     }
     for (const a in obj) {
-        if (
-            (obj[a] && obj[a].attributes) ||
-            a.indexOf('111') > -1 ||
-            a.endsWith('__r')
-        ) {
+        if ((obj[a] && obj[a].attributes) || a.indexOf('111') > -1 || a.endsWith('__r')) {
             if (obj.ignoreFields.indexOf(a) === -1) {
                 obj.ignoreFields.push(a)
             }

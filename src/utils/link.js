@@ -18,11 +18,7 @@ export function openLink(link, context) {
     }
     let params = trimChar(url.search, '/', false)
     params = trimChar(params, '?', false)
-    params = JSON.parse(
-        '{"' +
-            decodeURI(params.replace(/&/g, '","').replace(/=/g, '":"')) +
-            '"}'
-    )
+    params = JSON.parse('{"' + decodeURI(params.replace(/&/g, '","').replace(/=/g, '":"')) + '"}')
     for (const a in params) {
         window.localStorage[a] = params[a]
     }

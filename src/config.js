@@ -41,19 +41,13 @@ export function loadConfig() {
             result.customCaches.push({
                 objectName: 'Account',
                 sfObjectName: 'Account',
-                tableToCache:
-                    PLATFORM === 'IOS'
-                        ? 'tbl_crm_accounts_m_v3'
-                        : 'tbl_crm_accounts',
+                tableToCache: PLATFORM === 'IOS' ? 'tbl_crm_accounts_m_v3' : 'tbl_crm_accounts',
                 query: result.sfdcAccountQuery
             })
             result.customCaches.push({
                 objectName: 'Contact',
                 sfObjectName: 'Contact',
-                tableToCache:
-                    PLATFORM === 'IOS'
-                        ? 'tbl_crm_contacts_m_v4'
-                        : 'tbl_crm_contacts',
+                tableToCache: PLATFORM === 'IOS' ? 'tbl_crm_contacts_m_v4' : 'tbl_crm_contacts',
                 query: result.sfdcContactQuery
             })
             result.customCaches.push({
@@ -65,8 +59,7 @@ export function loadConfig() {
             result.customCaches.push({
                 objectName: 'User',
                 sfObjectName: 'User',
-                tableToCache:
-                    PLATFORM === 'IOS' ? 'tbl_crm_users_m_v3' : 'tbl_crm_users',
+                tableToCache: PLATFORM === 'IOS' ? 'tbl_crm_users_m_v3' : 'tbl_crm_users',
                 query: ''
             })
             store.patch(result)
