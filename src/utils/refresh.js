@@ -3,11 +3,13 @@ import { eventHub } from './eventHub'
 
 window.localStorage.setItem('reloadConsole', 'false')
 
-export function refreshWatcher() {
+export function refreshWatcher(timeout) {
     watchLocalStorage('reloadConsole').then((r) => {
         window.console.log('change detected... refresh')
-        eventHub.$emit('refresh')
+        setTimeout(() => {
+            eventHub.$emit('refresh')
+        }, timeout)
         window.localStorage.setItem('reloadConsole', 'false')
-        refreshWatcher()
+        refreshWatcher(timeout)
     })
 }

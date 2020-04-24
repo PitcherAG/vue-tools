@@ -33,13 +33,15 @@ export const useParamsStore = createStore({
 export function loadParams() {
     const store = useParamsStore()
     return new Promise(resolve => {
-        if (process.env.VUE_APP_PARAMS) { // for testing
+        if (process.env.VUE_APP_PARAMS) {
             let preParams = JSON.parse(process.env.VUE_APP_PARAMS)
             store.patch(preParams)
             resolve(store.state)
         } else if (typeof window.params === 'undefined') {
+            let count = 0
             let interval = setInterval(() => {
-                if (typeof window.params !== 'undefined') {
+                count++
+                if (typeof window.params !== 'undefined' || count===10) {
                     clearInterval(interval)
                     store.patch(window.params)
                     resolve(store.state)
