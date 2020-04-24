@@ -23,7 +23,7 @@ function fireEvent(name, params) {
             delete window[errorCallback]
         }
 
-        window[callback] = (res) => {
+        window[callback] = res => {
             if (res.startsWith('{') || res.startsWith('[')) {
                 try {
                     resolve(JSON.parse(res))
@@ -37,7 +37,7 @@ function fireEvent(name, params) {
             destroyEvent()
         }
 
-        window[errorCallback] = (error) => {
+        window[errorCallback] = error => {
             reject(error)
             destroyEvent()
         }
@@ -50,8 +50,4 @@ function fireEvent(name, params) {
     })
 }
 
-export {
-    fireEvent,
-    fireEventCount,
-    source
-}
+export { fireEvent, fireEventCount, source }

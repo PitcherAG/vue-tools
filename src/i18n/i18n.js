@@ -26,7 +26,6 @@ export function trans(key) {
         return key
     }
     return result
-
 }
 
 export function setLanguage(locale) {

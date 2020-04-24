@@ -90,8 +90,8 @@ function startStopDetailingWindows(options) {
         fireEvent('stopDetailing', options)
     } else {
         fireEvent('getCrmEventsForToday', {
-            'callBack': 'gotCrmEventsForToday',
-            'target': options
+            callBack: 'gotCrmEventsForToday',
+            target: options
         })
     }
 }

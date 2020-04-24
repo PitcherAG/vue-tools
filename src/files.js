@@ -5,7 +5,7 @@ const keywordDict = {}
 
 async function loadFiles() {
     if (!loaded) {
-        const files = await fireEvent('getPitcherFiles', { 'fullData': true })
+        const files = await fireEvent('getPitcherFiles', { fullData: true })
         for (const file of files) {
             let keywords
             try {

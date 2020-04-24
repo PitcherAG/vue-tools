@@ -8,7 +8,7 @@ export const useConfigStore = createStore({
         customCaches: null
     }),
     getters: {
-        getTableDict: (state) => {
+        getTableDict: state => {
             let d = {}
             if (!state.customCaches) {
                 return d
@@ -19,9 +19,8 @@ export const useConfigStore = createStore({
                 d[table.objectName] = table.tableToCache
             }
             return d
-
         },
-        getCacheDict: (state) => {
+        getCacheDict: state => {
             let d = {}
             if (!state.customCaches) {
                 return d
@@ -32,7 +31,6 @@ export const useConfigStore = createStore({
                 d[table.objectName] = table
             }
             return d
-
         }
     }
 })
