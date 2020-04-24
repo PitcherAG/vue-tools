@@ -9,7 +9,7 @@ async function loadFiles() {
         for (const file of files) {
             let keywords
             try {
-                keywords = file.keywords.split(',').map((f) => f.trim())
+                keywords = file.keywords.split(',').map(f => f.trim())
             } catch (e) {
                 keywords = []
             }

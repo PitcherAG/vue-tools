@@ -13,7 +13,7 @@ export class Field {
         this.parentObjectType = objectType
         this.references = []
         this.required = !obj.nillable || obj.nameField
-        this.valid = function (value) {
+        this.valid = function(value) {
             if ((self.type === 'boolean' && value === true) || value === false) {
                 return true
             }
