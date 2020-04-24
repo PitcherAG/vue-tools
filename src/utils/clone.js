@@ -7,6 +7,4 @@ function clone(obj) {
     return copy
 }
 
-export {
-    clone
-}
+export { clone }

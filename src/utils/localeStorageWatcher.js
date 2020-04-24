@@ -1,5 +1,5 @@
 export function watchLocalStorage(name) {
-    return new Promise(((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         const storage = window.localStorage
         const oldValue = storage.getItem(name)
 
@@ -13,5 +13,5 @@ export function watchLocalStorage(name) {
             }, 1000)
         }
         waitForReload()
-    }))
+    })
 }
