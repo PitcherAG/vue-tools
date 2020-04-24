@@ -17,11 +17,13 @@ function clearCache() {
 }
 
 function hasCached(query) {
-    return cacheEnabled
-        && !query.toLowerCase().includes('delete')
-        && !query.toLowerCase().includes('insert')
-        && cache.hasOwnProperty(query)
-        && cache[query].time + cacheTimeout > Date.now()
+    return (
+        cacheEnabled &&
+        !query.toLowerCase().includes('delete') &&
+        !query.toLowerCase().includes('insert') &&
+        cache.hasOwnProperty(query) &&
+        cache[query].time + cacheTimeout > Date.now()
+    )
 }
 
 function query(query, db = null) {
@@ -50,7 +52,13 @@ function query(query, db = null) {
                     for (let j = 0; j < e.columns.length; j++) {
                         let column = e.columns[j]
 
-                        if (column === 'extraField' || column === 'account' || column === 'eventJSON' || column === 'contact' || column === 'user') {
+                        if (
+                            column === 'extraField' ||
+                            column === 'account' ||
+                            column === 'eventJSON' ||
+                            column === 'contact' ||
+                            column === 'user'
+                        ) {
                             let o = JSON.parse(res[j])
                             for (let n in o) {
                                 if (o.hasOwnProperty(n) && n !== 'attributes') {
@@ -77,10 +85,4 @@ function query(query, db = null) {
     })
 }
 
-export {
-    cacheEnabled,
-    cacheTimeout,
-    clearCache,
-    defaultDatabase,
-    query
-}
+export { cacheEnabled, cacheTimeout, clearCache, defaultDatabase, query }

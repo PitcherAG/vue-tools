@@ -3,7 +3,6 @@ import { trimChar } from './trim'
 import { launchFileWithID, launchFileWithKeyword } from '../app'
 import { PLATFORM } from '../platform'
 
-
 export function openLink(link, context) {
     /*
      context = {a:434}
@@ -13,23 +12,22 @@ export function openLink(link, context) {
     link = renderContext(link, context)
     const url = new URL(link)
     try {
-
-    }catch(e){
+    } catch (e) {
         console.error(link)
         throw e
     }
     let params = trimChar(url.search, '/', false)
     params = trimChar(params, '?', false)
     params = JSON.parse('{"' + decodeURI(params.replace(/&/g, '","').replace(/=/g, '":"')) + '"}')
-    for(const a in params){
+    for (const a in params) {
         window.localStorage[a] = params[a]
     }
 
     if (url.protocol === 'pitcher:') {
         let filename
-        if(PLATFORM==='ANDROID') {
+        if (PLATFORM === 'ANDROID') {
             filename = trimChar(url.pathname, '/')
-        }else{
+        } else {
             filename = url.hostname
         }
         if (isNaN(filename)) {

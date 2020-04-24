@@ -2,7 +2,6 @@ import { useConfigStore } from '../config'
 import { query } from './query'
 import { execBool } from '../utils/contextExec'
 
-
 export class Field {
     referenceTo = []
 
@@ -15,7 +14,7 @@ export class Field {
         this.references = []
         this.required = !obj.nillable || obj.nameField
         this.valid = function(value) {
-            if (self.type === 'boolean' && value === true || value === false) {
+            if ((self.type === 'boolean' && value === true) || value === false) {
                 return true
             }
             if (!value && self.required) {

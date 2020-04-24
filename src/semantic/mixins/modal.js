@@ -1,4 +1,4 @@
-const changedEvent = 'changed';
+const changedEvent = 'changed'
 
 export default {
     model: {
@@ -19,37 +19,37 @@ export default {
     watch: {
         open(value) {
             if (value) {
-                this.showModal();
+                this.showModal()
             } else {
-                this.hideModal();
+                this.hideModal()
             }
         }
     },
     methods: {
         hideModal() {
-            $(this.$el).modal('hide');
+            $(this.$el).modal('hide')
         },
         onApprove() {
-            this.$emit('approve');
+            this.$emit('approve')
         },
         onDeny() {
-            this.$emit('deny');
+            this.$emit('deny')
         },
         onHidden() {
-            this.$emit('hidden');
-            this.$emit('changed', false);
+            this.$emit('hidden')
+            this.$emit('changed', false)
         },
         onHide() {
-            this.$emit('hide');
+            this.$emit('hide')
         },
         onShow() {
-            this.$emit('show');
+            this.$emit('show')
         },
         onVisible() {
-            this.$emit('visible');
+            this.$emit('visible')
         },
         showModal() {
-            $(this.$el).modal('show');
+            $(this.$el).modal('show')
         }
     },
     mounted() {
@@ -60,7 +60,7 @@ export default {
             onHidden: this.onHidden,
             onHide: this.onHide,
             onShow: this.onShow,
-            onVisible: this.onVisible,
-        });
+            onVisible: this.onVisible
+        })
     }
-};
+}
