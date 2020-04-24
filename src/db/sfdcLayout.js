@@ -1,13 +1,13 @@
 import { createStore } from 'pinia'
 import { getLayout } from '../app'
 
-export const useLayourStore = createStore({
+export const useLayoutStore = createStore({
     id: 'layout',
     state: () => ({})
 })
 
 export async function loadLayout(objectName, objectTypeId) {
-    const store = useLayourStore()
+    const store = useLayoutStore()
     if (store.state[objectTypeId]) {
         return store.state[objectTypeId]
     } else {
@@ -24,7 +24,6 @@ export class Schema {
         for (let a in obj) {
             this[a] = obj[a]
         }
-        const self = this
         this.objectType = objectType
     }
 }

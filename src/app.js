@@ -25,7 +25,7 @@ export function startPrecall() {
 export function getSFUrl(path) {
     // example: '/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB240BY180&versionId=0682E000005CNoY'
     return fireEvent('getSFUrl', {
-        'path': path
+        path: path
     })
 }
 
