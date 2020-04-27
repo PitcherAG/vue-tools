@@ -3,14 +3,13 @@ import { query } from './query'
 import { execBool } from '../utils/contextExec'
 
 export class Field {
-    referenceTo = []
-
     constructor(obj, objectType) {
         for (let a in obj) {
             this[a] = obj[a]
         }
         const self = this
         this.parentObjectType = objectType
+        this.referenceTo = []
         this.references = []
         this.required = !obj.nillable || obj.nameField
         this.valid = function(value) {
