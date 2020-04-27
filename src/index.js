@@ -32,4 +32,7 @@ import ObjectForm from './components/ObjectForm.vue'
 import ObjectFormField from './components/ObjectFormField.vue'
 import TransitionPage from './components/TransitionPage.vue'
 
-export { Calendar, Dropdown, ObjectForm, ObjectFormField, TransitionPage }
+// Mixins
+import ModalMixin from './semantic/mixins/modal.js'
+
+export { Calendar, Dropdown, ObjectForm, ObjectFormField, TransitionPage, ModalMixin }
