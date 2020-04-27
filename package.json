@@ -21,7 +21,7 @@
     "lint": "eslint ./src --fix"
   },
   "dependencies": {
-    "@vue/composition-api": "^0.3.4",
+    "@vue/composition-api": "^0.5.0",
     "core-js": "^3.6.4",
     "handlebars": "^4.7.6",
     "pinia": "0.0.5",
