@@ -19,9 +19,9 @@
             onMounted(() => {
                 $(refs.trigger).popup({
                     on: props.on,
-                    popup: trigger.popup,
                     position: 'bottom left'
                 })
+                popup: refs.popup,
             })
 
             onBeforeUnmount(() => {
