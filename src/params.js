@@ -13,14 +13,14 @@ export const useParamsStore = createStore({
         // locale: computed(() => state.salesForceUser ? state.salesForceUser.LanguageLocaleKey : null)
     }),
     getters: {
-        locale: (state, getters) => {
+        locale: state => {
             return state.salesForceUser
                 ? state.salesForceUser.LanguageLocaleKey.split('_').join('-')
                 : state.user
                 ? state.user.LanguageLocaleKey.split('_').join('-')
                 : null
         },
-        language: (state, getters) => {
+        language: state => {
             return state.salesForceUser
                 ? state.salesForceUser.LanguageLocaleKey.split('_')[0].toLowerCase()
                 : state.user

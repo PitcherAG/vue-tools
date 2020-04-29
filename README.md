@@ -151,6 +151,39 @@ export default {
 ```html
 <button>{{ trans('Save')}}</button>
 ```
+
+### numbers
+
+#### decimals
+format a value with minium and maximum fraction digitis:
+
+```javascript
+import { formatDecimal } from 'pitcher-vue-sdk'
+formatDecimal(123.456 , 2, 0) // 123.46
+formatDecimal(100 , 2, 1) // 100.0
+formatDecimal(100 , 2, 0) // 100
+```  
+
+#### percent
+format a percent value with minium and maximum fraction digitis:
+     
+ ```javascript
+ import { formatPecent } from 'pitcher-vue-sdk'
+ formatPecent(123.456 , 2, 0) // 123.46 %
+ formatPecent(100 , 2, 1) // 100.0 %
+ formatPecent(100 , 2, 0) // 100 %
+ ```  
+
+#### currency
+format a number value into a localized currency:
+     
+ ```javascript
+ import { formatCurrency } from 'pitcher-vue-sdk'
+ formatCurrency(123.456 , "EUR") // € 123.46 
+ formatCurrency(100000, "CHF") // sFr. 10'0000.00
+
+ ```  
+
 ## Utils
 
 ### link
