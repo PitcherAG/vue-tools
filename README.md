@@ -4,7 +4,7 @@ Please open pull request if you want to change something
 ## Ti.App.fireEvent
 
 ```javascript
-import { fireEvent } from 'pitcher-vue-sdk/event'
+import { fireEvent } from '@pitcher/vue-sdk'
 
 fireEvent('dbFunction', {
     'query': query,
@@ -18,7 +18,7 @@ fireEvent('dbFunction', {
 ## DB Queries
 ### Query
 ```javascript
-import { query } from 'pitcher-vue-sdk/db/query'
+import { query } from '@pitcher/vue-sdk'
 
 query('select * from tbl_event_v1').then(e => window.console.log(e))
 ```
@@ -30,8 +30,8 @@ Context query uses handlebars template syntax. It needs the config installed and
 This give it all the table names as context. Extra context can be supplied.
 
 ```javascript
- import { contextQuery } from 'pitcher-vue-sdk/db/contextQuery'
- import { loadConfig } from 'pitcher-vue-sdk/config'
+ import { contextQuery } from '@pitcher/vue-sdk'
+ import { loadConfig } from '@pitcher/vue-sdk'
  
      
  loadConfig().then(() => {
@@ -48,7 +48,7 @@ It's a good idea to call loadConfig() in your App.vue onMounted() function first
 in your App.vue you need to call loadParams on mounted and then you can use the useParamsStore() function anywhere else:
  ```javascript
 import { onMounted } from '@vue/composition-api'
-import { loadParams, useParamsStore } from 'pitcher-vue-sdk/params'
+import { loadParams, useParamsStore } from '@pitcher/vue-sdk'
 
 export default {
         name: 'app',
@@ -69,7 +69,7 @@ export default {
 ### date
 
 ```javascript
-    import { formatDate } from 'pitcher-vue-sdk/i18n/date'
+    import { formatDate } from '@pitcher/vue-sdk'
     const a = new Date()
     formatDate(a, true) // local format date with year (false for day and month only)
 ```
@@ -82,8 +82,8 @@ in your app.vue:
 
 ```javascript
     import { onMounted } from '@vue/composition-api'
-    import { loadParams, useParamsStore } from 'pitcher-vue-sdk//params'
-    import { provideI18n, setLanguage } from 'pitcher-vue-sdk//i18n/i18n'
+    import { loadParams, useParamsStore } from '@pitcher/vue-sdk'
+    import { provideI18n, setLanguage } from '@pitcher/vue-sdk'
     const translations = {
         locale: 'en',
         messages: {
@@ -133,14 +133,14 @@ in your app.vue:
 Then somewhere else:
 
 ```javascript
-import { trans } from ''pitcher-vue-sdk/i18n/i18n'
+import { trans } from '@pitcher/vue-sdk'
 const v = trans('Save')
 
 ```
 or
 
 ```javascript
-import { trans } from ''pitcher-vue-sdk/i18n/i18n'
+import { trans } from '@pitcher/vue-sdk'
 export default {
         setup(props, attrs) {
             return { trans}
@@ -162,7 +162,7 @@ opens an other interactive via a 'pitcher link', Example:
 This would open the interactive with the keyword `keyword` and save myParam and otherParam to local storage
 
 ```javascript
-    import { openLink } from 'pitcher-vue-sdk/utils/link'
+    import { openLink } from '@pitcher/vue-sdk'
     var link = 'pitcher://keyword/?myParam=5&otherParam={{ a.count}}'
     var context = {a:5}
     openLink(link, context)
@@ -174,7 +174,7 @@ This would open the interactive with the keyword `keyword` and save myParam and 
 renders a handlebars template in a given context
 
 ```javascript
-import { renderContext } from 'pitcher-vue-sdk/utils/renderContext'
+import { renderContext } from '@pitcher/vue-sdk'
 
 const obj = {first: "Hello", last:"World"}
 const template = "Say: {{ first }} and then {{ last }}"
@@ -192,7 +192,7 @@ console.log(result) // Say: Hello and then World
 executes a question template in a give context and returns a Boolean
 
 ```javascript
-import { execBool } from 'pitcher-vue-sdk/utils/contextExec'
+import { execBool } from '@pitcher/vue-sdk'
 
 const obj = {a:5, b:false}
 const question = "a > 5 && !b"
@@ -202,7 +202,7 @@ const result = execBool(question, obj)
 executes a question template in a give context and returns a String
 
 ```javascript
-import { execString } from 'pitcher-vue-sdk/utils/contextExec'
+import { execString } from '@pitcher/vue-sdk'
 
 let obj = {a:()=>{return 'hello world'}, b:true}
 let question = "b : a() ? ''"
@@ -215,7 +215,7 @@ result = execString(question, obj) // hello - world
 executes a template in a context
 
 ```javascript
-import { execExecute } from 'pitcher-vue-sdk/utils/contextExec'
+import { execExecute } from '@pitcher/vue-sdk'
 
 let obj = {a:()=>{return 'hello world'}, b:true}
 let question = "alert(a())"
@@ -231,7 +231,7 @@ Fomantic Calendar
 
 ### Dropdown
 
-Fomantic Dropdwon
+Fomantic Dropdown
 
 ### ObjectForm
 
@@ -261,7 +261,7 @@ Displays a form field inside ObjectForm
 ### TransitionPage
 
 Gives you transitions between router pages.
-
+ 
 Example: 
 ```html
 <template>
@@ -273,11 +273,18 @@ Example:
             </TransitionPage>
         </div>
     </div>
-</template>
+</template> 
 
+<script>
+import { TransitionPage } from "@pitcher/vue-sdk";
 
+export default {
+    components: {
+      TransitionPage
+    }
+}
+</script>
 ```
-
 
 ## Semantic UI
 - [Modal Mixin](#modal-mixin)
@@ -294,11 +301,11 @@ Example Component:
 ```
 
 ```javascript
-import modal from "pitcher-vue-sdk/semantic/mixins/modal";
+import { ModalMixin } from "@pitcher/vue-sdk";
 
 export default {
     name: "SomeModal",
-    mixins: [modal],
+    mixins: [ModalMixin],
     methods: {
         hideModal() {
             // do something
@@ -331,11 +338,11 @@ export default {
 Example Usage:
 ```html
 <SomeModal
+    v-model="openModal"
     @approve="onApprove"
     @deny="onDeny"
     @hidden="onHidden"
     @hide="onHide"
     @show="onShow"
-    @visible="onVisible"
-    v-model="openModal"/>
+    @visible="onVisible"/>
 ```
