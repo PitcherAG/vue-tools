@@ -168,10 +168,10 @@ formatDecimal(100 , 2, 0) // 100
 format a percent value with minium and maximum fraction digitis:
      
  ```javascript
- import { formatPecent } from 'pitcher-vue-sdk'
- formatPecent(123.456 , 2, 0) // 123.46 %
- formatPecent(100 , 2, 1) // 100.0 %
- formatPecent(100 , 2, 0) // 100 %
+ import { formatPercent } from 'pitcher-vue-sdk'
+ formatPercent(123.456 , 2, 0) // 123.46 %
+ formatPercent(100 , 2, 1) // 100.0 %
+ formatPercent(100 , 2, 0) // 100 %
  ```  
 
 #### currency
