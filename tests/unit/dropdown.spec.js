@@ -7,13 +7,13 @@ describe('Dropdown.vue', () => {
             propsData: {
                 options: [
                     { name: 'hello', value: 1 },
-                    { name: 'world', value: 2 },
+                    { name: 'world', value: 2 }
                 ],
                 textField: 'name',
                 valueField: 'value',
                 defaultText: 'select',
-                value: null,
-            },
+                value: null
+            }
         })
         await wrapper.vm.$nextTick()
 
@@ -27,6 +27,5 @@ describe('Dropdown.vue', () => {
         wrapper.findAll('.item').at(0).trigger('click')
         await wrapper.vm.$nextTick()
         expect(wrapper.props().value).toBe(2)*/
-
     })
 })

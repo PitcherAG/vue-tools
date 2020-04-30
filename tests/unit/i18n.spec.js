@@ -7,19 +7,19 @@ describe('i18n', () => {
     it('date', () => {
         let resp = { locale: { value: 'de-CH' } }
         useParamsStore.mockReturnValue(resp)
-        expect(formatDate("2020.02.20")).toBe('20.02.20')
+        expect(formatDate('2020.02.20')).toBe('20.02.20')
         resp = { locale: { value: 'en-US' } }
         useParamsStore.mockReturnValue(resp)
-        expect(formatDate("2020.02.20")).toBe('02/20/20')
+        expect(formatDate('2020.02.20')).toBe('02/20/20')
     })
 
     it('currency', () => {
         let resp = { locale: { value: 'de-CH' } }
         useParamsStore.mockReturnValue(resp)
-        expect(formatCurrency(100, "CHF")).toBe('CHF 100.00')
+        expect(formatCurrency(100, 'CHF')).toBe('CHF 100.00')
         resp = { locale: { value: 'en-US' } }
         useParamsStore.mockReturnValue(resp)
-        expect(formatCurrency(55000.578, "USD")).toBe('$55,000.58')
+        expect(formatCurrency(55000.578, 'USD')).toBe('$55,000.58')
     })
 
     it('decimal', () => {
@@ -47,17 +47,17 @@ describe('i18n', () => {
         const translations = {
             messages: {
                 en: {
-                    'Save': '',
+                    Save: ''
                 },
                 es: {
-                    'Save': 'Guardar',
-                },
-            },
+                    Save: 'Guardar'
+                }
+            }
         }
         provideI18n(translations)
-        setLanguage("en")
-        expect(trans("Save")).toBe('Save')
-        setLanguage("es")
-        expect(trans("Save")).toBe('Guardar')
+        setLanguage('en')
+        expect(trans('Save')).toBe('Save')
+        setLanguage('es')
+        expect(trans('Save')).toBe('Guardar')
     })
 })
