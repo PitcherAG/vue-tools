@@ -33,7 +33,10 @@ jobs:
     - uses: actions/checkout@master
     - uses: actions/setup-node@master
     - run: npm install
+    
     - name: Jest Annotations & Coverage
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       uses: mattallty/jest-github-action@v1.0.2
       with:
         # The test command to run
