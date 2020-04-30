@@ -6,7 +6,6 @@
   "scripts": {
     "build": "rimraf ./dist && babel src -d dist",
     "test:unit": "vue-cli-service test:unit",
-    "test": "jest",
     "lint": "eslint ./src --fix",
     "npm link": "npm link",
     "npm publish": "npm publish",
