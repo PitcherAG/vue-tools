@@ -21,10 +21,7 @@ export * from './files.js'
 export * from './params.js'
 export * from './platform.js'
 
-export * from './utils/link.js'
-export * from './utils/contextExec.js'
-export * from './utils/contextExec.js'
-export * from './utils/renderContext.js'
+export * from './utils'
 
 // Vue Components
 import Calendar from './components/Calendar.vue'
