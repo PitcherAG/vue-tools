@@ -1,11 +1,17 @@
 <template>
     <div :class="classList" ref="dropdown">
-        <input type="hidden" v-model="value">
+        <input type="hidden" v-model="value" />
         <i class="dropdown icon"></i>
         <div class="text" v-show="value"></div>
         <div class="default" v-show="!value">{{ defaultText }}</div>
         <div class="menu">
-            <div class="item" v-for="(option, index) in list" :key="index" :data-value="option.value" :data-text="option.text">
+            <div
+                class="item"
+                v-for="(option, index) in list"
+                :key="index"
+                :data-value="option.value"
+                :data-text="option.text"
+            >
                 {{ option.text }}
             </div>
         </div>
