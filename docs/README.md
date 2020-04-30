@@ -14,6 +14,7 @@ Please open a pull request if you want to change something
     - [Android](debug/android.md)
     - [Windows](debug/windows.md)
 - [How to deploy](deployment.md)
+- [How to change this docs](docs.md)
 
 ## Documentation
 
