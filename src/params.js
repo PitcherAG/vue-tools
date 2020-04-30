@@ -1,9 +1,18 @@
 import { createStore } from 'pinia'
+import { fireEvent } from './event'
+import { waitForWindowProp } from './utils'
+
+/** For Pitcher Impact
+|--------------------------------------------------
+|	params
+|--------------------------------------------------
+**/
 
 window.getParameters = function(text) {
     window.params = JSON.parse(text)
 }
 
+// params store
 export const useParamsStore = createStore({
     id: 'params',
     state: () => ({
@@ -38,37 +47,35 @@ export const useParamsStore = createStore({
     }
 })
 
-export function loadParams() {
-    const store = useParamsStore()
-    return new Promise(resolve => {
-        if (process.env.VUE_APP_PARAMS) {
-            // for testing
-            let preParams = JSON.parse(process.env.VUE_APP_PARAMS)
-            store.patch(preParams)
-            resolve(store.state)
-        } else if (typeof window.params === 'undefined') {
-            let count = 0
-            let interval = setInterval(() => {
-                count++
-                if (typeof window.params !== 'undefined' || count === 10) {
-                    clearInterval(interval)
-                    store.patch(window.params)
-                    resolve(store.state)
-                }
-            }, 100)
-        } else {
-            store.patch(window.params)
-            resolve(store)
-        }
-    })
+// Params initializer
+export async function loadParams() {
+    const { state, patch } = useParamsStore()
+
+    // for testing
+    if (process.env.VUE_APP_PARAMS) {
+        let preParams = JSON.parse(process.env.VUE_APP_PARAMS)
+        patch(preParams)
+        return state
+    }
+
+    const params = await waitForWindowProp('params')
+    if (params) {
+        patch(window.serverJSON)
+    }
+    return state
 }
 
 export function useParams() {
-    const params = useParamsStore().state
-    return { params }
+    return useParamsStore().state
 }
 
-// For Pitcher Connect initialization
+/** For Pitcher Connect
+|--------------------------------------------------
+|	serverJSON
+|--------------------------------------------------
+**/
+
+// These must to be attached on window
 window.setMainNav = function(lastViewedCategory) {
     window.lastViewedCategory = lastViewedCategory
 }
@@ -80,39 +87,52 @@ window.gotJSON = function(serverJSONV, documentPathV) {
         window.serverJSON.files.reverse()
         window.appID = window.serverJSON.appID
     } catch (e) {
-        window.Ti.App.fireEvent('Error', e)
+        fireEvent('Error', e)
     }
 }
 
 window.loadPresentations = function() {}
 window.showUI = function() {}
 
-export function loadServerJSON() {
-    return new Promise(resolve => {
-        if (process.env.VUE_APP_PARAMS) {
-            // for testing
-            // let preParams = JSON.parse(process.env.VUE_APP_PARAMS)
-            // store.patch(preParams)
-            // resolve(store.state)
-            /*
-              TO DO:
-              Remove later
-            */
-            resolve(undefined)
-        } else if (typeof window.serverJSON === 'undefined') {
-            let count = 0
-            let interval = setInterval(() => {
-                count++
-                if (typeof window.serverJSON !== 'undefined' || count === 10) {
-                    clearInterval(interval)
-                    // store.patch(window.params)
-                    // resolve(store.state)
-                    return resolve(window.serverJSON)
-                }
-            }, 100)
-        } else {
-            // store.patch(window.params)
-            return resolve(undefined)
-        }
+// serverJSON store
+export const useServerJSONStore = createStore({
+    id: 'serverJSON',
+    state: () => ({
+        files: null,
+        slides: null,
+        config: null,
+        groups: null,
+        appID: null,
+        categories: null,
+        supportEmail: null,
+        deviceName: null,
+        metadata: null,
+        messages: null,
+        md5: null,
+        documentPath: null
     })
+})
+
+// serverJSON initializer
+export async function loadServerJSON() {
+    const { state, patch } = useServerJSONStore()
+
+    // for testing
+    if (process.env.VUE_APP_SERVERJSON) {
+        // for testing
+        let preServerJSON = JSON.parse(process.env.VUE_APP_SERVERJSON)
+        patch(preServerJSON)
+        return state
+    }
+
+    const serverJSON = await waitForWindowProp('serverJSON')
+    if (serverJSON) {
+        state.documentPath = window.documentPath
+        patch(window.serverJSON)
+    }
+    return state
+}
+
+export function useServerJSON() {
+    return useServerJSONStore().state
 }
