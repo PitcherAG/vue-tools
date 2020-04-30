@@ -1,4 +1,4 @@
-import { watchLocalStorage } from './localeStorageWatcher'
+import { watchLocalStorage } from './watchers'
 import { eventHub } from './eventHub'
 
 window.localStorage.setItem('reloadConsole', 'false')

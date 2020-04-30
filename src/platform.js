@@ -1,6 +1,9 @@
 function getMobileOperatingSystem() {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera
 
+    if (window.parent !== window.self) {
+        return 'CONNECT'
+    }
     if (/windows phone/i.test(userAgent)) {
         return 'WINDOWS'
     }
