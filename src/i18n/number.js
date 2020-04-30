@@ -2,7 +2,7 @@ import { useParamsStore } from '../params'
 
 const currencyDict = {
     Euro: 'EUR',
-    'U.S. Dollar': 'USD',
+    'U.S. Dollar': 'USD'
 }
 
 export function formatCurrency(value, currency) {
