@@ -31,7 +31,7 @@ export function openLink(link, context) {
             filename = url.hostname
         }
         if (isNaN(filename)) {
-            const p = launchFileWithKeyword(filename, params)
+            launchFileWithKeyword(filename, params)
         } else {
             launchFileWithID(filename)
         }
