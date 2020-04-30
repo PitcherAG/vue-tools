@@ -49,9 +49,9 @@ export default {
  
 
 ## serverJSON
-To get serverJSON from Pitcher Connect, you **MUST** to use ```loadServerJSON()``` in the start point of your application. When you use ```loadServerJSON()``` function, the SDK injects ```window.setMainNav```, ```window.gotJSON```, ```window.loadPresentations``` and ```window.showUI``` functions for Connect to be able to work.
+To get serverJSON from Pitcher Connect, you **MUST** to use ```loadServerJSON()``` in the start point of your application. When you use ```loadServerJSON()``` function, the SDK injects ```window.setMainNav```,  ```window.gotJSON```,  ```window.loadPresentations```  and  ```window.showUI``` functions for Connect to be able to work.
 
-After calling ```loadServerJSON()```, we can use ```useServerJSONStore()``` function anywhere in the application.
+After calling ```loadServerJSON()```, we can use ```useServerJSONStore()``` function anywhere in the application. As it is a store, the data inside is reactive.
  
 #### Example - usage with useServerJSONStore()
  
