@@ -18,7 +18,7 @@ Please open a pull request if you want to change something
 
 ## Documentation
 
-- [Initialization (getParameters)](params.md)
+- [Initialization (getParameters & loadServerJSON)](params.md)
 - [Events and Ti.App](events.md)
 - [Db queries](db.md)
 - [Config.json](config.md)
