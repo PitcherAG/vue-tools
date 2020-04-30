@@ -32,12 +32,13 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - uses: actions/setup-node@master
-      with:
-        node-version: '12'
     - run: npm install
-    - name: Jest Code Coverage Report
-      uses: ziishaned/jest-reporter-action@0.1.1
+    - name: Jest Annotations & Coverage
+      uses: mattallty/jest-github-action@v1.0.2
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        test-command: cross-env NODE_ICU_DATA=node_modules/full-icu vue-cli-service test:unit
-
+        # The test command to run
+        test-command: npm run test:unit 
+        # Comment PRs with code coverage
+        coverage-comment: true # optional, default is true
+        # Only run tests on changed files (over base branch)
+        changes-only: false # optional, default is false
