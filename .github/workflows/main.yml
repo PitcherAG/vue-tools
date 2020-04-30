@@ -24,13 +24,6 @@ jobs:
     - name: Install Dependencies
       run: npm install
     # Runs a single command using the runners shell
-    - name: Run Jest
-      uses: stefanoeb/jest-action@1.0.3
-    # Runs a set of commands using the runners shell
-    - name: Jest Code Coverage Report
-      uses: ziishaned/jest-reporter-action@0.1.1
-      with:
-        # Github token
-        github-token: 
-        # Specify a command to run the tests
+    - name: unittest
+      run: npm run test:unit
 
