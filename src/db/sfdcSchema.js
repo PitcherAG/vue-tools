@@ -24,7 +24,7 @@ export async function getField(objectName, field_name) {
     const schema = loadSchema(objectName)
     for (const field of schema.fields) {
         if (field.name === field_name.trim()) {
-            const f = new Field(field, props.objectName)
+            const f = new Field(field, objectName)
             return f
         }
     }
