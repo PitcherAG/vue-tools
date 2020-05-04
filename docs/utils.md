@@ -16,6 +16,15 @@ This would open the interactive with the keyword `keyword` and save myParam and 
     openLink(link, context)
 ```
 
+This would open a file with fileID: `12345`
+
+```javascript
+    import { openLink } from '@pitcher/vue-sdk'
+    var link = 'pitcher://12345/?myParam=5&otherParam={{ a.count}}'
+    var context = {a:5}
+    openLink(link, context)
+```
+
 
 ### renderContext
 
