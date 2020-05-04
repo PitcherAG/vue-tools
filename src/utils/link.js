@@ -1,5 +1,5 @@
 import { renderContext } from './renderContext'
-import { launchFileWithID, launchFileWithKeyword } from '../app'
+import { launchContentWithID, launchFileWithKeyword } from '../app'
 
 export async function openLink(link, context) {
     /*
@@ -34,6 +34,6 @@ export async function openLink(link, context) {
     if (isNaN(Number(id))) {
         await launchFileWithKeyword(id, params)
     } else {
-        await launchFileWithID(Number(id))
+        await launchContentWithID(id, params)
     }
 }
