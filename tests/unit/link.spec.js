@@ -6,7 +6,7 @@ jest.mock('../../src/event')
 jest.mock('../../src/files')
 
 describe('link', () => {
-    it('links', async () => {
+    it('keyword link', async () => {
         fireEvent.mockResolvedValue()
         getFilesWithKeyword.mockResolvedValue([{ vUrl: 'myurl', ID: '11111', body: 'title' }])
         await openLink('pitcher://myKeyword?hello=world')
@@ -24,6 +24,20 @@ describe('link', () => {
         expect(fireEvent).toHaveBeenCalledWith('launchContentWithID', {
             "currentID": undefined,
             "fileID": "11111",
+            "forceChange": false,
+            "parameters": { "hello2": "world2" },
+            "subId": 0,
+        })
+
+    })
+
+    it('id link', async () => {
+        fireEvent.mockResolvedValue()
+        getFilesWithKeyword.mockResolvedValue([{ vUrl: 'myurl', ID: '11111', body: 'title' }])
+        await openLink('pitcher://12345/?hello2=world2')
+        expect(fireEvent).toHaveBeenCalledWith('launchContentWithID', {
+            "currentID": undefined,
+            "fileID": "12345",
             "forceChange": false,
             "parameters": { "hello2": "world2" },
             "subId": 0,
