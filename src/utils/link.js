@@ -1,39 +1,39 @@
 import { renderContext } from './renderContext'
-import { trimChar } from './trim'
-import { launchFileWithID, launchFileWithKeyword } from '../app'
-import { PLATFORM } from '../platform'
+import { launchContentWithID, launchFileWithKeyword } from '../app'
 
-export function openLink(link, context) {
+export async function openLink(link, context) {
     /*
      context = {a:434}
      link format: pitcher://keyword/?param1=2&param2=434
      link format: pitcher://fileid/?param1=2&param2={{ a }}
      */
     link = renderContext(link, context)
-    const url = new URL(link)
-    try {
-    } catch (e) {
-        console.error(link)
-        throw e
+    window.console.info('open link', link)
+    link = link.split('pitcher://').join('')
+    let id
+    if (link.split('/').length === 2) {
+        id = link.split('/')[0]
+    } else if (link.split('?').length === 2) {
+        id = link.split('?')[0]
+    } else {
+        id = link
     }
-    let params = trimChar(url.search, '/', false)
-    params = trimChar(params, '?', false)
-    params = JSON.parse('{"' + decodeURI(params.replace(/&/g, '","').replace(/=/g, '":"')) + '"}')
+    let args = link.split('?')[1]
+    const params = {}
+    if (args.length) {
+        args = decodeURI(args).split('&')
+        for (const arg of args) {
+            const splits = arg.split('=')
+            params[splits[0]] = splits[1]
+        }
+    }
     for (const a in params) {
         window.localStorage[a] = params[a]
     }
 
-    if (url.protocol === 'pitcher:') {
-        let filename
-        if (PLATFORM === 'ANDROID') {
-            filename = trimChar(url.pathname, '/')
-        } else {
-            filename = url.hostname
-        }
-        if (isNaN(filename)) {
-            launchFileWithKeyword(filename, params)
-        } else {
-            launchFileWithID(filename)
-        }
+    if (isNaN(Number(id))) {
+        await launchFileWithKeyword(id, params)
+    } else {
+        await launchContentWithID(id, params)
     }
 }
