@@ -11,21 +11,23 @@ export const useI18nStore = createStore({
         messages: null
     }),
     actions: {
-        setLanguage: async function(locale) {
+        setLanguage: async function(locale, load = true) {
             console.log('set language to ' + locale)
             const state = this.state
             state.locale = locale
-            try {
-                const response = await fetch(`translations/${locale}.json`)
-                const messages = await response.json()
-                console.log(messages)
-                if (!state.messages) {
-                    state.messages = {}
+            if (load) {
+                try {
+                    const response = await fetch(`translations/${locale}.json`)
+                    const messages = await response.json()
+                    console.log(messages)
+                    if (!state.messages) {
+                        state.messages = {}
+                    }
+                    state.messages[locale] = messages[locale]
+                } catch (e) {
+                    console.error('The language ' + locale + ' does not has a translation file or translation data!')
+                    console.error(e)
                 }
-                state.messages[locale] = messages[locale]
-            } catch (e) {
-                console.error('The language ' + locale + ' does not has a translation file or translation data!')
-                console.error(e)
             }
         }
     }
@@ -60,10 +62,10 @@ export function trans(key, n = 0) {
     return result
 }
 
-export async function setLanguage(locale) {
+export async function setLanguage(locale, load = true) {
     locale = locale.split('-').join('_')
     const store = useI18nStore()
-    await store.setLanguage(locale)
+    await store.setLanguage(locale, load)
 }
 
 window.$gettext = function(msgid) {

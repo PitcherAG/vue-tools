@@ -1,5 +1,13 @@
 import { useParamsStore } from '../../src/params'
-import { formatCurrency, formatDate, formatDecimal, formatPercent, provideI18n, setLanguage, trans } from '../../src'
+import {
+    formatCurrency,
+    formatDate,
+    formatDecimal,
+    formatPercent,
+    provideI18n,
+    setLanguage,
+    trans,
+} from '../../src'
 
 jest.mock('../../src/params')
 
@@ -46,18 +54,18 @@ describe('i18n', () => {
     it('translations', () => {
         const translations = {
             messages: {
-                en: {
-                    Save: '',
-                },
-                es: {
-                    Save: 'Guardar',
-                },
+            en: {
+                    Save: ''
             },
+            es: {
+                    Save: 'Guardar'
+                }
+        }
         }
         provideI18n(translations)
-        setLanguage('en')
+        setLanguage('en', false)
         expect(trans('Save')).toBe('Save')
-        setLanguage('es')
+        setLanguage('es', false)
         expect(trans('Save')).toBe('Guardar')
     })
 })
