@@ -24,7 +24,7 @@ export default {
             default: true
         },
         defaultText: {
-            default: 'Date/Time'
+            default: $gettext('Date/Time')
         },
         action: {
             type: String,
@@ -57,9 +57,44 @@ export default {
                             const dd = date.getDate().toString()
                             return yyyy + '-' + (mm[1] ? mm : '0' + mm[0]) + '-' + (dd[1] ? dd : '0' + dd[0]) // padding
                             /*}else if(props.type==='datetime'){
-                                return date.toISOString()
-                            }*/
+                                    return date.toISOString()
+                                }*/
                         }
+                    },
+                    text: {
+                        days: [$gettext("'S', 'M', 'T', 'W', 'T', 'F', 'S'").split(',')],
+                        months: [
+                            $gettext('January'),
+                            $gettext('February'),
+                            $gettext('March'),
+                            $gettext('April'),
+                            $gettext('May'),
+                            $gettext('June'),
+                            $gettext('July'),
+                            $gettext('August'),
+                            $gettext('September'),
+                            $gettext('October'),
+                            $gettext('November'),
+                            $gettext('December')
+                        ],
+                        monthsShort: [
+                            $gettext('Jan'),
+                            $gettext('Feb'),
+                            $gettext('Mar'),
+                            $gettext('Apr'),
+                            $gettext('May'),
+                            $gettext('Jun'),
+                            $gettext('Jul'),
+                            $gettext('Aug'),
+                            $gettext('Sep'),
+                            $gettext('Oct'),
+                            $gettext('Nov'),
+                            $gettext('Dec')
+                        ],
+                        today: $gettext('Today'),
+                        now: $gettext('Now'),
+                        am: $gettext('AM'),
+                        pm: $gettext('PM')
                     }
                 },
                 props.setting
