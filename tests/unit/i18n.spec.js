@@ -12,7 +12,7 @@ import Vue from 'vue'
 
 jest.mock('../../src/params')
 
-Vue.use(TranslationPlugin)
+
 
 describe('i18n', () => {
     it('date', () => {
@@ -55,6 +55,7 @@ describe('i18n', () => {
     })
 
     it('translations', () => {
+        Vue.use(TranslationPlugin)
         const translations = {
             messages: {
                 en: {
