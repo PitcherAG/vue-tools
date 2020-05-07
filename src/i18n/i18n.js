@@ -1,14 +1,15 @@
 import { createStore } from 'pinia'
 import { getTranslationIndex } from './plurals'
+import { renderContext } from '../utils'
 
 export const useI18nStore = createStore({
     id: 'i18n',
     state: () => ({
         availableLanguages: {
-            en_US: 'American English'
+            en_US: 'American English',
         },
         locale: 'en_US',
-        messages: null
+        messages: null,
     }),
     actions: {
         setLanguage: async function(locale, load = true) {
@@ -29,8 +30,8 @@ export const useI18nStore = createStore({
                     console.error(e)
                 }
             }
-        }
-    }
+        },
+    },
 })
 
 export function provideI18n(i18nConfig) {
@@ -45,7 +46,7 @@ export function useI18N() {
     return { t: store.t, store }
 }
 
-export function trans(key, n = 0) {
+export function trans(key, n = 0, context) {
     const store = useI18nStore()
     if (!store.state.messages || !store.state.messages[store.state.locale]) {
         console.error('no translations found for:' + store.state.locale)
@@ -53,11 +54,14 @@ export function trans(key, n = 0) {
     }
     let result = store.state.messages[store.state.locale][key]
     if (Array.isArray(result)) {
-        const index = getTranslationIndex(n)
+        const index = getTranslationIndex(store.state.locale, n)
         result = result[index]
     }
     if (!result) {
-        return key
+        result = key
+    }
+    if (context || result.indexOf('{{') > -1) {
+        result = renderContext(result, context)
     }
     return result
 }
@@ -68,23 +72,19 @@ export async function setLanguage(locale, load = true) {
     await store.setLanguage(locale, load)
 }
 
-window.$gettext = function(msgid) {
-    return trans(msgid)
+window.$gettext = function(msgid, context) {
+    return trans(msgid, 1, context)
 }
 
-export function $gettext(msgid) {
-    return trans(msgid)
-}
-
-window.$ngettext = function(msgid, n) {
-    return trans(msgid, n)
+window.$ngettext = function(msgid, n, context) {
+    return trans(msgid, n, context)
 }
 
 export function TranslationPlugin(Vue, options = {}) {
     const defaultConfig = {
         availableLanguages: { en_US: 'English' },
         locale: 'en_US',
-        messages: null
+        messages: null,
     }
 
     Object.keys(options).forEach(key => {
