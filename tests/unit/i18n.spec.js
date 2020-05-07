@@ -6,10 +6,13 @@ import {
     formatPercent,
     provideI18n,
     setLanguage,
-    trans,
+    trans, TranslationPlugin,
 } from '../../src'
+import Vue from 'vue'
 
 jest.mock('../../src/params')
+
+Vue.use(TranslationPlugin)
 
 describe('i18n', () => {
     it('date', () => {
@@ -54,18 +57,19 @@ describe('i18n', () => {
     it('translations', () => {
         const translations = {
             messages: {
-            en: {
-                    Save: ''
+                en: {
+                    Save: '',
+                },
+                es: {
+                    Save: 'Guardar',
+                },
             },
-            es: {
-                    Save: 'Guardar'
-                }
-        }
         }
         provideI18n(translations)
         setLanguage('en', false)
         expect(trans('Save')).toBe('Save')
         setLanguage('es', false)
         expect(trans('Save')).toBe('Guardar')
+        expect($gettext('Save')).toBe('Guardar')
     })
 })
