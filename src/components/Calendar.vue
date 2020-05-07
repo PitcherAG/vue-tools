@@ -2,7 +2,7 @@
     <div class="ui calendar" ref="calendar">
         <div class="ui input left icon">
             <i class="calendar icon"></i>
-            <input ref="input" type="text" :placeholder="defaultText" v-model="value" />
+            <input ref="input" type="text" :placeholder="placeholder" v-model="value" />
         </div>
     </div>
 </template>
@@ -24,7 +24,7 @@ export default {
             default: true
         },
         defaultText: {
-            default: $gettext('Date/Time')
+            default:'Date/Time'
         },
         action: {
             type: String,
@@ -99,6 +99,12 @@ export default {
                 },
                 props.setting
             )
+            const placeholder = ref()
+            if(props.defaultText == 'Date/Time'){
+                placeholder.value = $gettext('Date/Time')
+            }else{
+                placeholder.value = props.defaultText
+            }
 
             $(attrs.refs.calendar).calendar(settings)
         }
@@ -111,7 +117,7 @@ export default {
         onUpdated(() => {
             initCalendar()
         })
-        return { initCalendar }
+        return { initCalendar, placeholder }
     }
 }
 </script>
