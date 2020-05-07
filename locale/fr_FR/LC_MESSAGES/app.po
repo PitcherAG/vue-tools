@@ -1,0 +1,165 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/components/Calendar.vue:65
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr ""
+
+#: src/components/Calendar.vue:96
+msgid "AM"
+msgstr ""
+
+#: src/components/Calendar.vue:84
+msgid "Apr"
+msgstr ""
+
+#: src/components/Calendar.vue:70
+msgid "April"
+msgstr ""
+
+#: src/components/Calendar.vue:88
+msgid "Aug"
+msgstr ""
+
+#: src/components/Calendar.vue:74
+msgid "August"
+msgstr ""
+
+#: src/components/ObjectFormField.vue:88
+msgid "Date"
+msgstr ""
+
+#: src/components/Calendar.vue:27 src/components/ObjectFormField.vue:89
+msgid "Date/Time"
+msgstr ""
+
+#: src/components/Calendar.vue:92
+msgid "Dec"
+msgstr ""
+
+#: src/components/Calendar.vue:78
+msgid "December"
+msgstr ""
+
+#: src/components/Calendar.vue:82
+msgid "Feb"
+msgstr ""
+
+#: src/components/Calendar.vue:68
+msgid "February"
+msgstr ""
+
+#: src/components/Calendar.vue:81
+msgid "Jan"
+msgstr ""
+
+#: src/components/Calendar.vue:67
+msgid "January"
+msgstr ""
+
+#: src/components/Calendar.vue:87
+msgid "Jul"
+msgstr ""
+
+#: src/components/Calendar.vue:73
+msgid "July"
+msgstr ""
+
+#: src/components/Calendar.vue:86
+msgid "Jun"
+msgstr ""
+
+#: src/components/Calendar.vue:72
+msgid "June"
+msgstr ""
+
+#: src/components/Calendar.vue:83
+msgid "Mar"
+msgstr ""
+
+#: src/components/Calendar.vue:69
+msgid "March"
+msgstr ""
+
+#: src/components/Calendar.vue:71 src/components/Calendar.vue:85
+msgid "May"
+msgstr ""
+
+#: src/i18n/i18n.js:72
+msgid "msgid"
+msgstr ""
+
+#: src/components/Calendar.vue:91
+msgid "Nov"
+msgstr ""
+
+#: src/components/Calendar.vue:77
+msgid "November"
+msgstr ""
+
+#: src/components/Calendar.vue:95
+msgid "Now"
+msgstr ""
+
+#: src/components/Calendar.vue:90
+msgid "Oct"
+msgstr ""
+
+#: src/components/Calendar.vue:76
+msgid "October"
+msgstr ""
+
+#: src/components/Calendar.vue:97
+msgid "PM"
+msgstr ""
+
+#: src/components/ObjectForm.vue:93 src/components/ObjectForm.vue:161
+msgid "Save"
+msgstr ""
+
+#: src/components/ObjectFormField.vue:51 src/components/ObjectFormField.vue:68
+msgid "Select"
+msgstr ""
+
+#: src/components/ObjectForm.vue:52
+msgid "Select Record Type"
+msgstr ""
+
+#: src/components/Calendar.vue:89
+msgid "Sep"
+msgstr ""
+
+#: src/components/Calendar.vue:75
+msgid "September"
+msgstr ""
+
+#: src/components/ObjectForm.vue:326
+msgid "This Object does not have an external ID field in the config.json."
+msgstr ""
+
+#: src/components/ObjectForm.vue:332
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+
+#: src/components/ObjectForm.vue:330
+msgid "This Object is not editable. You need to sync first."
+msgstr ""
+
+#: src/components/Calendar.vue:94
+msgid "Today"
+msgstr ""
+
+#: src/components/ObjectForm.vue:325
+msgid "You can not add an object of this type."
+msgstr ""

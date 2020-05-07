@@ -10,7 +10,7 @@
     "npm link": "npm link",
     "npm publish": "npm publish",
     "yarn link": "yarn link",
-    "test:badges": "npm run test:unit  && jest-coverage-badges"
+    "makemessages": "make clean makemessages"
   },
   "main": "src",
   "dependencies": {
@@ -28,6 +28,7 @@
     "@vue/cli-service": "~4.3.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/test-utils": "1.0.0-beta.31",
+    "easygettext": "^2.13.0",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.2",
     "eslint": "^6.7.2",
@@ -58,6 +59,7 @@
     "url": "git+https://github.com/PitcherAG/pitcher-vue-sdk.git"
   },
   "files": [
-    "/src"
+    "/src",
+    "/locale/**/*.po"
   ]
 }

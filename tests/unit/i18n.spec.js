@@ -47,12 +47,12 @@ describe('i18n', () => {
         const translations = {
             messages: {
                 en: {
-                    Save: ''
+                    Save: '',
                 },
                 es: {
-                    Save: 'Guardar'
-                }
-            }
+                    Save: 'Guardar',
+                },
+            },
         }
         provideI18n(translations)
         setLanguage('en')
