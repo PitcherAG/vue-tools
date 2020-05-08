@@ -17,7 +17,7 @@
         ></textarea>
         <Dropdown
             v-if="type === 'picklist' || type === 'multipicklist'"
-            defaultText="Select"
+            :defaultText="$gettext('Select')"
             :multiple="type === 'multipicklist'"
             v-on:input="$emit('input', $event)"
             :value="value"
@@ -26,7 +26,7 @@
         ></Dropdown>
         <Dropdown
             v-if="type === 'reference'"
-            defaultText="Select"
+            :defaultText="$gettext('Select')"
             :multiple="type === 'multipicklist'"
             v-on:input="$emit('input', $event)"
             :value="value"
@@ -38,7 +38,7 @@
             v-if="type === 'date' || type === 'datetime'"
             :type="type"
             v-on:input="$emit('input', $event)"
-            :default-text="type == 'date' ? 'Date' : 'Date/Time'"
+            :default-text="type == 'date' ? $gettext('Date') : $gettext('Date/Time')"
             :value="value"
         ></Calendar>
 

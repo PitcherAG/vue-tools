@@ -1,5 +1,14 @@
 import { useParamsStore } from '../../src/params'
-import { formatCurrency, formatDate, formatDecimal, formatPercent, provideI18n, setLanguage, trans } from '../../src'
+import {
+    formatCurrency,
+    formatDate,
+    formatDecimal,
+    formatPercent,
+    provideI18n,
+    setLanguage,
+    trans, TranslationPlugin,
+} from '../../src'
+import Vue from 'vue'
 
 jest.mock('../../src/params')
 
@@ -44,20 +53,58 @@ describe('i18n', () => {
     })
 
     it('translations', () => {
+        Vue.use(TranslationPlugin)
         const translations = {
             messages: {
                 en: {
-                    Save: ''
+                    Save: '',
                 },
                 es: {
-                    Save: 'Guardar'
-                }
-            }
+                    Save: 'Guardar',
+                },
+            },
         }
         provideI18n(translations)
-        setLanguage('en')
+        setLanguage('en', false)
         expect(trans('Save')).toBe('Save')
-        setLanguage('es')
+        setLanguage('es', false)
         expect(trans('Save')).toBe('Guardar')
+        expect($gettext('Save')).toBe('Guardar')
+    })
+
+    it('plurals', () => {
+        Vue.use(TranslationPlugin)
+        const translations = {
+            messages: {
+                en_US: {
+                    Ticket: ['Ticket', 'Tickets'],
+                },
+            },
+        }
+        provideI18n(translations)
+        setLanguage('en_US', false)
+        expect($ngettext('Ticket', 1)).toBe('Ticket')
+        expect($ngettext('Ticket', 2)).toBe('Tickets')
+    })
+
+    it('vars in trans', () => {
+        Vue.use(TranslationPlugin)
+        const translations = {
+            messages: {
+                en_US: {
+                    "I have { a } and { b }.": "",
+                    Ticket: ['Ticket', 'Tickets'],
+                    "I have {num} Ticket.": ["I have { num } Ticket.", "I have { num } Tickets."],
+                },
+            },
+        }
+        provideI18n(translations)
+        setLanguage('en_US', false)
+        expect($ngettext('I have {num} Ticket.', 2, { num: 2 })).toBe('I have 2 Tickets.')
+        expect($gettext('I have { a } and { b }.', {
+            a: 'apples',
+            b: 'oranges',
+        })).toBe('I have apples and oranges.')
+
     })
 })
