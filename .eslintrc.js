@@ -11,6 +11,7 @@ module.exports = {
         PLATFORM: true,
         $gettext: true,
         $ngettext: true,
+        $t: true,
     },
 
     extends: ['plugin:vue/essential', 'eslint:recommended', '@vue/prettier'],

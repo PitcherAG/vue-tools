@@ -1,15 +1,15 @@
 import { createStore } from 'pinia'
 import { getTranslationIndex } from './plurals'
-import { renderContext } from '../utils'
+import { renderSimpleContext } from '../utils'
 
 export const useI18nStore = createStore({
     id: 'i18n',
     state: () => ({
         availableLanguages: {
-            en_US: 'American English',
+            en_US: 'American English'
         },
         locale: 'en_US',
-        messages: null,
+        messages: null
     }),
     actions: {
         setLanguage: async function(locale, load = true) {
@@ -30,8 +30,8 @@ export const useI18nStore = createStore({
                     console.error(e)
                 }
             }
-        },
-    },
+        }
+    }
 })
 
 export function provideI18n(i18nConfig) {
@@ -60,8 +60,8 @@ export function trans(key, n = 0, context) {
     if (!result) {
         result = key
     }
-    if (context || result.indexOf('{{') > -1) {
-        result = renderContext(result, context)
+    if (context || result.indexOf('{') > -1) {
+        result = renderSimpleContext(result, context)
     }
     return result
 }
@@ -76,6 +76,10 @@ window.$gettext = function(msgid, context) {
     return trans(msgid, 1, context)
 }
 
+window.$t = function(msgid, context) {
+    return trans(msgid, 1, context)
+}
+
 window.$ngettext = function(msgid, n, context) {
     return trans(msgid, n, context)
 }
@@ -84,7 +88,7 @@ export function TranslationPlugin(Vue, options = {}) {
     const defaultConfig = {
         availableLanguages: { en_US: 'English' },
         locale: 'en_US',
-        messages: null,
+        messages: null
     }
 
     Object.keys(options).forEach(key => {
@@ -96,11 +100,12 @@ export function TranslationPlugin(Vue, options = {}) {
     const store = useI18nStore()
     store.patch(options)
 
-    Vue.filter('translate', function(value) {
+    /*Vue.filter('translate', function(value) {
         return trans(value)
-    })
+    })*/
 
     // Exposes instance methods.
     Vue.prototype.$gettext = $gettext
     Vue.prototype.$ngettext = $ngettext
+    Vue.prototype.$t = $gettext
 }
