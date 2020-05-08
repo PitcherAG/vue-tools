@@ -2,7 +2,7 @@
     <div class="ui calendar" ref="calendar">
         <div class="ui input left icon">
             <i class="calendar icon"></i>
-            <input ref="input" type="text" :placeholder="defaultText" v-model="value" />
+            <input ref="input" type="text" :placeholder="placeholder" v-model="value" />
         </div>
     </div>
 </template>
@@ -24,7 +24,7 @@ export default {
             default: true
         },
         defaultText: {
-            default: 'Date/Time'
+            default:'Date/Time'
         },
         action: {
             type: String,
@@ -57,13 +57,54 @@ export default {
                             const dd = date.getDate().toString()
                             return yyyy + '-' + (mm[1] ? mm : '0' + mm[0]) + '-' + (dd[1] ? dd : '0' + dd[0]) // padding
                             /*}else if(props.type==='datetime'){
-                                return date.toISOString()
-                            }*/
+                                    return date.toISOString()
+                                }*/
                         }
+                    },
+                    text: {
+                        days: [$gettext("'S', 'M', 'T', 'W', 'T', 'F', 'S'").split(',')],
+                        months: [
+                            $gettext('January'),
+                            $gettext('February'),
+                            $gettext('March'),
+                            $gettext('April'),
+                            $gettext('May'),
+                            $gettext('June'),
+                            $gettext('July'),
+                            $gettext('August'),
+                            $gettext('September'),
+                            $gettext('October'),
+                            $gettext('November'),
+                            $gettext('December')
+                        ],
+                        monthsShort: [
+                            $gettext('Jan'),
+                            $gettext('Feb'),
+                            $gettext('Mar'),
+                            $gettext('Apr'),
+                            $gettext('May'),
+                            $gettext('Jun'),
+                            $gettext('Jul'),
+                            $gettext('Aug'),
+                            $gettext('Sep'),
+                            $gettext('Oct'),
+                            $gettext('Nov'),
+                            $gettext('Dec')
+                        ],
+                        today: $gettext('Today'),
+                        now: $gettext('Now'),
+                        am: $gettext('AM'),
+                        pm: $gettext('PM')
                     }
                 },
                 props.setting
             )
+            const placeholder = ref()
+            if(props.defaultText == 'Date/Time'){
+                placeholder.value = $gettext('Date/Time')
+            }else{
+                placeholder.value = props.defaultText
+            }
 
             $(attrs.refs.calendar).calendar(settings)
         }
@@ -76,7 +117,7 @@ export default {
         onUpdated(() => {
             initCalendar()
         })
-        return { initCalendar }
+        return { initCalendar, placeholder }
     }
 }
 </script>
