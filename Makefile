@@ -43,7 +43,8 @@ $(TEMPLATE_POT): $(GETTEXT_SOURCES)
 	mkdir -p $(dir $@);
 	mkdir -p public/translations;
 # Extract gettext strings from templates files and create a POT dictionary template.
-	node_modules/easygettext/src/extract-cli.js --quite --output $@ $(GETTEXT_SOURCES);
+	# node_modules/easygettext/src/extract-cli.js --quite --output $@ $(GETTEXT_SOURCES);
+	node_modules/gettext-vue/bin/xgettext-vue --join-existing --output=$@ $(GETTEXT_SOURCES)
 	# xgettext -d default --language=JavaScript --language=Python --from-code=UTF-8 --keyword=gettext --keyword="(\"gettext\")" --keyword=gettext_noop --keyword="_" --keyword=gettext_lazy --output=$@ $(GETTEXT_SOURCES)
     # Generate .po files for each available language.
 

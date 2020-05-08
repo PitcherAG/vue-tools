@@ -5,4 +5,11 @@ function renderContext(str, context) {
     return template(context)
 }
 
-export { renderContext }
+function renderSimpleContext(str, context) {
+    /* renders string in the form {var1} and {var2} */
+    return str.replace(new RegExp('{([^{]+)}', 'g'), function(_unused, varName) {
+        return context[varName]
+    })
+}
+
+export { renderContext, renderSimpleContext }
