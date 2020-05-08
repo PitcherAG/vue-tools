@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.0
+
+- complete new translation system with gettext support 
+
 ## 1.1.5
  - reduces npm file size
 
