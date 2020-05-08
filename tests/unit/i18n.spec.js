@@ -92,18 +92,19 @@ describe('i18n', () => {
         const translations = {
             messages: {
                 en_US: {
-                    "I have {{ a }} and {{ b }}.": "",
+                    "I have { a } and { b }.": "",
                     Ticket: ['Ticket', 'Tickets'],
-                    "I have {{ num }} Ticket.": ["I have {{ num }} Ticket.", "I have {{ num }} Tickets."],
+                    "I have {num} Ticket.": ["I have { num } Ticket.", "I have { num } Tickets."],
                 },
             },
         }
         provideI18n(translations)
         setLanguage('en_US', false)
-        expect($gettext('I have {{ a }} and {{ b }}.', {
+        expect($ngettext('I have {num} Ticket.', 2, { num: 2 })).toBe('I have 2 Tickets.')
+        expect($gettext('I have { a } and { b }.', {
             a: 'apples',
             b: 'oranges',
         })).toBe('I have apples and oranges.')
-        expect($ngettext('I have {{ num }} Ticket.', 2, { num: 2 })).toBe('I have 2 Tickets.')
+
     })
 })
