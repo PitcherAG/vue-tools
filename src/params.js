@@ -98,18 +98,22 @@ window.showUI = function() {}
 export const useServerJSONStore = createStore({
     id: 'serverJSON',
     state: () => ({
-        files: null,
-        slides: null,
+        files: [],
+        categories: [],
         config: null,
-        groups: null,
-        appID: null,
-        categories: null,
-        supportEmail: null,
+        groups: [],
+        appID: '',
         deviceName: null,
+        messages: [],
         metadata: null,
-        messages: null,
+        slides: [],
+        supportEmail: null,
         md5: null,
-        documentPath: null
+        systemLang: null,
+        locale: null,
+        userfullname: null,
+        ajaxtoken: null,
+        isCustomerUI: false
     })
 })
 
