@@ -60,7 +60,7 @@ export async function loadParams() {
 
     const params = await waitForWindowProp('params')
     if (params) {
-        patch(window.serverJSON)
+        patch(window.params)
     }
     return state
 }
