@@ -20,6 +20,7 @@ describe('i18n', () => {
         resp = { locale: { value: 'en-US' } }
         useParamsStore.mockReturnValue(resp)
         expect(formatDate('2020.02.20')).toBe('02/20/20')
+        expect(formatDate()).toBe('Invalid Date')
     })
 
     it('currency', () => {
