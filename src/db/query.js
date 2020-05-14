@@ -56,6 +56,7 @@ function query(query, db = null) {
                             column === 'account' ||
                             column === 'eventJSON' ||
                             column === 'contact' ||
+                            column === 'Json' ||
                             column === 'user'
                         ) {
                             let o = JSON.parse(res[j])
