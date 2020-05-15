@@ -16,7 +16,9 @@ export function watchLocalStorage(name) {
     })
 }
 
-export function waitForWindowProp(prop, timeout = 10) {
+export function waitForWindowProp(prop, _timeout = 5) {
+    // _timeout * 10 = seconds -> sec as interval value is 100, which is 1/10 of 1000
+    const timeout = _timeout * 10
     // check if prop is sent
     if (!prop || prop === '') {
         throw new Error('No property is sent to watch on window')

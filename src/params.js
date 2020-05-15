@@ -118,7 +118,7 @@ export const useServerJSONStore = createStore({
 })
 
 // serverJSON initializer
-export async function loadServerJSON() {
+export async function loadServerJSON(timeout = 5) {
     const { state, patch } = useServerJSONStore()
 
     // for testing
@@ -129,7 +129,7 @@ export async function loadServerJSON() {
         return state
     }
 
-    const serverJSON = await waitForWindowProp('serverJSON')
+    const serverJSON = await waitForWindowProp('serverJSON', timeout)
     if (serverJSON) {
         state.documentPath = window.documentPath
         patch(window.serverJSON)
