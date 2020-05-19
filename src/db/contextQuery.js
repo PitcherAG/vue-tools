@@ -1,7 +1,7 @@
-import Handlebars from 'handlebars'
 import { query as oQuery } from './query'
 import { useConfigStore } from '../config'
 import { useParamsStore } from '../params'
+import { renderContext } from '../utils'
 
 export async function contextQuery(query, context, db = null) {
     if (!query) {
@@ -10,7 +10,6 @@ export async function contextQuery(query, context, db = null) {
     const configStore = useConfigStore()
     const params = useParamsStore().state
     query = query.split('TODAY').join("date('now')")
-    const template = Handlebars.compile(query)
     let tableDict = configStore.getTableDict.value
     for (let a in context) {
         if (context.hasOwnProperty(a)) {
@@ -30,7 +29,7 @@ export async function contextQuery(query, context, db = null) {
     if (params.locale) {
         tableDict.locale = params.locale
     }
-    let q = template(tableDict)
+    let q = renderContext(query, tableDict)
     window.console.log(q)
     try {
         const result = await oQuery(q, db)

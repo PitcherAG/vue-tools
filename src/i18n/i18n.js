@@ -76,6 +76,10 @@ window.$gettext = function(msgid, context) {
     return trans(msgid, 1, context)
 }
 
+window.translateUI = function(json) {
+    console.warn('not implemented', JSON.parse(json))
+}
+
 window.$t = function(msgid, context) {
     return trans(msgid, 1, context)
 }
