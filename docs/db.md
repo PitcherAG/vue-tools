@@ -32,6 +32,7 @@ As a result contextQuery has knowledge about the current environment and provide
   example: `{{ account.Id }}`
 - It provides you with today: `TODAY`
 - You can provide extra context via parameters
+- you can execute javascript and function from the context
 
 
 ```javascript
@@ -40,6 +41,9 @@ As a result contextQuery has knowledge about the current environment and provide
   contextQuery("SELECT * from {{ Account }} \
                 WHERE Id='{{ account.id }} AND \    
                 ModifiedDate < TODAY AND Name='{{ Name }}'", { Name:'ABCDEF1234' })
+
+  contextQuery("SELECT * from {{ Account }} \
+                  WHERE Id IN ({{ ids.join(',') }})", {ids:[1,2,3] })
 
 
 ```

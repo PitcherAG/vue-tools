@@ -28,13 +28,13 @@ This would open a file with fileID: `12345`
 
 ### renderContext
 
-renders a handlebars template in a given context
+renders a template in a given context
 
 ```javascript
 import { renderContext } from '@pitcher/vue-sdk'
 
-const obj = {first: "Hello", last:"World"}
-const template = "Say: {{ first }} and then {{ last }}"
+const obj = {first: "Hello", last:"World", hasLast:true}
+const template = "Say: {{ first }}{% if hasLast %} and then {{ last.toUpperCase() }}{% endif %}"
 const result = renderContext(template, obj)
 console.log(result) // Say: Hello and then World
     
