@@ -16,10 +16,10 @@
   "dependencies": {
     "@vue/composition-api": "^0.5.0",
     "core-js": "^3.6.4",
-    "pinia": "0.0.5",
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "pinia": "0.0.5",
     "@babel/cli": "^7.8.4",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
