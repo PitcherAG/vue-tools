@@ -39,24 +39,3 @@ export async function contextQuery(query, context, db = null) {
         throw e
     }
 }
-/*
-const template = `
-<ul>
-  <li v-for="item in items">
-   {{ item }}
-  </li>
-</ul>`
-
-const compiledTemplate = Vue.compile(template)
-
-new Vue({
-    el: '#app',
-    data() {
-        return {
-            items: ['Item1', 'Item2']
-        }
-    },
-    render(createElement) {
-        return compiledTemplate.render.call(this, createElement)
-    }
-})*/
