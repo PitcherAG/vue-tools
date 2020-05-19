@@ -18,7 +18,7 @@ query('select * from tbl_event_v1').then(e => window.console.log(e))
 
 ### ContextQuery
 
-Context query uses handlebars template syntax and enriches the query function dramatically. 
+Context query uses template syntax and enriches the query function dramatically. 
 As prerequisite it needs `loadConfig()` and `loadParams()` run before calling it the first time.
 
 As a result contextQuery has knowledge about the current environment and provides you with:
@@ -32,6 +32,7 @@ As a result contextQuery has knowledge about the current environment and provide
   example: `{{ account.Id }}`
 - It provides you with today: `TODAY`
 - You can provide extra context via parameters
+- you can execute javascript and function from the context
 
 
 ```javascript
@@ -41,6 +42,12 @@ As a result contextQuery has knowledge about the current environment and provide
                 WHERE Id='{{ account.id }} AND \    
                 ModifiedDate < TODAY AND Name='{{ Name }}'", { Name:'ABCDEF1234' })
 
+  contextQuery("SELECT * from {{ Account }} \
+                WHERE Id IN ({{ ids.join(',') }})", {ids:[1,2,3] })
+
+  contextQuery("SELECT AccountId__c='{{ account.id }}{% if account.isVIP %} AND \  
+                IsVIP=TRUE{% endif %}", {ids:[1,2,3] })
+  
 
 ```
 
