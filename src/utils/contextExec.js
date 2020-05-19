@@ -33,3 +33,15 @@ export function execContext(func, context, printOnError) {
         window.console.error(context)
     }
 }
+
+export function execReturn(func, context, printOnError) {
+    try {
+        const ref = new Function('with(this){\nreturn ' + func + '\n}')
+        return ref.apply(context)
+    } catch (e) {
+        if (printOnError) return func
+        window.console.error('with(this){\n' + func + '\n}')
+        window.console.error(e)
+        window.console.error(context)
+    }
+}
