@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.3
+
+- bugfixes
+
 ## 1.2.2
 
 - our own simple template engine
