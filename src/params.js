@@ -3,10 +3,10 @@ import { fireEvent } from './event'
 import { waitForWindowProp } from './utils'
 
 /** For Pitcher Impact
-|--------------------------------------------------
-|	params
-|--------------------------------------------------
-**/
+ |--------------------------------------------------
+ |    params
+ |--------------------------------------------------
+ **/
 
 window.getParameters = function(text) {
     window.params = JSON.parse(text)
@@ -18,25 +18,30 @@ export const useParamsStore = createStore({
     state: () => ({
         account: null,
         contacts: null,
-        salesForceUser: null
+        salesForceUser: null,
+        user: null
         // locale: computed(() => state.salesForceUser ? state.salesForceUser.LanguageLocaleKey : null)
     }),
+    actions: {},
     getters: {
-        locale: state => {
-            return state.salesForceUser
-                ? state.salesForceUser.LanguageLocaleKey.split('_').join('-')
-                : state.user
-                ? state.user.LanguageLocaleKey.split('_').join('-')
-                : null
+        locale(state) {
+            if (state.salesForceUser) {
+                return state.salesForceUser.LanguageLocaleKey.split('_').join('-')
+            }
+            if (state.user) {
+                return state.user.LanguageLocaleKey.split('_').join('-')
+            }
         },
-        language: state => {
-            return state.salesForceUser
-                ? state.salesForceUser.LanguageLocaleKey.split('_')[0].toLowerCase()
-                : state.user
-                ? state.user.LanguageLocaleKey.split('_')[0].toLowerCase()
-                : null
+
+        language(state) {
+            if (state.salesForceUser) {
+                return state.salesForceUser.LanguageLocaleKey.split('_')[0].toLowerCase()
+            }
+            if (state.user) {
+                return state.user.LanguageLocaleKey.split('_')[0].toLowerCase()
+            }
         },
-        context: state => {
+        context(state) {
             return {
                 Account: state.account,
                 Contact: state.contact,
@@ -70,10 +75,10 @@ export function useParams() {
 }
 
 /** For Pitcher Connect
-|--------------------------------------------------
-|	serverJSON
-|--------------------------------------------------
-**/
+ |--------------------------------------------------
+ |    serverJSON
+ |--------------------------------------------------
+ **/
 
 // These must to be attached on window
 window.setMainNav = function(lastViewedCategory) {

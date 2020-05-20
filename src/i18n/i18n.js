@@ -13,7 +13,11 @@ export const useI18nStore = createStore({
     }),
     actions: {
         setLanguage: async function(locale, load = true) {
+            if (!locale) {
+                throw new Error('not a valid locale:' + locale)
+            }
             console.log('set language to ' + locale)
+            locale = locale.split('-').join('_')
             const state = this.state
             state.locale = locale
             if (load) {
@@ -34,18 +38,6 @@ export const useI18nStore = createStore({
     }
 })
 
-export function provideI18n(i18nConfig) {
-    console.warn('provideI18n is deprecated')
-    const store = useI18nStore()
-    store.patch(i18nConfig)
-}
-
-export function useI18N() {
-    console.warn('useI18N is deprecated')
-    const store = useI18nStore()
-    return { t: store.t, store }
-}
-
 export function trans(key, n = 0, context) {
     const store = useI18nStore()
     if (!store.state.messages || !store.state.messages[store.state.locale]) {
@@ -64,12 +56,6 @@ export function trans(key, n = 0, context) {
         result = renderSimpleContext(result, context)
     }
     return result
-}
-
-export async function setLanguage(locale, load = true) {
-    locale = locale.split('-').join('_')
-    const store = useI18nStore()
-    await store.setLanguage(locale, load)
 }
 
 window.$gettext = function(msgid, context) {
