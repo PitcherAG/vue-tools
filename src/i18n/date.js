@@ -1,4 +1,5 @@
 import { useI18nStore } from './i18n'
+import moment from 'moment'
 
 export function formatDate(date, showYear = true) {
     const store = useI18nStore()
@@ -12,9 +13,8 @@ export function formatDate(date, showYear = true) {
     if (!locale) {
         throw new Error('locale not defined')
     }
-    locale = locale.split('_').join('-')
-    if (date && date.match(/\d{13}/)) {
-        return new Date(Number(date)).toLocaleDateString(locale, options)
-    }
-    return new Date(date).toLocaleDateString(locale, options)
+    const l = locale.split('_').join('-')
+    const m = moment(date)
+    const d = m.toDate()
+    return d.toLocaleDateString(l, options)
 }
