@@ -1,4 +1,5 @@
 import { useParamsStore } from '../params'
+import { useI18nStore } from './i18n'
 
 const currencyDict = {
     Euro: 'EUR',
@@ -6,22 +7,38 @@ const currencyDict = {
 }
 
 export function formatCurrency(value, currency) {
-    const params = useParamsStore()
+    const store = useI18nStore()
     if (!currency) {
+        const params = useParamsStore()
         currency = params.state.account.CurrencyIsoCode
     }
     if (currency.length > 3) {
         currency = currencyDict[currency]
     }
-    return new Intl.NumberFormat(params.locale.value, { style: 'currency', currency }).format(value)
+    let locale = store.state.locale
+    if (!locale) {
+        throw new Error('locale not defined')
+    }
+    locale = locale.split('_').join('-')
+    return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(value)
 }
 
 export function formatDecimal(value, maximumFractionDigits = 1, minimumFractionDigits = 0) {
-    const params = useParamsStore()
-    return new Intl.NumberFormat(params.locale.value, { maximumFractionDigits, minimumFractionDigits }).format(value)
+    const store = useI18nStore()
+    let locale = store.state.locale
+    if (!locale) {
+        throw new Error('locale not defined')
+    }
+    locale = locale.split('_').join('-')
+    return new Intl.NumberFormat(locale, { maximumFractionDigits, minimumFractionDigits }).format(value)
 }
 
 export function formatPercent(value, maximumFractionDigits = 1, minimumFractionDigits = 0) {
-    const params = useParamsStore()
-    return new Intl.NumberFormat(params.locale.value, { maximumFractionDigits, minimumFractionDigits }).format(value)
+    const store = useI18nStore()
+    let locale = store.state.locale
+    if (!locale) {
+        throw new Error('locale not defined')
+    }
+    locale = locale.split('_').join('-')
+    return new Intl.NumberFormat(locale, { maximumFractionDigits, minimumFractionDigits }).format(value)
 }
