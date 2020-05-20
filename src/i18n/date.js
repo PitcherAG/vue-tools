@@ -2,6 +2,9 @@ import { useI18nStore } from './i18n'
 import moment from 'moment'
 
 export function formatDate(date, showYear = true) {
+    if (!date) {
+        return ''
+    }
     const store = useI18nStore()
     let options
     if (showYear) {
