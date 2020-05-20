@@ -8,6 +8,9 @@ export function formatDate(date, showYear = true) {
     } else {
         options = { month: 'short', day: '2-digit' }
     }
+    if(!params.locale.value){
+        throw new Error('locale not defined')
+    }
     if (date && date.match(/\d{13}/)) {
         return new Date(Number(date)).toLocaleDateString(params.locale.value, options)
     }
