@@ -19,8 +19,12 @@ describe('i18n', () => {
         expect(formatDate('2020.02.20')).toBe('20.02.20')
         resp = { locale: { value: 'en-US' } }
         useParamsStore.mockReturnValue(resp)
+        expect(formatDate("2020-05-11T19:12:11.000+0000")).toBe("05/11/20")
         expect(formatDate('2020.02.20')).toBe('02/20/20')
         expect(formatDate()).toBe('Invalid Date')
+        resp = { locale: { value: null } }
+        useParamsStore.mockReturnValue(resp)
+        expect(() => {formatDate()}).toThrow()
     })
 
     it('currency', () => {
