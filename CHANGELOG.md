@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.2
+
+- our own simple template engine
+
+## 1.2.1
+
+- bugfixes
+
 ## 1.2.0
 
 - complete new translation system with gettext support 
