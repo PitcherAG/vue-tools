@@ -1,6 +1,9 @@
 import { useParamsStore } from '../params'
 
 export function formatDate(date, showYear = true) {
+    if(!date){
+        return ''
+    }
     const params = useParamsStore()
     let options
     if (showYear) {
