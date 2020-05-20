@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.0
+
+- i18n refactor
+    you now need to intialize like this:
+    ``` javascript
+     await loadParams()
+     const params = useParamsStore()
+     const i18n = useI18nStore()
+     await i18n.setLanguage(params.locale.value, true) // true loads translation files
+  ```
+- iso date format with timezone support for safari
+    
 ## 1.2.3
 
 - bugfixes
