@@ -1,15 +1,23 @@
-import { useParamsStore } from '../params'
+import { useI18nStore } from './i18n'
+import moment from 'moment'
 
 export function formatDate(date, showYear = true) {
-    const params = useParamsStore()
+    if (!date) {
+        return ''
+    }
+    const store = useI18nStore()
     let options
     if (showYear) {
         options = { year: '2-digit', month: '2-digit', day: '2-digit' }
     } else {
         options = { month: 'short', day: '2-digit' }
     }
-    if (date && date.match(/\d{13}/)) {
-        return new Date(Number(date)).toLocaleDateString(params.locale.value, options)
+    let locale = store.state.locale
+    if (!locale) {
+        throw new Error('locale not defined')
     }
-    return new Date(date).toLocaleDateString(params.locale.value, options)
+    const l = locale.split('_').join('-')
+    const m = moment(date)
+    const d = m.toDate()
+    return d.toLocaleDateString(l, options)
 }

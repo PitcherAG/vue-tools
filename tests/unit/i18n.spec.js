@@ -1,59 +1,11 @@
-import { useParamsStore } from '../../src/params'
 import {
-    formatCurrency,
-    formatDate,
-    formatDecimal,
-    formatPercent,
-    provideI18n,
-    setLanguage,
-    trans, TranslationPlugin,
+    trans, TranslationPlugin, useI18nStore,
 } from '../../src'
 import Vue from 'vue'
 
-jest.mock('../../src/params')
-
 describe('i18n', () => {
-    it('date', () => {
-        let resp = { locale: { value: 'de-CH' } }
-        useParamsStore.mockReturnValue(resp)
-        expect(formatDate('2020.02.20')).toBe('20.02.20')
-        resp = { locale: { value: 'en-US' } }
-        useParamsStore.mockReturnValue(resp)
-        expect(formatDate('2020.02.20')).toBe('02/20/20')
-        expect(formatDate()).toBe('Invalid Date')
-    })
-
-    it('currency', () => {
-        let resp = { locale: { value: 'de-CH' } }
-        useParamsStore.mockReturnValue(resp)
-        expect(formatCurrency(100, 'CHF')).toBe('CHF 100.00')
-        resp = { locale: { value: 'en-US' } }
-        useParamsStore.mockReturnValue(resp)
-        expect(formatCurrency(55000.578, 'USD')).toBe('$55,000.58')
-    })
-
-    it('decimal', () => {
-        let resp = { locale: { value: 'de-CH' } }
-        useParamsStore.mockReturnValue(resp)
-        expect(formatDecimal(100.512321)).toBe('100.5')
-        expect(formatDecimal(100.512321, 2)).toBe('100.51')
-        expect(formatDecimal(100)).toBe('100')
-        resp = { locale: { value: 'en-US' } }
-        useParamsStore.mockReturnValue(resp)
-        expect(formatDecimal(100.512321)).toBe('100.5')
-    })
-
-    test('percent', () => {
-        let resp = { locale: { value: 'de-CH' } }
-        useParamsStore.mockReturnValue(resp)
-        expect(formatPercent(33.33333)).toBe('33.3')
-        expect(formatPercent(33.33333, 2)).toBe('33.33')
-        resp = { locale: { value: 'en-US' } }
-        useParamsStore.mockReturnValue(resp)
-        expect(formatPercent(33.33333)).toBe('33.3')
-    })
-
     it('translations', () => {
+        const store = useI18nStore()
         Vue.use(TranslationPlugin)
         const translations = {
             messages: {
@@ -64,16 +16,18 @@ describe('i18n', () => {
                     Save: 'Guardar',
                 },
             },
+            locale: 'en',
         }
-        provideI18n(translations)
-        setLanguage('en', false)
+        store.patch(translations)
+        store.setLanguage('en', false)
         expect(trans('Save')).toBe('Save')
-        setLanguage('es', false)
+        store.setLanguage('es', false)
         expect(trans('Save')).toBe('Guardar')
         expect($gettext('Save')).toBe('Guardar')
     })
 
     it('plurals', () => {
+        const store = useI18nStore()
         Vue.use(TranslationPlugin)
         const translations = {
             messages: {
@@ -82,13 +36,14 @@ describe('i18n', () => {
                 },
             },
         }
-        provideI18n(translations)
-        setLanguage('en_US', false)
+        store.patch(translations)
+        store.setLanguage('en_US', false)
         expect($ngettext('Ticket', 1)).toBe('Ticket')
         expect($ngettext('Ticket', 2)).toBe('Tickets')
     })
 
     it('vars in trans', () => {
+        const store = useI18nStore()
         Vue.use(TranslationPlugin)
         const translations = {
             messages: {
@@ -99,8 +54,8 @@ describe('i18n', () => {
                 },
             },
         }
-        provideI18n(translations)
-        setLanguage('en_US', false)
+        store.patch(translations)
+        store.setLanguage('en_US', false)
         expect($ngettext('I have {num} Ticket.', 2, { num: 2 })).toBe('I have 2 Tickets.')
         expect($gettext('I have { a } and { b }.', {
             a: 'apples',
