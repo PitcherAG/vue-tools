@@ -15,7 +15,6 @@
     "main": "src",
     "dependencies": {
         "core-js": "^3.6.4",
-        "machine-gettext": "0.0.1",
         "moment": "^2.26.0",
         "vue": "^2.6.11"
     },
