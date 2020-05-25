@@ -5,122 +5,150 @@ msgstr ""
 "Language-Team: none\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: easygettext\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/components/Calendar.vue:65
+#, fuzzy
 msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
-msgstr ""
+msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
 
 #: src/components/Calendar.vue:67
+#, fuzzy
 msgid "January"
-msgstr ""
+msgstr "January"
 
 #: src/components/Calendar.vue:68
+#, fuzzy
 msgid "February"
-msgstr ""
+msgstr "February"
 
 #: src/components/Calendar.vue:69
+#, fuzzy
 msgid "March"
-msgstr ""
+msgstr "March"
 
 #: src/components/Calendar.vue:70
+#, fuzzy
 msgid "April"
-msgstr ""
+msgstr "April"
 
 #: src/components/Calendar.vue:71 src/components/Calendar.vue:85
+#, fuzzy
 msgid "May"
-msgstr ""
+msgstr "May"
 
 #: src/components/Calendar.vue:72
+#, fuzzy
 msgid "June"
-msgstr ""
+msgstr "June"
 
 #: src/components/Calendar.vue:73
+#, fuzzy
 msgid "July"
-msgstr ""
+msgstr "July"
 
 #: src/components/Calendar.vue:74
+#, fuzzy
 msgid "August"
-msgstr ""
+msgstr "August"
 
 #: src/components/Calendar.vue:75
+#, fuzzy
 msgid "September"
-msgstr ""
+msgstr "September"
 
 #: src/components/Calendar.vue:76
+#, fuzzy
 msgid "October"
-msgstr ""
+msgstr "October"
 
 #: src/components/Calendar.vue:77
+#, fuzzy
 msgid "November"
-msgstr ""
+msgstr "November"
 
 #: src/components/Calendar.vue:78
+#, fuzzy
 msgid "December"
-msgstr ""
+msgstr "December"
 
 #: src/components/Calendar.vue:81
+#, fuzzy
 msgid "Jan"
-msgstr ""
+msgstr "Jan"
 
 #: src/components/Calendar.vue:82
+#, fuzzy
 msgid "Feb"
-msgstr ""
+msgstr "Feb"
 
 #: src/components/Calendar.vue:83
+#, fuzzy
 msgid "Mar"
-msgstr ""
+msgstr "Mar"
 
 #: src/components/Calendar.vue:84
+#, fuzzy
 msgid "Apr"
-msgstr ""
+msgstr "Apr"
 
 #: src/components/Calendar.vue:86
+#, fuzzy
 msgid "Jun"
-msgstr ""
+msgstr "Jun"
 
 #: src/components/Calendar.vue:87
+#, fuzzy
 msgid "Jul"
-msgstr ""
+msgstr "Jul"
 
 #: src/components/Calendar.vue:88
+#, fuzzy
 msgid "Aug"
-msgstr ""
+msgstr "Aug"
 
 #: src/components/Calendar.vue:89
+#, fuzzy
 msgid "Sep"
-msgstr ""
+msgstr "Sep"
 
 #: src/components/Calendar.vue:90
+#, fuzzy
 msgid "Oct"
-msgstr ""
+msgstr "Oct"
 
 #: src/components/Calendar.vue:91
+#, fuzzy
 msgid "Nov"
-msgstr ""
+msgstr "Nov"
 
 #: src/components/Calendar.vue:92
+#, fuzzy
 msgid "Dec"
-msgstr ""
+msgstr "Dec"
 
 #: src/components/Calendar.vue:94
+#, fuzzy
 msgid "Today"
-msgstr ""
+msgstr "Today"
 
 #: src/components/Calendar.vue:95
+#, fuzzy
 msgid "Now"
-msgstr ""
+msgstr "Now"
 
 #: src/components/Calendar.vue:96
+#, fuzzy
 msgid "AM"
-msgstr ""
+msgstr "AM"
 
 #: src/components/Calendar.vue:97
+#, fuzzy
 msgid "PM"
-msgstr ""
+msgstr "PM"
 
 #: src/components/Calendar.vue:104 src/components/ObjectFormField.vue:41
 msgid "Date/Time"
@@ -161,6 +189,3 @@ msgstr "Select"
 #: src/components/ObjectFormField.vue:41
 msgid "Date"
 msgstr "Date"
-
-#~ msgid "msgid"
-#~ msgstr "msgid"
