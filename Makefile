@@ -44,7 +44,7 @@ $(TEMPLATE_POT): $(GETTEXT_SOURCES)
 	mkdir -p public/translations;
 # Extract gettext strings from templates files and create a POT dictionary template.
 	# node_modules/easygettext/src/extract-cli.js --quite --output $@ $(GETTEXT_SOURCES);
-	node_modules/gettext-vue/bin/xgettext-vue --join-existing --output=$@ $(GETTEXT_SOURCES)
+	node_modules/@pitcher/gettext-vue/bin/xgettext-vue --join-existing --output=$@ $(GETTEXT_SOURCES)
 	# xgettext -d default --language=JavaScript --language=Python --from-code=UTF-8 --keyword=gettext --keyword="(\"gettext\")" --keyword=gettext_noop --keyword="_" --keyword=gettext_lazy --output=$@ $(GETTEXT_SOURCES)
     # Generate .po files for each available language.
 
@@ -59,6 +59,7 @@ $(TEMPLATE_POT): $(GETTEXT_SOURCES)
 			msginit --no-translator --locale=$$lang --input=$@ --output-file=$$PO_FILE || break ; \
 			msgattrib --no-wrap --no-obsolete -o $$PO_FILE $$PO_FILE || break; \
 		fi; \
+		node_modules/@pitcher/machine-gettext/index.js --input $$PO_FILE --out $$PO_FILE -f -o; \
 	done;
 
 # node_modules/easygettext/src/compile-cli.js --output $$JSON_FILE $$PO_FILE || break;
