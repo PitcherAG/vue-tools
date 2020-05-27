@@ -13,22 +13,21 @@ describe('link', () => {
         expect(fireEvent.mock.calls.length).toBe(1)
 
         expect(fireEvent).toHaveBeenCalledWith('launchContentWithID', {
-            "currentID": undefined,
-            "fileID": "11111",
-            "forceChange": false,
-            "parameters": { "hello": "world" },
-            "subId": 0,
+            currentID: undefined,
+            fileID: '11111',
+            forceChange: false,
+            parameters: { hello: 'world' },
+            subId: 0
         })
 
         await openLink('pitcher://myKeyword2/?hello2=world2')
         expect(fireEvent).toHaveBeenCalledWith('launchContentWithID', {
-            "currentID": undefined,
-            "fileID": "11111",
-            "forceChange": false,
-            "parameters": { "hello2": "world2" },
-            "subId": 0,
+            currentID: undefined,
+            fileID: '11111',
+            forceChange: false,
+            parameters: { hello2: 'world2' },
+            subId: 0
         })
-
     })
 
     it('id link', async () => {
@@ -36,12 +35,11 @@ describe('link', () => {
         getFilesWithKeyword.mockResolvedValue([{ vUrl: 'myurl', ID: '11111', body: 'title' }])
         await openLink('pitcher://12345/?hello2=world2')
         expect(fireEvent).toHaveBeenCalledWith('launchContentWithID', {
-            "currentID": undefined,
-            "fileID": "12345",
-            "forceChange": false,
-            "parameters": { "hello2": "world2" },
-            "subId": 0,
+            currentID: undefined,
+            fileID: '12345',
+            forceChange: false,
+            parameters: { hello2: 'world2' },
+            subId: 0
         })
     })
-
 })
