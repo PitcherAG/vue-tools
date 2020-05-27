@@ -1,14 +1,16 @@
+/* eslint-disable no-unused-vars */
 import { useParamsStore } from '../../src/params'
 import { formatCurrency, formatDate, formatDecimal, formatPercent, useI18nStore } from '../../src'
 
 jest.mock('../../src/i18n/i18n')
 
 describe('numbers', () => {
-
     it('currency', () => {
         let resp = { state: { locale: null } }
         useI18nStore.mockReturnValue(resp)
-        expect(() => {formatCurrency()}).toThrow()
+        expect(() => {
+            formatCurrency()
+        }).toThrow()
         resp = { state: { locale: 'de-CH' } }
         useI18nStore.mockReturnValue(resp)
         expect(formatCurrency(100, 'CHF')).toBe('CHF 100.00')
@@ -20,7 +22,9 @@ describe('numbers', () => {
     it('decimal', () => {
         let resp = { state: { locale: null } }
         useI18nStore.mockReturnValue(resp)
-        expect(() => {formatDecimal()}).toThrow()
+        expect(() => {
+            formatDecimal()
+        }).toThrow()
         resp = { state: { locale: 'de-CH' } }
         useI18nStore.mockReturnValue(resp)
         expect(formatDecimal(100.512321)).toBe('100.5')
@@ -34,7 +38,9 @@ describe('numbers', () => {
     test('percent', () => {
         let resp = { state: { locale: null } }
         useI18nStore.mockReturnValue(resp)
-        expect(() => {formatPercent()}).toThrow()
+        expect(() => {
+            formatPercent()
+        }).toThrow()
         resp = { state: { locale: 'de-CH' } }
         useI18nStore.mockReturnValue(resp)
         expect(formatPercent(33.33333)).toBe('33.3')
@@ -43,5 +49,4 @@ describe('numbers', () => {
         useI18nStore.mockReturnValue(resp)
         expect(formatPercent(33.33333)).toBe('33.3')
     })
-
 })
