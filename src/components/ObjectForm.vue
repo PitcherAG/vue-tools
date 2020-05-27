@@ -38,15 +38,16 @@
                 <h4 class="ui header">{{ section.heading }}</h4>
                 <div class="two fields" v-for="(row, key) in section.layoutRows" :key="key">
                     <fragment v-for="(item, key) in row.layoutItems" :key="key">
-                        <ObjectFormField
-                            v-if="!comp.exclude"
-                            v-model="state.obj[comp.value].value"
-                            v-for="(comp, key) in item.layoutComponents"
-                            :key="key"
-                            :field="comp.field"
-                            :showError="state.showErrors"
-                            :label="item.label"
-                        ></ObjectFormField>
+                        <template v-for="(comp, key) in item.layoutComponents">
+                            <ObjectFormField
+                                v-if="!comp.exclude"
+                                v-model="state.obj[comp.value].value"
+                                :key="key"
+                                :field="comp.field"
+                                :showError="state.showErrors"
+                                :label="item.label"
+                            />
+                        </template>
                     </fragment>
                 </div>
             </fragment>
@@ -56,6 +57,8 @@
 </template>
 
 <script>
+/* eslint-disable no-unused-vars, max-len */
+
 import { computed, reactive, ref, watch } from '@vue/composition-api'
 import { loadSchema } from '../db/sfdcSchema'
 import { useConfigStore } from '../config'
