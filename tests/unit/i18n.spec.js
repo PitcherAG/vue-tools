@@ -1,6 +1,4 @@
-import {
-    trans, TranslationPlugin, useI18nStore,
-} from '../../src'
+import { trans, TranslationPlugin, useI18nStore } from '../../src'
 import Vue from 'vue'
 
 describe('i18n', () => {
@@ -10,13 +8,13 @@ describe('i18n', () => {
         const translations = {
             messages: {
                 en: {
-                    Save: '',
+                    Save: ''
                 },
                 es: {
-                    Save: 'Guardar',
-                },
+                    Save: 'Guardar'
+                }
             },
-            locale: 'en',
+            locale: 'en'
         }
         store.patch(translations)
         store.setLanguage('en', false)
@@ -32,9 +30,9 @@ describe('i18n', () => {
         const translations = {
             messages: {
                 en_US: {
-                    Ticket: ['Ticket', 'Tickets'],
-                },
-            },
+                    Ticket: ['Ticket', 'Tickets']
+                }
+            }
         }
         store.patch(translations)
         store.setLanguage('en_US', false)
@@ -48,19 +46,20 @@ describe('i18n', () => {
         const translations = {
             messages: {
                 en_US: {
-                    "I have { a } and { b }.": "",
+                    'I have { a } and { b }.': '',
                     Ticket: ['Ticket', 'Tickets'],
-                    "I have {num} Ticket.": ["I have { num } Ticket.", "I have { num } Tickets."],
-                },
-            },
+                    'I have {num} Ticket.': ['I have { num } Ticket.', 'I have { num } Tickets.']
+                }
+            }
         }
         store.patch(translations)
         store.setLanguage('en_US', false)
         expect($ngettext('I have {num} Ticket.', 2, { num: 2 })).toBe('I have 2 Tickets.')
-        expect($gettext('I have { a } and { b }.', {
-            a: 'apples',
-            b: 'oranges',
-        })).toBe('I have apples and oranges.')
-
+        expect(
+            $gettext('I have { a } and { b }.', {
+                a: 'apples',
+                b: 'oranges'
+            })
+        ).toBe('I have apples and oranges.')
     })
 })
