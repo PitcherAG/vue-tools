@@ -37,19 +37,21 @@ export default {
 
     setup(props, attrs) {
         console.log('setup cal')
+        const placeholder = ref()
+
         const initCalendar = () => {
             const settings = $.extend(
                 {
                     type: props.type,
                     today: props.today,
                     action: props.action,
-                    onChange: function(value, text) {
+                    onChange: function() {
                         console.log('change', attrs)
                         attrs.emit('input', attrs.refs.input.value)
                     },
                     touchReadonly: true,
                     formatter: {
-                        date: function(date, settings) {
+                        date: function(date) {
                             if (!date) return ''
                             //if(props.type==='date') {
                             const yyyy = date.getFullYear().toString()
@@ -99,7 +101,7 @@ export default {
                 },
                 props.setting
             )
-            const placeholder = ref()
+
             if (props.defaultText == 'Date/Time') {
                 placeholder.value = $gettext('Date/Time')
             } else {
@@ -108,12 +110,13 @@ export default {
 
             $(attrs.refs.calendar).calendar(settings)
         }
-        const val = ref(props.value)
+
         onMounted(() => {
             setTimeout(() => {
                 initCalendar()
             }, 10)
         })
+
         onUpdated(() => {
             initCalendar()
         })
