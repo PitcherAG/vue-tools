@@ -1,11 +1,6 @@
 <template>
     <!-- Numpad -->
-    <div
-        class="numpad-input"
-        :class="[group]"
-        :style="{ display: fluid ? 'block' : 'inline-block' }"
-        @focus="focus(true)"
-    >
+    <div class="numpad-input" :class="[group]" :style="{ display: fluid ? 'block' : 'inline-block' }">
         <!-- Input -->
         <div class="ui test" :class="inputClasses" ref="inputDiv">
             <i v-if="leftIcon" class="icon" :class="leftIcon" style="z-index: 1" />
@@ -133,7 +128,7 @@ export default defineComponent({
         leftIcon: String,
         max: {
             type: Number,
-            default: 1000000.0
+            default: 1000000
         },
         noAnimation: {
             type: Boolean,
