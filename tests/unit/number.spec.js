@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useParamsStore } from '../../src/params'
 import { formatCurrency, formatDate, formatDecimal, formatPercent, useI18nStore } from '../../src'
 
