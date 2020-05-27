@@ -7,16 +7,17 @@
         @focus="focus(true)"
     >
         <!-- Input -->
-        <div class="ui" :class="inputClasses">
+        <div class="ui test" :class="inputClasses" ref="inputDiv">
             <i v-if="leftIcon" class="icon" :class="leftIcon" style="z-index: 1" />
             <slot v-if="labelLeftSlot" name="labelLeft" />
             <input
                 :value="value"
                 type="text"
+                readonly="readonly"
                 ref="input"
                 @focus="focus(true)"
-                @blur="focus(true)"
-                @keypress="keypress"
+                @blur="focus(false)"
+                @keypress.prevent
             />
             <i v-if="rightIcon" class="icon" :class="rightIcon" />
             <slot v-if="labelRightSlot" name="labelRight" />
@@ -35,7 +36,7 @@
                         3
                     </button>
                     <!-- Clear -->
-                    <button class="keys__row--number" @mousedown.prevent @click="emit('00.0')">
+                    <button class="keys__row--number" @mousedown.prevent @click="reset">
                         <i class="times icon thinner" />
                     </button>
                 </div>
@@ -106,6 +107,20 @@ export default defineComponent({
         value: {
             type: String
         },
+        decimals: {
+            type: Number,
+            default: 2,
+            validator: val => {
+                if (val > 5) {
+                    console.error("[Vue warn]: The value of decimals can't be higher than 10!")
+                    return false
+                } else if (val < 0) {
+                    console.error("[Vue warn]: The value of decimals can't be lower than 0!")
+                    return false
+                }
+                return true
+            }
+        },
         group: {
             type: String,
             default: 'no-group'
@@ -149,6 +164,12 @@ export default defineComponent({
             }
         })
 
+        // set divider value connected to decimals
+        // 10, 100, 1000 etc.
+        const dividerValue = parseInt('1' + '0'.repeat(props.decimals))
+        // default zero value
+        const defaultValue = props.decimals === 0 ? '0' : `0.${'0'.repeat(props.decimals)}`
+
         onMounted(() => {
             if (!state.groups[props.group]) {
                 state.groups[props.group] = []
@@ -174,77 +195,54 @@ export default defineComponent({
                 return
             }
 
-            // value does not contain .
-            if (props.value.indexOf('.') === -1) {
-                emit(props.value + val)
-                return
-            }
-
-            // value contains . create fraction
-            const fraction = props.value.split('.')
-
-            if (fraction[0] === '00' && fraction[1] === '0') {
-                // fresh start
-                emit(`${fraction[0]}.${val}`)
-            } else if (fraction[0] === '00' && fraction[1] !== '0') {
-                // remove last char in F0 + add F1 + . + newValue
-                emit(`${fraction[0].slice(0, -1)}${fraction[1]}.${val}`)
-            } else if (fraction[0].charAt(0) === '0') {
-                // remove first char in F0 + add F1 + . + newValue
-                emit(`${fraction[0].substr(1)}${fraction[1]}.${val}`)
-            } else {
-                // F0 + F1 + . + newValue
-                emit(`${fraction[0]}${fraction[1]}.${val}`)
-            }
+            // parse current value as Integer
+            const parsed = parseInt(props.value.replace(/\D/g, ''))
+            // concatenate incoming value as string with parsed value
+            const value = parsed + val.toString()
+            // mask the value with decimals
+            const masked = (value / dividerValue).toFixed(props.decimals)
+            // set value
+            emit(masked.toString())
         }
 
         function incDec(action) {
             if (props.value === '') {
-                emit('00.0')
+                emit(defaultValue)
             }
             // parse the number with decimals
-            let parsedNumber = parseFloat(props.value).toFixed(2)
+            let parsedNumber = parseFloat(props.value).toFixed(props.decimals)
 
             if (action === 'dec' && parsedNumber >= 1) {
                 // decrease action
                 parsedNumber--
-                emit(parsedNumber.toFixed(1).toString())
+                emit(parsedNumber.toFixed(props.decimals).toString())
             } else if (action === 'inc' && parseFloat(props.value) < props.max) {
                 // increase action
                 parsedNumber++
                 parsedNumber = parsedNumber > props.max ? props.max : parsedNumber
-                emit(parsedNumber.toFixed(1).toString())
+                emit(parsedNumber.toFixed(props.decimals).toString())
             }
         }
 
         function backspace() {
-            // if value does not contain .
-            if (props.value.indexOf('.') === -1) {
-                // if next click will NOT clear the input
-                if (props.value.slice(0, -1) !== '') {
-                    emit(props.value.slice(0, -1))
-                } else {
-                    // next click will clear the input, set default
-                    emit('00.0')
-                }
-                return
-            }
+            // parse current value as Integer & convert to string
+            const parsed = parseInt(props.value.replace(/\D/g, '')).toString()
+            // remove last char
+            const value = parsed.slice(0, -1)
+            // mask the value with decimals
+            const masked = (value / dividerValue).toFixed(props.decimals)
 
-            // value contains . split fraction to handle it
-            const fraction = props.value.split('.')
-            // get last char in fraction 0, last number before the .
-            const lastChar = fraction[0].charAt(fraction[0].length - 1)
-
-            if (fraction[0].length > 2) {
-                // fraction 0 has more than 2 digits
-                emit(`${fraction[0].slice(0, -1)}.${lastChar}`)
-            } else if (fraction[0].length === 2) {
-                // fraction 0 has exactly 2 digits
-                emit(`0${fraction[0].slice(0, -1)}.${lastChar}`)
-            } else if (fraction[0].length === 1) {
-                // fraction 0 has 1 digit
-                emit(`00.${lastChar}`)
+            if (masked !== 0) {
+                // set value
+                emit(masked.toString())
+            } else {
+                // set default value as it is now 0
+                emit(defaultValue)
             }
+        }
+
+        function reset() {
+            emit(defaultValue)
         }
 
         function focus(visibility) {
@@ -255,7 +253,7 @@ export default defineComponent({
                 checkOverlap()
                 // visible, if value empty set default
                 if (props.value === '') {
-                    emit('00.0')
+                    emit(defaultValue)
                 }
                 // select the value inside input
                 ctx.refs.input.select()
@@ -265,31 +263,9 @@ export default defineComponent({
                 }
 
                 // if animation is active, animate
-                ctx.refs.input.classList.add('animate')
-                setTimeout(() => ctx.refs.input.classList.remove('animate'), 300)
+                ctx.refs.inputDiv.classList.add('animate')
+                setTimeout(() => ctx.refs.inputDiv.classList.remove('animate'), 300)
             }
-        }
-
-        function keypress(e) {
-            ctx.root.$nextTick(() => {
-                if (props.value.indexOf('.') === -1 && e.target.value.length > 5) {
-                    // if value not contains . and length is over 5
-                    return e.preventDefault()
-                } else if (props.value.indexOf('.') !== -1 && e.target.value.length > 7) {
-                    // if value contains . and length is over 7
-                    return e.preventDefault()
-                } else if (!/\d/.test(e.key) && e.key !== '.') {
-                    // if value is not digit and pressed key is not .
-                    return e.preventDefault()
-                } else if (!/\d/.test(e.key) && e.target.value.includes('.')) {
-                    // if value is not digit and value includes .
-                    return e.preventDefault()
-                }
-                // must be emitted in the end of event loop
-                setTimeout(() => {
-                    emit(e.target.value)
-                })
-            })
         }
 
         function jumpNextSibling() {
@@ -343,8 +319,8 @@ export default defineComponent({
             addVal,
             incDec,
             backspace,
+            reset,
             focus,
-            keypress,
             emit,
             jumpNextSibling,
             jumpNextGroup
@@ -361,11 +337,14 @@ $border: 1px solid #d3d3d3;
 $border-radius: 8.4px;
 
 .numpad-input {
-    input {
-        text-align: right;
+    .ui.input {
         transform: scale(1) translateY(0) translateZ(0);
         &.animate {
             @extend .pulse;
+        }
+
+        input {
+            text-align: right;
         }
     }
 
@@ -421,7 +400,6 @@ $border-radius: 8.4px;
         .thinner {
             -webkit-text-stroke: 3px $numpad-bg;
 
-            // Polyfill for IE
             @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
                 font-family: thin-icons;
             }
