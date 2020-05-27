@@ -24,7 +24,7 @@ export default {
             default: true
         },
         defaultText: {
-            default:'Date/Time'
+            default: 'Date/Time'
         },
         action: {
             type: String,
@@ -100,9 +100,9 @@ export default {
                 props.setting
             )
             const placeholder = ref()
-            if(props.defaultText == 'Date/Time'){
+            if (props.defaultText == 'Date/Time') {
                 placeholder.value = $gettext('Date/Time')
-            }else{
+            } else {
                 placeholder.value = props.defaultText
             }
 
