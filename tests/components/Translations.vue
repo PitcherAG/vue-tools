@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { computed, ref } from '@vue/composition-api'
+import { ref } from '@vue/composition-api'
 
 export default {
     name: 'translations',
@@ -29,7 +29,7 @@ export default {
         const asd = 3
         const b = ref($gettext('underscore in js'))
         const c = ref($ngettext('underscore in js', na))
-        return { na, asd, b }
+        return { na, asd, b, c }
     }
 }
 </script>
