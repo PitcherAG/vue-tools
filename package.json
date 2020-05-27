@@ -6,7 +6,7 @@
     "scripts": {
         "build": "rimraf ./dist && babel src -d dist",
         "test:unit": "cross-env NODE_ICU_DATA=node_modules/full-icu vue-cli-service test:unit",
-        "lint": "eslint ./src --fix",
+        "lint": "vue-cli-service lint",
         "npm link": "npm link",
         "npm publish": "npm publish",
         "yarn link": "yarn link",
