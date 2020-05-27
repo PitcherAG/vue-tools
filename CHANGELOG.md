@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1
+
+- plural forms for translations works now
+- machine translations implemented for .po files
+
 ## 1.3.0
 
 - i18n refactor
