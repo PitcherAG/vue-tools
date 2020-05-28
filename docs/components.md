@@ -2,6 +2,55 @@
 
 ## Components
 
+### Checkbox
+
+Displays a fomantic checkbox
+
+```html
+<Checkbox :label="'myLabel'"  v-model="myBoolean"/>
+```
+
+### Sidebar
+
+Fomantic Sidebar component
+
+```html
+<Sidebar>
+      <div class="item">
+           <h2 class="header">{{ data.Name }}</h2>
+       </div>
+       <div class="item">
+        {{ data.description}}
+       </div>
+
+</Sidebar>
+```
+
+```javascript
+setup(){
+     const sidebar = Sidebar.useSidebarStore()
+     const data = sidebar.state.data
+     return {data}
+}
+```
+
+and somewhere else:
+
+```javascript
+setup() {
+    const showSidebar = (product) => {
+        const sidebar = Sidebar.useSidebarStore()
+        sidebar.state.data = product
+        sidebar.show()
+    }
+    return { showSidebar }
+}
+```
+
+```html
+<button v-on:click="showSidebar(myProduct)">Show sidebar</button>
+```
+
 ### Calendar
 
 Fomantic Calendar 

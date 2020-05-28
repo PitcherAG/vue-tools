@@ -23,7 +23,6 @@
             onMounted(()=>{
                 console.log(ctx)
                 $(ctx.refs.checkbox).checkbox('setting', 'onChange', (e) => {
-                    console.log(e)
                     ctx.emit('input', !props.value)
                 })
             })
