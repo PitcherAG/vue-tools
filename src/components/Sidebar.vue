@@ -1,6 +1,6 @@
 <template>
     <!-- eslint-disable max-len -->
-    <div class="ui sidebar right push wide vertical menu" ref="sidebar" data-bind="with: viewModel.sidebar_product">
+    <div class="ui sidebar right push wide vertical menu" ref="sidebar">
         <slot></slot>
     </div>
 </template>
