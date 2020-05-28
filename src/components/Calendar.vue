@@ -62,7 +62,7 @@ export default {
                         }
                     },
                     text: {
-                        days: [$gettext("'S', 'M', 'T', 'W', 'T', 'F', 'S'").split(',')],
+                        days: $gettext("'S', 'M', 'T', 'W', 'T', 'F', 'S'").split(','),
                         months: [
                             $gettext('January'),
                             $gettext('February'),
