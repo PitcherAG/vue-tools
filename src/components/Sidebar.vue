@@ -1,6 +1,6 @@
 <template>
     <!-- eslint-disable max-len -->
-    <div class="ui sidebar right push wide vertical menu" data-bind="with: viewModel.sidebar_product">
+    <div class="ui sidebar right push wide vertical menu" ref="sidebar" data-bind="with: viewModel.sidebar_product">
         <slot></slot>
     </div>
 </template>
@@ -33,10 +33,10 @@
 
     export default {
         name: 'Sidebar',
-        setup() {
+        setup(props, ctx) {
             const store = useSidebarStore()
             onMounted(() => {
-                $('.ui.sidebar').sidebar('setting', 'onChange', () => {
+                $(ctx.refs.sidebar).sidebar('setting', 'onChange', () => {
                     store.state.open = !store.state.open
                 })
             })
