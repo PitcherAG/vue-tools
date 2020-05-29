@@ -1,12 +1,12 @@
 import CompositionApi from '@vue/composition-api'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import Numpad from '../../src/components/Numpad.vue'
+import NumpadInput from '../../src/components/NumpadInput.vue'
 
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
 
-describe('Numpad.vue', () => {
-    const wrapper = shallowMount(Numpad, {
+describe('NumpadInput.vue', () => {
+    const wrapper = shallowMount(NumpadInput, {
         localVue,
         propsData: {
             value: '0.00',
@@ -31,7 +31,7 @@ describe('Numpad.vue', () => {
         expect(wrapper.find('.numpad').exists()).toBe(true)
     })
 
-    it('Numpad emits value changes', async () => {
+    it('Numpad Input emits value changes', async () => {
         // get first number input button & click
         wrapper.find('.keys__row--number').trigger('click')
         await wrapper.vm.$nextTick()

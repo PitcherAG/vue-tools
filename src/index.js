@@ -23,9 +23,11 @@ export * from './event.js'
 export * from './files.js'
 export * from './params.js'
 export * from './platform.js'
-export * from './components/export.js'
 
 export * from './utils'
+
+// Vue Components
+export * from './components/export.js'
 
 // Mixins
 import ModalMixin from './semantic/mixins/modal.js'
