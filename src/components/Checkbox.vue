@@ -1,6 +1,6 @@
 <template>
     <div class="ui toggle checkbox" ref="checkbox">
-        <input type="checkbox" tabindex="0" class="hidden" :value="value" >
+        <input type="checkbox" tabindex="0" class="hidden" v-model="innerValue" >
         <label>{{ label }}</label>
     </div>
 </template>
@@ -19,12 +19,13 @@
             }
         },
         setup(props, ctx){
+            const innerValue = props.value
             onMounted(()=>{
-                console.log(ctx)
                 $(ctx.refs.checkbox).checkbox('setting', 'onChange', (e) => {
                     ctx.emit('input', !props.value)
                 })
             })
+            return {innerValue}
         }
     }
 </script>
