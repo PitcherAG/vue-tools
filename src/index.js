@@ -23,18 +23,11 @@ export * from './event.js'
 export * from './files.js'
 export * from './params.js'
 export * from './platform.js'
+export * from './components/export.js'
 
 export * from './utils'
-
-// Vue Components
-import Calendar from './components/Calendar.vue'
-import Dropdown from './components/Dropdown.vue'
-import Numpad from './components/Numpad.vue'
-import ObjectForm from './components/ObjectForm.vue'
-import ObjectFormField from './components/ObjectFormField.vue'
-import TransitionPage from './components/TransitionPage.vue'
 
 // Mixins
 import ModalMixin from './semantic/mixins/modal.js'
 
-export { Calendar, Dropdown, Numpad, ObjectForm, ObjectFormField, TransitionPage, ModalMixin }
+export { ModalMixin }
