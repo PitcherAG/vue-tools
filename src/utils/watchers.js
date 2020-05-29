@@ -30,7 +30,7 @@ export function waitForWindowProp(prop, _timeout = 5) {
             let count = 0
             let interval = setInterval(() => {
                 count++
-                if (typeof window.serverJSON !== 'undefined' || count === timeout) {
+                if (typeof window[prop] !== 'undefined' || count === timeout) {
                     clearInterval(interval)
                     return resolve(window[prop])
                 }
