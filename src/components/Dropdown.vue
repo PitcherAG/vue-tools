@@ -1,7 +1,7 @@
 <template>
     <div :class="classList" ref="dropdown">
         <input type="hidden" v-model="value" />
-        <i class="dropdown icon"></i>
+        <i class="icon" :class="icon"></i>
         <div class="text" v-show="value"></div>
         <div class="default" v-show="!value">{{ defaultText }}</div>
         <div class="menu">
@@ -39,6 +39,9 @@ export default {
         },
         valueField: {
             default: 'value'
+        },
+        icon:{
+            default: 'dropdown'
         },
         action: {
             type: String,
