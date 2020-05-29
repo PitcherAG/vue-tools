@@ -24,7 +24,7 @@ Usage Example
 
 function getId() {
     const store = useParamsStore()
-    return 'order_' + store.state.account.Id
+    return 'myApp_' + store.state.account.Id
 }
 
 export function save() {
@@ -48,7 +48,6 @@ In your App.vue:
 setup() {
         console.log('App setup')
         const loaded = ref(false)
-        // provideI18n(translations)
         onMounted(async () => {
             console.log('on App mounted')
             await loadSomeData()
