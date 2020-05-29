@@ -21,6 +21,7 @@ Please open a pull request if you want to change something
 - [Initialization (getParameters & loadServerJSON)](params.md)
 - [Events and Ti.App](events.md)
 - [Db queries](db.md)
+- [Save & Resume](resume.md)
 - [Config.json](config.md)
 - [Files](files.md)
 - [Internationalization and translations](i18n.md)

@@ -8,6 +8,7 @@
 - checkbox component
 - fixes Calendar translations bug
 - fixes Watcher callbacks for params and serverJSON
+- added saveLocal() and loadLocal() functions (saveFromHTML, getFromHTML)
 
 ## 1.3.0
 
