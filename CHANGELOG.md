@@ -9,7 +9,7 @@
 - numpadInput component
 - fixes Calendar translations bug
 - fixes Watcher callbacks for params and serverJSON
-- added saveLocal() and loadLocal() functions (saveFromHTML, getFromHTML)
+- added saveLocal() and loadLocal() functions (saveFromHTML, getFromHTML) with docs
 
 ## 1.3.0
 
