@@ -4,6 +4,10 @@
 
 - plural forms for translations works now
 - machine translations implemented for .po files
+- sidebar component
+- checkbox component
+- fixes Calendar translations bug
+- fixes Watcher callbacks for params and serverJSON
 
 ## 1.3.0
 
