@@ -156,3 +156,20 @@ export function getLayout(objectName, objectTypeId) {
     console.log(desc)
     return fireEvent('getFromHTML', { id: desc, useSFDCDB: true })
 }
+
+export function saveLocal(id, data, useSFDCDB = true) {
+    fireEvent('saveFromHTML', {
+        variables: data,
+        closeWeb: false,
+        id: id,
+        useSFDCDB: useSFDCDB
+    })
+}
+
+export async function loadLocal(id, useSFDCDB = true) {
+    const data = await fireEvent('getFromHTML', {
+        id: id,
+        useSFDCDB: useSFDCDB
+    })
+    return data
+}
