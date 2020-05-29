@@ -5,6 +5,9 @@
 ### Checkbox
 
 Displays a fomantic checkbox
+```javascript
+import { Checkbox ] from '@pitcher/vue-sdk'
+```
 
 ```html
 <Checkbox :label="'myLabel'"  v-model="myBoolean"/>
@@ -14,6 +17,9 @@ Displays a fomantic checkbox
 
 Fomantic Sidebar component
 
+```javascript
+import { Sidebar ] from '@pitcher/vue-sdk'
+```
 ```html
 <Sidebar>
       <div class="item">
@@ -22,7 +28,6 @@ Fomantic Sidebar component
        <div class="item">
         {{ data.description}}
        </div>
-
 </Sidebar>
 ```
 
@@ -37,6 +42,8 @@ setup(){
 and somewhere else:
 
 ```javascript
+import { Sidebar ] from '@pitcher/vue-sdk'
+
 setup() {
     const showSidebar = (product) => {
         const sidebar = Sidebar.useSidebarStore()
@@ -50,6 +57,58 @@ setup() {
 ```html
 <button v-on:click="showSidebar(myProduct)">Show sidebar</button>
 ```
+
+### Numpad Input
+Custom component
+#### Available props
+| prop | type | required | default | description |
+| :--- | :--- | :--- | :--- | :--- |
+| `v-model` | `String` | yes | - | input value
+| `decimals` | `Number` | no | 2 | decimal value for input
+| `max` | `Number` | no | 1000000 | maximum number that input can reach
+| `group` | `String` | no | no-group | for grouping inputs & navigate thru numpad buttons
+| `fluid` | `Boolean` | no | undefined | fluid input size
+| `disabled` | `Boolean` | no | undefined | disable input
+| `size` | `String` | no | medium | tiny \| small \| large \| big \| huge \| massive 
+| `rightIcon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
+| `leftIcon` | `String` | no | medium | FA icon name. Use ONLY icon name i.e. users times etc.
+| `noAnimation` | `Boolean` | no | false | Input animation on focus
+| `color` | `String` | no | undefined | color for input container class (fomantic)
+
+#### Available slots
+| slot | description |
+| :--- | :--- |
+| `labelLeft` | Slot to add custom label html to the left side of input
+| `labelRight` | Slot to add custom label html to the right side of input
+
+
+#### Usage
+
+```javascript
+import { NumpadInput ] from '@pitcher/vue-sdk'
+```
+
+```html
+// Simple usage
+<NumpadInput v-model="fooInputValue" group="foo" />
+ 
+// Defining size, decimals, icon, maximum without animation
+<NumpadInput v-model="barInputValue" group="bar" size="small" leftIcon="search" :decimals="0" :max="100" noAnimation />
+ 
+// Usage with slots
+<NumpadInput v-model="fooInputValue" group="foo">
+	// add left label
+	<template #labelLeft>
+		<div class="ui label">http://</div>
+    </template>
+    
+    // add right label
+	<template #labelRight>
+    	<div class="ui label">.com</div>
+    </template>
+</NumpadInput>
+```
+
 
 ### Calendar
 
