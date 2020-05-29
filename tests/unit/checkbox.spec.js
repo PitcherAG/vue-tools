@@ -9,7 +9,7 @@ describe('Checkbox.vue', () => {
         localVue,
         propsData: {
             value: true,
-            label:'hello'
+            label: 'hello'
         }
     })
 
@@ -25,12 +25,11 @@ describe('Checkbox.vue', () => {
     it('checkbox test', async () => {
         expect(wrapper.find('input').element.checked).toBe(true)
         wrapper.find('.ui.toggle.checkbox').trigger('click')
-        await wrapper.vm.$nextTick()
         await updateValue(false)
+
         wrapper.find('.ui.toggle.checkbox').trigger('click')
         await wrapper.vm.$nextTick()
         expect(wrapper.text()).toBe('hello')
-        expect(wrapper.emitted().input).toStrictEqual([[false],[true]])
+        expect(wrapper.emitted().input).toStrictEqual([[false], [true]])
     })
-
 })
