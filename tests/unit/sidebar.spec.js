@@ -6,7 +6,7 @@ localVue.use(CompositionApi)
 
 describe('Sidebar.vue', () => {
     const wrapper = shallowMount(Sidebar, {
-        localVue,
+        localVue
     })
 
     it('sidebar test', async () => {
@@ -15,5 +15,4 @@ describe('Sidebar.vue', () => {
         const sidebar = wrapper.find('.ui.sidebar')
         expect(sidebar.exists()).toBe(true)
     })
-
 })
