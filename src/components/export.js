@@ -1,12 +1,12 @@
 /* Here you have to export all the components you have created */
 
 // Vue Components
-import Calendar from './components/Calendar.vue'
-import Dropdown from './components/Dropdown.vue'
-import Numpad from './components/Numpad.vue'
-import Checkbox from './components/Checkbox.vue'
-import ObjectForm from './components/ObjectForm.vue'
-import ObjectFormField from './components/ObjectFormField.vue'
-import TransitionPage from './components/TransitionPage.vue'
+import Calendar from './Calendar.vue'
+import Dropdown from './Dropdown.vue'
+import NumpadInput from './NumpadInput.vue'
+import Checkbox from './Checkbox.vue'
+import ObjectForm from './ObjectForm.vue'
+import ObjectFormField from './ObjectFormField.vue'
+import TransitionPage from './TransitionPage.vue'
 
-export { Calendar, Checkbox, Dropdown, Numpad, ObjectForm, ObjectFormField, TransitionPage }
+export { Calendar, Checkbox, Dropdown, NumpadInput, ObjectForm, ObjectFormField, TransitionPage }
