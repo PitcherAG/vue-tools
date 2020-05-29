@@ -1,7 +1,7 @@
 <template>
     <!-- eslint-disable max-len -->
     <div class="ui sidebar right push wide vertical menu" ref="sidebar">
-        <slot></slot>
+        <slot />
     </div>
 </template>
 
@@ -44,5 +44,3 @@ export default {
     useSidebarStore
 }
 </script>
-
-<style scoped></style>

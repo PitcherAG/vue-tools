@@ -6,6 +6,7 @@
 - machine translations implemented for .po files
 - sidebar component
 - checkbox component
+- numpadInput component
 - fixes Calendar translations bug
 - fixes Watcher callbacks for params and serverJSON
 - added saveLocal() and loadLocal() functions (saveFromHTML, getFromHTML)
