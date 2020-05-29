@@ -40,7 +40,7 @@ export default {
         valueField: {
             default: 'value'
         },
-        icon:{
+        icon: {
             default: 'dropdown'
         },
         action: {
