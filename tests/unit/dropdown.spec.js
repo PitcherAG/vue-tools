@@ -19,7 +19,7 @@ describe('Dropdown.vue', () => {
 
         expect(wrapper.text()).toBe('select')
 
-        wrapper.setData({ value: 1 })
+        wrapper.setProps({ value: 1 })
         expect(wrapper.props().value).toBe(1)
         /*await wrapper.vm.$nextTick()
         wrapper.trigger('click')
