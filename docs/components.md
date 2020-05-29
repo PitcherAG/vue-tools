@@ -97,14 +97,14 @@ import { NumpadInput ] from '@pitcher/vue-sdk'
  
 // Usage with slots
 <NumpadInput v-model="fooInputValue" group="foo">
-	// add left label
-	<template #labelLeft>
-		<div class="ui label">http://</div>
+    // add left label
+    <template #labelLeft>
+        <div class="ui label">http://</div>
     </template>
-    
-    // add right label
-	<template #labelRight>
-    	<div class="ui label">.com</div>
+      
+      // add right label
+    <template #labelRight>
+        <div class="ui label">.com</div>
     </template>
 </NumpadInput>
 ```
