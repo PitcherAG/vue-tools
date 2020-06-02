@@ -1,9 +1,10 @@
 <template>
     <div :class="classList" ref="dropdown">
         <input type="hidden" v-model="value" />
-        <i class="icon" :class="icon"></i>
+        <i :class="icon + ' icon'"></i>
         <div class="text" v-show="value"></div>
         <div class="default" v-show="!value">{{ defaultText }}</div>
+        <i class="remove icon" style="z-index:100"></i>
         <div class="menu">
             <div
                 class="item"
@@ -114,5 +115,49 @@ export default {
 <style scoped>
 .default {
     color: rgba(191, 191, 191, 0.87) !important;
+}
+
+.ui.clearable.selection.dropdown.labeled i.remove.icon {
+    left: auto;
+    right: 0;
+    font-size: 1em;
+}
+
+.ui.dropdown > .remove.icon {
+    margin: -0.78571429em !important;
+    padding: 0.91666667em !important;
+    right: 1.5em !important;
+    top: 0.78571429em !important;
+    position: absolute !important;
+    opacity: 0.6 !important;
+    z-index: 3 !important;
+}
+
+.ui.dropdown > .icon:not(.dropdown) {
+    margin-left: 0.2em;
+    margin-right: 0.5em;
+}
+
+.ui.multiple.dropdown > .default {
+    position: static;
+    padding: 0;
+    max-width: 100%;
+    margin: 0.45238095em 0 0.45238095em 0.64285714em;
+    line-height: 1.21428571em;
+}
+
+.ui.clearable.dropdown .default,
+.ui.clearable.dropdown a:last-of-type {
+    margin-right: 0em;
+}
+
+.ui.dropdown > .default {
+    display: inline-block;
+    -webkit-transition: none;
+    transition: none;
+    pointer-events: none;
+}
+.ui.multiple.dropdown {
+    padding-right: 0.5em;
 }
 </style>
