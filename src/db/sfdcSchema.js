@@ -4,7 +4,7 @@ import { Field } from './sfdcField'
 
 export const useSchemaStore = createStore({
     id: 'schema',
-    state: () => ({})
+    state: () => ({}),
 })
 
 export async function loadSchema(objectName) {
@@ -28,5 +28,5 @@ export async function getField(objectName, field_name) {
             return f
         }
     }
-    throw new Error('field not found:'+field_name)
+    throw new Error('field not found:' + field_name)
 }
