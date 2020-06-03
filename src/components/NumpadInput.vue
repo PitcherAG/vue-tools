@@ -5,7 +5,17 @@
         <div class="ui test" :class="inputAttrs.class" ref="inputDiv">
             <i v-if="leftIcon" class="icon" :class="leftIcon" style="z-index: 1" />
             <slot v-if="labelLeftSlot" name="labelLeft" />
-            <input :value="value" type="text" readonly="readonly" :style="inputAttrs.style" :placeholder="placeholder" ref="input" @focus="focus(true)" @blur="focus(false)" @keypress.prevent />
+            <input
+                :value="value"
+                type="text"
+                readonly="readonly"
+                :style="inputAttrs.style"
+                :placeholder="placeholder"
+                ref="input"
+                @focus="focus(true)"
+                @blur="focus(false)"
+                @keypress.prevent
+            />
             <i v-if="rightIcon" class="icon" :class="rightIcon" />
             <slot v-if="labelRightSlot" name="labelRight" />
         </div>
