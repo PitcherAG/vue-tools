@@ -2,18 +2,10 @@
     <!-- Numpad -->
     <div class="numpad-input" :class="[group]" :style="{ display: fluid ? 'block' : 'inline-block' }">
         <!-- Input -->
-        <div class="ui test" :class="inputClasses" ref="inputDiv">
+        <div class="ui test" :class="inputAttrs.class" ref="inputDiv">
             <i v-if="leftIcon" class="icon" :class="leftIcon" style="z-index: 1" />
             <slot v-if="labelLeftSlot" name="labelLeft" />
-            <input
-                :value="value"
-                type="text"
-                readonly="readonly"
-                ref="input"
-                @focus="focus(true)"
-                @blur="focus(false)"
-                @keypress.prevent
-            />
+            <input :value="value" type="text" readonly="readonly" :style="inputAttrs.style" :placeholder="placeholder" ref="input" @focus="focus(true)" @blur="focus(false)" @keypress.prevent />
             <i v-if="rightIcon" class="icon" :class="rightIcon" />
             <slot v-if="labelRightSlot" name="labelRight" />
         </div>
@@ -123,12 +115,19 @@ export default defineComponent({
         fluid: Boolean,
         disabled: Boolean,
         color: String,
+        minWidth: {
+            type: Number | String,
+            default: 50
+        },
         size: String,
         rightIcon: String,
         leftIcon: String,
+        placeholder: {
+            type: String,
+            default: ''
+        },
         max: {
-            type: Number,
-            default: 1000000
+            type: Number
         },
         noAnimation: {
             type: Boolean,
@@ -145,17 +144,22 @@ export default defineComponent({
             labelRightSlot: !!ctx.slots.labelRight
         })
 
-        const inputClasses = computed(() => {
+        const inputAttrs = computed(() => {
             return {
-                fluid: props.fluid,
-                disabled: props.disabled,
-                [props.color]: !!props.color,
-                [props.size]: !!props.size,
-                left: props.leftIcon,
-                right: ctx.slots.labelRight,
-                labeled: ctx.slots.labelLeft || ctx.slots.labelRight,
-                icon: props.rightIcon || props.leftIcon,
-                input: true
+                class: {
+                    fluid: props.fluid,
+                    disabled: props.disabled,
+                    [props.color]: !!props.color,
+                    [props.size]: !!props.size,
+                    left: props.leftIcon,
+                    right: ctx.slots.labelRight,
+                    labeled: ctx.slots.labelLeft || ctx.slots.labelRight,
+                    icon: props.rightIcon || props.leftIcon,
+                    input: true
+                },
+                style: {
+                    minWidth: `${parseInt(props.minWidth)}px`
+                }
             }
         })
 
@@ -185,7 +189,7 @@ export default defineComponent({
 
         function addVal(val) {
             // before adding a new value, check if next value will pass over the max number
-            if (parseFloat(props.value) >= props.max || parseInt('1' + props.value) >= props.max) {
+            if (props.max && (parseFloat(props.value) >= props.max || parseInt('1' + props.value) >= props.max)) {
                 // max number passing on next click, don't add value
                 return
             }
@@ -211,10 +215,12 @@ export default defineComponent({
                 // decrease action
                 parsedNumber--
                 emit(parsedNumber.toFixed(props.decimals).toString())
-            } else if (action === 'inc' && parseFloat(props.value) < props.max) {
+            } else if (action === 'inc') {
                 // increase action
                 parsedNumber++
-                parsedNumber = parsedNumber > props.max ? props.max : parsedNumber
+                if (props.max && parseFloat(props.value) + 1 >= props.max) {
+                    parsedNumber = props.max
+                }
                 emit(parsedNumber.toFixed(props.decimals).toString())
             }
         }
@@ -307,7 +313,7 @@ export default defineComponent({
 
         return {
             ...toRefs(localState),
-            inputClasses,
+            inputAttrs,
             addVal,
             incDec,
             backspace,
