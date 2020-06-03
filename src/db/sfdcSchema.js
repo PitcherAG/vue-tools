@@ -21,11 +21,12 @@ export async function loadSchema(objectName) {
 }
 
 export async function getField(objectName, field_name) {
-    const schema = loadSchema(objectName)
+    const schema = await loadSchema(objectName)
     for (const field of schema.fields) {
         if (field.name === field_name.trim()) {
             const f = new Field(field, objectName)
             return f
         }
     }
+    throw new Error('field not found:'+field_name)
 }

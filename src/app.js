@@ -146,9 +146,19 @@ export function saveObject(obj) {
     }
 }
 
+
 export function getSchema(objectName) {
-    const desc = objectName + '_desc'
-    return fireEvent('getFromHTML', { id: desc, useSFDCDB: true })
+    let desc
+    if (PLATFORM === 'ANDROID') {
+        desc = objectName + '_desc'
+    } else if (PLATFORM === "IOS") {
+        desc = objectName + '_desc_cache'
+    }
+    try {
+        return fireEvent('getFromHTML', { id: desc, useSFDCDB: true })
+    }catch(e){
+        throw new Error('Schema not found:'+objectName)
+    }
 }
 
 export function getLayout(objectName, objectTypeId) {
