@@ -345,11 +345,12 @@ $border-radius: 8.4px;
         border-radius: $border-radius;
         background-color: $numpad-bg;
         position: fixed;
-        z-index: 5;
+        z-index: 10000;
         top: auto;
         left: auto;
         right: 16px;
         bottom: 16px;
+        border: $border;
 
         &.top {
             bottom: auto;
