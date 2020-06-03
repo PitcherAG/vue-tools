@@ -5,6 +5,7 @@
     "author": "Pitcher AG",
     "scripts": {
         "build": "rimraf ./dist && babel src -d dist",
+        "demo": "vue-cli-service serve --port 5000 --public http://localhost:5000/demo --open",
         "test:unit": "cross-env NODE_ICU_DATA=node_modules/full-icu vue-cli-service test:unit",
         "lint": "vue-cli-service lint",
         "npm link": "npm link",
