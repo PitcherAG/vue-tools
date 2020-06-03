@@ -250,9 +250,6 @@ export default defineComponent({
                 if (props.value === '') {
                     emit(defaultValue)
                 }
-                // select the value inside input
-                ctx.refs.input.select()
-
                 if (props.noAnimation) {
                     return
                 }
