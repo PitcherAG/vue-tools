@@ -6,3 +6,4 @@ pitcher-vue-sdk.iml
 coverage
 *.mo
 *.po~
+.vscode
