@@ -378,13 +378,25 @@ $border-radius: 8.4px;
                     text-align: center;
                     vertical-align: middle;
                     cursor: pointer;
+                    user-select: none;
 
                     &:not(:last-child) {
                         border-right: $border;
                     }
 
-                    &:hover {
-                        color: rgba(0, 0, 0, 0.3);
+                    &:visited,
+                    &:focus {
+                        color: rgba(0, 0, 0, 0.6);
+                    }
+
+                    @media (hover: hover) {
+                        &:hover {
+                            color: rgba(0, 0, 0, 0.3);
+                        }
+                    }
+
+                    i {
+                        pointer-events: none;
                     }
                 }
             }
