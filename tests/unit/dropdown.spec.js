@@ -1,4 +1,3 @@
-
 import Dropdown from '../../src/components/Dropdown'
 
 import CompositionApi from '@vue/composition-api'
@@ -13,13 +12,13 @@ describe('Dropdown.vue', () => {
         propsData: {
             options: [
                 { name: 'hello', value: 1 },
-                { name: 'world', value: 2 },
+                { name: 'world', value: 2 }
             ],
             textField: 'name',
             valueField: 'value',
             defaultText: 'select',
-            value: null,
-        },
+            value: null
+        }
     })
     it('dropdown value changes', async () => {
         expect(wrapper.find('.default').text()).toBe(`select`)
@@ -30,4 +29,3 @@ describe('Dropdown.vue', () => {
         expect(wrapper.find('.text').text()).toBe('hello')
     })
 })
-

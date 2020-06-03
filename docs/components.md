@@ -65,13 +65,15 @@ Custom component
 | :--- | :--- | :--- | :--- | :--- |
 | `v-model` | `String` | yes | - | input value
 | `decimals` | `Number` | no | 2 | decimal value for input
-| `max` | `Number` | no | 1000000 | maximum number that input can reach
+| `max` | `Number` | no | undefined | maximum number that input can reach
+| `minWidth` | `Number | String` | no | 50 | min-width css property for input element
 | `group` | `String` | no | no-group | for grouping inputs & navigate thru numpad buttons
 | `fluid` | `Boolean` | no | undefined | fluid input size
 | `disabled` | `Boolean` | no | undefined | disable input
 | `size` | `String` | no | medium | tiny \| small \| large \| big \| huge \| massive 
 | `rightIcon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
 | `leftIcon` | `String` | no | medium | FA icon name. Use ONLY icon name i.e. users times etc.
+| `placeholder` | `String` | no | '' | placeholder for input element
 | `noAnimation` | `Boolean` | no | false | Input animation on focus
 | `color` | `String` | no | undefined | color for input container class (fomantic)
 
