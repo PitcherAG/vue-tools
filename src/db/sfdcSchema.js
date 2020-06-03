@@ -4,7 +4,7 @@ import { Field } from './sfdcField'
 
 export const useSchemaStore = createStore({
     id: 'schema',
-    state: () => ({}),
+    state: () => ({})
 })
 
 export async function loadSchema(objectName) {
