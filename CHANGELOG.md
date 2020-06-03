@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.2
+
+- added demo page for future changes & development of UI elements
+- numpadInput updated
+  - minWidth attr added
+  - placeholder attr added
+  - max attr has not default value anymore
+  - z-index: 10000 & user-select: none added
+
+
 ## 1.3.1
 
 - plural forms for translations works now
