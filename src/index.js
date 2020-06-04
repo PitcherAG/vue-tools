@@ -30,6 +30,4 @@ export * from './utils'
 export * from './components/export.js'
 
 // Mixins
-import ModalMixin from './semantic/mixins/modal.js'
-
-export { ModalMixin }
+export { default as ModalMixin } from './semantic/mixins/modal.js'
