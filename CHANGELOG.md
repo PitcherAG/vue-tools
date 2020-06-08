@@ -8,6 +8,8 @@
   - placeholder attr added
   - max attr has not default value anymore
   - z-index: 10000 & user-select: none added
+- dropdown multiple support
+- partial dropdown search support
 
 
 ## 1.3.1
