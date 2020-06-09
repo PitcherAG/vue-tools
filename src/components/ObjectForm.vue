@@ -2,7 +2,7 @@
     <div>
         <div class="ui red negative segment transition visible" v-if="validationError">
             <div class="ui red header">
-                <i class="disabled warning sign icon"></i>
+                <i class="disabled warning sign icon" />
                 <div class="content">
                     {{ validationErrorTitle }}
                     <div class="sub header">
@@ -15,7 +15,7 @@
             <sui-form-field :required="true" :error="state.showErrors && !state.recordType">
                 <label>Please select a Record Type</label>
                 <Dropdown
-                    :defaultText="$gettext('Select Record Type')"
+                    :default-text="$gettext('Select Record Type')"
                     v-model="state.recordTypeSaved"
                     :options="state.recordTypes"
                     text-field="name"
@@ -29,7 +29,7 @@
                 v-model="state.obj[field.name].value"
                 :key="key"
                 :field="field"
-                :showError="state.showErrors"
+                :show-error="state.showErrors"
             />
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
@@ -44,7 +44,7 @@
                                 v-model="state.obj[comp.value].value"
                                 :key="key"
                                 :field="comp.field"
-                                :showError="state.showErrors"
+                                :show-error="state.showErrors"
                                 :label="item.label"
                             />
                         </template>
@@ -215,7 +215,7 @@ export default {
                 if (!state.recordTypeId) {
                     return
                 }
-                let fields = []
+                const fields = []
                 let req_fields = []
 
                 const includeFields = props.fields

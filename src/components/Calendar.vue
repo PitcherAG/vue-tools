@@ -1,7 +1,7 @@
 <template>
     <div class="ui calendar" ref="calendar">
         <div class="ui input left icon">
-            <i class="calendar icon"></i>
+            <i class="calendar icon" />
             <input ref="input" type="text" :placeholder="placeholder" v-model="value" />
         </div>
     </div>

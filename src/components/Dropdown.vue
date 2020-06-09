@@ -1,11 +1,11 @@
 <template>
     <div :class="classList" ref="dropdown" @click="onSearch">
         <input type="hidden" v-model="value" />
-        <i :class="icon + ' icon'"></i>
-        <input v-if="hasSearch" ref="search" v-on:input="onSearch" class="search" autocomplete="off" tabindex="0" />
-        <div class="text" v-show="value"></div>
+        <i :class="icon + ' icon'" />
+        <input v-if="hasSearch" ref="search" @input="onSearch" class="search" autocomplete="off" tabindex="0" />
+        <div class="text" v-show="value" />
         <div class="default" v-show="!value && !isSearching">{{ defaultText }}</div>
-        <i class="remove icon" style="z-index:100"></i>
+        <i class="remove icon" style="z-index:100" />
         <div class="menu">
             <div
                 class="item"

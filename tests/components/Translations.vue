@@ -14,7 +14,7 @@
 import { ref } from '@vue/composition-api'
 
 export default {
-    name: 'translations',
+    name: 'Translations',
     props: {
         title: {
             type: String,

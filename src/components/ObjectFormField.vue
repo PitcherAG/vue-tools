@@ -6,41 +6,41 @@
             type="text"
             placeholder=""
             :value="value"
-            v-on:input="$emit('input', $event.target.value)"
+            @input="$emit('input', $event.target.value)"
             :maxlength="field.length"
         />
         <textarea
             v-if="type === 'textarea' || type === 'address'"
-            v-on:input="$emit('input', $event.target.value)"
+            @input="$emit('input', $event.target.value)"
             :value="value"
             :maxlength="field.length"
-        ></textarea>
+        />
         <Dropdown
             v-if="type === 'picklist' || type === 'multipicklist'"
-            :defaultText="$gettext('Select')"
+            :default-text="$gettext('Select')"
             :multiple="type === 'multipicklist'"
-            v-on:input="$emit('input', $event)"
+            @input="$emit('input', $event)"
             :value="value"
             :options="picklist"
-            addClass="selection"
-        ></Dropdown>
+            add-class="selection"
+        />
         <Dropdown
             v-if="type === 'reference'"
-            :defaultText="$gettext('Select')"
+            :default-text="$gettext('Select')"
             :multiple="type === 'multipicklist'"
-            v-on:input="$emit('input', $event)"
+            @input="$emit('input', $event)"
             :value="value"
             :options="field.references"
-            addClass="selection"
-        ></Dropdown>
+            add-class="selection"
+        />
 
         <Calendar
             v-if="type === 'date' || type === 'datetime'"
             :type="type"
-            v-on:input="$emit('input', $event)"
+            @input="$emit('input', $event)"
             :default-text="type == 'date' ? $gettext('Date') : $gettext('Date/Time')"
             :value="value"
-        ></Calendar>
+        />
 
         <input
             v-if="type === 'double' || type === 'currency' || type === 'int'"
@@ -48,7 +48,7 @@
             :numpadGroup="'ObjectFormField'"
             :numpadDecimalPlaces="field.digits"
             :value="value"
-            v-on:input="$emit('input', $event.target.value)"
+            @input="$emit('input', $event.target.value)"
             placeholder=""
             style="width:85px;"
             type="number"
@@ -65,7 +65,7 @@
             v-if="type === 'boolean'"
             toggle
             :value="value ? 'on' : 'off'"
-            v-on:input="$emit('input', $event.target.value == 'on')"
+            @input="$emit('input', $event.target.value == 'on')"
         />
     </sui-form-field>
 </template>
