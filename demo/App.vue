@@ -8,7 +8,7 @@
 import Demo from './Demo'
 
 export default {
-    name: 'app',
+    name: 'App',
     components: {
         Demo
     }
@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style lang="scss">
-#demo-app {
+#app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: left;
