@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="px-4">
+    <div id="app" class="px-4 fill-height">
         <Demo />
     </div>
 </template>
@@ -21,9 +21,7 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: left;
     color: #2c3e50;
-    padding-top: 60px;
     width: 100%;
-    overflow: hidden;
     max-width: 100%;
 }
 
