@@ -64,7 +64,7 @@ module.exports = {
                 ignoreComments: true,
                 ignoreTrailingComments: true,
                 ignoreUrls: true,
-                ignoreStrings: false,
+                ignoreStrings: true,
                 ignoreTemplateLiterals: false,
                 ignoreRegExpLiterals: false,
                 ignoreHTMLAttributeValues: false,
