@@ -95,7 +95,8 @@ module.exports = {
             }
         ],
         'vue/no-setup-props-destructure': 'warn',
-        'vue/no-template-shadow': 'error'
+        'vue/no-template-shadow': 'error',
+        'vue/no-deprecated-filter': 'warn'
     },
     overrides: [
         {
