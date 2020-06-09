@@ -16,7 +16,7 @@ export default {
         },
         type: {
             default: 'datetime',
-            validator: function(value) {
+            validator: value => {
                 return ['datetime', 'date', 'time', 'month', 'year'].indexOf(value) !== -1
             }
         },
@@ -45,13 +45,13 @@ export default {
                     type: props.type,
                     today: props.today,
                     action: props.action,
-                    onChange: function() {
+                    onChange: () => {
                         console.log('change', attrs)
                         attrs.emit('input', attrs.refs.input.value)
                     },
                     touchReadonly: true,
                     formatter: {
-                        date: function(date) {
+                        date: date => {
                             if (!date) return ''
                             //if(props.type==='date') {
                             const yyyy = date.getFullYear().toString()
