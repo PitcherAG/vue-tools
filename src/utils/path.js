@@ -1,5 +1,5 @@
 function removeRoot(path) {
-    let splits = path.split('.')
+    const splits = path.split('.')
     if (splits.length === 1) {
         return path
     }
@@ -12,9 +12,9 @@ function getPath(obj, path, ignoreRoot = false) {
     if (ignoreRoot) {
         path = removeRoot(path)
     }
-    let splits = path.split('.')
-    let attr = splits.shift()
-    let result = obj[attr]
+    const splits = path.split('.')
+    const attr = splits.shift()
+    const result = obj[attr]
     if (splits.length === 0) {
         if (typeof result === 'function') {
             return result()

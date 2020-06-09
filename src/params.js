@@ -58,7 +58,7 @@ export async function loadParams() {
 
     // for testing
     if (process.env.VUE_APP_PARAMS) {
-        let preParams = JSON.parse(process.env.VUE_APP_PARAMS)
+        const preParams = JSON.parse(process.env.VUE_APP_PARAMS)
         patch(preParams)
         return state
     }
@@ -129,7 +129,7 @@ export async function loadServerJSON(timeout = 5) {
     // for testing
     if (process.env.VUE_APP_SERVERJSON) {
         // for testing
-        let preServerJSON = JSON.parse(process.env.VUE_APP_SERVERJSON)
+        const preServerJSON = JSON.parse(process.env.VUE_APP_SERVERJSON)
         patch(preServerJSON)
         return state
     }

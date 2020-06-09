@@ -4,7 +4,7 @@ import { execBool } from '../utils/contextExec'
 
 export class Field {
     constructor(obj, objectType) {
-        for (let a in obj) {
+        for (const a in obj) {
             this[a] = obj[a]
         }
         const self = this
@@ -66,7 +66,7 @@ export class Field {
         }
         q += ' from ' + table_name
         const data = await query(q)
-        let result = []
+        const result = []
         for (const obj of data) {
             if (filters) {
                 const pass = execBool(filters, obj)
