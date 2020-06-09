@@ -126,7 +126,7 @@ export default defineComponent({
         disabled: Boolean,
         color: String,
         minWidth: {
-            type: Number | String,
+            type: [Number, String],
             default: 50
         },
         size: String,
