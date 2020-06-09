@@ -29,7 +29,7 @@ module.exports = {
         'no-prototype-builtins': 1,
         'no-empty': 1,
         'no-var': 1,
-        'no-unused-vars': 0,
+        'no-unused-vars': 1,
         'prefer-arrow-callback': 1,
         'arrow-parens': ['error', 'as-needed'],
         'prefer-const': [
