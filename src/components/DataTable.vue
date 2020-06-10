@@ -5,7 +5,13 @@
                 <!-- If heading-row slot exist, override with a slot -->
                 <template v-if="hasHeadingRowSlot">
                     <!-- map only visible fields, return rawData as well -->
-                    <slot name="heading-row" :fields="fields.filter(f => !f.hide)" :raw="fields" :sort="sort" :getClass="getTHClass" />
+                    <slot
+                        name="heading-row"
+                        :fields="fields.filter(f => !f.hide)"
+                        :raw="fields"
+                        :sort="sort"
+                        :getClass="getTHClass"
+                    />
                 </template>
                 <template v-else v-for="f in fields">
                     <!-- default table heading -->
@@ -52,7 +58,19 @@ import { defineComponent, computed, reactive, toRefs } from '@vue/composition-ap
 import _ from 'lodash'
 
 function sortBy(data, by, order) {
-    return _.orderBy(data, [by], [order])
+    // function to check date
+    const isDate = val => Date.parse(val) !== isNaN(val)
+
+    // sort logic
+    return _.orderBy(
+        data,
+        o => {
+            // check if the property is a date, return as a date
+            // otherwise return the object it self
+            return isDate(o[by]) ? new Date(o[by]) : o[by]
+        },
+        [order]
+    )
 }
 
 export default defineComponent({
