@@ -34,6 +34,22 @@
                     Edit
                 </button>
             </template>
+            <template #t-foot>
+                <tr>
+                    <th></th>
+                    <th colspan="6">
+                        <div class="ui right floated small primary labeled icon button">
+                            <i class="user icon"></i> Add User
+                        </div>
+                        <div class="ui small  button">
+                            Approve
+                        </div>
+                        <div class="ui small  disabled button">
+                            Approve All
+                        </div>
+                    </th>
+                </tr>
+            </template>
         </DataTable>
     </div>
 </template>
@@ -58,7 +74,8 @@ export default {
             options: {
                 // TODO
                 searchFor: '',
-                searchFields: ['title', 'url']
+                searchFields: ['title', 'url'],
+                noHeader: false
             },
             fields: [
                 {
@@ -70,54 +87,49 @@ export default {
                     title: 'Title',
                     dataField: 'title',
                     icon: 'cog',
-                    width: '3%', // TODO
+                    // width: '25px',
                     thClass: 'left aligned',
-                    trClass: 'left aligned',
+                    tdClass: 'left aligned',
                     sortable: true
+                    // colspan: 2
                 },
                 {
                     title: 'Url',
                     dataField: 'url',
-                    width: '3%',
                     thClass: 'left aligned',
-                    trClass: 'left aligned',
+                    tdClass: 'left aligned',
                     transform: val => `url: ${val}`
                 },
                 {
                     title: 'Favorite',
                     dataField: 'isFavorite',
-                    width: '3%',
                     thClass: 'left aligned',
-                    trClass: 'left aligned'
+                    tdClass: 'left aligned'
                 },
                 {
                     title: 'In Board',
                     dataField: 'isInBoard',
-                    width: '3%',
                     thClass: 'center aligned',
-                    trClass: 'center aligned'
+                    tdClass: 'center aligned'
                 },
                 {
                     title: 'New',
                     dataField: 'isNew',
-                    width: '3%',
                     thClass: 'right aligned',
-                    trClass: 'right aligned'
+                    tdClass: 'right aligned'
                 },
                 {
                     title: 'Created Date',
                     dataField: 'createdDate',
-                    width: '3%',
                     thClass: 'center aligned',
-                    trClass: 'center aligned',
+                    tdClass: 'center aligned',
                     sortable: true
                 },
                 {
                     title: 'Actions',
                     dataField: '__slot:actions',
-                    width: '3%',
                     thClass: 'center aligned',
-                    trClass: 'center aligned'
+                    tdClass: 'center aligned'
                 }
             ]
             // test: '',
