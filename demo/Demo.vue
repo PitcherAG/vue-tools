@@ -13,11 +13,11 @@
             text-field="text"
             value-field="value"
         /> -->
-        <DataTable :data="data" :fields="fields" celled>
-
-            <!-- <template #heading-row="{ rowData }">
-                <th v-for="(d, dKey) in rowData" :key="dKey">
-                    {{ d.title }}
+        <DataTable class="celled" :data="data" :fields="fields" celled>
+            <!-- <template #heading-row="{ fields, sort, getClass }">
+                <th v-for="(f, fKey) in fields" :key="fKey" @click="sort(f.dataField)" :class="getClass(f)">
+                    <i v-if="f.icon" class="icon" :class="f.icon" />
+                    {{ f.title }}
                 </th>
             </template> -->
             <!-- <template #row="{ rowData, raw }">
@@ -55,6 +55,11 @@ export default {
     setup() {
         const state = reactive({
             data,
+            options: {
+                // TODO
+                searchFor: '',
+                searchFields: ['title', 'url']
+            },
             fields: [
                 {
                     title: 'Id',
@@ -63,53 +68,56 @@ export default {
                 },
                 {
                     title: 'Title',
-                    width: '3%',
                     dataField: 'title',
-                    dataClass: 'left aligned',
-                    contentClass: 'left aligned'
+                    icon: 'cog',
+                    width: '3%', // TODO
+                    thClass: 'left aligned',
+                    trClass: 'left aligned',
+                    sortable: true
                 },
                 {
                     title: 'Url',
-                    width: '3%',
                     dataField: 'url',
-                    dataClass: 'left aligned',
-                    contentClass: 'left aligned'
+                    width: '3%',
+                    thClass: 'left aligned',
+                    trClass: 'left aligned',
+                    transform: val => `url: ${val}`
                 },
                 {
                     title: 'Favorite',
-                    width: '3%',
                     dataField: 'isFavorite',
-                    dataClass: 'left aligned',
-                    contentClass: 'left aligned'
+                    width: '3%',
+                    thClass: 'left aligned',
+                    trClass: 'left aligned'
                 },
                 {
                     title: 'In Board',
-                    width: '3%',
                     dataField: 'isInBoard',
-                    dataClass: 'center aligned',
-                    contentClass: 'center aligned'
+                    width: '3%',
+                    thClass: 'center aligned',
+                    trClass: 'center aligned'
                 },
                 {
                     title: 'New',
-                    width: '3%',
                     dataField: 'isNew',
-                    dataClass: 'right aligned',
-                    contentClass: 'right aligned'
+                    width: '3%',
+                    thClass: 'right aligned',
+                    trClass: 'right aligned'
                 },
                 {
                     title: 'Created Date',
-                    width: '3%',
                     dataField: 'createdDate',
-                    dataClass: 'center aligned',
-                    contentClass: 'center aligned'
+                    width: '3%',
+                    thClass: 'center aligned',
+                    trClass: 'center aligned',
+                    sortable: true
                 },
                 {
                     title: 'Actions',
-                    width: '3%',
                     dataField: '__slot:actions',
-                    dataClass: 'center aligned',
-                    contentClass: 'center aligned',
-                    collapse: true
+                    width: '3%',
+                    thClass: 'center aligned',
+                    trClass: 'center aligned'
                 }
             ]
             // test: '',
