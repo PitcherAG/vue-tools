@@ -58,6 +58,47 @@
                 <slot name="t-foot" />
             </tfoot>
         </template>
+        <tfoot>
+            <tr>
+                <th :colspan="fields.length" class="right aligned">
+                    <div class="ui pagination menu">
+                        <a class="item icon">
+                            <i class="icon angle double left" />
+                        </a>
+                        <a class="item icon" @click="paginate(pagination.currentPage - 1)">
+                            <i class="icon chevron left" />
+                        </a>
+                        <a class="item">
+                            {{ pagination.startPage }}
+                        </a>
+                        <a class="active item">
+                            a
+                        </a>
+                        <a class="item">
+                            b
+                        </a>
+                        <div class="disabled item">
+                            ...
+                        </div>
+                        <a class="item">
+                            x
+                        </a>
+                        <!-- <a class="item">
+                            {{ pagination.totalPages }}
+                        </a> -->
+                        <a class="item">
+                            {{ pagination.endPage }}
+                        </a>
+                        <a class="item icon" @click="paginate(pagination.currentPage + 1)">
+                            <i class="icon chevron right" />
+                        </a>
+                        <a class="item icon">
+                            <i class="icon angle double right" />
+                        </a>
+                    </div>
+                </th>
+            </tr>
+        </tfoot>
     </table>
 </template>
 
@@ -85,9 +126,26 @@ export default defineComponent({
         searchFields: {
             type: Array
         },
+        noDataTemplate: {
+            type: String,
+            default: 'No data available.'
+        },
         noHeader: {
             type: Boolean,
             default: false
+        },
+        fixedHeader: {
+            type: Boolean,
+            default: false
+        },
+        // Pagination related
+        initialPage: {
+            type: Number,
+            default: 1
+        },
+        perPage: {
+            type: Number,
+            default: 10
         }
     },
     setup(props, { slots }) {
@@ -103,8 +161,19 @@ export default defineComponent({
 
         const state = reactive({
             sortBy: '',
-            sortOrder: ''
+            sortOrder: '',
+            pagination: {
+                currentPage: props.initialPage || 1,
+                totalPages: Math.ceil(props.data.length / props.perPage),
+                startPage: 1,
+                endPage: 10,
+                startIndex: 1,
+                endIndex: 0,
+                pages: 0
+            }
         })
+
+        calculatePagination()
 
         const tableData = computed(() => {
             let temp = props.data
@@ -113,7 +182,8 @@ export default defineComponent({
                 temp = sortBy(props.data, state.sortBy, state.sortOrder)
             }
 
-            return temp
+            // pagination
+            return temp.slice(state.pagination.startIndex, state.pagination.startIndex + props.perPage)
         })
 
         function sort(by) {
@@ -152,7 +222,38 @@ export default defineComponent({
             return filtered
         }
 
-        return { ...toRefs(state), tableClasses, ...slotChecks, sort, getTHClass, getScopeData, tableData }
+        function calculatePagination() {
+            if (state.pagination.totalPages <= 10) {
+                // less than 10 total pages so show all
+                state.pagination.startPage = 1
+                state.pagination.endPage = state.pagination.totalPages
+            } else {
+                // more than 10 total pages so calculate start and end pages
+                if (state.pagination.currentPage <= 6) {
+                    state.pagination.startPage = 1
+                    state.pagination.endPage = 10
+                } else if (state.pagination.currentPage + 4 >= state.pagination.totalPages) {
+                    state.pagination.startPage = state.pagination.totalPages - 9
+                    state.pagination.endPage = state.pagination.totalPages
+                } else {
+                    state.pagination.startPage = state.pagination.currentPage - 5
+                    state.pagination.endPage = state.pagination.currentPage + 4
+                }
+            }
+            state.pagination.startIndex = (state.pagination.currentPage - 1) * props.perPage
+            state.pagination.endIndex = state.pagination.startIndex + props.perPage
+            state.pagination.pages = _.range(state.pagination.startPage, state.pagination.endPage + 1)
+            console.log('current', state.pagination.currentPage)
+            console.log('pages', state.pagination.pages)
+            console.log('pagi', state.pagination)
+        }
+
+        function paginate(to) {
+            state.pagination.currentPage = to
+            calculatePagination()
+        }
+
+        return { ...toRefs(state), tableClasses, ...slotChecks, sort, getTHClass, getScopeData, tableData, paginate }
     }
 })
 </script>

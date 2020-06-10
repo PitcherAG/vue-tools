@@ -13,7 +13,7 @@
             text-field="text"
             value-field="value"
         /> -->
-        <DataTable class="celled" :data="data" :fields="fields" celled>
+        <DataTable class="celled" :data="data" :fields="fields" :per-page="10">
             <!-- <template #heading-row="{ fields, sort, getClass }">
                 <th v-for="(f, fKey) in fields" :key="fKey" @click="sort(f.dataField)" :class="getClass(f)">
                     <i v-if="f.icon" class="icon" :class="f.icon" />
@@ -34,7 +34,7 @@
                     Edit
                 </button>
             </template>
-            <template #t-foot>
+            <!-- <template #t-foot>
                 <tr>
                     <th></th>
                     <th colspan="6">
@@ -49,7 +49,7 @@
                         </div>
                     </th>
                 </tr>
-            </template>
+            </template> -->
         </DataTable>
     </div>
 </template>
@@ -75,7 +75,10 @@ export default {
                 // TODO
                 searchFor: '',
                 searchFields: ['title', 'url'],
-                noHeader: false
+                noHeader: false,
+                noDataTemplate: '', // TODO & Slot
+                fixedHeader: '', // TODO
+                width: '100%' // TODO
             },
             fields: [
                 {
