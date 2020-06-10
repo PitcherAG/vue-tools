@@ -1,7 +1,7 @@
 <template>
-    <table class="ui table pitcher sortable mb-6" :class="tableClasses">
+    <table class="ui table pitcher mb-6" :class="tableClasses">
         <thead>
-            <tr v-if="!hideHeader">
+            <tr v-if="!noHeader">
                 <!-- If heading-row slot exist, override with a slot -->
                 <template v-if="hasHeadingRowSlot">
                     <!-- map only visible fields, return rawData as well -->
@@ -20,6 +20,8 @@
                         :key="f.name"
                         :class="getTHClass(f)"
                         @click="f.sortable ? sort(f.dataField) : null"
+                        :colspan="f.colspan"
+                        :style="{ width: f.width }"
                     >
                         <i v-if="f.icon" class="icon" :class="f.icon" />
                         {{ f.title }}
@@ -37,7 +39,7 @@
 
                 <!-- Default Row content -->
                 <template v-else v-for="(f, fKey) in fields">
-                    <td v-if="!f.hide" :key="fKey" :class="f.trClass">
+                    <td v-if="!f.hide" :key="fKey" :class="f.tdClass">
                         <!-- if this field is a slot, get the slot -->
                         <template v-if="f.dataField.includes('__slot:')">
                             <slot :name="f.dataField.replace('__slot:', '')" :data="item" />
@@ -50,6 +52,12 @@
                 </template>
             </tr>
         </tbody>
+        <!-- TFoot slot -->
+        <template v-if="hasTFootSlot">
+            <tfoot>
+                <slot name="t-foot" />
+            </tfoot>
+        </template>
     </table>
 </template>
 
@@ -71,23 +79,26 @@ export default defineComponent({
             type: Array,
             required: true
         },
-        hideHeader: {
-            type: Boolean,
-            default: false
+        searchFor: {
+            type: [String, Number]
         },
-        sortable: {
+        searchFields: {
+            type: Array
+        },
+        noHeader: {
             type: Boolean,
             default: false
         }
     },
     setup(props, { slots }) {
         const tableClasses = {
-            sortable: props.sortable
+            sortable: props.fields.some(f => f.sortable)
         }
 
         const slotChecks = {
             hasRowSlot: !!slots.row,
-            hasHeadingRowSlot: !!slots['heading-row']
+            hasHeadingRowSlot: !!slots['heading-row'],
+            hasTFootSlot: !!slots['t-foot']
         }
 
         const state = reactive({
