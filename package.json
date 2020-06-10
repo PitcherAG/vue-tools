@@ -16,6 +16,7 @@
     "main": "src",
     "dependencies": {
         "core-js": "^3.6.4",
+        "lodash": "^4.17.15",
         "moment": "^2.26.0"
     },
     "devDependencies": {
