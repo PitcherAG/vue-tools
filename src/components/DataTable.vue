@@ -58,19 +58,7 @@ import { defineComponent, computed, reactive, toRefs } from '@vue/composition-ap
 import _ from 'lodash'
 
 function sortBy(data, by, order) {
-    // function to check date
-    const isDate = val => Date.parse(val) !== isNaN(val)
-
-    // sort logic
-    return _.orderBy(
-        data,
-        o => {
-            // check if the property is a date, return as a date
-            // otherwise return the object it self
-            return isDate(o[by]) ? new Date(o[by]) : o[by]
-        },
-        [order]
-    )
+    return _.orderBy(data, [by], [order])
 }
 
 export default defineComponent({
