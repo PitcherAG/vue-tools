@@ -306,11 +306,12 @@ export default defineComponent({
             const scrollWidth = tbody.offsetWidth - tbody.scrollWidth
             const heading = document.querySelector('thead tr')
             heading.style.paddingRight = `${scrollWidth}px`
-            // console.log(window.innerWidth - document.documentElement.clientWidth)
         }
 
         onMounted(() => {
-            fixHeading()
+            if (props.fixedHeader) {
+                fixHeading()
+            }
         })
 
         return {
