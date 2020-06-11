@@ -1,5 +1,5 @@
 <template>
-    <table class="ui table pitcher mb-6" :class="tableClasses">
+    <table v-if="tableData.length > 0" class="ui table pitcher mb-6" :class="tableClasses">
         <thead>
             <tr v-if="!noHeader">
                 <!-- If heading-row slot exist, override with a slot -->
@@ -101,11 +101,20 @@
             </tr>
         </tfoot>
     </table>
+    <!-- no-data-template slot -->
+    <div v-else-if="hasNoDataSlot">
+        <slot name="no-data-template" />
+    </div>
+    <!-- default no data text -->
+    <div v-else class="pitcher table no-data">
+        <span class="ui text large grey center">{{ noDataText }}</span>
+    </div>
 </template>
 
 <script>
 import { defineComponent, computed, reactive, toRefs } from '@vue/composition-api'
 import _ from 'lodash'
+import { searchObjectArray } from '@/utils'
 
 function sortBy(data, by, order) {
     return _.orderBy(data, [by], [order])
@@ -125,11 +134,12 @@ export default defineComponent({
             type: [String, Number]
         },
         searchFields: {
-            type: Array
+            type: Array,
+            default: () => []
         },
-        noDataTemplate: {
+        noDataText: {
             type: String,
-            default: 'No data available.'
+            default: 'Table has not any data to show.'
         },
         noHeader: {
             type: Boolean,
@@ -165,7 +175,8 @@ export default defineComponent({
         const slotChecks = {
             hasRowSlot: !!slots.row,
             hasHeadingRowSlot: !!slots['heading-row'],
-            hasTFootSlot: !!slots['t-foot']
+            hasTFootSlot: !!slots['t-foot'],
+            hasNoDataSlot: !!slots['no-data-template']
         }
 
         const state = reactive({
@@ -182,18 +193,25 @@ export default defineComponent({
             }
         })
 
-        calculatePagination()
+        calculatePagination(props.data)
 
         const tableData = computed(() => {
             let temp = props.data
 
+            if (props.searchFor !== '') {
+                temp = searchObjectArray(temp, props.searchFor, props.searchFields)
+            }
+
+            // pagination active
             if (!props.noPagination) {
+                calculatePagination(temp)
                 temp = temp.slice(state.pagination.startIndex, state.pagination.startIndex + props.perPage)
             }
 
             if (state.sortBy) {
                 temp = sortBy(props.data, state.sortBy, state.sortOrder)
             }
+
             return temp
         })
 
@@ -233,10 +251,12 @@ export default defineComponent({
             return filtered
         }
 
-        function calculatePagination() {
+        function calculatePagination(data) {
             if (props.noPagination) {
                 return
             }
+
+            state.pagination.totalPages = Math.ceil(data.length / props.perPage)
             if (state.pagination.totalPages <= 10) {
                 // less than 10 total pages so show all
                 state.pagination.startPage = 1
@@ -270,10 +290,18 @@ export default defineComponent({
                 return
             }
             state.pagination.currentPage = to
-            calculatePagination()
         }
 
-        return { ...toRefs(state), tableClasses, ...slotChecks, sort, getTHClass, getScopeData, tableData, paginate }
+        return {
+            ...toRefs(state),
+            tableClasses,
+            ...slotChecks,
+            sort,
+            getTHClass,
+            getScopeData,
+            tableData,
+            paginate
+        }
     }
 })
 </script>
@@ -292,5 +320,9 @@ export default defineComponent({
             background: #f9fafb !important;
         }
     }
+}
+.pitcher.table.no-data {
+    text-align: center;
+    padding: 8px 0;
 }
 </style>
