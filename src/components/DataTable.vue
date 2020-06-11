@@ -1,5 +1,5 @@
 <template>
-    <table v-if="tableData.length > 0" class="ui table pitcher mb-6" :class="tableClasses">
+    <table v-if="tableData.length > 0" class="ui table pitcher mb-6" :class="tableAttr.class" :style="tableAttr.style">
         <thead>
             <tr v-if="!noHeader">
                 <!-- If heading-row slot exist, override with a slot -->
@@ -110,6 +110,10 @@ export default defineComponent({
             type: Array,
             default: () => []
         },
+        width: {
+            type: String,
+            default: '100%'
+        },
         noDataText: {
             type: String,
             default: 'Table has not any data to show'
@@ -166,9 +170,15 @@ export default defineComponent({
         })
 
         // Table classes
-        const tableClasses = {
-            sortable: props.fields.some(f => f.sortable),
-            'fixed-header': props.fixedHeader
+        const tableAttr = {
+            class: {
+                sortable: props.fields.some(f => f.sortable),
+                'fixed-header': props.fixedHeader
+            },
+            style: {
+                width: props.width,
+                maxWidth: props.width
+            }
         }
 
         // Where data is distributed to the table
@@ -298,7 +308,7 @@ export default defineComponent({
         return {
             ...toRefs(state),
             ...slotChecks,
-            tableClasses,
+            tableAttr,
             sort,
             getTHClass,
             getScopeData,
