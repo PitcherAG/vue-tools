@@ -13,7 +13,7 @@
             text-field="text"
             value-field="value"
         /> -->
-        <DataTable class="celled" :data="data" :fields="fields" :per-page="10">
+        <DataTable class="celled" :data="data" :fields="fields">
             <!-- <template #heading-row="{ fields, sort, getClass }">
                 <th v-for="(f, fKey) in fields" :key="fKey" @click="sort(f.dataField)" :class="getClass(f)">
                     <i v-if="f.icon" class="icon" :class="f.icon" />
@@ -76,9 +76,11 @@ export default {
                 searchFor: '',
                 searchFields: ['title', 'url'],
                 noHeader: false,
+                noPagination: false,
                 noDataTemplate: '', // TODO & Slot
                 fixedHeader: '', // TODO
-                width: '100%' // TODO
+                width: '100%',  // TODO
+                perPage: 15
             },
             fields: [
                 {

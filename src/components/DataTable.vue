@@ -58,41 +58,42 @@
                 <slot name="t-foot" />
             </tfoot>
         </template>
-        <tfoot>
+        <!-- Pagination -->
+        <tfoot v-if="!noPagination && pagination.totalPages > 1">
             <tr>
                 <th :colspan="fields.length" class="right aligned">
                     <div class="ui pagination menu">
-                        <a class="item icon">
+                        <a class="item icon" :class="{ disabled: pagination.currentPage === 1 }" @click="paginate(1)">
                             <i class="icon angle double left" />
                         </a>
-                        <a class="item icon" @click="paginate(pagination.currentPage - 1)">
+                        <a
+                            class="item icon"
+                            :class="{ disabled: pagination.currentPage === 1 }"
+                            @click="paginate(pagination.currentPage - 1)"
+                        >
                             <i class="icon chevron left" />
                         </a>
-                        <a class="item">
-                            {{ pagination.startPage }}
+                        <a
+                            v-for="(p, i) in pagination.pages"
+                            class="item"
+                            :key="i"
+                            :class="{ active: p === pagination.currentPage }"
+                            @click="paginate(p)"
+                        >
+                            {{ p }}
                         </a>
-                        <a class="active item">
-                            a
-                        </a>
-                        <a class="item">
-                            b
-                        </a>
-                        <div class="disabled item">
-                            ...
-                        </div>
-                        <a class="item">
-                            x
-                        </a>
-                        <!-- <a class="item">
-                            {{ pagination.totalPages }}
-                        </a> -->
-                        <a class="item">
-                            {{ pagination.endPage }}
-                        </a>
-                        <a class="item icon" @click="paginate(pagination.currentPage + 1)">
+                        <a
+                            class="item icon"
+                            :class="{ disabled: pagination.totalPages === pagination.currentPage }"
+                            @click="paginate(pagination.currentPage + 1)"
+                        >
                             <i class="icon chevron right" />
                         </a>
-                        <a class="item icon">
+                        <a
+                            class="item icon"
+                            :class="{ disabled: pagination.totalPages === pagination.currentPage }"
+                            @click="paginate(pagination.totalPages)"
+                        >
                             <i class="icon angle double right" />
                         </a>
                     </div>
@@ -145,7 +146,15 @@ export default defineComponent({
         },
         perPage: {
             type: Number,
-            default: 10
+            default: 15
+        },
+        totalVisible: {
+            type: Number,
+            default: 5
+        },
+        noPagination: {
+            type: Boolean,
+            default: false
         }
     },
     setup(props, { slots }) {
@@ -163,10 +172,10 @@ export default defineComponent({
             sortBy: '',
             sortOrder: '',
             pagination: {
-                currentPage: props.initialPage || 1,
+                currentPage: props.initialPage,
                 totalPages: Math.ceil(props.data.length / props.perPage),
                 startPage: 1,
-                endPage: 10,
+                endPage: 0,
                 startIndex: 1,
                 endIndex: 0,
                 pages: 0
@@ -178,12 +187,14 @@ export default defineComponent({
         const tableData = computed(() => {
             let temp = props.data
 
+            if (!props.noPagination) {
+                temp = temp.slice(state.pagination.startIndex, state.pagination.startIndex + props.perPage)
+            }
+
             if (state.sortBy) {
                 temp = sortBy(props.data, state.sortBy, state.sortOrder)
             }
-
-            // pagination
-            return temp.slice(state.pagination.startIndex, state.pagination.startIndex + props.perPage)
+            return temp
         })
 
         function sort(by) {
@@ -223,32 +234,41 @@ export default defineComponent({
         }
 
         function calculatePagination() {
+            if (props.noPagination) {
+                return
+            }
             if (state.pagination.totalPages <= 10) {
                 // less than 10 total pages so show all
                 state.pagination.startPage = 1
                 state.pagination.endPage = state.pagination.totalPages
             } else {
                 // more than 10 total pages so calculate start and end pages
-                if (state.pagination.currentPage <= 6) {
+                if (state.pagination.currentPage <= props.totalVisible / 2) {
+                    // Current near start
                     state.pagination.startPage = 1
-                    state.pagination.endPage = 10
-                } else if (state.pagination.currentPage + 4 >= state.pagination.totalPages) {
-                    state.pagination.startPage = state.pagination.totalPages - 9
+                    state.pagination.endPage = props.totalVisible
+                } else if (
+                    state.pagination.currentPage + Math.floor(props.totalVisible / 2) >=
+                    state.pagination.totalPages
+                ) {
+                    // Current near end
+                    state.pagination.startPage = state.pagination.totalPages - (props.totalVisible - 1)
                     state.pagination.endPage = state.pagination.totalPages
-                } else {
-                    state.pagination.startPage = state.pagination.currentPage - 5
-                    state.pagination.endPage = state.pagination.currentPage + 4
+                } else if (state.pagination.currentPage >= props.totalVisible / 2) {
+                    // Current in mid
+                    state.pagination.startPage = state.pagination.currentPage - Math.floor(props.totalVisible / 2)
+                    state.pagination.endPage = state.pagination.currentPage + Math.floor(props.totalVisible / 2)
                 }
             }
             state.pagination.startIndex = (state.pagination.currentPage - 1) * props.perPage
             state.pagination.endIndex = state.pagination.startIndex + props.perPage
             state.pagination.pages = _.range(state.pagination.startPage, state.pagination.endPage + 1)
-            console.log('current', state.pagination.currentPage)
-            console.log('pages', state.pagination.pages)
-            console.log('pagi', state.pagination)
         }
 
         function paginate(to) {
+            if (state.pagination.currentPage === to) {
+                return
+            }
             state.pagination.currentPage = to
             calculatePagination()
         }
