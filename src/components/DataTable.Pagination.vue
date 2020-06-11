@@ -38,15 +38,56 @@
 
 <script>
 import { defineComponent } from '@vue/composition-api'
+import _ from 'lodash'
 
 export default defineComponent({
     props: {
         pagination: {
             type: Object,
-            required: true
+            required: true,
+            validator: item => {
+                const valid =
+                    _.has(item, 'currentPage') &&
+                    _.has(item, 'totalPages') &&
+                    _.has(item, 'startPage') &&
+                    _.has(item, 'endPage') &&
+                    _.has(item, 'startIndex') &&
+                    _.has(item, 'endIndex') &&
+                    _.has(item, 'pages')
+
+                if (!valid) {
+                    console.error('[Vue warn]: Validation error in Pagination.vue!')
+                    console.error('[Vue warn]: prop.pagination is not valid!')
+                    throw `
+                    Expected
+                    pagination: {
+                        currentPage: Number,
+                        totalPages: Number
+                        startPage: Number
+                        endPage: Number
+                        startIndex: Number
+                        endIndex: Number
+                        pages: Number
+                    }`
+                }
+                return valid
+            }
         },
         paginate: {
-            type: Function
+            type: Function,
+            validator: item => {
+                const valid = typeof item === 'function'
+
+                if (!valid) {
+                    console.error('[Vue warn]: Validation error in Pagination.vue!')
+                    console.error('[Vue warn]: prop.paginate is not valid!')
+                    throw `
+                    Expected
+                    function paginate(to) { state.pagination.currentPage = to }
+                    `
+                }
+                return valid
+            }
         }
     }
 })
