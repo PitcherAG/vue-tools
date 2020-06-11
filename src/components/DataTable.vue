@@ -1,5 +1,5 @@
 <template>
-    <table v-if="tableData.length > 0" class="ui table pitcher mb-6 fixed-header" :class="tableClasses">
+    <table v-if="tableData.length > 0" class="ui table pitcher mb-6" :class="tableClasses">
         <thead>
             <tr v-if="!noHeader">
                 <!-- If heading-row slot exist, override with a slot -->
@@ -173,7 +173,8 @@ export default defineComponent({
     },
     setup(props, { slots }) {
         const tableClasses = {
-            sortable: props.fields.some(f => f.sortable)
+            sortable: props.fields.some(f => f.sortable),
+            'fixed-header': props.fixedHeader
         }
 
         const slotChecks = {
@@ -301,16 +302,18 @@ export default defineComponent({
             state.pagination.currentPage = to
         }
 
-        function fixHeading() {
+        function setHeadingFixed() {
             const tbody = document.querySelector('tbody')
             const scrollWidth = tbody.offsetWidth - tbody.scrollWidth
             const heading = document.querySelector('thead tr')
+            const tfoot = document.querySelector('tfoot')
             heading.style.paddingRight = `${scrollWidth}px`
+            tfoot.style.display = 'block'
         }
 
         onMounted(() => {
             if (props.fixedHeader) {
-                fixHeading()
+                setHeadingFixed()
             }
         })
 
@@ -330,10 +333,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .ui.table.pitcher {
-    > tfoot {
-        display: block !important;
-    }
-
     &.sortable {
         // disable text selection
         > thead > tr > th {
@@ -347,6 +346,7 @@ export default defineComponent({
         }
     }
 
+    // Styles for fixed heading
     &.fixed-header {
         display: flex;
         flex-direction: column;
@@ -387,6 +387,7 @@ export default defineComponent({
         }
     }
 }
+// No data style
 .pitcher.table.no-data {
     text-align: center;
     padding: 8px 0;
