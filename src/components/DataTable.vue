@@ -66,41 +66,7 @@
         <tfoot v-if="!noPagination && pagination.totalPages > 1">
             <tr>
                 <th :colspan="fields.length" class="right aligned">
-                    <div class="ui pagination menu">
-                        <a class="item icon" :class="{ disabled: pagination.currentPage === 1 }" @click="paginate(1)">
-                            <i class="icon angle double left" />
-                        </a>
-                        <a
-                            class="item icon"
-                            :class="{ disabled: pagination.currentPage === 1 }"
-                            @click="paginate(pagination.currentPage - 1)"
-                        >
-                            <i class="icon chevron left" />
-                        </a>
-                        <a
-                            v-for="(p, i) in pagination.pages"
-                            class="item"
-                            :key="i"
-                            :class="{ active: p === pagination.currentPage }"
-                            @click="paginate(p)"
-                        >
-                            {{ p }}
-                        </a>
-                        <a
-                            class="item icon"
-                            :class="{ disabled: pagination.totalPages === pagination.currentPage }"
-                            @click="paginate(pagination.currentPage + 1)"
-                        >
-                            <i class="icon chevron right" />
-                        </a>
-                        <a
-                            class="item icon"
-                            :class="{ disabled: pagination.totalPages === pagination.currentPage }"
-                            @click="paginate(pagination.totalPages)"
-                        >
-                            <i class="icon angle double right" />
-                        </a>
-                    </div>
+                    <Pagination :pagination="pagination" :paginate="paginate" />
                 </th>
             </tr>
         </tfoot>
@@ -118,6 +84,7 @@
 <script>
 import { defineComponent, computed, reactive, toRefs, onMounted } from '@vue/composition-api'
 import _ from 'lodash'
+import Pagination from './DataTable.Pagination.vue'
 import { searchObjectArray } from '@/utils'
 
 function sortBy(data, by, order) {
@@ -125,6 +92,9 @@ function sortBy(data, by, order) {
 }
 
 export default defineComponent({
+    components: {
+        Pagination
+    },
     props: {
         data: {
             type: Array,
@@ -172,11 +142,7 @@ export default defineComponent({
         }
     },
     setup(props, { slots }) {
-        const tableClasses = {
-            sortable: props.fields.some(f => f.sortable),
-            'fixed-header': props.fixedHeader
-        }
-
+        // Check slots if they exist
         const slotChecks = {
             hasRowSlot: !!slots.row,
             hasHeadingRowSlot: !!slots['heading-row'],
@@ -185,6 +151,7 @@ export default defineComponent({
             hasNoDataSlot: !!slots['no-data-template']
         }
 
+        // Local state
         const state = reactive({
             sortBy: '',
             sortOrder: '',
@@ -193,13 +160,17 @@ export default defineComponent({
                 totalPages: Math.ceil(props.data.length / props.perPage),
                 startPage: 1,
                 endPage: 0,
-                startIndex: 1,
+                startIndex: 0,
                 endIndex: 0,
                 pages: 0
             }
         })
 
-        calculatePagination(props.data)
+        // Table classes
+        const tableClasses = {
+            sortable: props.fields.some(f => f.sortable),
+            'fixed-header': props.fixedHeader
+        }
 
         // Where data is distributed to the table
         const tableData = computed(() => {
@@ -225,6 +196,10 @@ export default defineComponent({
             return temp
         })
 
+        // Calculate pagination data
+        calculatePagination(props.data)
+
+        // Set sort state
         function sort(by) {
             state.sortBy = by
             switch (state.sortOrder) {
@@ -241,6 +216,7 @@ export default defineComponent({
             }
         }
 
+        // helper for building th class
         function getTHClass(f) {
             let cls = f.thClass
             cls += f.sortable ? ' sortable' : ' no-sort'
@@ -261,6 +237,7 @@ export default defineComponent({
             return filtered
         }
 
+        // Calculate pagination data
         function calculatePagination(data) {
             if (props.noPagination) {
                 return
@@ -295,6 +272,7 @@ export default defineComponent({
             state.pagination.pages = _.range(state.pagination.startPage, state.pagination.endPage + 1)
         }
 
+        // Paginate function, this is sent to Pagination component
         function paginate(to) {
             if (state.pagination.currentPage === to) {
                 return
@@ -302,6 +280,7 @@ export default defineComponent({
             state.pagination.currentPage = to
         }
 
+        // If heading is fixed
         function setHeadingFixed() {
             const tbody = document.querySelector('tbody')
             const scrollWidth = tbody.offsetWidth - tbody.scrollWidth
