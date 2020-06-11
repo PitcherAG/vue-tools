@@ -1,5 +1,5 @@
 <template>
-    <table v-if="tableData.length > 0" class="ui table pitcher mb-6" :class="tableClasses">
+    <table v-if="tableData.length > 0" class="ui table pitcher mb-6 fixed-header" :class="tableClasses">
         <thead>
             <tr v-if="!noHeader">
                 <!-- If heading-row slot exist, override with a slot -->
@@ -30,7 +30,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(item, dKey) in tableData" :key="dKey">
+            <template v-if="hasBodySlot">
+                <slot name="body" :tableData="tableData" :pagination="pagination" :fields="fields" />
+            </template>
+
+            <tr v-else v-for="(item, dKey) in tableData" :key="dKey">
                 <!-- If row slot exist, override with a slot -->
                 <template v-if="hasRowSlot">
                     <!-- map only visible fields, return rawData as well -->
@@ -53,7 +57,7 @@
             </tr>
         </tbody>
         <!-- TFoot slot -->
-        <template v-if="hasTFootSlot">
+        <template v-if="hasTFootSlot" :pagination="pagination">
             <tfoot>
                 <slot name="t-foot" />
             </tfoot>
@@ -112,7 +116,7 @@
 </template>
 
 <script>
-import { defineComponent, computed, reactive, toRefs } from '@vue/composition-api'
+import { defineComponent, computed, reactive, toRefs, onMounted } from '@vue/composition-api'
 import _ from 'lodash'
 import { searchObjectArray } from '@/utils'
 
@@ -139,7 +143,7 @@ export default defineComponent({
         },
         noDataText: {
             type: String,
-            default: 'Table has not any data to show.'
+            default: 'Table has not any data to show'
         },
         noHeader: {
             type: Boolean,
@@ -175,6 +179,7 @@ export default defineComponent({
         const slotChecks = {
             hasRowSlot: !!slots.row,
             hasHeadingRowSlot: !!slots['heading-row'],
+            hasBodySlot: !!slots.body,
             hasTFootSlot: !!slots['t-foot'],
             hasNoDataSlot: !!slots['no-data-template']
         }
@@ -195,19 +200,23 @@ export default defineComponent({
 
         calculatePagination(props.data)
 
+        // Where data is distributed to the table
         const tableData = computed(() => {
             let temp = props.data
 
+            // if search word exist
             if (props.searchFor !== '') {
+                paginate(1)
                 temp = searchObjectArray(temp, props.searchFor, props.searchFields)
             }
 
-            // pagination active
+            // pagination active & paginate
             if (!props.noPagination) {
                 calculatePagination(temp)
                 temp = temp.slice(state.pagination.startIndex, state.pagination.startIndex + props.perPage)
             }
 
+            // sort
             if (state.sortBy) {
                 temp = sortBy(props.data, state.sortBy, state.sortOrder)
             }
@@ -292,10 +301,22 @@ export default defineComponent({
             state.pagination.currentPage = to
         }
 
+        function fixHeading() {
+            const tbody = document.querySelector('tbody')
+            const scrollWidth = tbody.offsetWidth - tbody.scrollWidth
+            const heading = document.querySelector('thead tr')
+            heading.style.paddingRight = `${scrollWidth}px`
+            // console.log(window.innerWidth - document.documentElement.clientWidth)
+        }
+
+        onMounted(() => {
+            fixHeading()
+        })
+
         return {
             ...toRefs(state),
-            tableClasses,
             ...slotChecks,
+            tableClasses,
             sort,
             getTHClass,
             getScopeData,
@@ -308,6 +329,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .ui.table.pitcher {
+    > tfoot {
+        display: block !important;
+    }
+
     &.sortable {
         // disable text selection
         > thead > tr > th {
@@ -318,6 +343,46 @@ export default defineComponent({
         > thead > tr > th.no-sort:hover {
             cursor: default !important;
             background: #f9fafb !important;
+        }
+    }
+
+    &.fixed-header {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        thead,
+        tbody {
+            display: block;
+        }
+
+        thead {
+            margin-right: 0px;
+
+            tr {
+                background-color: #f9fafb;
+
+                td:first-child,
+                td:last-child {
+                    border-radius: 0 !important;
+                }
+            }
+        }
+
+        tbody {
+            flex: 1;
+            overflow-y: scroll;
+        }
+
+        tr {
+            width: 100%;
+            display: flex;
+        }
+
+        tr td,
+        tr th {
+            display: block;
+            flex: 1;
         }
     }
 }
