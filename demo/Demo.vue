@@ -118,7 +118,6 @@ export default {
                     thClass: 'left aligned',
                     tdClass: 'left aligned',
                     sortable: true
-                    // colspan: 2
                 },
                 {
                     title: 'Url',

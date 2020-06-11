@@ -20,7 +20,6 @@
                         :key="f.name"
                         :class="getTHClass(f)"
                         @click="f.sortable ? sort(f.dataField) : null"
-                        :colspan="f.colspan"
                         :style="{ width: f.width }"
                     >
                         <i v-if="f.icon" class="icon" :class="f.icon" />
