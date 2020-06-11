@@ -16,7 +16,12 @@
         <div class="ui input">
             <input type="text" v-model="options.searchFor" />
         </div>
-        <DataTable class="celled" :data="data" :fields="fields" :search-for="options.searchFor" :search-fields="['title', 'url']">
+        <DataTable
+            class="celled"
+            :data="data"
+            :fields="fields"
+            v-bind="options"
+        >
             <!-- <template #heading-row="{ fields, sort, getClass }">
                 <th v-for="(f, fKey) in fields" :key="fKey" @click="sort(f.dataField)" :class="getClass(f)">
                     <i v-if="f.icon" class="icon" :class="f.icon" />
@@ -30,6 +35,23 @@
                 <td>
                     action button
                 </td>
+            </template> -->
+            <!-- <template #body="{ tableData, pagination, fields }">
+                <tr v-for="(row, rKey) in tableData" :key="rKey">
+                    <td v-for="(col, cKey) in row" :key="cKey">
+                        {{ col }}
+                    </td>
+                </tr>
+                <tr v-for="(row, rKey) in tableData" :key="rKey">
+                    <template v-for="(f, fKey) in fields">
+                        <td v-if="!f.hide" :key="fKey">
+                            if this field is not a slot
+                            <template v-if="!f.dataField.includes('__slot:')">
+                                {{ f.transform ? f.transform(row[f.dataField]) : row[f.dataField] }}
+                            </template>
+                        </td>
+                    </template>
+                </tr>
             </template> -->
             <template #actions>
                 <button class="ui button basic right aligned">
@@ -78,15 +100,14 @@ export default {
         const state = reactive({
             data,
             options: {
-                // TODO
                 searchFor: '',
                 searchFields: ['title', 'url'],
                 noHeader: false,
                 noPagination: false,
-                noDataText: '', // TODO & Slot
+                // noDataText: '',
                 fixedHeader: '', // TODO
                 width: '100%', // TODO
-                perPage: 15
+                perPage: 50
             },
             fields: [
                 {
