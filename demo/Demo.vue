@@ -13,7 +13,10 @@
             text-field="text"
             value-field="value"
         /> -->
-        <DataTable class="celled" :data="data" :fields="fields">
+        <div class="ui input">
+            <input type="text" v-model="options.searchFor" />
+        </div>
+        <DataTable class="celled" :data="data" :fields="fields" :search-for="options.searchFor" :search-fields="['title', 'url']">
             <!-- <template #heading-row="{ fields, sort, getClass }">
                 <th v-for="(f, fKey) in fields" :key="fKey" @click="sort(f.dataField)" :class="getClass(f)">
                     <i v-if="f.icon" class="icon" :class="f.icon" />
@@ -50,6 +53,9 @@
                     </th>
                 </tr>
             </template> -->
+            <!-- <template #no-data-template>
+                <span class="ui text large grey center">Test</span>
+            </template> -->
         </DataTable>
     </div>
 </template>
@@ -77,9 +83,9 @@ export default {
                 searchFields: ['title', 'url'],
                 noHeader: false,
                 noPagination: false,
-                noDataTemplate: '', // TODO & Slot
+                noDataText: '', // TODO & Slot
                 fixedHeader: '', // TODO
-                width: '100%',  // TODO
+                width: '100%', // TODO
                 perPage: 15
             },
             fields: [
