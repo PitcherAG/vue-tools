@@ -100,9 +100,9 @@ export default {
                 noHeader: false,
                 noPagination: false,
                 // noDataText: '',
-                fixedHeader: '', // TODO
+                fixedHeader: false,
                 width: '100%', // TODO
-                perPage: 50
+                perPage: 10
             },
             fields: [
                 {
