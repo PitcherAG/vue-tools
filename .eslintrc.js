@@ -94,6 +94,7 @@ module.exports = {
                 math: 'always'
             }
         ],
+        'vue/custom-event-name-casing': 0,
         'vue/no-setup-props-destructure': 'warn',
         'vue/no-template-shadow': 'error',
         'vue/no-deprecated-filter': 'warn'
