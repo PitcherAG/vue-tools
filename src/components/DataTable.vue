@@ -7,8 +7,7 @@
                     <!-- map only visible fields, return rawData as well -->
                     <slot
                         name="heading-row"
-                        :fields="fields.filter(f => !f.hide)"
-                        :raw="fields"
+                        :filteredFields="fields.filter(f => !f.hide)"
                         :sortData="sort"
                         :sortTable="sortTable"
                         :getClass="getTHClass"
@@ -34,7 +33,13 @@
         </thead>
         <tbody>
             <template v-if="hasBodySlot">
-                <slot name="body" :tableData="tableData" :fields="fields" :sortData="sort" :pagination="pagination" />
+                <slot
+                    name="body"
+                    :tableData="tableData"
+                    :filteredFields="fields.filter(f => !f.hide)"
+                    :sortData="sort"
+                    :pagination="pagination"
+                />
             </template>
 
             <tr v-else v-for="(item, dKey) in tableData" :key="dKey">
@@ -191,7 +196,7 @@ export default defineComponent({
                 endPage: 0,
                 startIndex: 0,
                 endIndex: 0,
-                pages: 0
+                pages: []
             }
         })
 
