@@ -9,35 +9,45 @@
                         name="heading-row"
                         :fields="fields.filter(f => !f.hide)"
                         :raw="fields"
-                        :sort="sort"
+                        :sortData="sort"
+                        :sortTable="sortTable"
                         :getClass="getTHClass"
                     />
                 </template>
+
+                <!-- default table heading -->
                 <template v-else v-for="f in fields">
-                    <!-- default table heading -->
                     <th
                         v-if="!f.hide"
                         :key="f.name"
                         :class="getTHClass(f)"
-                        @click="f.sortable ? sort(f.dataField) : null"
+                        @click="f.sortable ? sortTable(f.dataField) : null"
                         :style="{ width: f.width }"
                     >
-                        <i v-if="f.icon" class="icon" :class="f.icon" />
-                        {{ f.title }}
+                        <span :data-tooltip="f.tooltip ? f.title : undefined" :data-position="f.tooltip">
+                            <i v-if="f.icon" class="icon" :class="f.icon" />
+                            {{ f.title }}
+                        </span>
                     </th>
                 </template>
             </tr>
         </thead>
         <tbody>
             <template v-if="hasBodySlot">
-                <slot name="body" :tableData="tableData" :pagination="pagination" :fields="fields" />
+                <slot name="body" :tableData="tableData" :fields="fields" :sortData="sort" :pagination="pagination" />
             </template>
 
             <tr v-else v-for="(item, dKey) in tableData" :key="dKey">
                 <!-- If row slot exist, override with a slot -->
                 <template v-if="hasRowSlot">
                     <!-- map only visible fields, return rawData as well -->
-                    <slot name="row" :rowData="getScopeData(item)" :raw="item" />
+                    <slot
+                        name="row"
+                        :rowData="getScopeData(item)"
+                        :raw="item"
+                        :sortData="sort"
+                        :pagination="pagination"
+                    />
                 </template>
 
                 <!-- Default Row content -->
@@ -45,7 +55,7 @@
                     <td v-if="!f.hide" :key="fKey" :class="f.tdClass">
                         <!-- if this field is a slot, get the slot -->
                         <template v-if="f.dataField.includes('__slot:')">
-                            <slot :name="f.dataField.replace('__slot:', '')" :data="item" />
+                            <slot :name="f.dataField.replace('__slot:', '')" :columnData="item" :sortData="sort" />
                         </template>
                         <!-- otherwise use the prop from data -->
                         <template v-else>
@@ -56,23 +66,29 @@
             </tr>
         </tbody>
         <!-- TFoot slot -->
-        <template v-if="hasTFootSlot" :pagination="pagination">
+        <template v-if="hasTFootSlot">
             <tfoot>
-                <slot name="t-foot" />
+                <slot
+                    name="t-foot"
+                    :sortData="sort"
+                    :tableData="tableData"
+                    :pagination="pagination"
+                    :paginate="paginate"
+                />
             </tfoot>
         </template>
         <!-- Pagination -->
         <tfoot v-if="!noPagination && pagination.totalPages > 1">
             <tr>
-                <th :colspan="fields.length" class="right aligned">
-                    <Pagination :pagination="pagination" :paginate="paginate" />
+                <th :colspan="fields.length" :class="`${alignPagination} aligned`">
+                    <Pagination :pagination="pagination" :paginate="paginate" :size="paginationSize" />
                 </th>
             </tr>
         </tfoot>
     </table>
     <!-- no-data-template slot -->
     <div v-else-if="hasNoDataSlot">
-        <slot name="no-data-template" />
+        <slot name="no-data-template" :noDataText="noDataText" />
     </div>
     <!-- default no data text -->
     <div v-else class="pitcher table no-data">
@@ -139,6 +155,14 @@ export default defineComponent({
             type: Number,
             default: 5
         },
+        paginationSize: {
+            type: String,
+            default: ''
+        },
+        alignPagination: {
+            type: String,
+            default: 'right'
+        },
         noPagination: {
             type: Boolean,
             default: false
@@ -156,8 +180,10 @@ export default defineComponent({
 
         // Local state
         const state = reactive({
-            sortBy: '',
-            sortOrder: '',
+            sort: {
+                by: '',
+                order: ''
+            },
             pagination: {
                 currentPage: props.initialPage,
                 totalPages: Math.ceil(props.data.length / props.perPage),
@@ -198,8 +224,8 @@ export default defineComponent({
             }
 
             // sort
-            if (state.sortBy) {
-                temp = sortBy(props.data, state.sortBy, state.sortOrder)
+            if (state.sort.by) {
+                temp = sortBy(props.data, state.sort.by, state.sort.order)
             }
 
             return temp
@@ -209,18 +235,18 @@ export default defineComponent({
         calculatePagination(props.data)
 
         // Set sort state
-        function sort(by) {
-            state.sortBy = by
-            switch (state.sortOrder) {
+        function sortTable(by) {
+            state.sort.by = by
+            switch (state.sort.order) {
                 case '':
-                    state.sortOrder = 'asc'
+                    state.sort.order = 'asc'
                     break
                 case 'asc':
-                    state.sortOrder = 'desc'
+                    state.sort.order = 'desc'
                     break
                 case 'desc':
-                    state.sortBy = ''
-                    state.sortOrder = ''
+                    state.sort.by = ''
+                    state.sort.order = ''
                     break
             }
         }
@@ -230,8 +256,8 @@ export default defineComponent({
             let cls = f.thClass
             cls += f.sortable ? ' sortable' : ' no-sort'
 
-            cls += state.sortBy === f.dataField ? ' sorted' : ''
-            cls += state.sortBy === f.dataField && state.sortOrder === 'desc' ? ' descending' : ' ascending'
+            cls += state.sort.by === f.dataField ? ' sorted' : ''
+            cls += state.sort.by === f.dataField && state.sort.order === 'desc' ? ' descending' : ' ascending'
             return cls
         }
 
@@ -309,7 +335,7 @@ export default defineComponent({
             ...toRefs(state),
             ...slotChecks,
             tableAttr,
-            sort,
+            sortTable,
             getTHClass,
             getScopeData,
             tableData,

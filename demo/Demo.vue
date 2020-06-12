@@ -54,9 +54,9 @@
                     Edit
                 </button>
             </template>
-            <!-- <template #t-foot>
+            <!-- <template #t-foot="{ pagination, paginate }">
                 <tr>
-                    <th></th>
+                    <th><Pagination :pagination="pagination" :paginate="paginate" /></th>
                     <th colspan="6">
                         <div class="ui right floated small primary labeled icon button">
                             <i class="user icon"></i> Add User
@@ -80,6 +80,7 @@
 <script>
 import NumpadInput from '@/components/NumpadInput'
 import Dropdown from '@/components/Dropdown'
+import Pagination from '@/components/DataTable.Pagination'
 import DataTable from '@/components/DataTable'
 import { reactive, toRefs } from '@vue/composition-api'
 import data from './dummy'
@@ -88,6 +89,7 @@ export default {
     components: {
         NumpadInput,
         Dropdown,
+        Pagination,
         DataTable
     },
     props: {},
@@ -117,7 +119,8 @@ export default {
                     // width: '25px',
                     thClass: 'left aligned',
                     tdClass: 'left aligned',
-                    sortable: true
+                    sortable: true,
+                    tooltip: 'top left'
                 },
                 {
                     title: 'Url',
