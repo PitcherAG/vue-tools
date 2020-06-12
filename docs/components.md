@@ -1,5 +1,9 @@
 
-
+<style>
+    .markdown-section {
+        max-width: 75%;
+    }
+</style>
 ## Components
 
 ### Calendar
@@ -41,8 +45,78 @@ Fomantic DataTable with pagination
 #### Available slots
 | slot | description | props
 | :--- | :--- | :--- | 
-| `row` | Slot to add custom label html to the left side of input |
-| `labelRight` | Slot to add custom label html to the right side of input |
+| `heading-row` | Slot to overwrite the content of ```thead > tr``` | ```{ filteredFields, sortData, sortTable, getClass(field) }```
+| `body` | Slot to overwrite the content of ```tbody``` | ```{ tableData, filteredFields, sortData, pagination }```
+| `row` | Slot to overwrite the content of ```tbody > tr``` | ```{ rowData, raw, sortData, pagination }```
+| `t-foot` | Slot to overwrite the content of ```tfoot``` | ```{ tableData, sortData, pagination, paginate(n) }```
+| `no-data-template` | Slot to overwrite the content that shows when table has not any data | ```{ noDataText }```
+
+#### Definitions
+```javascript
+ // object array for fields, here you define how your data will be presented in the table
+fields: Field[]
+
+// a single field definition inside fields array
+field: {
+    // column heading
+    title: String,
+    // which data property this heading is presenting inside the data object you send.
+    // it can also be a slot name with __slot:slotname to access later inside your template
+    // when you use custom slot like this you have access to columnData and sortData in template
+    dataField: String | __slot:slotName,
+    // icon name to prepend to column title. use only icon name i.e. cog, times etc.
+    icon: String,
+    // class name to inject <th> element i.e. right aligned, collapsing etc.
+    thClass: String,
+    // class name to inject <td> element in each row
+    tdClass: String,
+    // to makes column sortable thru clicking the <th> element
+    sortable: Boolean,
+    // enable tooltip for <th> element
+    tooltip: Boolean,
+    // property in your data that you don't want to show in your table i.e. ID etc.
+    hide: Boolean,
+    // function to handle the value before it is shown in the table
+    transform: Function
+}
+
+// array of fields that are filtered. Does not include fields with hide: true set
+filteredFields: Field[]
+
+// data array that is currently shown in the table, according to pagination
+tableData: Object[]
+
+// single data object that belongs to the row when you are using in template #row.
+// it does not include properties you hide in your field definition
+rowData: Object
+
+// single data object that that belongs to the row whenyou are using in template #row.
+// it includes all properties of the object either you hide or not in your field definition 
+raw: Object
+
+// if any column is sorted currently, this object includes the details
+sortData: { by: String, order: String }
+
+// contains current pagination data inside
+pagination: {
+    currentPage: Number,
+    totalPages: Number,
+    startPage: Number,
+    endPage: Number,
+    startIndex: Number,
+    endIndex: Number,
+    pages: Array
+}
+// function to control pagination, number is the page number you want to paginate to
+paginate: Function(number)
+// function to sort the table. dataField is the name of your field you want to sort
+sortTable: Function(dataField)
+// this function injects related classes to the <th> element, if it is sortable, sorted etc.
+// field is a single field object
+getClass: Function(field)
+```
+
+#### Usage
 
 ### Dropdown
 
