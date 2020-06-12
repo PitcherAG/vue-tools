@@ -7,6 +7,9 @@ export default [
         isInBoard: true,
         isNew: false,
         group: 'qw-1',
+        nested: {
+            relation: 'searchme'
+        },
         createdDate: 'Monday, September 2, 2019 3:21 PM'
     },
     {
@@ -17,6 +20,9 @@ export default [
         isInBoard: false,
         isNew: false,
         group: 'qw-1',
+        nested: {
+            relation: 'test'
+        },
         createdDate: 'Sunday, November 11, 2018 2:58 PM'
     },
     {
@@ -27,6 +33,9 @@ export default [
         isInBoard: false,
         isNew: false,
         group: 'qw-1',
+        nested: {
+            relation: 'patrick'
+        },
         createdDate: 'Friday, July 7, 2017 9:58 PM'
     },
     {
@@ -36,6 +45,9 @@ export default [
         isFavorite: true,
         isInBoard: true,
         isNew: true,
+        nested: {
+            relation: 'onur'
+        },
         createdDate: 'Saturday, March 26, 2016 8:16 PM'
     },
     {
@@ -56,6 +68,9 @@ export default [
         isInBoard: true,
         isNew: false,
         group: 'qw-1',
+        nested: {
+            relation: 'common'
+        },
         createdDate: 'Thursday, November 7, 2019 3:59 AM'
     },
     {
