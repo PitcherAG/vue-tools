@@ -173,6 +173,7 @@ const fields = [
 const searchFor = ''
 // if not defined, by default it searches thru all object properties
 const searchFields = ['name', 'age']
+// NOTE: You can also search nested object properties like ['user.name', 'user.age'] etc.
 ```
 
 ```html
