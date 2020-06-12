@@ -18,8 +18,31 @@ import { Checkbox ] from '@pitcher/vue-sdk'
 ```
 
 ### DataTable
+Fomantic DataTable with pagination
 
-Fomantic DataTable
+#### Available props
+| prop | type | required | default | description |
+| :--- | :--- | :--- | :--- | :--- |
+| `data` | `Array` | yes | - | object array to present data in table
+| `fields` | `Array` | yes | - | object array for field options. Inside fields you define your table headings and the options for the column
+| `search-for` | `String | Number` | no | - | search key for searching the table. This prop can be bound to an input outside of DataTable
+| `search-fields` | `Array` | no | - | string array to specify which object properties you want to search inside your data array
+| `width` | `String` | no | 100% | table width
+| `no-data-text` | `String` | no | Table has not any data to show | text to show when your table has not any data to show
+| `no-header` | `Boolean` | no | false | hide table header, by default table header is visible
+| `fixed-header` | `Boolean` | no | false | make the table header fixed and table body scrollable
+| `initial-page` | `Number` | no | 1 | initial page for pagination
+| `per-page` | `Number` | no | 15 | how many line items per page to show in the table
+| `total-visible` | `Number` | no | 5 | how many page numbers to show in your pagination
+| `pagination-size` | `String` | no | 'medium' | tiny \| small \| medium \| large \| big \| huge \| massive 
+| `align-pagination` | `String` | no | right | right \| left \| center 
+| `no-pagination` | `Boolean` | no | false | to disable pagination in the table
+
+#### Available slots
+| slot | description | props
+| :--- | :--- | :--- | 
+| `row` | Slot to add custom label html to the left side of input |
+| `labelRight` | Slot to add custom label html to the right side of input |
 
 ### Dropdown
 
@@ -27,21 +50,22 @@ Fomantic Dropdown
 
 ### Numpad Input
 Custom component
+
 #### Available props
 | prop | type | required | default | description |
 | :--- | :--- | :--- | :--- | :--- |
 | `v-model` | `String` | yes | - | input value
 | `decimals` | `Number` | no | 2 | decimal value for input
 | `max` | `Number` | no | undefined | maximum number that input can reach
-| `minWidth` | `Number | String` | no | 50 | min-width css property for input element
+| `min-width` | `Number | String` | no | 50 | min-width css property for input element
 | `group` | `String` | no | no-group | for grouping inputs & navigate thru numpad buttons
 | `fluid` | `Boolean` | no | undefined | fluid input size
 | `disabled` | `Boolean` | no | undefined | disable input
-| `size` | `String` | no | medium | tiny \| small \| large \| big \| huge \| massive 
-| `rightIcon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
-| `leftIcon` | `String` | no | medium | FA icon name. Use ONLY icon name i.e. users times etc.
+| `size` | `String` | no | medium | tiny \| small \| medium \| large \| big \| huge \| massive 
+| `right-icon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
+| `left-icon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
 | `placeholder` | `String` | no | '' | placeholder for input element
-| `noAnimation` | `Boolean` | no | false | Input animation on focus
+| `no-animation` | `Boolean` | no | false | input animation on focus
 | `color` | `String` | no | undefined | color for input container class (fomantic)
 
 #### Available slots
