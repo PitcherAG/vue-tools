@@ -13,7 +13,7 @@ import Fuse from 'fuse.js'
  * ```
  **/
 
-export const search = (data, searchFor, fields = [], options = { threshold: 0 }, returnFull = false) => {
+export const search = (data, searchFor, fields = [], options = { threshold: 0.5 }, returnFull = false) => {
     const fuse = new Fuse(data, { keys: fields, ...options })
 
     const result = fuse.search(searchFor)
