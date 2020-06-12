@@ -62,7 +62,7 @@ field: {
     title: String,
     // which data property this heading is presenting inside the data object you send.
     // it can also be a slot name with __slot:slotname to access later inside your template
-    // when you use custom slot like this you have access to columnData and sortData in template
+    // when you use custom slot like this you have access to rowData and sortData in template
     dataField: String | __slot:slotName,
     // icon name to prepend to column title. use only icon name i.e. cog, times etc.
     icon: String,
@@ -117,9 +117,145 @@ getClass: Function(field)
 ```
 
 #### Usage
+```javascript
+import { DataTable } from '@pitcher/vue-sdk'
+
+// data that will be presented in table
+const data = [{
+    id: '65c5e68ec',
+    username: 'pitcher user',
+    age: 30,
+    createdDate: 'Saturday, September 22, 2018 6:14 AM'
+},
+...
+...
+]
+
+// field definitions must to be defined for each object property you have in your data
+const fields = [
+{
+    title: 'Id',
+    dataField: 'id',
+    hide: true  // makes this field invisible in table
+},
+{
+    // Required
+    title: 'Username',          // name that will be shown in <th>
+    // Required
+    dataField: 'username',      // property name inside data object
+    // these are optional
+    icon: 'user',               // icon to prepend in column header
+    width: '100px',             // column width
+    thClass: 'left aligned',    // class that will be injected to <th>
+    tdClass: 'collapsing',      // class that will be injected to <tr>
+    sortable: true,             // make column sortable
+    tooltip: 'top left'         // add tooltip to <th>
+},
+{
+    title: 'Age',
+    dataField: 'age',
+    sortable: true,
+    // transform the value before showing
+    transform: (val) => `${val} years old` 
+},
+{
+    title: 'Created date',
+    dataField: 'createdDate',
+    sortable: true
+},
+{
+    title: 'Actions'
+    // access in template with <template #actions>
+    dataField: '__slot:actions'
+}]
+
+// must be reactive
+const searchFor = ''
+// if not defined, by default it searches thru all object properties
+const searchFields = ['name', 'age']
+```
+
+```html
+// Simple usage
+<DataTable :data="data" :fields="fields" :search-for="searchFor" />
+ 
+// Using fomantic classes & fixed header etc.
+<DataTable class="celled striped" :data="data" :fields="fields" :per-page="50" fixed-header />
+ 
+// Usage with slots, contains all slot examples
+<DataTable :data="data" :fields="fields" >
+    <!-- Inject template to heading-row  -->
+    <template #heading-row="{ filteredFields, sortData, sortTable, getClass }">
+        <th v-for="(f, fKey) in filteredFields" :key="fKey" @click="sortTable(f.dataField)" :class="getClass(f)">
+            <i v-if="f.icon" class="icon" :class="f.icon" />
+            {{ f.title }}
+        </th>
+    </template>
+
+    <!-- Inject template to body -->
+    <template #body="{ tableData, filteredFields, pagination, sortData }">
+        <tr v-for="(row, rKey) in tableData" :key="rKey">
+            <td v-for="(col, cKey) in row" :key="cKey">
+                {{ col }}
+            </td>
+        </tr>
+        <tr v-for="(row, rKey) in tableData" :key="rKey">
+            <template v-for="(f, fKey) in filteredFields">
+                <td v-if="!f.hide" :key="fKey">
+                    if this field is not a slot
+                    <template v-if="!f.dataField.includes('__slot:')">
+                        {{ f.transform ? f.transform(row[f.dataField]) : row[f.dataField] }}
+                    </template>
+                </td>
+            </template>
+        </tr>
+    </template>
+
+    <!-- Inject template to each row  -->
+    <template #row="{ rowData, raw, sortData, pagination }">
+        <td v-for="(columnData, cKey) in rowData" :key="cKey">
+            {{ columnData }}
+        </td>
+        <td>
+            actions
+        </td>
+    </template>
+
+    <!-- Inject template to the slot you have dynamically created in fields -->
+    <template #actions="{ rowData, sortData }">
+        <button class="ui button basic right aligned" @click="doSomething(rowData)">
+            <i class="icon edit" />
+            Edit
+        </button>
+    </template>
+
+    <!-- Inject template inside tfoot element -->
+    <template #t-foot="{ pagination, paginate, tableData, sortData }">
+        <tr>
+            <th><Pagination :pagination="pagination" :paginate="paginate" /></th>
+            <th colspan="6">
+                <div class="ui right floated small primary labeled icon button">
+                    <i class="user icon"></i> Add User
+                </div>
+                <div class="ui small  button">
+                    Approve
+                </div>
+                <div class="ui small  disabled button">
+                    Approve All
+                </div>
+            </th>
+        </tr>
+    </template>
+
+    <!-- Inject template  -->
+    <template #no-data-template>
+        <span class="ui text large grey center">Here comes my custom no data text and style</span>
+    </template>
+</DataTable>
+```
+
 
 ### Dropdown
-
 Fomantic Dropdown
 
 ### Numpad Input
@@ -152,7 +288,7 @@ Custom component
 #### Usage
 
 ```javascript
-import { NumpadInput ] from '@pitcher/vue-sdk'
+import { NumpadInput } from '@pitcher/vue-sdk'
 ```
 
 ```html
