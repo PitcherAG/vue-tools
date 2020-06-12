@@ -2,14 +2,21 @@ import Fuse from 'fuse.js'
 
 /**
  * fuse.js search
+ * data array to search thru
  * @param {Array} [data]
- * @param {Array} [options]
+ * search keyword
+ * @param {String} [searchFor]
+ * string array search fields
+ * @param {Array} [fields]
+ * fuse.js options - you can use fuse.js options here
+ * @param {Object} [options]
+ * to return complete fuse.js array
+ * @param {Boolean} [returnFull]
  * @return {Array}
  *
  * @example
  * ```
- * const fuse = fuseSearch(dataArray, searchFor, ['objProp', 'objProp.nested'], fuseOptions)
- * fuse.search('search keyword')
+ * const result = search(dataArray, searchFor, ['objProp', 'objProp.nested'], fuseOptions, false)
  * ```
  **/
 
