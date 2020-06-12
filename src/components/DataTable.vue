@@ -104,10 +104,10 @@
 </template>
 
 <script>
-import { defineComponent, computed, reactive, toRefs, onMounted } from '@vue/composition-api'
+import { defineComponent, computed, reactive, toRefs, watch, onMounted } from '@vue/composition-api'
 import _ from 'lodash'
 import Pagination from './DataTable.Pagination.vue'
-import { searchObjectArray } from '@/utils'
+import { search } from '@/utils'
 
 function sortBy(data, by, order) {
     return _.orderBy(data, [by], [order])
@@ -220,8 +220,7 @@ export default defineComponent({
 
             // if search word exist
             if (props.searchFor !== '') {
-                paginate(1)
-                temp = searchObjectArray(temp, props.searchFor, props.searchFields)
+                temp = search(temp, props.searchFor, props.searchFields)
             }
 
             // pagination active & paginate
@@ -338,6 +337,21 @@ export default defineComponent({
             }
         })
 
+        // to fix pagination in search
+        watch(
+            () => props.searchFor,
+            (newVal, oldVal) => {
+                if (oldVal === undefined) {
+                    return
+                }
+
+                if (newVal.length > 0 && oldVal.length === 0) {
+                    paginate(1)
+                } else if (newVal.length === 0 && oldVal.length > 0) {
+                    paginate(1)
+                }
+            }
+        )
         return {
             ...toRefs(state),
             ...slotChecks,
