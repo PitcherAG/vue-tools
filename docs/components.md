@@ -2,6 +2,10 @@
 
 ## Components
 
+### Calendar
+
+Fomantic Calendar 
+
 ### Checkbox
 
 Displays a fomantic checkbox
@@ -13,50 +17,13 @@ import { Checkbox ] from '@pitcher/vue-sdk'
 <Checkbox :label="'myLabel'"  v-model="myBoolean"/>
 ```
 
-### Sidebar
+### DataTable
 
-Fomantic Sidebar component
+Fomantic DataTable
 
-```javascript
-import { Sidebar ] from '@pitcher/vue-sdk'
-```
-```html
-<Sidebar>
-      <div class="item">
-           <h2 class="header">{{ data.Name }}</h2>
-       </div>
-       <div class="item">
-        {{ data.description}}
-       </div>
-</Sidebar>
-```
+### Dropdown
 
-```javascript
-setup(){
-     const sidebar = Sidebar.useSidebarStore()
-     const data = sidebar.state.data
-     return {data}
-}
-```
-
-and somewhere else:
-
-```javascript
-import { Sidebar ] from '@pitcher/vue-sdk'
-
-setup() {
-    const showSidebar = (product) => {
-        const sidebar = Sidebar.useSidebarStore()
-        sidebar.state.data = product
-        sidebar.show()
-    }
-    return { showSidebar }
-}
-```
-
-```html
-<button v-on:click="showSidebar(myProduct)">Show sidebar</button>
-```
+Fomantic Dropdown
 
 ### Numpad Input
 Custom component
@@ -112,14 +79,6 @@ import { NumpadInput ] from '@pitcher/vue-sdk'
 ```
 
 
-### Calendar
-
-Fomantic Calendar 
-
-### Dropdown
-
-Fomantic Dropdown
-
 ### ObjectForm
 
 Displays a salesforce object as a form, uses layouts if available otherwise uses schemas. Layouts are supported by android at the moment only. 
@@ -144,6 +103,50 @@ Displays a salesforce object as a form, uses layouts if available otherwise uses
 
 Displays a form field inside ObjectForm
 
+### Sidebar
+
+Fomantic Sidebar component
+
+```javascript
+import { Sidebar ] from '@pitcher/vue-sdk'
+```
+```html
+<Sidebar>
+      <div class="item">
+           <h2 class="header">{{ data.Name }}</h2>
+       </div>
+       <div class="item">
+        {{ data.description}}
+       </div>
+</Sidebar>
+```
+
+```javascript
+setup(){
+     const sidebar = Sidebar.useSidebarStore()
+     const data = sidebar.state.data
+     return {data}
+}
+```
+
+and somewhere else:
+
+```javascript
+import { Sidebar ] from '@pitcher/vue-sdk'
+
+setup() {
+    const showSidebar = (product) => {
+        const sidebar = Sidebar.useSidebarStore()
+        sidebar.state.data = product
+        sidebar.show()
+    }
+    return { showSidebar }
+}
+```
+
+```html
+<button v-on:click="showSidebar(myProduct)">Show sidebar</button>
+```
 
 ### TransitionPage
 
