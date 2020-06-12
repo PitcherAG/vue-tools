@@ -1,6 +1,64 @@
 
 ## Utils
 
+### search
+
+Searches thru your data array with specified options. The search function uses fuse.js so you could use fuse options to define your search settings.
+
+
+```javascript
+import { search } from '@pitcher/vue-sdk'
+
+const data = [
+    {
+        title: "Old Man's War",
+        author: 'John Scalzi',
+        tags: ['fiction'],
+        details: {
+            stock: true,
+            shop: 'Globus'
+        }
+
+    },
+    {
+        title: 'The Lock Artist',
+        author: 'Steve',
+        tags: ['thriller'],
+        details: {
+            stock: false,
+            shop: 'Walmart'
+        }
+    }
+]
+
+const searchFields = ['author', 'details.shop']
+// fuse.js options - https://fusejs.io/api/options.html#basic-options
+const options = {
+    threshold: 0.4  // how strict the search should be
+    ...
+    ...
+}
+const searchFor = 'John'
+const results = search(data, searchFor, searchFields, options)
+
+/* result
+[{
+    title: "Old Man's War",
+    author: 'John Scalzi',
+    tags: ['fiction'],
+    details: {
+        stock: true,
+        shop: 'Globus'
+    }
+
+}]
+*/
+
+// If you want to get default search result of fuse.js
+const results = search(data, searchFor, searchFields, options, true)
+```
+
+
 ### link
 
 opens an other interactive via a 'pitcher link', Example:
@@ -11,8 +69,8 @@ This would open the interactive with the keyword `keyword` and save myParam and 
 
 ```javascript
     import { openLink } from '@pitcher/vue-sdk'
-    var link = 'pitcher://keyword/?myParam=5&otherParam={{ a.count}}'
-    var context = {a:5}
+    const link = 'pitcher://keyword/?myParam=5&otherParam={{ a.count}}'
+    const context = {a:5}
     openLink(link, context)
 ```
 
@@ -20,8 +78,8 @@ This would open a file with fileID: `12345`
 
 ```javascript
     import { openLink } from '@pitcher/vue-sdk'
-    var link = 'pitcher://12345/?myParam=5&otherParam={{ a.count}}'
-    var context = {a:5}
+    const link = 'pitcher://12345/?myParam=5&otherParam={{ a.count}}'
+    const context = {a:5}
     openLink(link, context)
 ```
 
