@@ -1,5 +1,5 @@
 <template>
-    <div class="ui pagination menu">
+    <div class="ui pagination menu" :class="size">
         <a class="item icon" :class="{ disabled: pagination.currentPage === 1 }" @click="paginate(1)">
             <i class="icon angle double left" />
         </a>
@@ -88,6 +88,10 @@ export default defineComponent({
                 }
                 return valid
             }
+        },
+        size: {
+            type: String,
+            default: ''
         }
     }
 })
