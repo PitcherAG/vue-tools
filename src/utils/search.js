@@ -1,33 +1,26 @@
+import Fuse from 'fuse.js'
+
 /**
- * This can be used for property searching in Object Arrays
+ * fuse.js search
  * @param {Array} [data]
- * @param {String} [searchFor]
- * @param {Array} [fields]
+ * @param {Array} [options]
  * @return {Array}
  *
  * @example
  * ```
- * searchObjectArray(array, 'search keyword', ['objProp1', 'objProp2']);
+ * const fuse = fuseSearch(dataArray, searchFor, ['objProp', 'objProp.nested'], fuseOptions)
+ * fuse.search('search keyword')
  * ```
  **/
-export const searchObjectArray = (data, searchFor, fields) => {
-    // the text should be case insensitive
-    const txt = new RegExp(searchFor, 'i')
 
-    // search specified fields
-    if (fields && fields.length > 0) {
-        return data.filter(item => fields.some(key => item[key].toString().search(txt) >= 0))
+export const search = (data, searchFor, fields = [], options = { threshold: 0 }, returnFull = false) => {
+    const fuse = new Fuse(data, { keys: fields, ...options })
+
+    const result = fuse.search(searchFor)
+
+    if (returnFull) {
+        return result
     }
 
-    // search all fields if not specified
-    return data.filter(item => {
-        const found = Object.values(item).filter(val => {
-            if (val.toString().search(txt) >= 0) {
-                return val
-            }
-        })
-        if (found.length > 0) {
-            return found
-        }
-    })
+    return result.map(i => i.item && i.item)
 }
