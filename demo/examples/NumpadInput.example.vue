@@ -2,7 +2,7 @@
     <div>
         <h3>Numpad Input</h3>
         <div class="ui divider" />
-        <NumpadInput v-model="test" placeholder="test" group="test"  />
+        <NumpadInput v-model="test" placeholder="test" group="test" />
         <!-- <NumpadInput v-model="test2" placeholder="test" group="test" /> -->
         <br />
         <br />
