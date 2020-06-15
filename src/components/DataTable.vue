@@ -1,7 +1,7 @@
 <template>
     <table v-if="tableData.length > 0" class="ui table pitcher mb-6" :class="tableAttr.class" :style="tableAttr.style">
-        <thead>
-            <tr v-if="!noHeader">
+        <thead v-if="!noHeader">
+            <tr>
                 <!-- If heading-row slot exist, override with a slot -->
                 <template v-if="hasHeadingRowSlot">
                     <!-- map only visible fields, return rawData as well -->
@@ -203,7 +203,7 @@ export default defineComponent({
         })
 
         // Table classes
-        const tableAttr = {
+        const tableAttr = computed(() => ({
             class: {
                 sortable: props.fields.some(f => f.sortable),
                 'fixed-header': props.fixedHeader
@@ -212,7 +212,7 @@ export default defineComponent({
                 width: props.width,
                 maxWidth: props.width
             }
-        }
+        }))
 
         // Where data is distributed to the table
         const tableData = computed(() => {
@@ -223,15 +223,15 @@ export default defineComponent({
                 temp = search(temp, props.searchFor, props.searchFields)
             }
 
+            // sort
+            if (state.sort.by) {
+                temp = sortBy(temp, state.sort.by, state.sort.order)
+            }
+
             // pagination active & paginate
             if (!props.noPagination) {
                 calculatePagination(temp)
                 temp = temp.slice(state.pagination.startIndex, state.pagination.startIndex + props.perPage)
-            }
-
-            // sort
-            if (state.sort.by) {
-                temp = sortBy(props.data, state.sort.by, state.sort.order)
             }
 
             return temp
