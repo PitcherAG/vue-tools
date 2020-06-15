@@ -2,7 +2,7 @@
     <!-- Numpad -->
     <div class="numpad-input" :class="[group]" :style="{ display: fluid ? 'block' : 'inline-block' }">
         <!-- Input -->
-        <div class="ui test" :class="inputAttrs.class" ref="inputDiv">
+        <div class="ui" :class="inputAttrs.class" ref="inputDiv">
             <i v-if="leftIcon" class="icon" :class="leftIcon" style="z-index: 1" />
             <slot v-if="labelLeftSlot" name="labelLeft" />
             <input
@@ -158,6 +158,10 @@ export default defineComponent({
         max: {
             type: Number
         },
+        transparent: {
+            type: Boolean,
+            default: false
+        },
         noAnimation: {
             type: Boolean,
             default: false
@@ -184,6 +188,7 @@ export default defineComponent({
                     right: ctx.slots.labelRight,
                     labeled: ctx.slots.labelLeft || ctx.slots.labelRight,
                     icon: props.rightIcon || props.leftIcon,
+                    transparent: props.transparent,
                     input: true
                 },
                 style: {
