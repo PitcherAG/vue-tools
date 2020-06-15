@@ -1,7 +1,6 @@
-import Dropdown from '../../src/components/Dropdown'
-
 import CompositionApi from '@vue/composition-api'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Dropdown from '@/components/Dropdown'
 
 const localVue = createLocalVue()
 localVue.use(CompositionApi)

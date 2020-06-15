@@ -1,6 +1,6 @@
 import CompositionApi from '@vue/composition-api'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import Checkbox from '../../src/components/Checkbox.vue'
+import Checkbox from '@/components/Checkbox.vue'
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
 
