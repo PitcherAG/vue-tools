@@ -12,6 +12,10 @@
 - eslint rules update
 - various bug fixes
 - DataTable component added
+- NumpadInput component updated
+  - validation for size prop
+  - transparent attr added
+  - maxWidth attr added
 - new utility search function added
 
 ## 1.3.2
