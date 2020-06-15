@@ -1,4 +1,4 @@
-import { execBool, execString, renderContext, renderSimpleContext } from '../../src/utils'
+import { execBool, execString, renderContext, renderSimpleContext } from '@/utils'
 
 describe('context', () => {
     it('renderContext', async () => {
