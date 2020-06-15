@@ -269,9 +269,11 @@ Custom component
 | `decimals` | `Number` | no | 2 | decimal value for input
 | `max` | `Number` | no | undefined | maximum number that input can reach
 | `min-width` | `Number | String` | no | 50 | min-width css property for input element
+| `max-width` | `Number | String` | no | 100% | max-width css property for input element
 | `group` | `String` | no | no-group | for grouping inputs & navigate thru numpad buttons
-| `fluid` | `Boolean` | no | undefined | fluid input size
-| `disabled` | `Boolean` | no | undefined | disable input
+| `fluid` | `Boolean` | no | undefined | makes the input fluid
+| `transparent` | `Boolean` | no | undefined | fomantic transparent input style
+| `disabled` | `Boolean` | no | undefined | disabled input
 | `size` | `String` | no | medium | tiny \| small \| medium \| large \| big \| huge \| massive 
 | `right-icon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
 | `left-icon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
