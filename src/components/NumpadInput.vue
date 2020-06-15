@@ -129,7 +129,26 @@ export default defineComponent({
             type: [Number, String],
             default: 50
         },
-        size: String,
+        size: {
+            type: String,
+            validator: val => {
+                const valid =
+                    val === '' ||
+                    val === 'tiny' ||
+                    val === 'small' ||
+                    val === 'medium' ||
+                    val === 'large' ||
+                    val === 'big' ||
+                    val === 'huge' ||
+                    val === 'massive'
+                if (!valid) {
+                    console.error('[Vue warn]: Validation error in NumpadInput.vue!')
+                    console.error('[Vue warn]: prop.size is not valid!')
+                    throw `Accepted values: tiny | small | medium | large | big | huge | massive`
+                }
+                return valid
+            }
+        },
         rightIcon: String,
         leftIcon: String,
         placeholder: {
