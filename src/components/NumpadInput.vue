@@ -99,6 +99,10 @@ const useNumpadStore = createStore({
     state: () => ({ groups: {} })
 })
 
+const parsePxStyle = val => {
+    return val.toString().includes('%') || val.toString().includes('px') ? val : `${parseInt(val)}px`
+}
+
 export default defineComponent({
     props: {
         value: {
@@ -124,10 +128,15 @@ export default defineComponent({
         },
         fluid: Boolean,
         disabled: Boolean,
+        transparent: Boolean,
         color: String,
         minWidth: {
             type: [Number, String],
             default: 50
+        },
+        maxWidth: {
+            type: [Number, String],
+            default: '100%'
         },
         size: {
             type: String,
@@ -157,10 +166,6 @@ export default defineComponent({
         },
         max: {
             type: Number
-        },
-        transparent: {
-            type: Boolean,
-            default: false
         },
         noAnimation: {
             type: Boolean,
@@ -192,7 +197,8 @@ export default defineComponent({
                     input: true
                 },
                 style: {
-                    minWidth: `${parseInt(props.minWidth)}px`
+                    minWidth: parsePxStyle(props.minWidth),
+                    maxWidth: parsePxStyle(props.maxWidth)
                 }
             }
         })
