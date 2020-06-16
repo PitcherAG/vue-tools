@@ -5,5 +5,8 @@ module.exports = {
         'src/**/*.{js,vue}',
         '!src/index.js' // No need to cover bootstrap file
     ],
-    setupFiles: ['./tests/setup.js']
+    moduleNameMapper: {
+        '^@/(.*)$': '<rootDir>/src/$1'
+    },
+    setupFiles: ['./tests/helpers/setup.js']
 }

@@ -1,7 +1,7 @@
 import { execBool, execReturn } from './contextExec'
 
 function parse(str, context, regex) {
-    let result = ifParse(str)(context)
+    const result = ifParse(str)(context)
     return interpolate(result)(context, regex)
 }
 

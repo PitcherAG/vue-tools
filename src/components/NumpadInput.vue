@@ -2,7 +2,7 @@
     <!-- Numpad -->
     <div class="numpad-input" :class="[group]" :style="{ display: fluid ? 'block' : 'inline-block' }">
         <!-- Input -->
-        <div class="ui test" :class="inputAttrs.class" ref="inputDiv">
+        <div class="ui" :class="inputAttrs.class" ref="inputDiv">
             <i v-if="leftIcon" class="icon" :class="leftIcon" style="z-index: 1" />
             <slot v-if="labelLeftSlot" name="labelLeft" />
             <input
@@ -99,6 +99,10 @@ const useNumpadStore = createStore({
     state: () => ({ groups: {} })
 })
 
+const parsePxStyle = val => {
+    return val.toString().includes('%') || val.toString().includes('px') ? val : `${parseInt(val)}px`
+}
+
 export default defineComponent({
     props: {
         value: {
@@ -124,12 +128,36 @@ export default defineComponent({
         },
         fluid: Boolean,
         disabled: Boolean,
+        transparent: Boolean,
         color: String,
         minWidth: {
-            type: Number | String,
+            type: [Number, String],
             default: 50
         },
-        size: String,
+        maxWidth: {
+            type: [Number, String],
+            default: '100%'
+        },
+        size: {
+            type: String,
+            validator: val => {
+                const valid =
+                    val === '' ||
+                    val === 'tiny' ||
+                    val === 'small' ||
+                    val === 'medium' ||
+                    val === 'large' ||
+                    val === 'big' ||
+                    val === 'huge' ||
+                    val === 'massive'
+                if (!valid) {
+                    console.error('[Vue warn]: Validation error in NumpadInput.vue!')
+                    console.error('[Vue warn]: prop.size is not valid!')
+                    throw `Accepted values: tiny | small | medium | large | big | huge | massive`
+                }
+                return valid
+            }
+        },
         rightIcon: String,
         leftIcon: String,
         placeholder: {
@@ -165,10 +193,12 @@ export default defineComponent({
                     right: ctx.slots.labelRight,
                     labeled: ctx.slots.labelLeft || ctx.slots.labelRight,
                     icon: props.rightIcon || props.leftIcon,
+                    transparent: props.transparent,
                     input: true
                 },
                 style: {
-                    minWidth: `${parseInt(props.minWidth)}px`
+                    minWidth: parsePxStyle(props.minWidth),
+                    maxWidth: parsePxStyle(props.maxWidth)
                 }
             }
         })

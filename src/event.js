@@ -1,9 +1,9 @@
-let source = 'modal'
+const source = 'modal'
 let fireEventCount = 0
 
 function fireEvent(name, params) {
     return new Promise((resolve, reject) => {
-        let eventID = fireEventCount++
+        const eventID = fireEventCount++
 
         const callback = `fireEventCB${eventID}`
         const errorCallback = `fireEventErrorCB${eventID}`

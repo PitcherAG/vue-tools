@@ -9,24 +9,24 @@ export const useConfigStore = createStore({
     }),
     getters: {
         getTableDict: state => {
-            let d = {}
+            const d = {}
             if (!state.customCaches) {
                 return d
             }
             for (let i = 0; i < state.customCaches.length; i++) {
-                let table = state.customCaches[i]
+                const table = state.customCaches[i]
                 d[table.sfObjectName] = table.tableToCache
                 d[table.objectName] = table.tableToCache
             }
             return d
         },
         getCacheDict: state => {
-            let d = {}
+            const d = {}
             if (!state.customCaches) {
                 return d
             }
             for (let i = 0; i < state.customCaches.length; i++) {
-                let table = state.customCaches[i]
+                const table = state.customCaches[i]
                 d[table.sfObjectName] = table
                 d[table.objectName] = table
             }

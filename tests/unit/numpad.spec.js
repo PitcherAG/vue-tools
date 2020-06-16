@@ -1,6 +1,6 @@
 import CompositionApi from '@vue/composition-api'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import NumpadInput from '../../src/components/NumpadInput.vue'
+import NumpadInput from '@/components/NumpadInput.vue'
 
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
