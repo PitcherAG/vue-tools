@@ -1,5 +1,5 @@
-import { trans, TranslationPlugin, useI18nStore } from '../../src'
 import Vue from 'vue'
+import { trans, TranslationPlugin, useI18nStore } from '@/'
 
 describe('i18n', () => {
     it('translations', () => {

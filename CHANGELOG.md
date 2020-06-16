@@ -1,9 +1,27 @@
 # Changelog
 
+## 1.3.3
+
+- added non-exported components -> Popup & Sidebar
+- updated dependencies
+  - pinia to 0.0.6
+  - @pitcher/machine-gettext to 1.1.2
+  - @vue/cli-service to 4.4.1
+  - eslint to 7.2.0
+  - eslint-plugin-vue to 7.0.0-alpha.6
+- eslint rules update
+- various bug fixes
+- DataTable component added
+- NumpadInput component updated
+  - validation for size prop
+  - transparent attr added
+  - maxWidth attr added
+- new utility search function added
+
 ## 1.3.2
 
 - added demo page for future changes & development of UI elements
-- numpadInput updated
+- NumpadInput component updated
   - minWidth attr added
   - placeholder attr added
   - max attr has not default value anymore

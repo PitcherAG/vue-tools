@@ -12,7 +12,7 @@ export function formatDate(date, showYear = true) {
     } else {
         options = { month: 'short', day: '2-digit' }
     }
-    let locale = store.state.locale
+    const locale = store.state.locale
     if (!locale) {
         throw new Error('locale not defined')
     }

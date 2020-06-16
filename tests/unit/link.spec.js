@@ -1,9 +1,9 @@
-import { fireEvent } from '../../src/event'
-import { openLink } from '../../src/utils'
-import { getFilesWithKeyword } from '../../src/files'
+import { fireEvent } from '@/event'
+import { openLink } from '@/utils'
+import { getFilesWithKeyword } from '@/files'
 
-jest.mock('../../src/event')
-jest.mock('../../src/files')
+jest.mock('@/event')
+jest.mock('@/files')
 
 describe('link', () => {
     it('keyword link', async () => {
