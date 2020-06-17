@@ -157,6 +157,9 @@ export default defineComponent({
             type: String,
             default: '100%'
         },
+        maxWidth: {
+            type: String
+        },
         noDataText: {
             type: String,
             default: 'Table has not any data to show'
@@ -230,7 +233,7 @@ export default defineComponent({
             },
             style: {
                 width: props.width,
-                maxWidth: props.width
+                maxWidth: props.maxWidth
             }
         }))
 

@@ -32,6 +32,7 @@ Fomantic DataTable with pagination
 | `search-for` | `String | Number` | no | '' | search key for searching the table. This prop can be bound to an input outside of DataTable
 | `search-fields` | `Array` | no | [] | string array to specify which object properties you want to search inside your data array
 | `width` | `String` | no | 100% | table width
+| `max-width` | `String` | no | - | table max-width
 | `no-data-text` | `String` | no | Table has not any data to show | text to show when your table has not any data to show
 | `no-header` | `Boolean` | no | false | hide table header, by default table header is visible
 | `fixed-header` | `Boolean` | no | false | make the table header fixed and table body scrollable
