@@ -136,7 +136,8 @@ export default defineComponent({
             required: true
         },
         searchFor: {
-            type: [String, Number]
+            type: [String, Number],
+            default: ''
         },
         searchFields: {
             type: Array,
