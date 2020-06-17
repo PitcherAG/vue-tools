@@ -47,6 +47,7 @@ Fomantic DataTable with pagination
 | slot | description | props
 | :--- | :--- | :--- | 
 | `heading-row` | Slot to overwrite the content of ```thead > tr``` | ```{ filteredFields, sortData, sortTable, getClass(field) }```
+| `FIELDTITLE__slot` | Dynamic slot to overwrite content of targeted field ```thead > tr > th``` | ```{ field }```
 | `body` | Slot to overwrite the content of ```tbody``` | ```{ tableData, filteredFields, sortData, pagination }```
 | `row` | Slot to overwrite the content of ```tbody > tr``` | ```{ rowData, raw, sortData, pagination }```
 | `t-foot` | Slot to overwrite the content of ```tfoot``` | ```{ tableData, sortData, pagination, paginate(n) }```
@@ -188,7 +189,15 @@ const searchFields = ['name', 'age']
 <DataTable class="celled striped" :data="data" :fields="fields" :per-page="50" fixed-header />
  
 // Usage with slots, contains all slot examples
-<DataTable :data="data" :fields="fields" >
+<DataTable :data="data" :fields="fields">
+    <!-- Inject template to any TH slot. No need to define anything special just add a template #FIELDTITLE__slot -->
+    <template #Id__slot="{ field }">
+        <button class="ui button basic right aligned">
+            <i class="icon edit" />
+            Id
+        </button>
+    </template>
+
     <!-- Inject template to heading-row  -->
     <template #heading-row="{ filteredFields, sortData, sortTable, getClass }">
         <th v-for="(f, fKey) in filteredFields" :key="fKey" @click="sortTable(f.dataField)" :class="getClass(f)">
