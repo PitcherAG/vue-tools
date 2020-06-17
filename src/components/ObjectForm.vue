@@ -60,7 +60,7 @@
 /* eslint-disable no-unused-vars, max-len */
 
 import { computed, reactive, ref, watch } from '@vue/composition-api'
-import { loadSchema, useConfigStore, contextQuery, saveObject, Field, loadLayout } from '@/index.js'
+import { loadSchema, useConfigStore, contextQuery, saveObject, Field, loadLayout } from '../utils'
 import ObjectFormField from './ObjectFormField'
 import Dropdown from './Dropdown'
 
