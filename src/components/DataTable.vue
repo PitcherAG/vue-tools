@@ -69,8 +69,8 @@
                         </template>
                         <!-- otherwise use the prop from data -->
                         <template v-else>
+                            <!-- Transform function, return mapped object, root object & field object -->
                             {{
-                                // Transform function, return mapped object, root object & field object
                                 f.transform
                                     ? f.transform(mapper(f.dataField, item), item, f)
                                     : mapper(f.dataField, item)
