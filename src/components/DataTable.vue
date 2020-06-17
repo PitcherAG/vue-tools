@@ -20,12 +20,19 @@
                         v-if="!f.hide"
                         :key="f.name"
                         :class="getTHClass(f)"
-                        @click="f.sortable ? sortTable(f.dataField) : null"
                         :style="{ width: f.width }"
+                        @click="f.sortable ? sortTable(f.dataField) : null"
                     >
+                        <!-- default -->
                         <span :data-tooltip="f.tooltip ? f.title : undefined" :data-position="f.tooltip">
-                            <i v-if="f.icon" class="icon" :class="f.icon" />
-                            {{ f.title }}
+                            <!-- custom header injection -->
+                            <template v-if="hasSlot(`${f.title}__slot`)">
+                                <slot :name="`${f.title}__slot`" :field="f" />
+                            </template>
+                            <template v-else>
+                                <i v-if="f.icon" class="icon" :class="f.icon" />
+                                {{ f.title }}
+                            </template>
                         </span>
                     </th>
                 </template>
@@ -354,6 +361,10 @@ export default defineComponent({
             tfoot.style.display = 'block'
         }
 
+        function hasSlot(name) {
+            return !!slots[name]
+        }
+
         onMounted(() => {
             if (props.fixedHeader) {
                 setHeadingFixed()
@@ -382,6 +393,7 @@ export default defineComponent({
             sortTable,
             getTHClass,
             getScopeData,
+            hasSlot,
             tableData,
             paginate,
             mapper
