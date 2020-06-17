@@ -115,8 +115,8 @@ export default {
                     transform: val => `url: ${val}`
                 },
                 {
-                    title: 'Favorite',
-                    dataField: 'isFavorite',
+                    title: 'Test.Relation',
+                    dataField: 'test.nested.another.hulo',
                     thClass: 'left aligned',
                     tdClass: 'left aligned'
                 },
