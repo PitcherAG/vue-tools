@@ -77,7 +77,7 @@ field: {
     // property in your data that you don't want to show in your table i.e. ID etc.
     hide: Boolean,
     // function to handle the value before it is shown in the table
-    transform: Function
+    transform: Function(value, rootObject, fieldObject)
 }
 
 // array of fields that are filtered. Does not include fields with hide: true set
@@ -159,7 +159,7 @@ const fields = [
     dataField: 'age',
     sortable: true,
     // transform the value before showing
-    transform: (val) => `${val} years old` 
+    transform: (val, obj, field) => `${val} years old` 
 },
 {
     title: 'Created date',
