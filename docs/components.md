@@ -90,6 +90,9 @@ tableData: Object[]
 // it does not include properties you hide in your field definition
 rowData: Object
 
+// single field object that belongs to the row when you are using a dynamic defined with __:slot.
+rowField: Object
+
 // single data object that that belongs to the row whenyou are using in template #row.
 // it includes all properties of the object either you hide or not in your field definition 
 raw: Object
@@ -222,8 +225,8 @@ const searchFields = ['name', 'age']
         </td>
     </template>
 
-    <!-- Inject template to the slot you have dynamically created in fields -->
-    <template #actions="{ rowData, sortData }">
+    <!-- Inject template to the slot you have dynamically created in fields with __slot: -->
+    <template #actions="{ rowData, rowField, sortData }">
         <button class="ui button basic right aligned" @click="doSomething(rowData)">
             <i class="icon edit" />
             Edit

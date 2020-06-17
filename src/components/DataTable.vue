@@ -60,7 +60,12 @@
                     <td v-if="!f.hide" :key="fKey" :class="f.tdClass">
                         <!-- if this field is a slot, get the slot -->
                         <template v-if="f.dataField.includes('__slot:')">
-                            <slot :name="f.dataField.replace('__slot:', '')" :rowData="item" :sortData="sort" />
+                            <slot
+                                :name="f.dataField.replace('__slot:', '')"
+                                :rowData="item"
+                                :rowField="f"
+                                :sortData="sort"
+                            />
                         </template>
                         <!-- otherwise use the prop from data -->
                         <template v-else>
