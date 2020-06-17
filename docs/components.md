@@ -29,8 +29,8 @@ Fomantic DataTable with pagination
 | :--- | :--- | :--- | :--- | :--- |
 | `data` | `Array` | yes | - | object array to present data in table
 | `fields` | `Array` | yes | - | object array for field options. Inside fields you define your table headings and the options for the column
-| `search-for` | `String | Number` | no | - | search key for searching the table. This prop can be bound to an input outside of DataTable
-| `search-fields` | `Array` | no | - | string array to specify which object properties you want to search inside your data array
+| `search-for` | `String | Number` | no | '' | search key for searching the table. This prop can be bound to an input outside of DataTable
+| `search-fields` | `Array` | no | [] | string array to specify which object properties you want to search inside your data array
 | `width` | `String` | no | 100% | table width
 | `no-data-text` | `String` | no | Table has not any data to show | text to show when your table has not any data to show
 | `no-header` | `Boolean` | no | false | hide table header, by default table header is visible
