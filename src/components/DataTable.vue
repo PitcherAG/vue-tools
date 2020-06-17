@@ -69,7 +69,12 @@
                         </template>
                         <!-- otherwise use the prop from data -->
                         <template v-else>
-                            {{ f.transform ? f.transform(mapper(f.dataField, item)) : mapper(f.dataField, item) }}
+                            {{
+                                // Transform function, return mapped object, root object & field object
+                                f.transform
+                                    ? f.transform(mapper(f.dataField, item), item, f)
+                                    : mapper(f.dataField, item)
+                            }}
                         </template>
                     </td>
                 </template>
