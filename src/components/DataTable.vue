@@ -64,7 +64,7 @@
                         </template>
                         <!-- otherwise use the prop from data -->
                         <template v-else>
-                            {{ f.transform ? f.transform(item[f.dataField]) : item[f.dataField] }}
+                            {{ f.transform ? f.transform(mapper(f.dataField, item)) : mapper(f.dataField, item) }}
                         </template>
                     </td>
                 </template>
@@ -111,6 +111,15 @@ import { search } from '@/utils'
 
 function sortBy(data, by, order) {
     return _.orderBy(data, [by], [order])
+}
+
+function mapper(key, obj) {
+    // map dotted objects
+    if (key.includes('.')) {
+        return key.split('.').reduce((o, i) => o[i], obj)
+    }
+    // map simple key
+    return obj[key]
 }
 
 export default defineComponent({
@@ -272,7 +281,7 @@ export default defineComponent({
             const filtered = []
             props.fields.forEach(f => {
                 if (!f.hide && !f.dataField.includes('__slot:')) {
-                    filtered.push(item[f.dataField])
+                    filtered.push(mapper(f.dataField, item))
                 }
             })
             return filtered
@@ -360,7 +369,8 @@ export default defineComponent({
             getTHClass,
             getScopeData,
             tableData,
-            paginate
+            paginate,
+            mapper
         }
     }
 })
