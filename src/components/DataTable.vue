@@ -107,7 +107,7 @@
 import { defineComponent, computed, reactive, toRefs, watch, onMounted } from '@vue/composition-api'
 import _ from 'lodash'
 import Pagination from './DataTable.Pagination.vue'
-import { search } from '@/utils'
+import { search } from '../utils'
 
 function sortBy(data, by, order) {
     return _.orderBy(data, [by], [order])
