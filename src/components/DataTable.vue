@@ -289,7 +289,7 @@ export default defineComponent({
 
         // helper for building th class
         function getTHClass(f) {
-            let cls = f.thClass
+            let cls = f.thClass ? f.thClass : ''
             cls += f.sortable ? ' sortable' : ' no-sort'
 
             cls += state.sort.by === f.dataField ? ' sorted' : ''
