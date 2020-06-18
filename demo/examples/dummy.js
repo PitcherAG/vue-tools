@@ -14,7 +14,7 @@ export default [
         test: {
             nested: {
                 another: {
-                    hulo: 'yeah'
+                    hulo: '1yeah'
                 }
             }
         }
@@ -34,7 +34,7 @@ export default [
         test: {
             nested: {
                 another: {
-                    hulo: 'yeah'
+                    hulo: '2yeah'
                 }
             }
         }
@@ -54,7 +54,7 @@ export default [
         test: {
             nested: {
                 another: {
-                    hulo: 'yeah'
+                    hulo: '3yeah'
                 }
             }
         }
