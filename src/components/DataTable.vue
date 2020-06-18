@@ -156,10 +156,7 @@ export default defineComponent({
             type: [String, Number],
             default: ''
         },
-        searchFields: {
-            type: Array,
-            default: () => []
-        },
+        searchFields: Array,
         width: {
             type: String,
             default: '100%'
