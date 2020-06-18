@@ -272,15 +272,25 @@ export default defineComponent({
 
         // Set sort state
         function sortTable(field) {
+            // reset sorting for other fields first
+            props.fields
+                .filter(f => f.dataField !== field.dataField && f.sorted)
+                .forEach(f => {
+                    if (f.sorted) {
+                        delete f.sorted
+                        state.sort.order = ''
+                    }
+                })
+            // set sorting by
             state.sort.by = field.sortField ? field.sortField : field.dataField
             switch (state.sort.order) {
                 case '':
                     state.sort.order = 'asc'
-                    field.sorted = true
+                    field.sorted = 'asc'
                     break
                 case 'asc':
                     state.sort.order = 'desc'
-                    field.sorted = true
+                    field.sorted = 'desc'
                     break
                 case 'desc':
                     state.sort.by = ''
@@ -296,7 +306,7 @@ export default defineComponent({
             cls += f.sortable ? ' sortable' : ' no-sort'
 
             cls += f.sorted ? ' sorted' : ''
-            cls += f.sorted && state.sort.order === 'desc' ? ' descending' : ' ascending'
+            cls += f.sorted && f.sorted === 'desc' ? ' descending' : ' ascending'
             return cls
         }
 
