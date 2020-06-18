@@ -106,7 +106,7 @@ const parsePxStyle = val => {
 export default defineComponent({
     props: {
         value: {
-            type: String
+            type: [String, Number]
         },
         decimals: {
             type: Number,
@@ -224,7 +224,8 @@ export default defineComponent({
         })
 
         function emit(val) {
-            ctx.emit('input', val)
+            const parsed = typeof props.value === 'number' ? parseFloat(val) : val
+            ctx.emit('input', parsed)
         }
 
         function addVal(val) {
@@ -235,7 +236,7 @@ export default defineComponent({
             }
 
             // parse current value as Integer
-            const parsed = parseInt(props.value.replace(/\D/g, ''))
+            const parsed = parseInt(props.value.toString().replace(/\D/g, ''))
             // concatenate incoming value as string with parsed value
             const value = parsed + val.toString()
             // mask the value with decimals
@@ -267,7 +268,7 @@ export default defineComponent({
 
         function backspace() {
             // parse current value as Integer & convert to string
-            const parsed = parseInt(props.value.replace(/\D/g, '')).toString()
+            const parsed = parseInt(props.value.toString().replace(/\D/g, '')).toString()
             // remove last char
             const value = parsed.slice(0, -1)
             // mask the value with decimals

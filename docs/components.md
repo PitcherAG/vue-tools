@@ -283,7 +283,7 @@ Custom component
 #### Available props
 | prop | type | required | default | description |
 | :--- | :--- | :--- | :--- | :--- |
-| `v-model` | `String` | yes | - | input value
+| `v-model` | `String | Number` | yes | - | input value
 | `decimals` | `Number` | no | 2 | decimal value for input
 | `max` | `Number` | no | undefined | maximum number that input can reach
 | `min-width` | `Number | String` | no | 50 | min-width css property for input element
