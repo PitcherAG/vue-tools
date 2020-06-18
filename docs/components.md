@@ -63,6 +63,7 @@ field: {
     // column heading
     title: String,
     // which data property this heading is presenting inside the data object you send.
+    // supports deep object mapping like obj.nested.child
     // it can also be a slot name with __slot:slotname to access later inside your template
     // when you use custom slot like this you have access to rowData and sortData in template
     dataField: String | __slot:slotName,
@@ -74,10 +75,14 @@ field: {
     tdClass: String,
     // to makes column sortable thru clicking the <th> element
     sortable: Boolean,
+    // define object property to sort thru, supports deep object mapping obj.nested.child.value etc.
+    sortField: String,
     // enable tooltip for <th> element
     tooltip: Boolean,
     // property in your data that you don't want to show in your table i.e. ID etc.
     hide: Boolean,
+    // sets width style to the <th> element, accepts only string
+    width: String
     // function to handle the value before it is shown in the table
     transform: Function(value, rootObject, fieldObject)
 }
@@ -114,8 +119,8 @@ pagination: {
 }
 // function to control pagination, number is the page number you want to paginate to
 paginate: Function(number)
-// function to sort the table. dataField is the name of your field you want to sort
-sortTable: Function(dataField)
+// function to sort the table. Takes in a field object and checks sortField & dataField properties to determine sort field
+sortTable: Function(field)
 // this function injects related classes to the <th> element, if it is sortable, sorted etc.
 // field is a single field object
 getClass: Function(field)

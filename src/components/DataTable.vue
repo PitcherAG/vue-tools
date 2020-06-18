@@ -21,7 +21,7 @@
                         :key="f.name"
                         :class="getTHClass(f)"
                         :style="{ width: f.width }"
-                        @click="f.sortable ? sortTable(f.dataField) : null"
+                        @click="f.sortable ? sortTable(f) : null"
                     >
                         <!-- default -->
                         <span :data-tooltip="f.tooltip ? f.title : undefined" :data-position="f.tooltip">
@@ -271,18 +271,21 @@ export default defineComponent({
         calculatePagination(props.data)
 
         // Set sort state
-        function sortTable(by) {
-            state.sort.by = by
+        function sortTable(field) {
+            state.sort.by = field.sortField ? field.sortField : field.dataField
             switch (state.sort.order) {
                 case '':
                     state.sort.order = 'asc'
+                    field.sorted = true
                     break
                 case 'asc':
                     state.sort.order = 'desc'
+                    field.sorted = true
                     break
                 case 'desc':
                     state.sort.by = ''
                     state.sort.order = ''
+                    delete field.sorted
                     break
             }
         }
@@ -292,8 +295,8 @@ export default defineComponent({
             let cls = f.thClass ? f.thClass : ''
             cls += f.sortable ? ' sortable' : ' no-sort'
 
-            cls += state.sort.by === f.dataField ? ' sorted' : ''
-            cls += state.sort.by === f.dataField && state.sort.order === 'desc' ? ' descending' : ' ascending'
+            cls += f.sorted ? ' sorted' : ''
+            cls += f.sorted && state.sort.order === 'desc' ? ' descending' : ' ascending'
             return cls
         }
 

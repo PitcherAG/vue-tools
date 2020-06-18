@@ -118,7 +118,8 @@ export default {
                     title: 'Test.Relation',
                     dataField: 'test.nested.another.hulo',
                     thClass: 'left aligned',
-                    tdClass: 'left aligned'
+                    tdClass: 'left aligned',
+                    sortable: true
                 },
                 {
                     title: 'In Board',
@@ -137,7 +138,8 @@ export default {
                     dataField: 'createdDate',
                     thClass: 'center aligned',
                     tdClass: 'center aligned',
-                    sortable: true
+                    sortable: true,
+                    sortField: 'test.nested.another.hulo'
                 },
                 {
                     title: 'Actions',
