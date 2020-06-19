@@ -77,6 +77,9 @@ field: {
     tdClass: String,
     // to makes column sortable thru clicking the <th> element
     sortable: Boolean,
+    // what type sorting logic should use when sorting the data
+    // default: string
+    sortType: 'string | number | date'
     // enable tooltip for <th> element
     tooltip: Boolean,
     // property in your data that you don't want to show in your table i.e. ID etc.
@@ -165,13 +168,15 @@ const fields = [
     title: 'Age',
     dataField: 'age',
     sortable: true,
+    sortType: 'number'
     // transform the value before showing
     transform: (val, obj, field) => `${val} years old` 
 },
 {
     title: 'Created date',
     dataField: 'createdDate',
-    sortable: true
+    sortable: true,
+    sortType: 'date'
 },
 {
     title: 'Actions'
