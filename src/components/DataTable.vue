@@ -123,13 +123,10 @@
 
 <script>
 import { defineComponent, computed, reactive, toRefs, watch, onMounted } from '@vue/composition-api'
-import _ from 'lodash'
+import orderBy from 'lodash/orderBy'
+import range from 'lodash/range'
 import Pagination from './DataTable.Pagination.vue'
 import { search } from '../utils'
-
-function sortBy(data, by, order) {
-    return _.orderBy(data, [by], [order])
-}
 
 function mapper(key, obj) {
     if (!key) {
@@ -142,6 +139,39 @@ function mapper(key, obj) {
     }
     // map simple key
     return obj[key]
+}
+
+function sortBy(data, fields, by, order) {
+    const field = fields.find(f => f.dataField === by)
+    if (!field) {
+        return data
+    }
+
+    if (typeof field.sortType === 'undefined' || field.sortType === 'string') {
+        // sortType: string or sortType: undefined
+        return orderBy(data, [by], [order])
+    } else if (field.sortType === 'number') {
+        // sortType: number
+        return orderBy(
+            data,
+            item => {
+                const val = mapper(by, item) === '' ? -1 : mapper(by, item)
+                return Number(val)
+            },
+            [order]
+        )
+    } else if (field.sortType === 'date') {
+        // sortType: date
+        return orderBy(
+            data,
+            item => {
+                return new Date(mapper(by, item))
+            },
+            [order]
+        )
+    }
+
+    return orderBy(data, [by], [order])
 }
 
 export default defineComponent({
@@ -257,7 +287,7 @@ export default defineComponent({
 
             // sort
             if (state.sort.by) {
-                temp = sortBy(temp, state.sort.by, state.sort.order)
+                temp = sortBy(temp, props.fields, state.sort.by, state.sort.order)
             }
 
             // pagination active & paginate
@@ -355,7 +385,7 @@ export default defineComponent({
             }
             state.pagination.startIndex = (state.pagination.currentPage - 1) * props.perPage
             state.pagination.endIndex = state.pagination.startIndex + props.perPage
-            state.pagination.pages = _.range(state.pagination.startPage, state.pagination.endPage + 1)
+            state.pagination.pages = range(state.pagination.startPage, state.pagination.endPage + 1)
         }
 
         // Paginate function, this is sent to Pagination component
