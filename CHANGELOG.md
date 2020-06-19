@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.3.4
+
+- DataTable updated
+  - added searchFor default value
+  - added maxWidth property
+  - deep object mapping support for dataField in field definition
+  - dataField does not support __slot anymore, added slotName property instead
+  - better sort functionality
+  - support sortType in field definition
+  - added dynamic slot property: rowFields
+  - dynamic th slots are supported now
+- NumpadInput updated
+  - v-model supports number as well
+  - add document listener to make blur event work
+- Dropdown component bugfix
+- importing modules with @ were causing error, fixed now
+- import lodash modules only instead of whole package
+- search threshold decreased to 0.3
+
 ## 1.3.3
 
 - added non-exported components -> Popup & Sidebar
