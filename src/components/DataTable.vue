@@ -66,10 +66,11 @@
                 <template v-else v-for="(f, fKey) in fields">
                     <td v-if="!f.hide" :key="fKey" :class="f.tdClass">
                         <!-- if this field is a slot, get the slot -->
-                        <template v-if="f.dataField.includes('__slot:')">
+                        <template v-if="!!f.slotName">
                             <slot
-                                :name="f.dataField.replace('__slot:', '')"
+                                :name="f.slotName"
                                 :rowData="item"
+                                :value="mapper(f.dataField, item)"
                                 :rowField="f"
                                 :sortData="sort"
                             />
@@ -131,6 +132,10 @@ function sortBy(data, by, order) {
 }
 
 function mapper(key, obj) {
+    if (!key) {
+        return null
+    }
+
     // map dotted objects
     if (key.includes('.')) {
         return key.split('.').reduce((o, i) => o[i], obj)
@@ -279,7 +284,7 @@ export default defineComponent({
                     }
                 })
             // set sorting by
-            state.sort.by = field.sortField ? field.sortField : field.dataField
+            state.sort.by = field.dataField
             switch (state.sort.order) {
                 case '':
                     state.sort.order = 'asc'
@@ -311,7 +316,7 @@ export default defineComponent({
         function getScopeData(item) {
             const filtered = []
             props.fields.forEach(f => {
-                if (!f.hide && !f.dataField.includes('__slot:')) {
+                if (!f.hide && typeof f.slotName !== 'string') {
                     filtered.push(mapper(f.dataField, item))
                 }
             })
