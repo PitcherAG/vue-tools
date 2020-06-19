@@ -30,17 +30,17 @@
                     <template v-for="(f, fKey) in fields">
                         <td v-if="!f.hide" :key="fKey">
                             if this field is not a slot
-                            <template v-if="!f.dataField.includes('__slot:')">
+                            <template v-if="!f.slotName">
                                 {{ f.transform ? f.transform(row[f.dataField]) : row[f.dataField] }}
                             </template>
                         </td>
                     </template>
                 </tr>
             </template> -->
-            <template #actions>
+            <template #actions="{ value }">
                 <button class="ui button basic right aligned">
                     <i class="icon edit" />
-                    Edit
+                    {{ value }}
                 </button>
             </template>
             <!-- <template #t-foot="{ pagination, paginate }">
@@ -83,7 +83,6 @@ export default {
             data,
             options: {
                 searchFor: '',
-                searchFields: ['title', 'url'],
                 noHeader: false,
                 noPagination: false,
                 // noDataText: '',
@@ -122,28 +121,29 @@ export default {
                     sortable: true
                 },
                 {
-                    title: 'In Board',
-                    dataField: 'isInBoard',
+                    title: 'Count',
+                    dataField: 'count',
                     thClass: 'center aligned',
-                    tdClass: 'center aligned'
+                    tdClass: 'center aligned',
+                    sortable: true
                 },
                 {
-                    title: 'New',
-                    dataField: 'isNew',
+                    title: 'Total',
+                    dataField: 'total',
                     thClass: 'right aligned',
-                    tdClass: 'right aligned'
+                    tdClass: 'right aligned',
+                    sortable: true
                 },
                 {
                     title: 'Created Date',
                     dataField: 'createdDate',
                     thClass: 'center aligned',
                     tdClass: 'center aligned',
-                    sortable: true,
-                    sortField: 'test.nested.another.hulo'
+                    sortable: true
                 },
                 {
                     title: 'Actions',
-                    dataField: '__slot:actions',
+                    slotName: 'actions',
                     thClass: 'center aligned',
                     tdClass: 'center aligned'
                 }
