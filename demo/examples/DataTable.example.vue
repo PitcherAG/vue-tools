@@ -118,28 +118,32 @@ export default {
                     dataField: 'test.nested.another.hulo',
                     thClass: 'left aligned',
                     tdClass: 'left aligned',
-                    sortable: true
+                    sortable: true,
+                    sortType: 'string'
                 },
                 {
                     title: 'Count',
                     dataField: 'count',
                     thClass: 'center aligned',
                     tdClass: 'center aligned',
-                    sortable: true
+                    sortable: true,
+                    sortType: 'number'
                 },
                 {
                     title: 'Total',
                     dataField: 'total',
                     thClass: 'right aligned',
                     tdClass: 'right aligned',
-                    sortable: true
+                    sortable: true,
+                    sortType: 'number'
                 },
                 {
                     title: 'Created Date',
                     dataField: 'createdDate',
                     thClass: 'center aligned',
                     tdClass: 'center aligned',
-                    sortable: true
+                    sortable: true,
+                    sortType: 'date'
                 },
                 {
                     title: 'Actions',
