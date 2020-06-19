@@ -92,7 +92,7 @@
 
 <script>
 import { createStore } from 'pinia'
-import { defineComponent, reactive, toRefs, computed, onMounted } from '@vue/composition-api'
+import { defineComponent, reactive, toRefs, computed, onMounted, onUnmounted } from '@vue/composition-api'
 
 // Global store for numpad component
 const useNumpadStore = createStore({
@@ -216,6 +216,7 @@ export default defineComponent({
                 focus(false)
             }
         }
+
         onMounted(() => {
             if (!state.groups[props.group]) {
                 state.groups[props.group] = []
@@ -231,6 +232,11 @@ export default defineComponent({
 
             // outer click listener
             document.addEventListener('click', determineOuterClick)
+        })
+
+        // destroy
+        onUnmounted(() => {
+            document.removeEventListener('click', determineOuterClick)
         })
 
         function emit(val) {
