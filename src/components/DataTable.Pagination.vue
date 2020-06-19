@@ -38,7 +38,7 @@
 
 <script>
 import { defineComponent } from '@vue/composition-api'
-import _ from 'lodash'
+import has from 'lodash/has'
 
 export default defineComponent({
     props: {
@@ -47,13 +47,13 @@ export default defineComponent({
             required: true,
             validator: item => {
                 const valid =
-                    _.has(item, 'currentPage') &&
-                    _.has(item, 'totalPages') &&
-                    _.has(item, 'startPage') &&
-                    _.has(item, 'endPage') &&
-                    _.has(item, 'startIndex') &&
-                    _.has(item, 'endIndex') &&
-                    _.has(item, 'pages')
+                    has(item, 'currentPage') &&
+                    has(item, 'totalPages') &&
+                    has(item, 'startPage') &&
+                    has(item, 'endPage') &&
+                    has(item, 'startIndex') &&
+                    has(item, 'endIndex') &&
+                    has(item, 'pages')
 
                 if (!valid) {
                     console.error('[Vue warn]: Validation error in Pagination.vue!')

@@ -20,12 +20,19 @@
                         v-if="!f.hide"
                         :key="f.name"
                         :class="getTHClass(f)"
-                        @click="f.sortable ? sortTable(f.dataField) : null"
                         :style="{ width: f.width }"
+                        @click="f.sortable ? sortTable(f) : null"
                     >
+                        <!-- default -->
                         <span :data-tooltip="f.tooltip ? f.title : undefined" :data-position="f.tooltip">
-                            <i v-if="f.icon" class="icon" :class="f.icon" />
-                            {{ f.title }}
+                            <!-- custom header injection -->
+                            <template v-if="hasSlot(`${f.title}__slot`)">
+                                <slot :name="`${f.title}__slot`" :field="f" />
+                            </template>
+                            <template v-else>
+                                <i v-if="f.icon" class="icon" :class="f.icon" />
+                                {{ f.title }}
+                            </template>
                         </span>
                     </th>
                 </template>
@@ -59,12 +66,23 @@
                 <template v-else v-for="(f, fKey) in fields">
                     <td v-if="!f.hide" :key="fKey" :class="f.tdClass">
                         <!-- if this field is a slot, get the slot -->
-                        <template v-if="f.dataField.includes('__slot:')">
-                            <slot :name="f.dataField.replace('__slot:', '')" :rowData="item" :sortData="sort" />
+                        <template v-if="!!f.slotName">
+                            <slot
+                                :name="f.slotName"
+                                :rowData="item"
+                                :value="mapper(f.dataField, item)"
+                                :rowField="f"
+                                :sortData="sort"
+                            />
                         </template>
                         <!-- otherwise use the prop from data -->
                         <template v-else>
-                            {{ f.transform ? f.transform(item[f.dataField]) : item[f.dataField] }}
+                            <!-- Transform function, return mapped object, root object & field object -->
+                            {{
+                                f.transform
+                                    ? f.transform(mapper(f.dataField, item), item, f)
+                                    : mapper(f.dataField, item)
+                            }}
                         </template>
                     </td>
                 </template>
@@ -105,12 +123,55 @@
 
 <script>
 import { defineComponent, computed, reactive, toRefs, watch, onMounted } from '@vue/composition-api'
-import _ from 'lodash'
+import orderBy from 'lodash/orderBy'
+import range from 'lodash/range'
 import Pagination from './DataTable.Pagination.vue'
-import { search } from '@/utils'
+import { search } from '../utils'
 
-function sortBy(data, by, order) {
-    return _.orderBy(data, [by], [order])
+function mapper(key, obj) {
+    if (!key) {
+        return null
+    }
+
+    // map dotted objects
+    if (key.includes('.')) {
+        return key.split('.').reduce((o, i) => o[i], obj)
+    }
+    // map simple key
+    return obj[key]
+}
+
+function sortBy(data, fields, by, order) {
+    const field = fields.find(f => f.dataField === by)
+    if (!field) {
+        return data
+    }
+
+    if (typeof field.sortType === 'undefined' || field.sortType === 'string') {
+        // sortType: string or sortType: undefined
+        return orderBy(data, [by], [order])
+    } else if (field.sortType === 'number') {
+        // sortType: number
+        return orderBy(
+            data,
+            item => {
+                const val = mapper(by, item) === '' ? -1 : mapper(by, item)
+                return Number(val)
+            },
+            [order]
+        )
+    } else if (field.sortType === 'date') {
+        // sortType: date
+        return orderBy(
+            data,
+            item => {
+                return new Date(mapper(by, item))
+            },
+            [order]
+        )
+    }
+
+    return orderBy(data, [by], [order])
 }
 
 export default defineComponent({
@@ -127,15 +188,16 @@ export default defineComponent({
             required: true
         },
         searchFor: {
-            type: [String, Number]
+            type: [String, Number],
+            default: ''
         },
-        searchFields: {
-            type: Array,
-            default: () => []
-        },
+        searchFields: Array,
         width: {
             type: String,
             default: '100%'
+        },
+        maxWidth: {
+            type: String
         },
         noDataText: {
             type: String,
@@ -210,7 +272,7 @@ export default defineComponent({
             },
             style: {
                 width: props.width,
-                maxWidth: props.width
+                maxWidth: props.maxWidth
             }
         }))
 
@@ -225,7 +287,7 @@ export default defineComponent({
 
             // sort
             if (state.sort.by) {
-                temp = sortBy(temp, state.sort.by, state.sort.order)
+                temp = sortBy(temp, props.fields, state.sort.by, state.sort.order)
             }
 
             // pagination active & paginate
@@ -241,29 +303,42 @@ export default defineComponent({
         calculatePagination(props.data)
 
         // Set sort state
-        function sortTable(by) {
-            state.sort.by = by
+        function sortTable(field) {
+            // reset sorting for other fields first
+            props.fields
+                .filter(f => f.dataField !== field.dataField && f.sorted)
+                .forEach(f => {
+                    if (f.sorted) {
+                        delete f.sorted
+                        state.sort.order = ''
+                    }
+                })
+            // set sorting by
+            state.sort.by = field.dataField
             switch (state.sort.order) {
                 case '':
                     state.sort.order = 'asc'
+                    field.sorted = 'asc'
                     break
                 case 'asc':
                     state.sort.order = 'desc'
+                    field.sorted = 'desc'
                     break
                 case 'desc':
                     state.sort.by = ''
                     state.sort.order = ''
+                    delete field.sorted
                     break
             }
         }
 
         // helper for building th class
         function getTHClass(f) {
-            let cls = f.thClass
+            let cls = f.thClass ? f.thClass : ''
             cls += f.sortable ? ' sortable' : ' no-sort'
 
-            cls += state.sort.by === f.dataField ? ' sorted' : ''
-            cls += state.sort.by === f.dataField && state.sort.order === 'desc' ? ' descending' : ' ascending'
+            cls += f.sorted ? ' sorted' : ''
+            cls += f.sorted && f.sorted === 'desc' ? ' descending' : ' ascending'
             return cls
         }
 
@@ -271,8 +346,8 @@ export default defineComponent({
         function getScopeData(item) {
             const filtered = []
             props.fields.forEach(f => {
-                if (!f.hide && !f.dataField.includes('__slot:')) {
-                    filtered.push(item[f.dataField])
+                if (!f.hide && typeof f.slotName !== 'string') {
+                    filtered.push(mapper(f.dataField, item))
                 }
             })
             return filtered
@@ -310,7 +385,7 @@ export default defineComponent({
             }
             state.pagination.startIndex = (state.pagination.currentPage - 1) * props.perPage
             state.pagination.endIndex = state.pagination.startIndex + props.perPage
-            state.pagination.pages = _.range(state.pagination.startPage, state.pagination.endPage + 1)
+            state.pagination.pages = range(state.pagination.startPage, state.pagination.endPage + 1)
         }
 
         // Paginate function, this is sent to Pagination component
@@ -329,6 +404,10 @@ export default defineComponent({
             const tfoot = document.querySelector('tfoot')
             heading.style.paddingRight = `${scrollWidth}px`
             tfoot.style.display = 'block'
+        }
+
+        function hasSlot(name) {
+            return !!slots[name]
         }
 
         onMounted(() => {
@@ -359,8 +438,10 @@ export default defineComponent({
             sortTable,
             getTHClass,
             getScopeData,
+            hasSlot,
             tableData,
-            paginate
+            paginate,
+            mapper
         }
     }
 })
