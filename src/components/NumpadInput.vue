@@ -9,6 +9,7 @@
                 :value="value"
                 type="text"
                 readonly="readonly"
+                class="number-input"
                 :style="inputAttrs.style"
                 :placeholder="placeholder"
                 ref="input"
@@ -209,6 +210,12 @@ export default defineComponent({
         // default zero value
         const defaultValue = props.decimals === 0 ? '0' : `0.${'0'.repeat(props.decimals)}`
 
+        // to check outer click
+        const determineOuterClick = e => {
+            if (!e.target.className.includes('number')) {
+                focus(false)
+            }
+        }
         onMounted(() => {
             if (!state.groups[props.group]) {
                 state.groups[props.group] = []
@@ -221,6 +228,9 @@ export default defineComponent({
                 id: `${props.group}_${state.groups[props.group].length}`,
                 input: ctx.refs.input
             })
+
+            // outer click listener
+            document.addEventListener('click', determineOuterClick)
         })
 
         function emit(val) {
