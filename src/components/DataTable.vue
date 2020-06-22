@@ -49,7 +49,7 @@
                 />
             </template>
 
-            <tr v-else v-for="(item, dKey) in tableData" :key="dKey">
+            <tr v-else v-for="item in tableData" :key="item.__rowID">
                 <!-- If row slot exist, override with a slot -->
                 <template v-if="hasRowSlot">
                     <!-- map only visible fields, return rawData as well -->
@@ -126,7 +126,7 @@ import { defineComponent, computed, reactive, toRefs, watch, onMounted } from '@
 import orderBy from 'lodash/orderBy'
 import range from 'lodash/range'
 import Pagination from './DataTable.Pagination.vue'
-import { search } from '../utils'
+import { search, uid } from '../utils'
 
 function mapper(key, obj) {
     if (!key) {
@@ -275,6 +275,11 @@ export default defineComponent({
                 maxWidth: props.maxWidth
             }
         }))
+
+        // generate rowID to each row
+        props.data.forEach(i => {
+            i.__rowID = uid()
+        })
 
         // Where data is distributed to the table
         const tableData = computed(() => {
