@@ -18,7 +18,7 @@
                 <template v-else v-for="f in fields">
                     <th
                         v-if="!f.hide"
-                        :key="f.name"
+                        :key="f.title"
                         :class="getTHClass(f)"
                         :style="{ width: f.width }"
                         @click="f.sortable ? sortTable(f) : null"
@@ -63,8 +63,8 @@
                 </template>
 
                 <!-- Default Row content -->
-                <template v-else v-for="(f, fKey) in fields">
-                    <td v-if="!f.hide" :key="fKey" :class="f.tdClass">
+                <template v-else v-for="f in fields">
+                    <td v-if="!f.hide" :key="f.title" :class="f.tdClass">
                         <!-- if this field is a slot, get the slot -->
                         <template v-if="!!f.slotName">
                             <slot
