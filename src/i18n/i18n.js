@@ -31,7 +31,7 @@ const state = {
 }
 
 if (process.env.VUE_APP_LANGUAGES) {
-    Object.assign(state, JSON.parse(process.env.VUE_APP_LANGUAGES))
+    Object.assign(state.availableLanguages, JSON.parse(process.env.VUE_APP_LANGUAGES))
 }
 
 export const useI18nStore = createStore({
