@@ -43,6 +43,7 @@
                 <slot
                     name="body"
                     :tableData="tableData"
+                    :mapper="mapper"
                     :filteredFields="fields.filter(f => !f.hide)"
                     :sortData="sort"
                     :pagination="pagination"
