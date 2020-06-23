@@ -217,18 +217,23 @@ const searchFields = ['name', 'age']
     </template>
 
     <!-- Inject template to body -->
-    <template #body="{ tableData, filteredFields, pagination, sortData }">
+    <template #body="{ tableData, filteredFields, mapper, pagination, sortData }">
         <tr v-for="(row, rKey) in tableData" :key="rKey">
-            <td v-for="(col, cKey) in row" :key="cKey">
+            <td v-for="col in row" :key="c.title">
                 {{ col }}
             </td>
         </tr>
-        <tr v-for="(row, rKey) in tableData" :key="rKey">
+        <tr v-for="row in tableData" :key="row.__rowID">
             <template v-for="(f, fKey) in filteredFields">
-                <td v-if="!f.hide" :key="fKey">
-                    if this field is not a slot
+                <td v-if="!f.hide" :key="fKey" :class="f.tdClass">
+                    <!-- if this field is not a slot -->
                     <template v-if="!f.slotName">
-                        {{ f.transform ? f.transform(row[f.dataField]) : row[f.dataField] }}
+                        <!-- Transform function, return mapped object, root object & field object -->
+                        {{
+                            f.transform
+                                ? f.transform(mapper(f.dataField, row), row, f)
+                                : mapper(f.dataField, row)
+                        }}
                     </template>
                 </td>
             </template>
