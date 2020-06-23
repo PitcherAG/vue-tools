@@ -1,5 +1,5 @@
 <template>
-    <div class="ui dropdown" :class="dropdownAttr.class" ref="dropdown">
+    <div class="ui dropdown" v-bind="dropdownAttr" ref="dropdown">
         <!-- hidden value -->
         <input type="hidden" :value="value" />
         <!-- append icon -->
@@ -68,6 +68,13 @@ export default {
             type: String,
             default: 'Select'
         },
+        minWidth: {
+            type: [Number, String]
+        },
+        maxWidth: {
+            type: [Number, String],
+            default: '100%'
+        },
         action: {
             type: String,
             default: 'activate'
@@ -88,6 +95,10 @@ export default {
                 fluid: props.fluid,
                 search: props.searchable,
                 selection: props.selection
+            },
+            style: {
+                minWidth: props.minWidth ? parsePxStyle(props.minWidth) : undefined,
+                maxWidth: parsePxStyle(props.maxWidth)
             }
         }))
 
@@ -119,7 +130,7 @@ export default {
                     onChange: (value, text) => {
                         emit('input', value)
                         emit('dropdown-selected', text)
-                        console.log("set value", value)
+                        console.log('set value', value)
                     }
                 },
                 props.setting
@@ -129,7 +140,7 @@ export default {
 
         const onSearch = e => {
             state.isSearching = refs.search && !!refs.search.value
-            console.log("isSearching", state.isSearching);
+            console.log('isSearching', state.isSearching)
         }
 
         onMounted(() => {
