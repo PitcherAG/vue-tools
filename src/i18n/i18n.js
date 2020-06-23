@@ -2,59 +2,94 @@ import { createStore } from 'pinia'
 import { getTranslationIndex } from './plurals'
 import { renderSimpleContext } from '../utils'
 
+const impactLanguageMap = {
+    AUSDE: 'de',
+    BI: 'id',
+    BR: 'pt',
+    BU: 'bg',
+    CAFR: 'fr',
+    CZ: 'cs',
+    DAN: 'da',
+    ESMX: 'es',
+    EST: 'et',
+    JP: 'ja',
+    LET: 'lv',
+    PO: 'pl',
+    PRT: 'pt',
+    SCH: 'zh-CN',
+    TCH: 'zh-TW',
+    UA: 'uk',
+    VN: 'vi'
+}
+
+const state = {
+    availableLanguages: {
+        en: 'English'
+    },
+    locale: 'en',
+    messages: {}
+}
+
+if (process.env.VUE_APP_LANGUAGES) {
+    Object.assign(state, JSON.parse(process.env.VUE_APP_LANGUAGES))
+}
+
 export const useI18nStore = createStore({
     id: 'i18n',
-    state: () => ({
-        availableLanguages: {
-            en_US: 'American English'
-        },
-        locale: 'en_US',
-        messages: null
-    }),
+    state: () => ({ ...state }),
     actions: {
-        setLanguage: async function(locale, load = true) {
-            if (!locale) {
-                throw new Error('not a valid locale:' + locale)
+        setImpactLanguage: async function(lang) {
+            if (impactLanguageMap[lang]) {
+                lang = impactLanguageMap[lang]
+            } else {
+                lang = lang.toLowerCase()
             }
-            console.log('set language to ' + locale)
-            locale = locale.split('-').join('_')
-            const state = this.state
-            state.locale = locale
-            if (load) {
-                try {
-                    const response = await fetch(`translations/${locale}.json`)
-                    const messages = await response.json()
-                    console.log(messages)
-                    if (!state.messages) {
-                        state.messages = {}
-                    }
-                    state.messages[locale] = messages[locale]
-                } catch (e) {
-                    console.error('The language ' + locale + ' does not has a translation file or translation data!')
-                    console.error(e)
-                }
+
+            this.setLanguage(lang)
+        },
+        setLanguage: async function(lang) {
+            if (!this.state.availableLanguages[lang]) {
+                throw new Error('invalid language')
             }
+
+            if (lang == 'en') {
+                this.state.locale = lang
+                this.state.messages = {}
+                return
+            }
+
+            const response = await fetch(`translations/${lang}/app.json`)
+            this.state.locale = lang
+            this.state.messages = await response.json()
         }
     }
 })
 
 export function trans(key, n = 0, context) {
     const store = useI18nStore()
-    if (!store.state.messages || !store.state.messages[store.state.locale]) {
-        console.error('no translations found for:' + store.state.locale)
+
+    if (!store.state.messages[store.state.locale]) {
         return key
     }
+
     let result = store.state.messages[store.state.locale][key]
+
+    // plural
     if (Array.isArray(result)) {
         const index = getTranslationIndex(store.state.locale, n)
         result = result[index]
     }
+
+    // empty
     if (!result) {
         result = key
     }
+
+    // replace placeholders
     if (context || result.indexOf('{') > -1) {
         result = renderSimpleContext(result, context)
     }
+
     return result
 }
 
@@ -75,24 +110,10 @@ window.$ngettext = function(msgid, n, context) {
 }
 
 export function TranslationPlugin(Vue, options = {}) {
-    const defaultConfig = {
-        availableLanguages: { en_US: 'English' },
-        locale: 'en_US',
-        messages: null
-    }
+    options = Object.assign({}, state, options)
 
-    Object.keys(options).forEach(key => {
-        if (Object.keys(defaultConfig).indexOf(key) === -1) {
-            throw new Error(`${key} is an invalid option for the translate plugin.`)
-        }
-    })
-    options = Object.assign(defaultConfig, options)
     const store = useI18nStore()
     store.patch(options)
-
-    /*Vue.filter('translate', function(value) {
-        return trans(value)
-    })*/
 
     // Exposes instance methods.
     Vue.prototype.$gettext = $gettext
