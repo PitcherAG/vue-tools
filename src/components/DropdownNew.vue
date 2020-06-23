@@ -33,8 +33,10 @@
                 :data-text="item.text"
                 :class="{ disabled: item.disabled }"
             >
-                <i v-if="item.icon" :class="`${item.icon} icon`" />
-                {{ item.text }}
+                <div>
+                    <i v-if="item.icon" :class="`${item.icon} icon`" />
+                    {{ item.text }}
+                </div>
             </div>
         </div>
     </div>
