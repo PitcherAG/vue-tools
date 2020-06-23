@@ -45,7 +45,7 @@ export const useI18nStore = createStore({
                 lang = lang.toLowerCase()
             }
 
-            this.setLanguage(lang)
+            await this.setLanguage(lang)
         },
         setLanguage: async function(lang) {
             if (!this.state.availableLanguages[lang]) {
