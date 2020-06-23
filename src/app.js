@@ -148,15 +148,17 @@ export function saveObject(obj) {
 
 export function getSchema(objectName) {
     let desc
-    if (PLATFORM === 'ANDROID') {
+    if (PLATFORM === 'ANDROID' || PLATFORM === 'WINDOWS') {
         desc = objectName + '_desc'
     } else if (PLATFORM === 'IOS') {
         desc = objectName + '_desc_cache'
+    } else {
+        throw 'no supported: ' + PLATFORM
     }
     try {
         return fireEvent('getFromHTML', { id: desc, useSFDCDB: true })
     } catch (e) {
-        throw new Error('Schema not found:' + objectName)
+        throw 'Schema not found:' + objectName
     }
 }
 

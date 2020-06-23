@@ -28,7 +28,7 @@ export function waitForWindowProp(prop, _timeout = 5) {
         // if prop doesn't exist, wait until it exist or timeout
         if (typeof window[prop] === 'undefined') {
             let count = 0
-            let interval = setInterval(() => {
+            const interval = setInterval(() => {
                 count++
                 if (typeof window[prop] !== 'undefined' || count === timeout) {
                     clearInterval(interval)

@@ -1,9 +1,9 @@
 import { fireEvent } from '../event'
 
 let cache = {}
-let cacheEnabled = false
-let cacheTimeout = 500
-let defaultDatabase = 'pitcher'
+const cacheEnabled = false
+const cacheTimeout = 500
+const defaultDatabase = 'pitcher'
 
 function cacheQuery(query, result) {
     cache[query] = {
@@ -39,17 +39,17 @@ function query(query, db = null) {
             pType: 'query',
             query: query
         })
-            .then(function(e) {
-                let result = []
+            .then(e => {
+                const result = []
                 if (e.error) {
                     reject(new Error(e.error))
                 }
                 for (let i = 0; i < e.results.length; i++) {
-                    let res = e.results[i]
-                    let obj = {}
+                    const res = e.results[i]
+                    const obj = {}
 
                     for (let j = 0; j < e.columns.length; j++) {
-                        let column = e.columns[j]
+                        const column = e.columns[j]
 
                         if (
                             column === 'extraField' ||
@@ -59,8 +59,8 @@ function query(query, db = null) {
                             column === 'Json' ||
                             column === 'user'
                         ) {
-                            let o = JSON.parse(res[j])
-                            for (let n in o) {
+                            const o = JSON.parse(res[j])
+                            for (const n in o) {
                                 if (o.hasOwnProperty(n) && n !== 'attributes') {
                                     obj[n] = o[n]
                                 }

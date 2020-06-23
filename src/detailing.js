@@ -5,8 +5,8 @@ function defaultOptions() {
     return { xPos: 50, yPos: 30, widthV: 160, heightV: 50 }
 }
 
-export let currentContact = null
-export let noContacts = true
+export const currentContact = null
+export const noContacts = true
 
 export function startStopDetailing(options, target) {
     if (!options) {

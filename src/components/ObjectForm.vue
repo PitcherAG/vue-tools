@@ -2,7 +2,7 @@
     <div>
         <div class="ui red negative segment transition visible" v-if="validationError">
             <div class="ui red header">
-                <i class="disabled warning sign icon"></i>
+                <i class="disabled warning sign icon" />
                 <div class="content">
                     {{ validationErrorTitle }}
                     <div class="sub header">
@@ -15,7 +15,7 @@
             <sui-form-field :required="true" :error="state.showErrors && !state.recordType">
                 <label>Please select a Record Type</label>
                 <Dropdown
-                    :defaultText="$gettext('Select Record Type')"
+                    :default-text="$gettext('Select Record Type')"
                     v-model="state.recordTypeSaved"
                     :options="state.recordTypes"
                     text-field="name"
@@ -29,22 +29,22 @@
                 v-model="state.obj[field.name].value"
                 :key="key"
                 :field="field"
-                :showError="state.showErrors"
+                :show-error="state.showErrors"
             />
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
         <sui-form v-if="!state.needsRecordType && !validationError && state.layout">
-            <fragment v-for="(section, key) in state.layout.editLayoutSections" :key="key">
+            <fragment v-for="(section, sectionKey) in state.layout.editLayoutSections" :key="sectionKey">
                 <h4 class="ui header">{{ section.heading }}</h4>
-                <div class="two fields" v-for="(row, key) in section.layoutRows" :key="key">
-                    <fragment v-for="(item, key) in row.layoutItems" :key="key">
-                        <template v-for="(comp, key) in item.layoutComponents">
+                <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
+                    <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
+                        <template v-for="(comp, compKey) in item.layoutComponents">
                             <ObjectFormField
                                 v-if="!comp.exclude"
                                 v-model="state.obj[comp.value].value"
-                                :key="key"
+                                :key="compKey"
                                 :field="comp.field"
-                                :showError="state.showErrors"
+                                :show-error="state.showErrors"
                                 :label="item.label"
                             />
                         </template>
@@ -60,14 +60,9 @@
 /* eslint-disable no-unused-vars, max-len */
 
 import { computed, reactive, ref, watch } from '@vue/composition-api'
-import { loadSchema } from '../db/sfdcSchema'
-import { useConfigStore } from '../config'
+import { loadSchema, useConfigStore, contextQuery, saveObject, Field, loadLayout } from '../utils'
 import ObjectFormField from './ObjectFormField'
-import { contextQuery } from '../db/contextQuery'
-import { saveObject } from '../app'
 import Dropdown from './Dropdown'
-import { Field } from '../db/sfdcField'
-import { loadLayout } from '../db/sfdcLayout'
 
 export default {
     components: { Dropdown, ObjectFormField },
@@ -215,7 +210,7 @@ export default {
                 if (!state.recordTypeId) {
                     return
                 }
-                let fields = []
+                const fields = []
                 let req_fields = []
 
                 const includeFields = props.fields

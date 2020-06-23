@@ -1,10 +1,11 @@
 <template>
-    <div :class="classList" ref="dropdown">
+    <div :class="classList" ref="dropdown" @click="onSearch">
         <input type="hidden" v-model="value" />
-        <i :class="icon + ' icon'"></i>
-        <div class="text" v-show="value"></div>
-        <div class="default" v-show="!value">{{ defaultText }}</div>
-        <i class="remove icon" style="z-index:100"></i>
+        <i :class="icon + ' icon'" />
+        <input v-if="hasSearch" ref="search" @input="onSearch" class="search" autocomplete="off" tabindex="0" />
+        <div class="text" v-show="value" />
+        <div class="default" v-show="!value && !isSearching">{{ defaultText }}</div>
+        <i class="remove icon" style="z-index:100" />
         <div class="menu">
             <div
                 class="item"
@@ -19,7 +20,7 @@
     </div>
 </template>
 <script>
-import { computed, onMounted, onUpdated } from '@vue/composition-api'
+import { computed, onMounted, onUpdated, ref } from '@vue/composition-api'
 
 export default {
     props: {
@@ -54,6 +55,8 @@ export default {
     },
 
     setup(props, attrs) {
+        const hasSearch = ref(false)
+
         const classList = computed(() => {
             let cls = 'ui dropdown '
             if (props.addClass) {
@@ -63,6 +66,7 @@ export default {
             }
             if (props.options.length > 10) {
                 cls += ' search'
+                hasSearch.value = true
             }
             return cls
         })
@@ -101,13 +105,24 @@ export default {
 
             $(attrs.refs.dropdown).dropdown(settings)
         }
+        const isSearching = ref(false)
+
+        const onSearch = e => {
+            if (attrs.refs.search && attrs.refs.search.value) {
+                isSearching.value = true
+            } else {
+                isSearching.value = false
+            }
+            return e
+        }
+
         onMounted(() => {
             initDropdown()
         })
         onUpdated(() => {
             initDropdown()
         })
-        return { classList, list, initDropdown }
+        return { classList, list, initDropdown, onSearch, hasSearch, isSearching }
     }
 }
 </script>
@@ -144,6 +159,12 @@ export default {
     max-width: 100%;
     margin: 0.45238095em 0 0.45238095em 0.64285714em;
     line-height: 1.21428571em;
+}
+
+.ui.search.dropdown > .default {
+    position: absolute;
+    left: 2.2em;
+    top: 0.22em;
 }
 
 .ui.clearable.dropdown .default,

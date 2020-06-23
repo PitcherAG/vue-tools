@@ -1,25 +1,22 @@
 <template>
-    <div class="pt-4">
+    <div class="pt-4 fill-height">
         <h2>Demo Page</h2>
         <div class="ui divider" />
-        <NumpadInput v-model="test" placeholder="test" group="test" />
-        <NumpadInput v-model="test2" placeholder="test" group="test" />
+        <NumpadInputEx />
+        <DataTableEx />
     </div>
 </template>
 
 <script>
-import NumpadInput from '@/components/NumpadInput'
+import NumpadInputEx from './examples/NumpadInput.example.vue'
+import DataTableEx from './examples/DataTable.example.vue'
+
 export default {
     components: {
-        NumpadInput
+        NumpadInputEx,
+        DataTableEx
     },
-    props: {},
-    setup() {
-        const test = ''
-        const test2 = ''
-
-        return { test, test2 }
-    }
+    setup() {}
 }
 </script>
 
