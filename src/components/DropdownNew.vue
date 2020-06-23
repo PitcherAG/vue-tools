@@ -2,8 +2,8 @@
     <div class="ui dropdown" v-bind="dropdownAttr" ref="dropdown">
         <!-- hidden value -->
         <input type="hidden" :value="value" />
-        <!-- append icon -->
-        <i :class="`${appendIcon} icon`" />
+        <!-- append icon / if NOT selection -->
+        <i v-if="selection" :class="`${appendIcon} icon`" />
 
         <!-- search input -->
         <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" />
@@ -11,11 +11,14 @@
         <!-- selected text -->
         <div class="text" v-show="value" />
 
+        <!-- append icon / if selection -->
+        <i v-if="!selection" :class="`${appendIcon} icon`" />
+
         <!-- placeholder -->
         <div class="default" v-show="!value && !isSearching">{{ defaultText }}</div>
 
         <!-- remove icon -->
-        <i v-if="clearable && value" class="remove icon" style="z-index: 100; display: inline-block" />
+        <i v-if="clearable && selection && value" class="remove icon" style="z-index: 100; display: inline-block" />
 
         <div class="menu">
             <div
@@ -81,6 +84,26 @@ export default {
         },
         setting: {
             type: Object
+        },
+        size: {
+            type: String,
+            validator: val => {
+                const valid =
+                    val === '' ||
+                    val === 'tiny' ||
+                    val === 'small' ||
+                    val === 'medium' ||
+                    val === 'large' ||
+                    val === 'big' ||
+                    val === 'huge' ||
+                    val === 'massive'
+                if (!valid) {
+                    console.error('[Vue warn]: Validation error in NumpadInput.vue!')
+                    console.error('[Vue warn]: prop.size is not valid!')
+                    throw `Accepted values: tiny | small | medium | large | big | huge | massive`
+                }
+                return valid
+            }
         }
     },
 
@@ -94,7 +117,8 @@ export default {
             class: {
                 fluid: props.fluid,
                 search: props.searchable,
-                selection: props.selection
+                selection: props.selection,
+                [props.size]: !!props.size
             },
             style: {
                 minWidth: props.minWidth ? parsePxStyle(props.minWidth) : undefined,
