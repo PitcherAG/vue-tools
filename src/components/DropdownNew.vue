@@ -2,8 +2,8 @@
     <div class="ui dropdown" v-bind="dropdownAttr" ref="dropdown">
         <!-- hidden value -->
         <input type="hidden" :value="value" />
-        <!-- append icon / if NOT selection -->
-        <i v-if="selection" :class="`${appendIcon} icon`" />
+        <!-- icon / if NOT selection -->
+        <i v-if="selection" :class="`${icon} icon`" />
 
         <!-- search input -->
         <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" />
@@ -11,14 +11,18 @@
         <!-- selected text -->
         <div class="text" v-show="value" />
 
-        <!-- append icon / if selection -->
-        <i v-if="!selection" :class="`${appendIcon} icon`" />
+        <!-- icon / if selection -->
+        <i v-if="!selection" :class="`${icon} icon`" />
 
         <!-- placeholder -->
         <div class="default" v-show="!value && !isSearching">{{ defaultText }}</div>
 
         <!-- remove icon -->
-        <i v-if="clearable && selection && value" class="remove icon" style="z-index: 100; display: inline-block" />
+        <i
+            v-if="clearable && selection && !loading && value"
+            class="remove icon"
+            style="z-index: 100; display: inline-block"
+        />
 
         <div class="menu">
             <div
@@ -27,6 +31,7 @@
                 :key="index"
                 :data-value="item.value"
                 :data-text="item.text"
+                :class="{ disabled: item.disabled }"
             >
                 <i v-if="item.icon" :class="`${item.icon} icon`" />
                 {{ item.text }}
@@ -56,10 +61,11 @@ export default {
         itemValue: {
             default: 'value'
         },
-        appendIcon: {
+        icon: {
             default: 'dropdown'
         },
         fluid: Boolean,
+        compact: Boolean,
         selection: {
             type: Boolean,
             default: true
@@ -67,6 +73,11 @@ export default {
         searchable: Boolean,
         clearable: Boolean,
         disabled: Boolean,
+        loading: {
+            type: Boolean,
+            default: false
+        },
+        error: Boolean,
         defaultText: {
             type: String,
             default: 'Select'
@@ -116,8 +127,12 @@ export default {
         const dropdownAttr = computed(() => ({
             class: {
                 fluid: props.fluid,
+                compact: props.compact,
                 search: props.searchable,
                 selection: props.selection,
+                loading: props.loading,
+                disabled: props.disabled,
+                error: props.error,
                 [props.size]: !!props.size
             },
             style: {
@@ -136,7 +151,8 @@ export default {
                     return {
                         text: option[props.itemText],
                         value: option[props.itemValue],
-                        icon: option.icon ? option.icon : null
+                        icon: option.icon ? option.icon : null,
+                        disabled: option.disabled
                     }
                 } else {
                     return {

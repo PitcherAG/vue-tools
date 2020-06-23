@@ -2,7 +2,7 @@
     <div>
         <h3>Dropdown</h3>
         <div class="ui divider" />
-        <Dropdown clearable class="amk" v-model="recordTypeSaved" :items="recordTypes" />
+        <Dropdown clearable class="test" v-model="recordTypeSaved" :items="recordTypes" />
         <br />
         <!-- <DropdownOld v-model="recordTypeSavedOld" :items="recordTypes" /> -->
         <br />
@@ -33,7 +33,8 @@ export default {
                 },
                 {
                     text: 'Aargau',
-                    value: 'aargau'
+                    value: 'aargau',
+                    disabled: true
                 },
                 {
                     text: 'Ticino',
