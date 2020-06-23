@@ -1,13 +1,52 @@
 # Changelog
 
+## 1.3.4
+
+- DataTable updated
+  - added searchFor default value
+  - added maxWidth property
+  - deep object mapping support for dataField in field definition
+  - dataField does not support __slot anymore, added slotName property instead
+  - better sort functionality
+  - support sortType in field definition
+  - added dynamic slot property: rowFields
+  - dynamic th slots are supported now
+- NumpadInput updated
+  - v-model supports number as well
+  - add document listener to make blur event work
+- Dropdown component bugfix
+- importing modules with @ were causing error, fixed now
+- import lodash modules only instead of whole package
+- search threshold decreased to 0.3
+
+## 1.3.3
+
+- added non-exported components -> Popup & Sidebar
+- updated dependencies
+  - pinia to 0.0.6
+  - @pitcher/machine-gettext to 1.1.2
+  - @vue/cli-service to 4.4.1
+  - eslint to 7.2.0
+  - eslint-plugin-vue to 7.0.0-alpha.6
+- eslint rules update
+- various bug fixes
+- DataTable component added
+- NumpadInput component updated
+  - validation for size prop
+  - transparent attr added
+  - maxWidth attr added
+- new utility search function added
+
 ## 1.3.2
 
 - added demo page for future changes & development of UI elements
-- numpadInput updated
+- NumpadInput component updated
   - minWidth attr added
   - placeholder attr added
   - max attr has not default value anymore
   - z-index: 10000 & user-select: none added
+- dropdown multiple support
+- partial dropdown search support
 
 
 ## 1.3.1

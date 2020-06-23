@@ -1,6 +1,6 @@
-import { formatDate, useI18nStore } from '../../src'
+import { formatDate, useI18nStore } from '@/'
 
-jest.mock('../../src/i18n/i18n')
+jest.mock('@/i18n/i18n')
 
 describe('i18n', () => {
     it('date', () => {

@@ -9,24 +9,24 @@ export const useConfigStore = createStore({
     }),
     getters: {
         getTableDict: state => {
-            let d = {}
+            const d = {}
             if (!state.customCaches) {
                 return d
             }
             for (let i = 0; i < state.customCaches.length; i++) {
-                let table = state.customCaches[i]
+                const table = state.customCaches[i]
                 d[table.sfObjectName] = table.tableToCache
                 d[table.objectName] = table.tableToCache
             }
             return d
         },
         getCacheDict: state => {
-            let d = {}
+            const d = {}
             if (!state.customCaches) {
                 return d
             }
             for (let i = 0; i < state.customCaches.length; i++) {
-                let table = state.customCaches[i]
+                const table = state.customCaches[i]
                 d[table.sfObjectName] = table
                 d[table.objectName] = table
             }
@@ -38,31 +38,86 @@ export const useConfigStore = createStore({
 export async function loadConfig() {
     const store = useConfigStore()
     const result = await fireEvent('getAppConfig', {})
+    console.log('app config', result)
+    if (PLATFORM === 'IOS') {
+        result.customCaches.push({
+            objectName: 'Account',
+            sfObjectName: 'Account',
+            tableToCache: 'tbl_crm_accounts_m_v3',
+            query: result.sfdcAccountQuery
+        })
+        result.customCaches.push({
+            objectName: 'Contact',
+            sfObjectName: 'Contact',
+            tableToCache: 'tbl_crm_contacts_m_v4',
+            query: result.sfdcContactQuery
+        })
+        result.customCaches.push({
+            objectName: 'Call',
+            sfObjectName: 'Call',
+            tableToCache: 'tbl_calls',
+            query: ''
+        })
+        result.customCaches.push({
+            objectName: 'User',
+            sfObjectName: 'User',
+            tableToCache: 'tbl_crm_users_m_v3',
+            query: ''
+        })
+    } else if (PLATFORM === 'ANDROID') {
+        result.customCaches.push({
+            objectName: 'Account',
+            sfObjectName: 'Account',
+            tableToCache: 'tbl_crm_accounts',
+            query: result.sfdcAccountQuery
+        })
+        result.customCaches.push({
+            objectName: 'Contact',
+            sfObjectName: 'Contact',
+            tableToCache: 'tbl_crm_contacts',
+            query: result.sfdcContactQuery
+        })
+        result.customCaches.push({
+            objectName: 'Call',
+            sfObjectName: 'Call',
+            tableToCache: 'tbl_calls',
+            query: ''
+        })
+        result.customCaches.push({
+            objectName: 'User',
+            sfObjectName: 'User',
+            tableToCache: 'tbl_crm_users',
+            query: ''
+        })
+    } else if (PLATFORM === 'WINDOWS') {
+        result.customCaches.push({
+            objectName: 'Account',
+            sfObjectName: 'Account',
+            tableToCache: 'SQLiteSfAccount',
+            query: result.sfdcAccountQuery
+        })
+        result.customCaches.push({
+            objectName: 'Contact',
+            sfObjectName: 'Contact',
+            tableToCache: 'SQLiteSfContact',
+            query: result.sfdcContactQuery
+        })
+        result.customCaches.push({
+            objectName: 'Call',
+            sfObjectName: 'Call',
+            tableToCache: 'SQLiteSfEvent',
+            query: ''
+        })
+        result.customCaches.push({
+            objectName: 'User',
+            sfObjectName: 'User',
+            tableToCache: 'SQLiteSfUser',
+            query: ''
+        })
+    } else {
+        throw new Error('platform not supported:' + PLATFORM)
+    }
 
-    result.customCaches.push({
-        objectName: 'Account',
-        sfObjectName: 'Account',
-        tableToCache: PLATFORM === 'IOS' ? 'tbl_crm_accounts_m_v3' : 'tbl_crm_accounts',
-        query: result.sfdcAccountQuery
-    })
-    result.customCaches.push({
-        objectName: 'Contact',
-        sfObjectName: 'Contact',
-        tableToCache: PLATFORM === 'IOS' ? 'tbl_crm_contacts_m_v4' : 'tbl_crm_contacts',
-        query: result.sfdcContactQuery
-    })
-    result.customCaches.push({
-        objectName: 'Call',
-        sfObjectName: 'Call',
-        tableToCache: 'tbl_calls',
-        query: ''
-    })
-    result.customCaches.push({
-        objectName: 'User',
-        sfObjectName: 'User',
-        tableToCache: PLATFORM === 'IOS' ? 'tbl_crm_users_m_v3' : 'tbl_crm_users',
-        query: ''
-    })
     store.patch(result)
     return result
 }

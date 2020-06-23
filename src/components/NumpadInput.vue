@@ -2,13 +2,14 @@
     <!-- Numpad -->
     <div class="numpad-input" :class="[group]" :style="{ display: fluid ? 'block' : 'inline-block' }">
         <!-- Input -->
-        <div class="ui test" :class="inputAttrs.class" ref="inputDiv">
+        <div class="ui" :class="inputAttrs.class" ref="inputDiv">
             <i v-if="leftIcon" class="icon" :class="leftIcon" style="z-index: 1" />
             <slot v-if="labelLeftSlot" name="labelLeft" />
             <input
                 :value="value"
                 type="text"
                 readonly="readonly"
+                class="number-input"
                 :style="inputAttrs.style"
                 :placeholder="placeholder"
                 ref="input"
@@ -91,7 +92,7 @@
 
 <script>
 import { createStore } from 'pinia'
-import { defineComponent, reactive, toRefs, computed, onMounted } from '@vue/composition-api'
+import { defineComponent, reactive, toRefs, computed, onMounted, onUnmounted } from '@vue/composition-api'
 
 // Global store for numpad component
 const useNumpadStore = createStore({
@@ -99,10 +100,14 @@ const useNumpadStore = createStore({
     state: () => ({ groups: {} })
 })
 
+const parsePxStyle = val => {
+    return val.toString().includes('%') || val.toString().includes('px') ? val : `${parseInt(val)}px`
+}
+
 export default defineComponent({
     props: {
         value: {
-            type: String
+            type: [String, Number]
         },
         decimals: {
             type: Number,
@@ -124,12 +129,36 @@ export default defineComponent({
         },
         fluid: Boolean,
         disabled: Boolean,
+        transparent: Boolean,
         color: String,
         minWidth: {
-            type: Number | String,
+            type: [Number, String],
             default: 50
         },
-        size: String,
+        maxWidth: {
+            type: [Number, String],
+            default: '100%'
+        },
+        size: {
+            type: String,
+            validator: val => {
+                const valid =
+                    val === '' ||
+                    val === 'tiny' ||
+                    val === 'small' ||
+                    val === 'medium' ||
+                    val === 'large' ||
+                    val === 'big' ||
+                    val === 'huge' ||
+                    val === 'massive'
+                if (!valid) {
+                    console.error('[Vue warn]: Validation error in NumpadInput.vue!')
+                    console.error('[Vue warn]: prop.size is not valid!')
+                    throw `Accepted values: tiny | small | medium | large | big | huge | massive`
+                }
+                return valid
+            }
+        },
         rightIcon: String,
         leftIcon: String,
         placeholder: {
@@ -165,10 +194,12 @@ export default defineComponent({
                     right: ctx.slots.labelRight,
                     labeled: ctx.slots.labelLeft || ctx.slots.labelRight,
                     icon: props.rightIcon || props.leftIcon,
+                    transparent: props.transparent,
                     input: true
                 },
                 style: {
-                    minWidth: `${parseInt(props.minWidth)}px`
+                    minWidth: parsePxStyle(props.minWidth),
+                    maxWidth: parsePxStyle(props.maxWidth)
                 }
             }
         })
@@ -178,6 +209,13 @@ export default defineComponent({
         const dividerValue = parseInt('1' + '0'.repeat(props.decimals))
         // default zero value
         const defaultValue = props.decimals === 0 ? '0' : `0.${'0'.repeat(props.decimals)}`
+
+        // to check outer click
+        const determineOuterClick = e => {
+            if (!e.target.className.includes('number')) {
+                focus(false)
+            }
+        }
 
         onMounted(() => {
             if (!state.groups[props.group]) {
@@ -191,10 +229,19 @@ export default defineComponent({
                 id: `${props.group}_${state.groups[props.group].length}`,
                 input: ctx.refs.input
             })
+
+            // outer click listener
+            document.addEventListener('click', determineOuterClick)
+        })
+
+        // destroy
+        onUnmounted(() => {
+            document.removeEventListener('click', determineOuterClick)
         })
 
         function emit(val) {
-            ctx.emit('input', val)
+            const parsed = typeof props.value === 'number' ? parseFloat(val) : val
+            ctx.emit('input', parsed)
         }
 
         function addVal(val) {
@@ -205,7 +252,7 @@ export default defineComponent({
             }
 
             // parse current value as Integer
-            const parsed = parseInt(props.value.replace(/\D/g, ''))
+            const parsed = parseInt(props.value.toString().replace(/\D/g, ''))
             // concatenate incoming value as string with parsed value
             const value = parsed + val.toString()
             // mask the value with decimals
@@ -237,7 +284,7 @@ export default defineComponent({
 
         function backspace() {
             // parse current value as Integer & convert to string
-            const parsed = parseInt(props.value.replace(/\D/g, '')).toString()
+            const parsed = parseInt(props.value.toString().replace(/\D/g, '')).toString()
             // remove last char
             const value = parsed.slice(0, -1)
             // mask the value with decimals

@@ -1,4 +1,4 @@
-import { execBool, execString, renderContext, renderSimpleContext } from '../../src/utils'
+import { execBool, execString, renderContext, renderSimpleContext } from '@/utils'
 
 describe('context', () => {
     it('renderContext', async () => {
@@ -31,7 +31,7 @@ describe('context', () => {
     })
 
     it('execString', async () => {
-        let result = execString('a + " world"', { a: 'hello' })
+        const result = execString('a + " world"', { a: 'hello' })
         expect(result).toBe('hello world')
     })
 })

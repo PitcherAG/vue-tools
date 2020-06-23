@@ -10,8 +10,8 @@ export async function contextQuery(query, context, db = null) {
     const configStore = useConfigStore()
     const params = useParamsStore().state
     query = query.split('TODAY').join("date('now')")
-    let tableDict = configStore.getTableDict.value
-    for (let a in context) {
+    const tableDict = configStore.getTableDict.value
+    for (const a in context) {
         if (context.hasOwnProperty(a)) {
             tableDict[a] = context[a]
         }
@@ -29,7 +29,7 @@ export async function contextQuery(query, context, db = null) {
     if (params.locale) {
         tableDict.locale = params.locale
     }
-    let q = renderContext(query, tableDict)
+    const q = renderContext(query, tableDict)
     window.console.log(q)
     try {
         const result = await oQuery(q, db)

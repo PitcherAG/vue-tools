@@ -21,7 +21,7 @@ export async function loadLayout(objectName, objectTypeId) {
 
 export class Schema {
     constructor(obj, objectType) {
-        for (let a in obj) {
+        for (const a in obj) {
             this[a] = obj[a]
         }
         this.objectType = objectType
