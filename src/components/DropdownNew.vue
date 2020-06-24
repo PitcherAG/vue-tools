@@ -144,10 +144,6 @@ export default {
         }))
 
         const listItems = computed(() => {
-            if (!props.items) {
-                console.error('items is null')
-            }
-
             return props.items.map(item => {
                 if (item.constructor === Object) {
                     return {
@@ -165,6 +161,27 @@ export default {
             })
         })
 
+        function mapItems() {
+            return props.items.map(item => {
+                if (item.constructor === Object) {
+                    return {
+                        name: item[props.itemText],
+                        value: item[props.itemValue],
+                        type: item.type ? item.type : 'item',
+                        icon: item.icon,
+                        image: item.image,
+                        disabled: item.disabled,
+                        selected: item.selected,
+                    }
+                } else {
+                    return {
+                        text: item,
+                        value: item
+                    }
+                }
+            })
+        }
+
         const initDropdown = () => {
             const settings = $.extend(
                 {
@@ -174,7 +191,7 @@ export default {
                         emit('onSelected', text)
                         console.log('set value', value)
                     },
-                    values: props.items
+                    values: mapItems()
                 },
                 props.settings
             )
@@ -214,6 +231,13 @@ export default {
 
         & > .icon.dropdown {
             margin: 0 0.2em 0 1em;
+        }
+    }
+
+    &.multiple {
+        .default {
+            padding-top: 8px;
+            padding-left: 8px;
         }
     }
 }

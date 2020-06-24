@@ -2,7 +2,7 @@
     <div>
         <h3>Dropdown</h3>
         <div class="ui divider" />
-        <Dropdown clearable searchable class="test" v-model="recordTypeSaved" :items="recordTypes" />
+        <Dropdown clearable multiple class="test" v-model="recordTypeSaved" :items="recordTypes" />
         <br />
         <!-- <DropdownOld v-model="recordTypeSavedOld" :items="recordTypes" /> -->
         <br />
@@ -27,12 +27,12 @@ export default {
             recordTypeSaved: 'zurich',
             recordTypes: [
                 {
-                    name: 'Zürich',
+                    text: 'Zürich',
                     value: 'zurich',
                     icon: 'cog'
                 },
                 {
-                    name: 'Aargau',
+                    text: 'Aargau',
                     value: 'aargau',
                     disabled: true
                 },
