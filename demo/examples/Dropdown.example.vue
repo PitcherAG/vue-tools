@@ -2,7 +2,17 @@
     <div>
         <h3>Dropdown</h3>
         <div class="ui divider" />
-        <Dropdown clearable searchable multiple class="test" icon="filter" ref="dropdown" v-model="recordTypeSaved" :items="recordTypes" />
+        <Dropdown
+            clearable
+            multiple
+            searchable
+            class="test"
+            icon="filter"
+            ref="dropdown"
+            v-model="recordTypeSaved"
+            :items="recordTypes"
+            @onSelected="test"
+        />
         <br />
         <!-- <DropdownOld v-model="recordTypeSavedOld" :items="recordTypes" /> -->
         <br />
@@ -64,12 +74,15 @@ export default {
                     text: 'Geneva',
                     value: 'geneva'
                 }
-            ]
+            ],
+            recordTypesSingle: ['Zurich', 'Ticino', 'Vaud', 'Lucerne', 'Geneva']
         })
 
-        function test() {
-            state.recordTypes[0].icon = 'user'
-            state.recordTypes[2].disabled = false
+        function test(v) {
+            console.log(state.recordTypeSaved);
+            // state.recordTypes[0].icon = 'user'
+            console.log(v)
+            // state.recordTypes[2].disabled = false
         }
 
         return { ...toRefs(state), test }

@@ -15,7 +15,10 @@
         <div class="text" v-show="value" />
 
         <!-- placeholder -->
-        <div class="default" v-show="!value && !isSearching">{{ defaultText }}</div>
+        <div class="default" v-show="!value && !isSearching" :style="{ left: icon !== 'dropdown' ? '32px' : ''}">
+            {{ defaultText }}
+        </div>
+
         <!-- icon / if NOT selection -->
         <i v-if="!selection" :class="`${icon} icon`" />
         <!-- remove icon -->
@@ -45,7 +48,7 @@
     </div>
 </template>
 <script>
-import { computed, reactive, toRefs, onMounted, onUpdated } from '@vue/composition-api'
+import { computed, reactive, toRefs, onMounted } from '@vue/composition-api'
 
 const parsePxStyle = val => {
     return val.toString().includes('%') || val.toString().includes('px') ? val : `${parseInt(val)}px`
@@ -125,7 +128,9 @@ export default {
     setup(props, { refs, emit }) {
         // local state
         const state = reactive({
-            isSearching: false
+            isSearching: false,
+            isSingleItem: false,
+            hasCustomIcon: props.icon !== 'dropdown'
         })
 
         const dropdownAttr = computed(() => ({
@@ -159,9 +164,11 @@ export default {
                         disabled: item.disabled
                     }
                 } else {
+                    state.isSingleItem = true
                     return {
                         text: item,
-                        value: item
+                        value: item,
+                        type: 'item'
                     }
                 }
             })
@@ -171,7 +178,7 @@ export default {
             const settings = $.extend(
                 {
                     action: props.action,
-                    onChange: (value, text) => {
+                    onChange: value => {
                         if (props.searchable) {
                             state.isSearching = false
 
@@ -179,9 +186,26 @@ export default {
                                 refs.search.click()
                             }
                         }
-
+                        // emit to v-model
                         emit('input', value)
-                        emit('onSelected', text)
+
+                        // emit full object on change
+                        let returnValue = []
+
+                        if (props.multiple) {
+                            const split = value.split(',')
+                            returnValue = props.items.filter(item => {
+                                const findItem = state.isSingleItem ? item : item[props.itemValue]
+                                if (split.includes(findItem)) {
+                                    return item
+                                }
+                            })
+                        } else {
+                            returnValue = state.isSingleItem
+                                ? value
+                                : props.items.find(item => item[props.itemValue] === value)
+                        }
+                        emit('onSelected', returnValue)
                     }
                 },
                 props.settings
@@ -221,7 +245,7 @@ export default {
     &.multiple.search {
         .default {
             position: absolute;
-            left: 32px;
+            left: 8px;
         }
     }
 
