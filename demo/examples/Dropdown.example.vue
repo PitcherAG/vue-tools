@@ -2,17 +2,39 @@
     <div>
         <h3>Dropdown</h3>
         <div class="ui divider" />
-        <Dropdown
-            clearable
-            multiple
-            searchable
-            class="test"
-            icon="filter"
-            ref="dropdown"
-            v-model="recordTypeSaved"
-            :items="recordTypes"
-            @onSelected="test"
-        />
+
+        <!-- default usage -->
+        <Dropdown v-model="recordTypeSaved" :items="recordTypes" clearable :selection="false" searchable multiple @onSelected="test" />
+        <br />
+        <br />
+
+        <!-- slot example advanced -->
+        <Dropdown class="ui dropdown left pointing icon button" v-model="slotModel" @input="test" @onSelected="test">
+            <i class="settings icon" />
+            <div class="menu">
+                <div class="ui left search icon input">
+                    <i class="search icon" />
+                    <input type="text" name="search" placeholder="Search issues..." />
+                </div>
+                <div class="divider" />
+                <div class="header">
+                    <i class="tags icon" />
+                    Filter by tag
+                </div>
+                <div class="item" data-value="important">
+                    <div class="ui red empty circular label" />
+                    Important
+                </div>
+                <div class="item" data-value="announcement">
+                    <div class="ui blue empty circular label" />
+                    Announcement
+                </div>
+                <div class="item" data-value="discussion">
+                    <div class="ui black empty circular label" />
+                    Discussion
+                </div>
+            </div>
+        </Dropdown>
         <br />
         <!-- <DropdownOld v-model="recordTypeSavedOld" :items="recordTypes" /> -->
         <br />
@@ -23,18 +45,15 @@
 
 <script>
 import Dropdown from '@/components/DropdownNew'
-import DropdownOld from '@/components/Dropdown'
 import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
     components: {
-        Dropdown,
-        DropdownOld
+        Dropdown
     },
     props: {},
-    setup(props, ctx) {
+    setup() {
         const state = reactive({
-            recordTypeSavedOld: 'zurich',
             recordTypeSaved: '',
             recordTypes: [
                 {
@@ -75,14 +94,12 @@ export default {
                     value: 'geneva'
                 }
             ],
-            recordTypesSingle: ['Zurich', 'Ticino', 'Vaud', 'Lucerne', 'Geneva']
+            recordTypesSingle: ['Zurich', 'Ticino', 'Vaud', 'Lucerne', 'Geneva'],
+            slotModel: ''
         })
 
         function test(v) {
-            console.log(state.recordTypeSaved);
-            // state.recordTypes[0].icon = 'user'
             console.log(v)
-            // state.recordTypes[2].disabled = false
         }
 
         return { ...toRefs(state), test }

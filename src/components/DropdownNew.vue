@@ -1,50 +1,55 @@
 <template>
     <div class="ui dropdown pitcher-dropdown" v-bind="dropdownAttr" ref="dropdown">
-        <!-- hidden value -->
-        <input type="hidden" :value="value" />
-        <!-- icon / if selection -->
-        <i
-            v-show="(selection && !isSearching) || multiple"
-            :class="[`${icon} icon`, { 'mr-2': icon !== 'dropdown' }]"
-        />
+        <template v-if="hasDefaultSlot">
+            <slot />
+        </template>
+        <template v-else>
+            <!-- hidden value -->
+            <input type="hidden" :value="value" />
+            <!-- icon / if selection -->
+            <i
+                v-show="(selection && !isSearching) || multiple"
+                :class="[`${icon} icon`, { 'mr-2': icon !== 'dropdown' }]"
+            />
 
-        <!-- search input -->
-        <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
+            <!-- search input -->
+            <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
 
-        <!-- selected text -->
-        <div class="text" v-show="value" />
+            <!-- selected text -->
+            <div class="text" v-show="value" />
 
-        <!-- placeholder -->
-        <div class="default" v-show="!value && !isSearching" :style="{ left: icon !== 'dropdown' ? '32px' : ''}">
-            {{ defaultText }}
-        </div>
+            <!-- placeholder -->
+            <div class="default" v-show="!value && !isSearching" :style="{ left: icon !== 'dropdown' ? '32px' : '' }">
+                {{ defaultText }}
+            </div>
 
-        <!-- icon / if NOT selection -->
-        <i v-if="!selection" :class="`${icon} icon`" />
-        <!-- remove icon -->
-        <i
-            v-if="(clearable && selection && !loading && value && !isSearching) || (multiple && clearable)"
-            class="remove icon"
-            style="z-index: 100; display: inline-block"
-            :style="{ right: icon !== 'dropdown' || isSearching ? '1.5em' : undefined }"
-        />
+            <!-- icon / if NOT selection -->
+            <i v-if="!selection" :class="`${icon} icon`" />
+            <!-- remove icon -->
+            <i
+                v-if="(clearable && selection && !loading && value && !isSearching) || (multiple && clearable && value)"
+                class="remove icon"
+                style="z-index: 100; display: inline-block"
+                :style="{ right: icon !== 'dropdown' || isSearching ? '1.5em' : undefined }"
+            />
 
-        <div class="menu">
-            <div
-                v-for="(item, index) in listItems"
-                :key="index"
-                :data-value="item.value"
-                :data-text="item.text"
-                :class="[item.type, { disabled: item.disabled }]"
-                @click="item.type === 'item' ? handleItemClick(item) : undefined"
-            >
-                <div>
-                    <img v-if="item.image" :src="item.image" class="image" />
-                    <i v-if="item.icon" :class="`${item.icon} icon`" />
-                    {{ item.text }}
+            <div class="menu">
+                <div
+                    v-for="(item, index) in listItems"
+                    :key="index"
+                    :data-value="item.value"
+                    :data-text="item.text"
+                    :class="[item.type, { disabled: item.disabled }]"
+                    @click="item.type === 'item' ? handleItemClick(item) : undefined"
+                >
+                    <div>
+                        <img v-if="item.image" :src="item.image" class="image" />
+                        <i v-if="item.icon" :class="`${item.icon} icon`" />
+                        {{ item.text }}
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
     </div>
 </template>
 <script>
@@ -61,7 +66,7 @@ export default {
         },
         items: {
             type: Array,
-            required: true
+            required: false
         },
         itemText: {
             default: 'text'
@@ -125,12 +130,18 @@ export default {
         }
     },
 
-    setup(props, { refs, emit }) {
+    setup(props, { refs, emit, slots }) {
+        // // validate
+        // if ((!props.selection && props.multiple) || (!props.selection && props.clearable)) {
+        //     throw new Error(`You can't combine multiple or clearable with selection: false!`)
+        // }
+
         // local state
         const state = reactive({
             isSearching: false,
             isSingleItem: false,
-            hasCustomIcon: props.icon !== 'dropdown'
+            hasCustomIcon: props.icon !== 'dropdown',
+            hasDefaultSlot: !!slots.default
         })
 
         const dropdownAttr = computed(() => ({
@@ -138,7 +149,8 @@ export default {
                 fluid: props.fluid,
                 compact: props.compact,
                 search: props.searchable,
-                selection: props.selection,
+                // false by default if default slot is used
+                selection: state.hasDefaultSlot ? false : props.selection,
                 'not-selection': !props.selection,
                 multiple: props.multiple,
                 loading: props.loading,
@@ -178,7 +190,7 @@ export default {
             const settings = $.extend(
                 {
                     action: props.action,
-                    onChange: value => {
+                    onChange: (value, text) => {
                         if (props.searchable) {
                             state.isSearching = false
 
@@ -186,8 +198,14 @@ export default {
                                 refs.search.click()
                             }
                         }
+
                         // emit to v-model
                         emit('input', value)
+
+                        if (!props.items) {
+                            emit('onSelected', value)
+                            return
+                        }
 
                         // emit full object on change
                         let returnValue = []
