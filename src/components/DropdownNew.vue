@@ -1,30 +1,29 @@
 <template>
-    <div class="ui dropdown" v-bind="dropdownAttr" ref="dropdown">
+    <div class="ui dropdown pitcher-dropdown" v-bind="dropdownAttr" ref="dropdown">
         <!-- hidden value -->
         <input type="hidden" :value="value" />
-        <!-- icon / if NOT selection -->
-        <i v-if="selection" :class="`${icon} icon`" />
+        <!-- icon / if selection -->
+        <i v-show="selection && !isSearching" :class="[`${icon} icon`, { 'mr-2': icon !== 'dropdown' }]" />
 
         <!-- search input -->
-        <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" />
+        <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
 
         <!-- selected text -->
         <div class="text" v-show="value" />
 
-        <!-- icon / if selection -->
-        <i v-if="!selection" :class="`${icon} icon`" />
-
         <!-- placeholder -->
         <div class="default" v-show="!value && !isSearching">{{ defaultText }}</div>
-
+        <!-- icon / if NOT selection -->
+        <i v-if="!selection" :class="`${icon} icon`" />
         <!-- remove icon -->
         <i
-            v-if="clearable && selection && !loading && value"
+            v-if="clearable && selection && !loading && value && !isSearching"
             class="remove icon"
             style="z-index: 100; display: inline-block"
+            :style="{ right: icon !== 'dropdown' || isSearching ? '1.5em' : undefined }"
         />
 
-        <div class="menu">
+        <!-- <div class="menu">
             <div
                 class="item"
                 v-for="(item, index) in listItems"
@@ -38,7 +37,7 @@
                     {{ item.text }}
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
@@ -72,6 +71,7 @@ export default {
             type: Boolean,
             default: true
         },
+        multiple: Boolean,
         searchable: Boolean,
         clearable: Boolean,
         disabled: Boolean,
@@ -95,9 +95,7 @@ export default {
             type: String,
             default: 'activate'
         },
-        setting: {
-            type: Object
-        },
+        settings: Object,
         size: {
             type: String,
             validator: val => {
@@ -132,6 +130,8 @@ export default {
                 compact: props.compact,
                 search: props.searchable,
                 selection: props.selection,
+                'not-selection': !props.selection,
+                multiple: props.multiple,
                 loading: props.loading,
                 disabled: props.disabled,
                 error: props.error,
@@ -148,18 +148,18 @@ export default {
                 console.error('items is null')
             }
 
-            return props.items.map(option => {
-                if (option.constructor === Object) {
+            return props.items.map(item => {
+                if (item.constructor === Object) {
                     return {
-                        text: option[props.itemText],
-                        value: option[props.itemValue],
-                        icon: option.icon ? option.icon : null,
-                        disabled: option.disabled
+                        text: item[props.itemText],
+                        value: item[props.itemValue],
+                        icon: item.icon ? item.icon : null,
+                        disabled: item.disabled
                     }
                 } else {
                     return {
-                        text: option,
-                        value: option
+                        text: item,
+                        value: item
                     }
                 }
             })
@@ -171,11 +171,12 @@ export default {
                     action: props.action,
                     onChange: (value, text) => {
                         emit('input', value)
-                        emit('dropdown-selected', text)
+                        emit('onSelected', text)
                         console.log('set value', value)
-                    }
+                    },
+                    values: props.items
                 },
-                props.setting
+                props.settings
             )
             $(refs.dropdown).dropdown(settings)
         }
@@ -189,15 +190,31 @@ export default {
             initDropdown()
         })
         onUpdated(() => {
-            initDropdown()
+            // initDropdown()
         })
+
         return { ...toRefs(state), dropdownAttr, listItems, initDropdown, onSearch }
     }
 }
 </script>
 
-<style scoped>
-.default {
-    color: rgba(191, 191, 191, 0.87) !important;
+<style lang="scss" scoped>
+.ui.dropdown.pitcher-dropdown {
+    .default {
+        color: rgba(191, 191, 191, 0.87) !important;
+        display: inline-block;
+    }
+
+    &.not-selection:not(.labeled) {
+        // any icon other than .dropdown
+        & > .icon:not(.dropdown) {
+            margin-left: 8px;
+            margin-right: 0;
+        }
+
+        & > .icon.dropdown {
+            margin: 0 0.2em 0 1em;
+        }
+    }
 }
 </style>

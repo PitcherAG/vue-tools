@@ -2,7 +2,7 @@
     <div>
         <h3>Dropdown</h3>
         <div class="ui divider" />
-        <Dropdown clearable class="test" v-model="recordTypeSaved" :items="recordTypes" />
+        <Dropdown clearable searchable class="test" v-model="recordTypeSaved" :items="recordTypes" />
         <br />
         <!-- <DropdownOld v-model="recordTypeSavedOld" :items="recordTypes" /> -->
         <br />
@@ -27,18 +27,19 @@ export default {
             recordTypeSaved: 'zurich',
             recordTypes: [
                 {
-                    text: 'Zürich',
+                    name: 'Zürich',
                     value: 'zurich',
                     icon: 'cog'
                 },
                 {
-                    text: 'Aargau',
+                    name: 'Aargau',
                     value: 'aargau',
                     disabled: true
                 },
                 {
                     text: 'Ticino',
-                    value: 'ticino'
+                    value: 'ticino',
+                    image: 'https://fomantic-ui.com/images/avatar/small/jenny.jpg'
                 },
                 {
                     text: 'Bern',
