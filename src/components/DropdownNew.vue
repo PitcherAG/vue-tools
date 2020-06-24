@@ -3,7 +3,10 @@
         <!-- hidden value -->
         <input type="hidden" :value="value" />
         <!-- icon / if selection -->
-        <i v-show="selection && !isSearching" :class="[`${icon} icon`, { 'mr-2': icon !== 'dropdown' }]" />
+        <i
+            v-show="(selection && !isSearching) || multiple"
+            :class="[`${icon} icon`, { 'mr-2': icon !== 'dropdown' }]"
+        />
 
         <!-- search input -->
         <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
@@ -17,7 +20,7 @@
         <i v-if="!selection" :class="`${icon} icon`" />
         <!-- remove icon -->
         <i
-            v-if="clearable && selection && !loading && value && !isSearching"
+            v-if="(clearable && selection && !loading && value && !isSearching) || (multiple && clearable)"
             class="remove icon"
             style="z-index: 100; display: inline-block"
             :style="{ right: icon !== 'dropdown' || isSearching ? '1.5em' : undefined }"
@@ -30,6 +33,7 @@
                 :data-value="item.value"
                 :data-text="item.text"
                 :class="[item.type, { disabled: item.disabled }]"
+                @click="item.type === 'item' ? handleItemClick(item) : undefined"
             >
                 <div>
                     <img v-if="item.image" :src="item.image" class="image" />
@@ -168,14 +172,28 @@ export default {
                 {
                     action: props.action,
                     onChange: (value, text) => {
+                        if (props.searchable) {
+                            state.isSearching = false
+
+                            if (props.multiple) {
+                                refs.search.click()
+                            }
+                        }
+
                         emit('input', value)
                         emit('onSelected', text)
-                        console.log('set value', value)
                     }
                 },
                 props.settings
             )
             $(refs.dropdown).dropdown(settings)
+        }
+
+        function handleItemClick(item) {
+            if (props.searchable && props.value === item.value) {
+                refs.search.value = ''
+                state.isSearching = false
+            }
         }
 
         const onSearch = e => {
@@ -186,7 +204,7 @@ export default {
             initDropdown()
         })
 
-        return { ...toRefs(state), dropdownAttr, listItems, initDropdown, onSearch }
+        return { ...toRefs(state), dropdownAttr, listItems, initDropdown, onSearch, handleItemClick }
     }
 }
 </script>
@@ -197,6 +215,14 @@ export default {
     .default {
         color: rgba(191, 191, 191, 0.87) !important;
         display: inline-block;
+        pointer-events: none;
+    }
+
+    &.multiple.search {
+        .default {
+            position: absolute;
+            left: 36px;
+        }
     }
 
     // image in list
