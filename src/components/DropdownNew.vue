@@ -133,7 +133,7 @@ export default {
                 'not-selection': !props.selection,
                 multiple: props.multiple,
                 loading: props.loading,
-                disabled: props.disabled,
+                disabled: props.disabled || props.loading,
                 error: props.error,
                 [props.size]: !!props.size
             },
