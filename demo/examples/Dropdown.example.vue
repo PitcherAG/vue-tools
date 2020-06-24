@@ -2,11 +2,12 @@
     <div>
         <h3>Dropdown</h3>
         <div class="ui divider" />
-        <Dropdown clearable multiple class="test" v-model="recordTypeSaved" :items="recordTypes" />
+        <Dropdown clearable class="test" ref="dropdown" v-model="recordTypeSaved" :items="recordTypes" />
         <br />
         <!-- <DropdownOld v-model="recordTypeSavedOld" :items="recordTypes" /> -->
         <br />
         <br />
+        <button @click="test">test me</button>
     </div>
 </template>
 
@@ -21,11 +22,15 @@ export default {
         DropdownOld
     },
     props: {},
-    setup() {
+    setup(props, ctx) {
         const state = reactive({
             recordTypeSavedOld: 'zurich',
-            recordTypeSaved: 'zurich',
+            recordTypeSaved: '',
             recordTypes: [
+                {
+                    text: 'Cantons',
+                    type: 'header'
+                },
                 {
                     text: 'Zürich',
                     value: 'zurich',
@@ -34,12 +39,16 @@ export default {
                 {
                     text: 'Aargau',
                     value: 'aargau',
+                    type: 'item'
+                },
+                {
+                    text: 'Vaud',
+                    value: 'vaud',
                     disabled: true
                 },
                 {
                     text: 'Ticino',
-                    value: 'ticino',
-                    image: 'https://fomantic-ui.com/images/avatar/small/jenny.jpg'
+                    value: 'ticino'
                 },
                 {
                     text: 'Bern',
@@ -47,7 +56,9 @@ export default {
                 },
                 {
                     text: 'Lucerne',
-                    value: 'lucerne'
+                    value: 'lucerne',
+                    // image: 'https://fomantic-ui.com/images/avatar/small/jenny.jpg',
+                    icon: 'users'
                 },
                 {
                     text: 'Geneva',
@@ -56,7 +67,12 @@ export default {
             ]
         })
 
-        return { ...toRefs(state) }
+        function test() {
+            state.recordTypes[0].icon = 'user'
+            state.recordTypes[2].disabled = false
+        }
+
+        return { ...toRefs(state), test }
     }
 }
 </script>

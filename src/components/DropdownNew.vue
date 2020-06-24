@@ -23,21 +23,21 @@
             :style="{ right: icon !== 'dropdown' || isSearching ? '1.5em' : undefined }"
         />
 
-        <!-- <div class="menu">
+        <div class="menu">
             <div
-                class="item"
                 v-for="(item, index) in listItems"
                 :key="index"
                 :data-value="item.value"
                 :data-text="item.text"
-                :class="{ disabled: item.disabled }"
+                :class="[item.type, { disabled: item.disabled }]"
             >
                 <div>
+                    <img v-if="item.image" :src="item.image" class="image" />
                     <i v-if="item.icon" :class="`${item.icon} icon`" />
                     {{ item.text }}
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 <script>
@@ -149,7 +149,9 @@ export default {
                     return {
                         text: item[props.itemText],
                         value: item[props.itemValue],
-                        icon: item.icon ? item.icon : null,
+                        type: item.type ? item.type : 'item',
+                        icon: item.icon,
+                        image: item.image,
                         disabled: item.disabled
                     }
                 } else {
@@ -161,27 +163,6 @@ export default {
             })
         })
 
-        function mapItems() {
-            return props.items.map(item => {
-                if (item.constructor === Object) {
-                    return {
-                        name: item[props.itemText],
-                        value: item[props.itemValue],
-                        type: item.type ? item.type : 'item',
-                        icon: item.icon,
-                        image: item.image,
-                        disabled: item.disabled,
-                        selected: item.selected,
-                    }
-                } else {
-                    return {
-                        text: item,
-                        value: item
-                    }
-                }
-            })
-        }
-
         const initDropdown = () => {
             const settings = $.extend(
                 {
@@ -190,8 +171,7 @@ export default {
                         emit('input', value)
                         emit('onSelected', text)
                         console.log('set value', value)
-                    },
-                    values: mapItems()
+                    }
                 },
                 props.settings
             )
@@ -200,14 +180,10 @@ export default {
 
         const onSearch = e => {
             state.isSearching = refs.search && !!refs.search.value
-            console.log('isSearching', state.isSearching)
         }
 
         onMounted(() => {
             initDropdown()
-        })
-        onUpdated(() => {
-            // initDropdown()
         })
 
         return { ...toRefs(state), dropdownAttr, listItems, initDropdown, onSearch }
@@ -217,9 +193,18 @@ export default {
 
 <style lang="scss" scoped>
 .ui.dropdown.pitcher-dropdown {
+    // default text color
     .default {
         color: rgba(191, 191, 191, 0.87) !important;
         display: inline-block;
+    }
+
+    // image in list
+    .item img {
+        vertical-align: top;
+        width: auto;
+        margin: -0.5em 0.5em -0.5em 0;
+        max-height: 2em;
     }
 
     &.not-selection:not(.labeled) {
@@ -229,6 +214,7 @@ export default {
             margin-right: 0;
         }
 
+        // when it is not a selection list
         & > .icon.dropdown {
             margin: 0 0.2em 0 1em;
         }
