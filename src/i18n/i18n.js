@@ -1,6 +1,7 @@
 import { createStore } from 'pinia'
 import { getTranslationIndex } from './plurals'
 import { renderSimpleContext } from '../utils'
+import { fetch as fetchPolyfill } from 'whatwg-fetch'
 
 export const useI18nStore = createStore({
     id: 'i18n',

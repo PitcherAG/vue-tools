@@ -10,163 +10,19 @@ msgstr ""
 "Generated-By: easygettext\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/components/Calendar.vue:65
-#, fuzzy
-msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
-msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
-
-#: src/components/Calendar.vue:67
-#, fuzzy
-msgid "January"
-msgstr "January"
-
-#: src/components/Calendar.vue:68
-#, fuzzy
-msgid "February"
-msgstr "February"
-
-#: src/components/Calendar.vue:69
-#, fuzzy
-msgid "March"
-msgstr "March"
-
-#: src/components/Calendar.vue:70
-#, fuzzy
-msgid "April"
-msgstr "April"
-
-#: src/components/Calendar.vue:71 src/components/Calendar.vue:85
-#, fuzzy
-msgid "May"
-msgstr "May"
-
-#: src/components/Calendar.vue:72
-#, fuzzy
-msgid "June"
-msgstr "June"
-
-#: src/components/Calendar.vue:73
-#, fuzzy
-msgid "July"
-msgstr "July"
-
-#: src/components/Calendar.vue:74
-#, fuzzy
-msgid "August"
-msgstr "August"
-
-#: src/components/Calendar.vue:75
-#, fuzzy
-msgid "September"
-msgstr "September"
-
-#: src/components/Calendar.vue:76
-#, fuzzy
-msgid "October"
-msgstr "October"
-
-#: src/components/Calendar.vue:77
-#, fuzzy
-msgid "November"
-msgstr "November"
-
-#: src/components/Calendar.vue:78
-#, fuzzy
-msgid "December"
-msgstr "December"
-
-#: src/components/Calendar.vue:81
-#, fuzzy
-msgid "Jan"
-msgstr "Jan"
-
-#: src/components/Calendar.vue:82
-#, fuzzy
-msgid "Feb"
-msgstr "Feb"
-
-#: src/components/Calendar.vue:83
-#, fuzzy
-msgid "Mar"
-msgstr "Mar"
-
-#: src/components/Calendar.vue:84
-#, fuzzy
-msgid "Apr"
-msgstr "Apr"
-
-#: src/components/Calendar.vue:86
-#, fuzzy
-msgid "Jun"
-msgstr "Jun"
-
-#: src/components/Calendar.vue:87
-#, fuzzy
-msgid "Jul"
-msgstr "Jul"
-
-#: src/components/Calendar.vue:88
-#, fuzzy
-msgid "Aug"
-msgstr "Aug"
-
-#: src/components/Calendar.vue:89
-#, fuzzy
-msgid "Sep"
-msgstr "Sep"
-
-#: src/components/Calendar.vue:90
-#, fuzzy
-msgid "Oct"
-msgstr "Oct"
-
-#: src/components/Calendar.vue:91
-#, fuzzy
-msgid "Nov"
-msgstr "Nov"
-
-#: src/components/Calendar.vue:92
-#, fuzzy
-msgid "Dec"
-msgstr "Dec"
-
-#: src/components/Calendar.vue:94
-#, fuzzy
-msgid "Today"
-msgstr "Today"
-
-#: src/components/Calendar.vue:95
-#, fuzzy
-msgid "Now"
-msgstr "Now"
-
-#: src/components/Calendar.vue:96
-#, fuzzy
-msgid "AM"
-msgstr "AM"
-
-#: src/components/Calendar.vue:97
-#, fuzzy
-msgid "PM"
-msgstr "PM"
-
-#: src/components/Calendar.vue:104 src/components/ObjectFormField.vue:41
-msgid "Date/Time"
-msgstr "Date/Time"
-
 #: src/components/ObjectForm.vue:18
 msgid "Select Record Type"
 msgstr "Select Record Type"
 
-#: src/components/ObjectForm.vue:34 src/components/ObjectForm.vue:53
+#: src/components/ObjectForm.vue:34 src/components/ObjectForm.vue:54
 msgid "Save"
 msgstr "Save"
 
-#: src/components/ObjectForm.vue:325
+#: src/components/ObjectForm.vue:323
 msgid "You can not add an object of this type."
 msgstr "You can not add an object of this type."
 
-#: src/components/ObjectForm.vue:326
+#: src/components/ObjectForm.vue:324
 msgid "This Object does not have an external ID field in the config.json."
 msgstr "This Object does not have an external ID field in the config.json."
 
@@ -174,13 +30,157 @@ msgstr "This Object does not have an external ID field in the config.json."
 msgid "This Object is not editable. You need to sync first."
 msgstr "This Object is not editable. You need to sync first."
 
-#: src/components/ObjectForm.vue:332
+#: src/components/ObjectForm.vue:331
 msgid ""
 "This Object does not have an external ID field in the config.json. Please "
 "provide one or sync first before editing."
 msgstr ""
 "This Object does not have an external ID field in the config.json. Please "
 "provide one or sync first before editing."
+
+#: src/components/Calendar.vue:67
+#, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+
+#: src/components/Calendar.vue:69
+#, fuzzy
+msgid "January"
+msgstr "January"
+
+#: src/components/Calendar.vue:70
+#, fuzzy
+msgid "February"
+msgstr "February"
+
+#: src/components/Calendar.vue:71
+#, fuzzy
+msgid "March"
+msgstr "March"
+
+#: src/components/Calendar.vue:72
+#, fuzzy
+msgid "April"
+msgstr "April"
+
+#: src/components/Calendar.vue:73 src/components/Calendar.vue:87
+#, fuzzy
+msgid "May"
+msgstr "May"
+
+#: src/components/Calendar.vue:74
+#, fuzzy
+msgid "June"
+msgstr "June"
+
+#: src/components/Calendar.vue:75
+#, fuzzy
+msgid "July"
+msgstr "July"
+
+#: src/components/Calendar.vue:76
+#, fuzzy
+msgid "August"
+msgstr "August"
+
+#: src/components/Calendar.vue:77
+#, fuzzy
+msgid "September"
+msgstr "September"
+
+#: src/components/Calendar.vue:78
+#, fuzzy
+msgid "October"
+msgstr "October"
+
+#: src/components/Calendar.vue:79
+#, fuzzy
+msgid "November"
+msgstr "November"
+
+#: src/components/Calendar.vue:80
+#, fuzzy
+msgid "December"
+msgstr "December"
+
+#: src/components/Calendar.vue:83
+#, fuzzy
+msgid "Jan"
+msgstr "Jan"
+
+#: src/components/Calendar.vue:84
+#, fuzzy
+msgid "Feb"
+msgstr "Feb"
+
+#: src/components/Calendar.vue:85
+#, fuzzy
+msgid "Mar"
+msgstr "Mar"
+
+#: src/components/Calendar.vue:86
+#, fuzzy
+msgid "Apr"
+msgstr "Apr"
+
+#: src/components/Calendar.vue:88
+#, fuzzy
+msgid "Jun"
+msgstr "Jun"
+
+#: src/components/Calendar.vue:89
+#, fuzzy
+msgid "Jul"
+msgstr "Jul"
+
+#: src/components/Calendar.vue:90
+#, fuzzy
+msgid "Aug"
+msgstr "Aug"
+
+#: src/components/Calendar.vue:91
+#, fuzzy
+msgid "Sep"
+msgstr "Sep"
+
+#: src/components/Calendar.vue:92
+#, fuzzy
+msgid "Oct"
+msgstr "Oct"
+
+#: src/components/Calendar.vue:93
+#, fuzzy
+msgid "Nov"
+msgstr "Nov"
+
+#: src/components/Calendar.vue:94
+#, fuzzy
+msgid "Dec"
+msgstr "Dec"
+
+#: src/components/Calendar.vue:96
+#, fuzzy
+msgid "Today"
+msgstr "Today"
+
+#: src/components/Calendar.vue:97
+#, fuzzy
+msgid "Now"
+msgstr "Now"
+
+#: src/components/Calendar.vue:98
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue:99
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/Calendar.vue:106 src/components/ObjectFormField.vue:41
+msgid "Date/Time"
+msgstr "Date/Time"
 
 #: src/components/ObjectFormField.vue:20 src/components/ObjectFormField.vue:29
 msgid "Select"
