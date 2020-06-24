@@ -2,7 +2,7 @@
     <div>
         <h3>Dropdown</h3>
         <div class="ui divider" />
-        <Dropdown clearable searchable class="test" icon="filter" ref="dropdown" v-model="recordTypeSaved" :items="recordTypes" />
+        <Dropdown clearable searchable multiple class="test" icon="filter" ref="dropdown" v-model="recordTypeSaved" :items="recordTypes" />
         <br />
         <!-- <DropdownOld v-model="recordTypeSavedOld" :items="recordTypes" /> -->
         <br />

@@ -221,7 +221,7 @@ export default {
     &.multiple.search {
         .default {
             position: absolute;
-            left: 36px;
+            left: 32px;
         }
     }
 
