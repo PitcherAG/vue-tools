@@ -163,7 +163,12 @@ export function getSchema(objectName) {
 }
 
 export function getLayout(objectName, objectTypeId) {
-    const desc = objectName + '_' + objectTypeId + '_layout'
+    let desc
+    if(PLATFORM==='IOS' || PLATFORM === "ANDROID"){
+        desc = objectName + '_' + objectTypeId + '_layout'
+    }else if(PLATFORM === "WINDOWS"){
+        desc = objectName+'<'+objectTypeId + '>_desc'
+    }
     console.log(desc)
     return fireEvent('getFromHTML', { id: desc, useSFDCDB: true })
 }
