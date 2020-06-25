@@ -6,6 +6,7 @@
         <template v-else>
             <!-- hidden value -->
             <input type="hidden" :value="value" />
+
             <!-- icon / if selection -->
             <i
                 v-show="(selection && !isSearching) || (selection && multiple)"
@@ -29,6 +30,7 @@
             <!-- clear button -->
             <i v-if="clearBtnAttr.render" :class="clearBtnAttr.class" :style="clearBtnAttr.style" />
 
+            <!-- menu items -->
             <div class="menu">
                 <div
                     v-for="(item, index) in listItems"
@@ -139,6 +141,13 @@ export default {
             hasDefaultSlot: !!slots.default
         })
 
+        const selectedValue = computed(() => {
+            if (Array.isArray(props.value)) {
+                return props.value.join(',')
+            }
+            return props.value
+        })
+
         const dropdownAttr = computed(() => ({
             class: {
                 fluid: props.fluid,
@@ -220,30 +229,30 @@ export default {
                             }
                         }
 
-                        // emit to v-model
-                        emit('input', value)
-
-                        // if slot usage, return only value change
-                        if (!props.items) {
-                            emit('onSelected', value)
-                            return
-                        }
-
                         // emit full object onChange as onSelected event
                         let returnValue = []
 
-                        if (props.multiple) {
+                        if (props.multiple || refs.dropdown.className.includes('multiple')) {
                             const split = value.split(',')
-                            returnValue = props.items.filter(item => {
-                                const findItem = state.isSingleItem ? item : item[props.itemValue]
-                                if (split.includes(findItem)) {
-                                    return item
-                                }
-                            })
+                            emit('input', split)
+                            // usage with items
+                            if (props.items) {
+                                returnValue = props.items.filter(item => {
+                                    const findItem = state.isSingleItem ? item : item[props.itemValue]
+                                    if (split.includes(findItem)) {
+                                        return item
+                                    }
+                                })
+                            }
                         } else {
-                            returnValue = state.isSingleItem
-                                ? value
-                                : props.items.find(item => item[props.itemValue] === value)
+                            emit('input', value)
+
+                            // usage with items
+                            if (props.items) {
+                                returnValue = state.isSingleItem
+                                    ? value
+                                    : props.items.find(item => item[props.itemValue] === value)
+                            }
                         }
                         emit('onSelected', returnValue)
                     }
@@ -272,7 +281,16 @@ export default {
             }
         }
 
-        return { ...toRefs(state), dropdownAttr, listItems, clearBtnAttr, initDropdown, onSearch, handleItemClick }
+        return {
+            ...toRefs(state),
+            selectedValue,
+            dropdownAttr,
+            listItems,
+            clearBtnAttr,
+            initDropdown,
+            onSearch,
+            handleItemClick
+        }
     }
 }
 </script>

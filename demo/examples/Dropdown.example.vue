@@ -11,14 +11,14 @@
             multiple
             searchable
             icon="filter"
-            @onSelected="test"
+            @input="test"
         />
         <br />
         <br />
         <br />
 
-        <!-- slot example advanced -->
-        <Dropdown class="ui dropdown left pointing icon button" v-model="slotModel" @input="test" @onSelected="test">
+        <!-- slot example -->
+        <Dropdown class="ui dropdown left pointing icon button" v-model="slotModel" @input="test">
             <i class="settings icon" />
             <div class="menu">
                 <div class="ui left search icon input">
@@ -47,7 +47,45 @@
         <br />
         <br />
         <br />
-        <button @click="test">test me</button>
+
+        <!-- Advanced slot example -->
+        <Dropdown class="fluid multiple search selection" v-model="slotModel2" @input="test">
+            <input type="hidden" name="country" />
+            <i class="dropdown icon" />
+            <div v-if="!slotModel2 || slotModel2.length < 1" class="default">Select Country</div>
+            <div class="text" />
+            <div class="menu">
+                <div class="item" data-value="au"><i class="au flag" />Australia</div>
+                <div class="item" data-value="at"><i class="at flag" />Austria</div>
+                <div class="item" data-value="be"><i class="be flag" />Belgium</div>
+                <div class="item" data-value="br"><i class="br flag" />Brazil</div>
+                <div class="item" data-value="cn"><i class="cn flag" />China</div>
+                <div class="item" data-value="cz"><i class="cz flag" />Czech Republic</div>
+                <div class="item" data-value="dk"><i class="dk flag" />Denmark</div>
+                <div class="item" data-value="gb"><i class="gb flag" />England</div>
+                <div class="item" data-value="fi"><i class="fi flag" />Finland</div>
+                <div class="item" data-value="fr"><i class="fr flag" />France</div>
+                <div class="item" data-value="de"><i class="de flag" />Germany</div>
+                <div class="item" data-value="it"><i class="it flag" />Italy</div>
+                <div class="item" data-value="li"><i class="li flag" />Liechtenstein</div>
+                <div class="item" data-value="mx"><i class="mx flag" />Mexico</div>
+                <div class="item" data-value="nl"><i class="nl flag" />Netherlands</div>
+                <div class="item" data-value="no"><i class="no flag" />Norway</div>
+                <div class="item" data-value="pl"><i class="pl flag" />Poland</div>
+                <div class="item" data-value="pt"><i class="pt flag" />Portugal</div>
+                <div class="item" data-value="sg"><i class="sg flag" />Singapore</div>
+                <div class="item" data-value="kr"><i class="kr flag" />South Korea</div>
+                <div class="item" data-value="es"><i class="es flag" />Spain</div>
+                <div class="item" data-value="se"><i class="se flag" />Sweden</div>
+                <div class="item" data-value="ch"><i class="ch flag" />Switzerland</div>
+                <div class="item" data-value="tr"><i class="tr flag" />Turkey</div>
+                <div class="item" data-value="ua"><i class="ua flag" />Ukraine</div>
+                <div class="item" data-value="us"><i class="us flag" />United States</div>
+            </div>
+        </Dropdown>
+        <br />
+        <br />
+        <br />
     </div>
 </template>
 
@@ -103,7 +141,8 @@ export default {
                 }
             ],
             recordTypesSingle: ['Zurich', 'Ticino', 'Vaud', 'Lucerne', 'Geneva'],
-            slotModel: ''
+            slotModel: '',
+            slotModel2: []
         })
 
         function test(v) {
