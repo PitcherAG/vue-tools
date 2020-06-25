@@ -6,25 +6,56 @@ const localVue = createLocalVue()
 localVue.use(CompositionApi)
 
 describe('Dropdown.vue', () => {
+    const items = [
+        { name: 'Hello', value: 'hello', type: 'item hello' },
+        { name: 'World', value: 'world', type: 'item world' }
+    ]
+
     const wrapper = shallowMount(Dropdown, {
         localVue,
         propsData: {
-            options: [
-                { name: 'hello', value: 1 },
-                { name: 'world', value: 2 }
-            ],
-            textField: 'name',
-            valueField: 'value',
-            defaultText: 'select',
-            value: null
+            value: '',
+            items,
+            itemText: 'name',
+            itemValue: 'value',
+            defaultText: 'select'
         }
     })
-    it('dropdown value changes', async () => {
-        expect(wrapper.find('.default').text()).toBe(`select`)
-        expect(wrapper.find('.text').text()).toBe(``)
 
-        wrapper.setProps({ value: 1 })
+    // Helper function
+    async function updateValue(key, value) {
+        wrapper.setProps({
+            [key]: value
+        })
         await wrapper.vm.$nextTick()
-        expect(wrapper.find('.text').text()).toBe('hello')
+    }
+
+    it('Dropdown mounts properly', async () => {
+        expect(wrapper.find('.default').text()).toBe(wrapper.vm.$props.defaultText)
+        expect(wrapper.find('.text').text()).toBe('')
+        expect(wrapper.find('.menu .header').exists()).toBe(false)
+        expect(wrapper.find('.menu .divider').exists()).toBe(false)
+        expect(wrapper.vm.$props.selection).toBe(true)
+    })
+
+    it('Updating dropdown items works', async () => {
+        await updateValue('items', [
+            { name: 'Test header', type: 'header' },
+            { name: 'Test Item', value: 'new-item', type: 'item test' },
+            { type: 'divider' },
+            ...items
+        ])
+        expect(wrapper.find('.menu .item.test').text()).toBe('Test Item')
+        expect(wrapper.find('.menu .header').exists()).toBe(true)
+        expect(wrapper.find('.menu .divider').exists()).toBe(true)
+    })
+
+    it('Dropdown value changes on click', async () => {
+        wrapper.find('.item.world').trigger('click')
+        await wrapper.vm.$nextTick()
+
+        expect(wrapper.emitted().input).toBeTruthy()
+        expect(wrapper.find('input[type="hidden"]').element.value).toBe('world')
+        expect(wrapper.find('.menu .item.world').text()).toBe('World')
     })
 })

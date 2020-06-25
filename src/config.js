@@ -37,7 +37,7 @@ export const useConfigStore = createStore({
 
 export async function loadConfig() {
     const store = useConfigStore()
-    const result = await fireEvent('getAppConfig', {})
+    let result = await fireEvent('getAppConfig', {})
     console.log('app config', result)
     if (PLATFORM === 'IOS') {
         result.customCaches.push({
@@ -90,6 +90,7 @@ export async function loadConfig() {
             query: ''
         })
     } else if (PLATFORM === 'WINDOWS') {
+        result = result[0]
         result.customCaches.push({
             objectName: 'Account',
             sfObjectName: 'Account',

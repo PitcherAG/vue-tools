@@ -1,6 +1,7 @@
-import {createStore} from 'pinia'
-import {getTranslationIndex} from './plurals'
-import {renderSimpleContext} from '../utils'
+import { createStore } from 'pinia'
+import { getTranslationIndex } from './plurals'
+import { renderSimpleContext } from '../utils'
+import { fetch as fetchPolyfill } from 'whatwg-fetch'
 
 const defaultOptions = {
     availableLanguages: {en: 'English'},
