@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.5
+
+- Dropdown component added
+- DataTable updated
+  - use uid for each table row (required for ui)
+  - return mapper function as a prop in body slot
+- added uid function to utils to generate unique ids
+- @vue/composition-api to 0.6.6
+- added fetch pollyfill
+- should now be windows compatible
+
 ## 1.3.4
 
 - DataTable updated

@@ -70,7 +70,7 @@
 import Pagination from '@/components/DataTable.Pagination'
 import DataTable from '@/components/DataTable'
 import { reactive, toRefs } from '@vue/composition-api'
-import data from './dummy.js'
+import data from './dummy.table.js'
 
 export default {
     components: {

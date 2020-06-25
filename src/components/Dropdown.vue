@@ -1,184 +1,344 @@
 <template>
-    <div :class="classList" ref="dropdown" @click="onSearch">
-        <input type="hidden" v-model="value" />
-        <i :class="icon + ' icon'" />
-        <input v-if="hasSearch" ref="search" @input="onSearch" class="search" autocomplete="off" tabindex="0" />
-        <div class="text" v-show="value" />
-        <div class="default" v-show="!value && !isSearching">{{ defaultText }}</div>
-        <i class="remove icon" style="z-index:100" />
-        <div class="menu">
-            <div
-                class="item"
-                v-for="(option, index) in list"
-                :key="index"
-                :data-value="option.value"
-                :data-text="option.text"
-            >
-                {{ option.text }}
+    <div class="ui dropdown pitcher-dropdown" v-bind="dropdownAttr" ref="dropdown">
+        <template v-if="hasDefaultSlot">
+            <slot />
+        </template>
+        <template v-else>
+            <!-- hidden value -->
+            <input type="hidden" :value="value" />
+
+            <!-- icon / if selection -->
+            <i
+                v-show="(selection && !isSearching) || (selection && multiple)"
+                :class="[`${icon} icon`, { 'mr-2 ml-1': hasCustomIcon }]"
+            />
+
+            <!-- search input -->
+            <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
+
+            <!-- selected text -->
+            <div class="text" v-show="value" />
+
+            <!-- placeholder -->
+            <div class="default" v-show="!value && !isSearching" :style="{ left: hasCustomIcon ? '32px' : '' }">
+                {{ defaultText }}
             </div>
-        </div>
+
+            <!-- icon / if NOT selection -->
+            <i v-if="!selection" :class="`${icon} icon mr-2`" />
+
+            <!-- clear button -->
+            <i v-if="clearBtnAttr.render" :class="clearBtnAttr.class" :style="clearBtnAttr.style" />
+
+            <!-- menu items -->
+            <div class="menu">
+                <div
+                    v-for="(item, index) in listItems"
+                    :key="index"
+                    :data-value="item.value"
+                    :data-text="item.text"
+                    :class="[item.type, { disabled: item.disabled }]"
+                    @click="item.type === 'item' ? handleItemClick(item) : undefined"
+                >
+                    <img v-if="item.image" :src="item.image" class="image" />
+                    <i v-if="item.icon" :class="`${item.icon} icon`" />
+                    {{ item.text }}
+                    <div v-if="item.description" class="description">{{ item.description }}</div>
+                </div>
+            </div>
+        </template>
     </div>
 </template>
 <script>
-import { computed, onMounted, onUpdated, ref } from '@vue/composition-api'
+import { computed, reactive, toRefs, onMounted } from '@vue/composition-api'
+
+const parsePxStyle = val => {
+    return val.toString().includes('%') || val.toString().includes('px') ? val : `${parseInt(val)}px`
+}
 
 export default {
     props: {
-        addClass: {
-            type: String
-        },
         value: {
             required: true
         },
-        defaultText: {
-            required: true
+        items: {
+            type: Array,
+            required: false
         },
-        options: {
-            required: true
-        },
-        textField: {
+        itemText: {
             default: 'text'
         },
-        valueField: {
+        itemValue: {
             default: 'value'
         },
         icon: {
             default: 'dropdown'
         },
+        defaultText: {
+            type: String,
+            default: 'Select'
+        },
         action: {
             type: String,
             default: 'activate'
         },
-        setting: {
-            type: Object
+        settings: Object,
+        fluid: Boolean,
+        compact: Boolean,
+        selection: {
+            type: Boolean,
+            default: true
+        },
+        multiple: Boolean,
+        searchable: Boolean,
+        clearable: Boolean,
+        disabled: Boolean,
+        loading: {
+            type: Boolean,
+            default: false
+        },
+        error: Boolean,
+        color: String,
+        minWidth: {
+            type: [Number, String]
+        },
+        maxWidth: {
+            type: [Number, String],
+            default: '100%'
+        },
+        size: {
+            type: String,
+            validator: val => {
+                const valid =
+                    val === '' ||
+                    val === 'tiny' ||
+                    val === 'small' ||
+                    val === 'medium' ||
+                    val === 'large' ||
+                    val === 'big' ||
+                    val === 'huge' ||
+                    val === 'massive'
+                if (!valid) {
+                    console.error('[Vue warn]: Validation error in NumpadInput.vue!')
+                    console.error('[Vue warn]: prop.size is not valid!')
+                    throw `Accepted values: tiny | small | medium | large | big | huge | massive`
+                }
+                return valid
+            }
         }
     },
 
-    setup(props, attrs) {
-        const hasSearch = ref(false)
+    setup(props, { refs, emit, slots }) {
+        // validate
+        if (!props.selection && props.searchable) {
+            console.error(`Combining searchable = true with selection = false is not recommended!`)
+        }
 
-        const classList = computed(() => {
-            let cls = 'ui dropdown '
-            if (props.addClass) {
-                cls += props.addClass
-            } else {
-                cls += 'selection '
-            }
-            if (props.options.length > 10) {
-                cls += ' search'
-                hasSearch.value = true
-            }
-            return cls
+        // local state
+        const state = reactive({
+            isSearching: false,
+            isSingleItem: false,
+            hasCustomIcon: props.icon !== 'dropdown',
+            hasDefaultSlot: !!slots.default
         })
 
-        const list = computed(() => {
-            if (!props.options) {
-                console.error('options is null')
+        const selectedValue = computed(() => {
+            if (Array.isArray(props.value)) {
+                return props.value.join(',')
+            }
+            return props.value
+        })
+
+        const dropdownAttr = computed(() => ({
+            class: {
+                fluid: props.fluid,
+                compact: props.compact,
+                search: props.searchable,
+                // false by default if default slot is used
+                selection: state.hasDefaultSlot ? false : props.selection,
+                'not-selection': !props.selection,
+                multiple: props.multiple,
+                loading: props.loading,
+                disabled: props.disabled || props.loading,
+                error: props.error,
+                [props.color]: !!props.color,
+                [props.size]: !!props.size
+            },
+            style: {
+                minWidth: props.minWidth ? parsePxStyle(props.minWidth) : undefined,
+                maxWidth: parsePxStyle(props.maxWidth)
+            }
+        }))
+
+        const clearBtnAttr = computed(() => {
+            const attr = {
+                render:
+                    // statements for v-if
+                    (props.selection && props.clearable && props.value && !state.isSearching) ||
+                    (props.selection && props.clearable && props.multiple && props.value) ||
+                    (!props.selection && !props.multiple && props.clearable && props.value),
+                class: 'remove icon',
+                style: {
+                    zIndex: '100',
+                    display: 'inline-block',
+                    right: state.hasCustomIcon || state.isSearching ? '1.5em' : undefined
+                }
             }
 
-            return props.options.map(option => {
-                if (option.constructor === Object) {
+            if (!props.selection && !props.multiple && props.clearable && props.value) {
+                attr.style.right = '-10px'
+                attr.style.top = '-2px'
+            }
+            return attr
+        })
+
+        // transform list items for dropdown
+        const listItems = computed(() => {
+            return props.items.map(item => {
+                if (item.constructor === Object) {
                     return {
-                        text: option[props.textField],
-                        value: option[props.valueField]
+                        text: item[props.itemText],
+                        value: item[props.itemValue],
+                        type: item.type ? item.type : 'item',
+                        description: item.description,
+                        icon: item.icon,
+                        image: item.image,
+                        disabled: item.disabled
                     }
                 } else {
+                    // if not key/value pair
+                    state.isSingleItem = true
                     return {
-                        text: option,
-                        value: option
+                        text: item,
+                        value: item,
+                        type: 'item'
                     }
                 }
             })
         })
 
+        // fomantic dropdown initialization
         const initDropdown = () => {
             const settings = $.extend(
                 {
                     action: props.action,
-                    onChange: function(value, text) {
-                        attrs.emit('input', value)
-                        attrs.emit('dropdown-selected', text)
+                    onChange: value => {
+                        if (props.searchable) {
+                            state.isSearching = false
+
+                            if (props.multiple) {
+                                refs.search.click()
+                            }
+                        }
+
+                        // emit full object onChange as onSelected event
+                        let returnValue = []
+
+                        if (props.multiple || refs.dropdown.className.includes('multiple')) {
+                            const split = value.split(',')
+                            emit('input', split)
+                            // usage with items
+                            if (props.items) {
+                                returnValue = props.items.filter(item => {
+                                    const findItem = state.isSingleItem ? item : item[props.itemValue]
+                                    if (split.includes(findItem)) {
+                                        return item
+                                    }
+                                })
+                            }
+                        } else {
+                            emit('input', value)
+
+                            // usage with items
+                            if (props.items) {
+                                returnValue = state.isSingleItem
+                                    ? value
+                                    : props.items.find(item => item[props.itemValue] === value)
+                            }
+                        }
+                        emit('onSelected', returnValue)
                     }
                 },
-                props.setting
+                // additional settings for dropdown
+                props.settings
             )
-
-            $(attrs.refs.dropdown).dropdown(settings)
+            // initialize
+            $(refs.dropdown).dropdown(settings)
         }
-        const isSearching = ref(false)
 
+        // function to run onSearch
         const onSearch = e => {
-            if (attrs.refs.search && attrs.refs.search.value) {
-                isSearching.value = true
-            } else {
-                isSearching.value = false
-            }
-            return e
+            state.isSearching = refs.search && !!refs.search.value
         }
 
         onMounted(() => {
             initDropdown()
         })
-        onUpdated(() => {
-            initDropdown()
-        })
-        return { classList, list, initDropdown, onSearch, hasSearch, isSearching }
+
+        // handle item click, without preventing default event
+        function handleItemClick(item) {
+            if (props.searchable && props.value === item.value) {
+                refs.search.value = ''
+                state.isSearching = false
+            }
+        }
+
+        return {
+            ...toRefs(state),
+            selectedValue,
+            dropdownAttr,
+            listItems,
+            clearBtnAttr,
+            initDropdown,
+            onSearch,
+            handleItemClick
+        }
     }
 }
 </script>
 
-<style scoped>
-.default {
-    color: rgba(191, 191, 191, 0.87) !important;
-}
+<style lang="scss" scoped>
+.ui.dropdown.pitcher-dropdown {
+    // default text color
+    .default {
+        color: rgba(191, 191, 191, 0.87) !important;
+        display: inline-block;
+        pointer-events: none;
+    }
 
-.ui.clearable.selection.dropdown.labeled i.remove.icon {
-    left: auto;
-    right: 0;
-    font-size: 1em;
-}
+    &.multiple.search {
+        .default {
+            position: absolute;
+            left: 8px;
+        }
+    }
 
-.ui.dropdown > .remove.icon {
-    margin: -0.78571429em !important;
-    padding: 0.91666667em !important;
-    right: 1.5em !important;
-    top: 0.78571429em !important;
-    position: absolute !important;
-    opacity: 0.6 !important;
-    z-index: 3 !important;
-}
+    // image in list
+    .item img {
+        vertical-align: top;
+        width: auto;
+        margin: -0.5em 0.5em -0.5em 0;
+        max-height: 2em;
+    }
 
-.ui.dropdown > .icon:not(.dropdown) {
-    margin-left: 0.2em;
-    margin-right: 0.5em;
-}
+    &.not-selection:not(.labeled) {
+        // any icon other than .dropdown
+        & > .icon:not(.dropdown) {
+            margin-left: 8px;
+            margin-right: 0;
+        }
 
-.ui.multiple.dropdown > .default {
-    position: static;
-    padding: 0;
-    max-width: 100%;
-    margin: 0.45238095em 0 0.45238095em 0.64285714em;
-    line-height: 1.21428571em;
-}
+        // when it is not a selection list
+        & > .icon.dropdown {
+            margin: 0 0.2em 0 1em;
+        }
+    }
 
-.ui.search.dropdown > .default {
-    position: absolute;
-    left: 2.2em;
-    top: 0.22em;
-}
-
-.ui.clearable.dropdown .default,
-.ui.clearable.dropdown a:last-of-type {
-    margin-right: 0em;
-}
-
-.ui.dropdown > .default {
-    display: inline-block;
-    -webkit-transition: none;
-    transition: none;
-    pointer-events: none;
-}
-.ui.multiple.dropdown {
-    padding-right: 0.5em;
+    &.multiple {
+        .default {
+            padding-top: 8px;
+            padding-left: 8px;
+        }
+    }
 }
 </style>
