@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.5
+
+- added fetch pollyfill
+- should now be windows compatible
+
 ## 1.3.4
 
 - DataTable updated
