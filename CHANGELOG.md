@@ -8,7 +8,8 @@
   - return mapper function as a prop in body slot
 - added uid function to utils to generate unique ids
 - @vue/composition-api to 0.6.6
-- polyfill fetch function for translations
+- added fetch pollyfill
+- should now be windows compatible
 
 ## 1.3.4
 
