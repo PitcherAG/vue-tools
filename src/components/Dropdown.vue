@@ -108,7 +108,7 @@ export default {
         const isSearching = ref(false)
 
         const onSearch = e => {
-            if (attrs.refs.search.value) {
+            if (attrs.refs.search && attrs.refs.search.value) {
                 isSearching.value = true
             } else {
                 isSearching.value = false

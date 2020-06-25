@@ -29,9 +29,10 @@ Fomantic DataTable with pagination
 | :--- | :--- | :--- | :--- | :--- |
 | `data` | `Array` | yes | - | object array to present data in table
 | `fields` | `Array` | yes | - | object array for field options. Inside fields you define your table headings and the options for the column
-| `search-for` | `String | Number` | no | - | search key for searching the table. This prop can be bound to an input outside of DataTable
-| `search-fields` | `Array` | no | - | string array to specify which object properties you want to search inside your data array
+| `search-for` | `String | Number` | no | '' | search key for searching the table. This prop can be bound to an input outside of DataTable
+| `search-fields` | `Array` | no | [] | string array to specify which object properties you want to search inside your data array
 | `width` | `String` | no | 100% | table width
+| `max-width` | `String` | no | - | table max-width
 | `no-data-text` | `String` | no | Table has not any data to show | text to show when your table has not any data to show
 | `no-header` | `Boolean` | no | false | hide table header, by default table header is visible
 | `fixed-header` | `Boolean` | no | false | make the table header fixed and table body scrollable
@@ -46,6 +47,7 @@ Fomantic DataTable with pagination
 | slot | description | props
 | :--- | :--- | :--- | 
 | `heading-row` | Slot to overwrite the content of ```thead > tr``` | ```{ filteredFields, sortData, sortTable, getClass(field) }```
+| `FIELDTITLE__slot` | Dynamic slot to overwrite content of targeted field ```thead > tr > th``` | ```{ field }```
 | `body` | Slot to overwrite the content of ```tbody``` | ```{ tableData, filteredFields, sortData, pagination }```
 | `row` | Slot to overwrite the content of ```tbody > tr``` | ```{ rowData, raw, sortData, pagination }```
 | `t-foot` | Slot to overwrite the content of ```tfoot``` | ```{ tableData, sortData, pagination, paginate(n) }```
@@ -60,10 +62,13 @@ fields: Field[]
 field: {
     // column heading
     title: String,
-    // which data property this heading is presenting inside the data object you send.
-    // it can also be a slot name with __slot:slotname to access later inside your template
-    // when you use custom slot like this you have access to rowData and sortData in template
-    dataField: String | __slot:slotName,
+    // which object property this heading is presenting inside the data object you send.
+    // supports deep object mapping like obj.nested.child
+    dataField: String,
+    // when you need to use a custom slot, you can define a slotName here to access in your template
+    // when using slotName property, dataField is not required. But if you still need to map the property
+    // of the object, you can still use dataField combined with slotName
+    slotName: String
     // icon name to prepend to column title. use only icon name i.e. cog, times etc.
     icon: String,
     // class name to inject <th> element i.e. right aligned, collapsing etc.
@@ -72,15 +77,20 @@ field: {
     tdClass: String,
     // to makes column sortable thru clicking the <th> element
     sortable: Boolean,
+    // what type sorting logic should use when sorting the data
+    // default: string
+    sortType: 'string | number | date'
     // enable tooltip for <th> element
     tooltip: Boolean,
     // property in your data that you don't want to show in your table i.e. ID etc.
     hide: Boolean,
+    // sets width style to the <th> element, accepts only string
+    width: String
     // function to handle the value before it is shown in the table
-    transform: Function
+    transform: Function(value, rootObject, fieldObject)
 }
 
-// array of fields that are filtered. Does not include fields with hide: true set
+// array of fields that are filtered. Does not include fields with hide: true and slotName
 filteredFields: Field[]
 
 // data array that is currently shown in the table, according to pagination
@@ -89,6 +99,9 @@ tableData: Object[]
 // single data object that belongs to the row when you are using in template #row.
 // it does not include properties you hide in your field definition
 rowData: Object
+
+// single field object that belongs to the row when you are using a dynamic defined with slotName.
+rowField: Object
 
 // single data object that that belongs to the row whenyou are using in template #row.
 // it includes all properties of the object either you hide or not in your field definition 
@@ -109,8 +122,8 @@ pagination: {
 }
 // function to control pagination, number is the page number you want to paginate to
 paginate: Function(number)
-// function to sort the table. dataField is the name of your field you want to sort
-sortTable: Function(dataField)
+// function to sort the table. Takes in a field object and checks dataField property for sorting
+sortTable: Function(field)
 // this function injects related classes to the <th> element, if it is sortable, sorted etc.
 // field is a single field object
 getClass: Function(field)
@@ -141,7 +154,7 @@ const fields = [
 {
     // Required
     title: 'Username',          // name that will be shown in <th>
-    // Required
+    // Required (unless you use slotName: property)
     dataField: 'username',      // property name inside data object
     // these are optional
     icon: 'user',               // icon to prepend in column header
@@ -155,18 +168,20 @@ const fields = [
     title: 'Age',
     dataField: 'age',
     sortable: true,
+    sortType: 'number'
     // transform the value before showing
-    transform: (val) => `${val} years old` 
+    transform: (val, obj, field) => `${val} years old` 
 },
 {
     title: 'Created date',
     dataField: 'createdDate',
-    sortable: true
+    sortable: true,
+    sortType: 'date'
 },
 {
     title: 'Actions'
     // access in template with <template #actions>
-    dataField: '__slot:actions'
+    slotName: 'actions'
 }]
 
 // must be reactive
@@ -184,7 +199,15 @@ const searchFields = ['name', 'age']
 <DataTable class="celled striped" :data="data" :fields="fields" :per-page="50" fixed-header />
  
 // Usage with slots, contains all slot examples
-<DataTable :data="data" :fields="fields" >
+<DataTable :data="data" :fields="fields">
+    <!-- Inject template to any TH slot. No need to define anything special just add a template #FIELDTITLE__slot -->
+    <template #Id__slot="{ field }">
+        <button class="ui button basic right aligned">
+            <i class="icon edit" />
+            Id
+        </button>
+    </template>
+
     <!-- Inject template to heading-row  -->
     <template #heading-row="{ filteredFields, sortData, sortTable, getClass }">
         <th v-for="(f, fKey) in filteredFields" :key="fKey" @click="sortTable(f.dataField)" :class="getClass(f)">
@@ -204,7 +227,7 @@ const searchFields = ['name', 'age']
             <template v-for="(f, fKey) in filteredFields">
                 <td v-if="!f.hide" :key="fKey">
                     if this field is not a slot
-                    <template v-if="!f.dataField.includes('__slot:')">
+                    <template v-if="!f.slotName">
                         {{ f.transform ? f.transform(row[f.dataField]) : row[f.dataField] }}
                     </template>
                 </td>
@@ -222,8 +245,8 @@ const searchFields = ['name', 'age']
         </td>
     </template>
 
-    <!-- Inject template to the slot you have dynamically created in fields -->
-    <template #actions="{ rowData, sortData }">
+    <!-- Inject template to the slot you have dynamically defined in fields -> slotName -->
+    <template #actions="{ value, rowData, rowField, sortData }">
         <button class="ui button basic right aligned" @click="doSomething(rowData)">
             <i class="icon edit" />
             Edit
@@ -236,7 +259,7 @@ const searchFields = ['name', 'age']
             <th><Pagination :pagination="pagination" :paginate="paginate" /></th>
             <th colspan="6">
                 <div class="ui right floated small primary labeled icon button">
-                    <i class="user icon"></i> Add User
+                    <i class="user icon" /> Add User
                 </div>
                 <div class="ui small  button">
                     Approve
@@ -265,7 +288,7 @@ Custom component
 #### Available props
 | prop | type | required | default | description |
 | :--- | :--- | :--- | :--- | :--- |
-| `v-model` | `String` | yes | - | input value
+| `v-model` | `String | Number` | yes | - | input value
 | `decimals` | `Number` | no | 2 | decimal value for input
 | `max` | `Number` | no | undefined | maximum number that input can reach
 | `min-width` | `Number | String` | no | 50 | min-width css property for input element
