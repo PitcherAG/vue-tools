@@ -38,11 +38,10 @@
                     :class="[item.type, { disabled: item.disabled }]"
                     @click="item.type === 'item' ? handleItemClick(item) : undefined"
                 >
-                    <div>
-                        <img v-if="item.image" :src="item.image" class="image" />
-                        <i v-if="item.icon" :class="`${item.icon} icon`" />
-                        {{ item.text }}
-                    </div>
+                    <img v-if="item.image" :src="item.image" class="image" />
+                    <i v-if="item.icon" :class="`${item.icon} icon`" />
+                    {{ item.text }}
+                    <div v-if="item.description" class="description">{{ item.description }}</div>
                 </div>
             </div>
         </template>
@@ -190,6 +189,7 @@ export default {
                         text: item[props.itemText],
                         value: item[props.itemValue],
                         type: item.type ? item.type : 'item',
+                        description: item.description,
                         icon: item.icon,
                         image: item.image,
                         disabled: item.disabled
