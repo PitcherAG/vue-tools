@@ -74,6 +74,15 @@ export default {
         icon: {
             default: 'dropdown'
         },
+        defaultText: {
+            type: String,
+            default: 'Select'
+        },
+        action: {
+            type: String,
+            default: 'activate'
+        },
+        settings: Object,
         fluid: Boolean,
         compact: Boolean,
         selection: {
@@ -89,10 +98,7 @@ export default {
             default: false
         },
         error: Boolean,
-        defaultText: {
-            type: String,
-            default: 'Select'
-        },
+        color: String,
         minWidth: {
             type: [Number, String]
         },
@@ -100,11 +106,6 @@ export default {
             type: [Number, String],
             default: '100%'
         },
-        action: {
-            type: String,
-            default: 'activate'
-        },
-        settings: Object,
         size: {
             type: String,
             validator: val => {
@@ -130,7 +131,7 @@ export default {
     setup(props, { refs, emit, slots }) {
         // validate
         if (!props.selection && props.searchable) {
-            throw new Error(`You can't combine searchable with selection: false!`)
+            console.error(`Combining searchable = true with selection = false is not recommended!`)
         }
 
         // local state
@@ -160,6 +161,7 @@ export default {
                 loading: props.loading,
                 disabled: props.disabled || props.loading,
                 error: props.error,
+                [props.color]: !!props.color,
                 [props.size]: !!props.size
             },
             style: {
