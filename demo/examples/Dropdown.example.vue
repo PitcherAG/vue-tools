@@ -4,7 +4,16 @@
         <div class="ui divider" />
 
         <!-- default usage -->
-        <Dropdown v-model="recordTypeSaved" :items="recordTypes" clearable :selection="false" searchable multiple @onSelected="test" />
+        <Dropdown
+            v-model="recordTypeSaved"
+            :items="recordTypes"
+            clearable
+            multiple
+            searchable
+            icon="filter"
+            @onSelected="test"
+        />
+        <br />
         <br />
         <br />
 
@@ -36,7 +45,6 @@
             </div>
         </Dropdown>
         <br />
-        <!-- <DropdownOld v-model="recordTypeSavedOld" :items="recordTypes" /> -->
         <br />
         <br />
         <button @click="test">test me</button>
@@ -44,7 +52,7 @@
 </template>
 
 <script>
-import Dropdown from '@/components/DropdownNew'
+import Dropdown from '@/components/Dropdown'
 import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
