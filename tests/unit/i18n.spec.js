@@ -6,6 +6,10 @@ describe('i18n', () => {
         const store = useI18nStore()
         Vue.use(TranslationPlugin)
         const translations = {
+            availableLanguages: {
+              en: 'English',
+              es: 'Spanish'
+            },
             messages: {
                 en: {
                     Save: ''
@@ -28,6 +32,9 @@ describe('i18n', () => {
         const store = useI18nStore()
         Vue.use(TranslationPlugin)
         const translations = {
+            availableLanguages: {
+                en_US: 'English (US)'
+            },
             messages: {
                 en_US: {
                     Ticket: ['Ticket', 'Tickets']
@@ -44,6 +51,9 @@ describe('i18n', () => {
         const store = useI18nStore()
         Vue.use(TranslationPlugin)
         const translations = {
+            availableLanguages: {
+                en_US: 'English (US)'
+            },
             messages: {
                 en_US: {
                     'I have { a } and { b }.': '',

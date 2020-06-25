@@ -13,18 +13,16 @@ export const useI18nStore = createStore({
     id: 'i18n',
     state: () => defaultOptions,
     actions: {
-        setLanguage: async function (lang, dir = 'translations', app = 'app') {
+        setLanguage: async function (lang, load = true, dir = 'translations', app = 'app') {
             if (!this.state.availableLanguages[lang]) {
                 throw new Error('invalid language')
             }
 
-            if (lang == 'en') {
-                this.state.locale = lang
-                return
+            if (load && lang != 'en') {
+                const response = await fetch(`${dir}/${lang}/${app}.json`)
+                this.state.messages[lang] = await response.json()
             }
 
-            const response = await fetch(`${dir}/${lang}/${app}.json`)
-            this.state.messages[lang] = await response.json()
             this.state.locale = lang
         },
     },
