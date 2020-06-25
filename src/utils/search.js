@@ -20,8 +20,11 @@ import Fuse from 'fuse.js'
  * ```
  **/
 
-export const search = (data, searchFor, fields = [], options = { threshold: 0.5 }, returnFull = false) => {
-    const fuse = new Fuse(data, { keys: fields, ...options })
+export const search = (data, searchFor, fields, options = { threshold: 0.3 }, returnFull = false) => {
+    if (fields) {
+        options.keys = fields
+    }
+    const fuse = new Fuse(data, { ...options })
 
     const result = fuse.search(searchFor)
 

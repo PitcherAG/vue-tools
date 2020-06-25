@@ -9,6 +9,7 @@
                 :value="value"
                 type="text"
                 readonly="readonly"
+                class="number-input"
                 :style="inputAttrs.style"
                 :placeholder="placeholder"
                 ref="input"
@@ -91,7 +92,7 @@
 
 <script>
 import { createStore } from 'pinia'
-import { defineComponent, reactive, toRefs, computed, onMounted } from '@vue/composition-api'
+import { defineComponent, reactive, toRefs, computed, onMounted, onUnmounted } from '@vue/composition-api'
 
 // Global store for numpad component
 const useNumpadStore = createStore({
@@ -106,7 +107,7 @@ const parsePxStyle = val => {
 export default defineComponent({
     props: {
         value: {
-            type: String
+            type: [String, Number]
         },
         decimals: {
             type: Number,
@@ -209,6 +210,13 @@ export default defineComponent({
         // default zero value
         const defaultValue = props.decimals === 0 ? '0' : `0.${'0'.repeat(props.decimals)}`
 
+        // to check outer click
+        const determineOuterClick = e => {
+            if (!e.target.className.includes('number')) {
+                focus(false)
+            }
+        }
+
         onMounted(() => {
             if (!state.groups[props.group]) {
                 state.groups[props.group] = []
@@ -221,10 +229,19 @@ export default defineComponent({
                 id: `${props.group}_${state.groups[props.group].length}`,
                 input: ctx.refs.input
             })
+
+            // outer click listener
+            document.addEventListener('click', determineOuterClick)
+        })
+
+        // destroy
+        onUnmounted(() => {
+            document.removeEventListener('click', determineOuterClick)
         })
 
         function emit(val) {
-            ctx.emit('input', val)
+            const parsed = typeof props.value === 'number' ? parseFloat(val) : val
+            ctx.emit('input', parsed)
         }
 
         function addVal(val) {
@@ -235,7 +252,7 @@ export default defineComponent({
             }
 
             // parse current value as Integer
-            const parsed = parseInt(props.value.replace(/\D/g, ''))
+            const parsed = parseInt(props.value.toString().replace(/\D/g, ''))
             // concatenate incoming value as string with parsed value
             const value = parsed + val.toString()
             // mask the value with decimals
@@ -267,7 +284,7 @@ export default defineComponent({
 
         function backspace() {
             // parse current value as Integer & convert to string
-            const parsed = parseInt(props.value.replace(/\D/g, '')).toString()
+            const parsed = parseInt(props.value.toString().replace(/\D/g, '')).toString()
             // remove last char
             const value = parsed.slice(0, -1)
             // mask the value with decimals
