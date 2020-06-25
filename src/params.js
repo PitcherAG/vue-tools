@@ -8,6 +8,7 @@ import { waitForWindowProp } from './utils'
  |--------------------------------------------------
  **/
 
+
 window.getParameters = function(text) {
     window.params = JSON.parse(text)
 }
@@ -39,6 +40,33 @@ export const useParamsStore = createStore({
             }
             if (state.user) {
                 return state.user.LanguageLocaleKey.split('_')[0].toLowerCase()
+            }
+            if (state.config) {
+                const isoLocaleMap = {
+                    AUSDE: 'de',
+                    BI: 'id',
+                    BR: 'pt',
+                    BU: 'bg',
+                    CAFR: 'fr',
+                    CZ: 'cs',
+                    DAN: 'da',
+                    ESMX: 'es',
+                    EST: 'et',
+                    JP: 'ja',
+                    LET: 'lv',
+                    PO: 'pl',
+                    PRT: 'pt',
+                    SCH: 'zh-CN',
+                    TCH: 'zh-TW',
+                    UA: 'uk',
+                    VN: 'vi'
+                }
+
+                if (isoLocaleMap[state.config.langV]) {
+                    return isoLocaleMap[state.config.langV]
+                } else {
+                    return state.config.langV.toLowerCase()
+                }
             }
         },
         context(state) {
