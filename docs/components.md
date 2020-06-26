@@ -29,7 +29,7 @@ Fomantic DataTable with pagination
 | :--- | :--- | :--- | :--- | :--- |
 | `data` | `Array` | yes | - | object array to present data in table
 | `fields` | `Array` | yes | - | object array for field options. Inside fields you define your table headings and the options for the column
-| `search-for` | `String | Number` | no | '' | search key for searching the table. This prop can be bound to an input outside of DataTable
+| `search-for` | `String \| Number` | no | '' | search key for searching the table. This prop can be bound to an input outside of DataTable
 | `search-fields` | `Array` | no | [] | string array to specify which object properties you want to search inside your data array
 | `width` | `String` | no | 100% | table width
 | `max-width` | `String` | no | - | table max-width
@@ -309,8 +309,8 @@ Fomantic Dropdown component
 | `error` | `Boolean` | no | undefined | adds error class to the container
 | `color` | `String` | no | undefined | sets the color if it's button thru adding the color class to the container. (Check Fomantic for examples)
 | `size` | `String` | no | medium | tiny \| small \| medium \| large \| big \| huge \| massive 
-| `min-width` | `Number | String` | no | 50 | min-width css property for input element
-| `max-width` | `Number | String` | no | 100% | max-width css property for input element
+| `min-width` | `Number \| String` | no | 50 | min-width css property for input element
+| `max-width` | `Number \| String` | no | 100% | max-width css property for input element
 
 #### Available slots
 | slot | description |
@@ -446,11 +446,11 @@ Custom component
 #### Available props
 | prop | type | required | default | description |
 | :--- | :--- | :--- | :--- | :--- |
-| `v-model` | `String | Number` | yes | - | input value
+| `v-model` | `String \| Number` | yes | - | input value
 | `decimals` | `Number` | no | 2 | decimal value for input
 | `max` | `Number` | no | undefined | maximum number that input can reach
-| `min-width` | `Number | String` | no | 50 | min-width css property for input element
-| `max-width` | `Number | String` | no | 100% | max-width css property for input element
+| `min-width` | `Number \| String` | no | 50 | min-width css property for input element
+| `max-width` | `Number \| String` | no | 100% | max-width css property for input element
 | `group` | `String` | no | no-group | for grouping inputs & navigate thru numpad buttons
 | `fluid` | `Boolean` | no | undefined | makes the input fluid
 | `transparent` | `Boolean` | no | undefined | fomantic transparent input style
@@ -528,8 +528,8 @@ Fomantic Progress Bar component
 #### Available props
 | prop | type | required | default | description |
 | :--- | :--- | :--- | :--- | :--- |
-| `value` | `Number | String` | yes | - | model to track the value of the progressbar
-| `total` | `Number | String` | no | 100 | total number to completion of progress
+| `value` | `Number \| String` | yes | - | model to track the value of the progressbar
+| `total` | `Number \| String` | no | 100 | total number to completion of progress
 | `show-progress` | `Boolean` | no | true | shows progress percentage on progress bar
 | `progress-center` | `Boolean` | no | undefined | centers the progress percentage on progress bar
 | `show-label` | `Boolean` | no | false | shows label under progress bar. Has a slot option if needed the customise label
@@ -543,7 +543,7 @@ Fomantic Progress Bar component
 | `size` | `String` | no | medium | tiny \| small \| medium \| large \| big \| huge \| massive 
 | `max-width` | `Number | String` | no | 100% | max-width css property for input element
 | `settings` | `Object` | no | undefined | Fomantic progress bar settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/progress.html#/settings
-| `attached` | `top | bottom` | no | undefined' | Fomantic attached option. Accepts only top or bottom, however this does not work properly in some cases. You might need to customise thru css to get a better look.
+| `attached` | `top \| bottom` | no | undefined' | Fomantic attached option. Accepts only top or bottom, however this does not work properly in some cases. You might need to customise thru css to get a better look.
 
 #### Available slots
 | slot | description |
