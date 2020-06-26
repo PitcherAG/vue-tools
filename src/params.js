@@ -9,6 +9,7 @@ import { computed } from '@vue/composition-api'
  |--------------------------------------------------
  **/
 
+
 window.getParameters = function(text) {
     window.params = JSON.parse(text)
 }
@@ -30,12 +31,48 @@ const s = {
         }
     }),
 
+    locale: computed(() => {
+        if (s.state.salesForceUser) {
+            return s.state.salesForceUser.LanguageLocaleKey.split('_').join('-')
+        }
+        if (s.state.user) {
+            return s.state.user.LanguageLocaleKey.split('_').join('-')
+        }
+    }),
+
     language: computed(() => {
         if (s.state.salesForceUser) {
             return s.state.salesForceUser.LanguageLocaleKey.split('_')[0].toLowerCase()
         }
-        if (s.state.user) {
+        if (state.user) {
             return s.state.user.LanguageLocaleKey.split('_')[0].toLowerCase()
+        }
+        if (s.state.config) {
+            const isoLocaleMap = {
+                AUSDE: 'de',
+                BI: 'id',
+                BR: 'pt',
+                BU: 'bg',
+                CAFR: 'fr',
+                CZ: 'cs',
+                DAN: 'da',
+                ESMX: 'es',
+                EST: 'et',
+                JP: 'ja',
+                LET: 'lv',
+                PO: 'pl',
+                PRT: 'pt',
+                SCH: 'zh-CN',
+                TCH: 'zh-TW',
+                UA: 'uk',
+                VN: 'vi'
+            }
+
+            if (isoLocaleMap[s.state.config.langV]) {
+                return isoLocaleMap[s.state.config.langV]
+            } else {
+                return s.state.config.langV.toLowerCase()
+            }
         }
     }),
     context: computed(() => {
