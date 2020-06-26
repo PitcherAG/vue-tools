@@ -3,6 +3,7 @@
 ## 1.3.5
 
 - Dropdown component added
+- ProgressBar component added
 - DataTable updated
   - use uid for each table row (required for ui)
   - return mapper function as a prop in body slot
