@@ -1,33 +1,36 @@
 import Component from './component'
 import Directive from './directive'
-import {createStore} from 'pinia'
 import {getTranslationIndex} from './plurals'
 import {renderSimpleContext} from '../utils'
-
+import Vue from 'vue'
+import { fetch as fetchPolyfill } from 'whatwg-fetch'
+import VueCompositionApi from '@vue/composition-api'
 const defaultOptions = {
     availableLanguages: {en: 'English'},
     locale: 'en',
     messages: {en: {}},
 }
 
-export const useI18nStore = createStore({
+const s = {
     id: 'i18n',
-    state: () => defaultOptions,
-    actions: {
-        setLanguage: async function (lang, load = true, dir = 'translations', app = 'app') {
-            if (!this.state.availableLanguages[lang]) {
-                throw new Error('invalid language')
-            }
+    state: defaultOptions,
+    setLanguage: async function (lang, load = true, dir = 'translations', app = 'app') {
+        if (!this.state.availableLanguages[lang]) {
+            throw new Error('invalid language')
+        }
 
-            if (load && lang != 'en') {
-                const response = await fetch(`${dir}/${lang}/${app}.json`)
-                this.state.messages[lang] = await response.json()
-            }
+        if (load && lang != 'en') {
+            const response = await fetch(`${dir}/${lang}/${app}.json`)
+            this.state.messages[lang] = await response.json()
+        }
 
-            this.state.locale = lang
-        },
+        this.state.locale = lang
     },
-})
+}
+const store = Vue.observable(s)
+export const useI18nStore = () => {
+    return store
+}
 
 export function trans(msgid, n = 0, placeholders) {
     if (msgid == '') {
@@ -92,14 +95,12 @@ export function TranslationPlugin(Vue, options = {}) {
     options = Object.assign(defaultOptions, options)
 
     const store = useI18nStore()
-    store.patch(options)
-
+    Object.assign(options, store.state)
     // Makes <translate> available as a global component.
     Vue.component('translate', Component)
 
     // An option to support translation with HTML content: `v-translate`.
     Vue.directive('translate', Directive)
-
     // Exposes instance methods.
     Vue.prototype.$gettext = $gettext
     Vue.prototype.$ngettext = $ngettext

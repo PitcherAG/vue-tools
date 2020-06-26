@@ -1,39 +1,43 @@
 import { fireEvent } from './event'
-import { createStore } from 'pinia'
+import Vue from 'vue'
 import { PLATFORM } from './platform'
+import { computed } from '@vue/composition-api'
 
-export const useConfigStore = createStore({
+const s = {
     id: 'config',
-    state: () => ({
+    state: {
         customCaches: null
-    }),
-    getters: {
-        getTableDict: state => {
-            const d = {}
-            if (!state.customCaches) {
-                return d
-            }
-            for (let i = 0; i < state.customCaches.length; i++) {
-                const table = state.customCaches[i]
-                d[table.sfObjectName] = table.tableToCache
-                d[table.objectName] = table.tableToCache
-            }
-            return d
-        },
-        getCacheDict: state => {
-            const d = {}
-            if (!state.customCaches) {
-                return d
-            }
-            for (let i = 0; i < state.customCaches.length; i++) {
-                const table = state.customCaches[i]
-                d[table.sfObjectName] = table
-                d[table.objectName] = table
-            }
+    },
+    getTableDict: computed(() => {
+        const d = {}
+        if (!s.state.customCaches) {
             return d
         }
-    }
-})
+        for (let i = 0; i < s.state.customCaches.length; i++) {
+            const table = s.state.customCaches[i]
+            d[table.sfObjectName] = table.tableToCache
+            d[table.objectName] = table.tableToCache
+        }
+        return d
+    }),
+    getCacheDict: computed(() => {
+        const d = {}
+        if (!s.state.customCaches) {
+            return d
+        }
+        for (let i = 0; i < s.state.customCaches.length; i++) {
+            const table = s.state.customCaches[i]
+            d[table.sfObjectName] = table
+            d[table.objectName] = table
+        }
+        return d
+    })
+}
+const store = Vue.observable(s)
+
+export const useConfigStore = () => {
+    return store
+}
 
 export async function loadConfig() {
     const store = useConfigStore()
@@ -118,7 +122,8 @@ export async function loadConfig() {
     } else {
         throw new Error('platform not supported:' + PLATFORM)
     }
-
-    store.patch(result)
-    return result
+    for (const a in result) {
+        store.state[a] = result[a]
+    }
+    return store.state
 }
