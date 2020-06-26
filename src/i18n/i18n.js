@@ -1,20 +1,21 @@
 import Component from './component'
 import Directive from './directive'
-import {getTranslationIndex} from './plurals'
-import {renderSimpleContext} from '../utils'
+import { getTranslationIndex } from './plurals'
+import { renderSimpleContext } from '../utils'
 import Vue from 'vue'
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
 import VueCompositionApi from '@vue/composition-api'
+
 const defaultOptions = {
-    availableLanguages: {en: 'English'},
+    availableLanguages: { en: 'English' },
     locale: 'en',
-    messages: {en: {}},
+    messages: { en: {} }
 }
 
 const s = {
     id: 'i18n',
     state: defaultOptions,
-    setLanguage: async function (lang, load = true, dir = 'translations', app = 'app') {
+    setLanguage: async function(lang, load = true, dir = 'translations', app = 'app') {
         if (!this.state.availableLanguages[lang]) {
             throw new Error('invalid language')
         }
@@ -25,7 +26,7 @@ const s = {
         }
 
         this.state.locale = lang
-    },
+    }
 }
 const store = Vue.observable(s)
 export const useI18nStore = () => {
@@ -69,23 +70,23 @@ export function trans(msgid, n = 0, placeholders) {
     return translated
 }
 
-window.$gettext = function (msgid, context) {
+window.$gettext = function(msgid, context) {
     return trans(msgid, 1, context)
 }
 
-window.translateUI = function (json) {
+window.translateUI = function(json) {
     console.warn('not implemented', JSON.parse(json))
 }
 
-window.$t = function (msgid, context) {
+window.$t = function(msgid, context) {
     return trans(msgid, 1, context)
 }
 
-window.$ngettext = function (msgid, n, context) {
+window.$ngettext = function(msgid, n, context) {
     return trans(msgid, n, context)
 }
 
-export function TranslationPlugin(Vue, options = {}) {
+export function TranslationPlugin(_Vue, options = {}) {
     Object.keys(options).forEach(key => {
         if (Object.keys(defaultOptions).indexOf(key) === -1) {
             throw new Error(`${key} is an invalid option for the translate plugin.`)
@@ -97,12 +98,12 @@ export function TranslationPlugin(Vue, options = {}) {
     const store = useI18nStore()
     Object.assign(options, store.state)
     // Makes <translate> available as a global component.
-    Vue.component('translate', Component)
+    _Vue.component('translate', Component)
 
     // An option to support translation with HTML content: `v-translate`.
-    Vue.directive('translate', Directive)
+    _Vue.directive('translate', Directive)
     // Exposes instance methods.
-    Vue.prototype.$gettext = $gettext
-    Vue.prototype.$ngettext = $ngettext
-    Vue.prototype.$t = $gettext
+    _Vue.prototype.$gettext = $gettext
+    _Vue.prototype.$ngettext = $ngettext
+    _Vue.prototype.$t = $gettext
 }
