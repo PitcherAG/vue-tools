@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ProgressBar :value="barModel" :total="total" @onChange="log" />
+        <ProgressBar :value="barModel" :color="color" :total="total" @onChange="log" />
         <!-- <ProgressBar :value="barModel" :total="total" :color="color" show-label @onChange="log">
             <template #label="{ percent, value, total }">
                 percent: {{ percent }} value: {{ value }} total: {{ total }}
