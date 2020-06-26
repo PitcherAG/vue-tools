@@ -1,6 +1,7 @@
-import { createStore } from 'pinia'
 import { fireEvent } from './event'
 import { waitForWindowProp } from './utils'
+import Vue from 'vue'
+import { computed } from '@vue/composition-api'
 
 /** For Pitcher Impact
  |--------------------------------------------------
@@ -13,89 +14,98 @@ window.getParameters = function(text) {
     window.params = JSON.parse(text)
 }
 
-// params store
-export const useParamsStore = createStore({
+const s = {
     id: 'params',
-    state: () => ({
+    state: {
         account: null,
         contacts: null,
         salesForceUser: null,
         user: null
-        // locale: computed(() => state.salesForceUser ? state.salesForceUser.LanguageLocaleKey : null)
+    },
+    locale: computed(() => {
+        if (s.state.salesForceUser) {
+            return s.state.salesForceUser.LanguageLocaleKey.split('_').join('-')
+        }
+        if (s.state.user) {
+            return s.state.user.LanguageLocaleKey.split('_').join('-')
+        }
     }),
-    actions: {},
-    getters: {
-        locale(state) {
-            if (state.salesForceUser) {
-                return state.salesForceUser.LanguageLocaleKey.split('_').join('-')
-            }
-            if (state.user) {
-                return state.user.LanguageLocaleKey.split('_').join('-')
-            }
-        },
 
-        language(state) {
-            if (state.salesForceUser) {
-                return state.salesForceUser.LanguageLocaleKey.split('_')[0].toLowerCase()
-            }
-            if (state.user) {
-                return state.user.LanguageLocaleKey.split('_')[0].toLowerCase()
-            }
-            if (state.config) {
-                const isoLocaleMap = {
-                    AUSDE: 'de',
-                    BI: 'id',
-                    BR: 'pt',
-                    BU: 'bg',
-                    CAFR: 'fr',
-                    CZ: 'cs',
-                    DAN: 'da',
-                    ESMX: 'es',
-                    EST: 'et',
-                    JP: 'ja',
-                    LET: 'lv',
-                    PO: 'pl',
-                    PRT: 'pt',
-                    SCH: 'zh-CN',
-                    TCH: 'zh-TW',
-                    UA: 'uk',
-                    VN: 'vi'
-                }
+    locale: computed(() => {
+        if (s.state.salesForceUser) {
+            return s.state.salesForceUser.LanguageLocaleKey.split('_').join('-')
+        }
+        if (s.state.user) {
+            return s.state.user.LanguageLocaleKey.split('_').join('-')
+        }
+    }),
 
-                if (isoLocaleMap[state.config.langV]) {
-                    return isoLocaleMap[state.config.langV]
-                } else {
-                    return state.config.langV.toLowerCase()
-                }
+    language: computed(() => {
+        if (s.state.salesForceUser) {
+            return s.state.salesForceUser.LanguageLocaleKey.split('_')[0].toLowerCase()
+        }
+        if (state.user) {
+            return s.state.user.LanguageLocaleKey.split('_')[0].toLowerCase()
+        }
+        if (s.state.config) {
+            const isoLocaleMap = {
+                AUSDE: 'de',
+                BI: 'id',
+                BR: 'pt',
+                BU: 'bg',
+                CAFR: 'fr',
+                CZ: 'cs',
+                DAN: 'da',
+                ESMX: 'es',
+                EST: 'et',
+                JP: 'ja',
+                LET: 'lv',
+                PO: 'pl',
+                PRT: 'pt',
+                SCH: 'zh-CN',
+                TCH: 'zh-TW',
+                UA: 'uk',
+                VN: 'vi'
             }
-        },
-        context(state) {
-            return {
-                Account: state.account,
-                Contact: state.contact,
-                Contacts: state.contacts,
-                User: state.salesForceUser ? state.salesForceUser : state.user
+
+            if (isoLocaleMap[s.state.config.langV]) {
+                return isoLocaleMap[s.state.config.langV]
+            } else {
+                return s.state.config.langV.toLowerCase()
             }
         }
-    }
-})
+    }),
+    context: computed(() => {
+        return {
+            Account: s.state.account,
+            Contact: s.state.contact,
+            Contacts: s.state.contacts,
+            User: s.state.salesForceUser ? s.state.salesForceUser : s.state.user
+        }
+    })
+}
+const store = Vue.observable(s)
+
+export const useParamsStore = () => {
+    return store
+}
 
 // Params initializer
 export async function loadParams() {
-    const { state, patch } = useParamsStore()
+    const store = useParamsStore()
 
     // for testing
     if (process.env.VUE_APP_PARAMS) {
         const preParams = JSON.parse(process.env.VUE_APP_PARAMS)
-        patch(preParams)
-        return state
+        Object.assign(store.state, preParams)
+        return store.state
     }
 
     const params = await waitForWindowProp('params')
     if (params) {
-        patch(window.params)
+        Object.assign(store.state, window.params)
     }
-    return state
+    return store.state
 }
 
 export function useParams() {
@@ -128,9 +138,9 @@ window.loadPresentations = function() {}
 window.showUI = function() {}
 
 // serverJSON store
-export const useServerJSONStore = createStore({
+const b = {
     id: 'serverJSON',
-    state: () => ({
+    state: {
         files: [],
         categories: [],
         config: null,
@@ -147,27 +157,33 @@ export const useServerJSONStore = createStore({
         userfullname: null,
         ajaxtoken: null,
         isCustomerUI: false
-    })
-})
+    }
+}
+
+const storeServer = Vue.observable(b)
+
+export const useServerJSONStore = () => {
+    return storeServer
+}
 
 // serverJSON initializer
 export async function loadServerJSON(timeout = 5) {
-    const { state, patch } = useServerJSONStore()
+    const store = useServerJSONStore()
 
     // for testing
     if (process.env.VUE_APP_SERVERJSON) {
         // for testing
         const preServerJSON = JSON.parse(process.env.VUE_APP_SERVERJSON)
-        patch(preServerJSON)
-        return state
+        Object.assign(store.state, preServerJSON)
+        return store.state
     }
 
     const serverJSON = await waitForWindowProp('serverJSON', timeout)
     if (serverJSON) {
-        state.documentPath = window.documentPath
-        patch(window.serverJSON)
+        store.state.documentPath = window.documentPath
+        Object.assign(store.state, window.serverJSON)
     }
-    return state
+    return store.state
 }
 
 export function useServerJSON() {
