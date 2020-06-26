@@ -6,29 +6,30 @@
 </template>
 
 <script>
-import { createStore } from 'pinia'
 import { onMounted } from '@vue/composition-api'
+import Vue from 'vue'
 
-function useSidebarStore() {
-    return createStore({
-        id: 'sidebar',
+const s = {
+    id: 'sidebar',
+    state: () => ({
+        data: null,
+        open: false
+    }),
+    toggle() {
+        $('.ui.sidebar').sidebar('toggle')
+    },
+    show() {
+        $('.ui.sidebar').sidebar('show')
+    },
+    hide() {
+        $('.ui.sidebar').sidebar('hide')
+    }
+}
 
-        state: () => ({
-            data: null,
-            open: false
-        }),
-        actions: {
-            toggle() {
-                $('.ui.sidebar').sidebar('toggle')
-            },
-            show() {
-                $('.ui.sidebar').sidebar('show')
-            },
-            hide() {
-                $('.ui.sidebar').sidebar('hide')
-            }
-        }
-    })()
+const store = Vue.observable(s)
+
+export const useSidebarStore = () => {
+    return store
 }
 
 export default {

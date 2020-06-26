@@ -1,44 +1,46 @@
-import { createStore } from 'pinia'
 import { getTranslationIndex } from './plurals'
 import { renderSimpleContext } from '../utils'
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
+import Vue from 'vue'
 
-export const useI18nStore = createStore({
+const s = {
     id: 'i18n',
-    state: () => ({
+    state: {
         availableLanguages: {
             en_US: 'American English'
         },
         locale: 'en_US',
         messages: null
-    }),
-    actions: {
-        setLanguage: async function(locale, load = true) {
-            if (!locale) {
-                throw new Error('not a valid locale:' + locale)
-            }
-            console.log('set language to ' + locale)
-            locale = locale.split('-').join('_')
-            const state = this.state
-            state.locale = locale
-            if (load) {
-                try {
-                    const response = await fetch(`translations/${locale}.json`)
-                    const messages = await response.json()
-                    console.log(messages)
-                    if (!state.messages) {
-                        state.messages = {}
-                    }
-                    state.messages[locale] = messages[locale]
-                } catch (e) {
-                    console.error('The language ' + locale + ' does not has a translation file or translation data!')
-                    console.error(e)
+    },
+    setLanguage: async function(locale, load = true) {
+        if (!locale) {
+            throw new Error('not a valid locale:' + locale)
+        }
+        console.log('set language to ' + locale)
+        locale = locale.split('-').join('_')
+        const state = this.state
+        state.locale = locale
+        if (load) {
+            try {
+                const response = await fetch(`translations/${locale}.json`)
+                const messages = await response.json()
+                console.log(messages)
+                if (!state.messages) {
+                    state.messages = {}
                 }
+                state.messages[locale] = messages[locale]
+            } catch (e) {
+                console.error('The language ' + locale + ' does not has a translation file or translation data!')
+                console.error(e)
             }
         }
     }
-})
+}
+const store = Vue.observable(s)
 
+export const useI18nStore = () => {
+    return store
+}
 export function trans(key, n = 0, context) {
     const store = useI18nStore()
     if (!store.state.messages || !store.state.messages[store.state.locale]) {
@@ -89,11 +91,7 @@ export function TranslationPlugin(Vue, options = {}) {
     })
     options = Object.assign(defaultConfig, options)
     const store = useI18nStore()
-    store.patch(options)
-
-    /*Vue.filter('translate', function(value) {
-        return trans(value)
-    })*/
+    Object.assign(options, store.state)
 
     // Exposes instance methods.
     Vue.prototype.$gettext = $gettext
