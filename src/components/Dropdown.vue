@@ -194,7 +194,7 @@ export default {
 
         // transform list items for dropdown
         const listItems = computed(() => {
-            if(!props.items){
+            if (!props.items) {
                 return []
             }
             return props.items.map(item => {
