@@ -4,6 +4,7 @@
 
 ### Added
 - Dropdown component added
+- ProgressBar component added
 - added uid function to utils to generate unique ids
 - added fetch pollyfill
 - should now be windows compatible
