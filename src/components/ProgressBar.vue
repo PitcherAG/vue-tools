@@ -16,7 +16,7 @@
                 <slot name="label" :percent="percent" :value="value" :total="total" />
             </template>
             <!-- default label -->
-            <template v-else> {{ percent }}% completed </template>
+            <template v-else>{{ percent }}% completed</template>
         </div>
     </div>
 </template>
@@ -60,9 +60,6 @@ export default {
             default: false
         },
         color: String,
-        minWidth: {
-            type: [Number, String]
-        },
         maxWidth: {
             type: [Number, String],
             default: '100%'
@@ -124,7 +121,6 @@ export default {
                 [props.size]: !!props.size
             },
             style: {
-                minWidth: props.minWidth ? parsePxStyle(props.minWidth) : undefined,
                 maxWidth: parsePxStyle(props.maxWidth)
             }
         }))
