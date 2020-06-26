@@ -541,7 +541,7 @@ Fomantic Progress Bar component
 | `animate` | `Boolean` | no | false | disable/enable progress bar animation
 | `color` | `String` | no | undefined | Color of the progress bar. Details: https://fomantic-ui.com/modules/progress.html#color
 | `size` | `String` | no | medium | tiny \| small \| medium \| large \| big \| huge \| massive 
-| `max-width` | `Number | String` | no | 100% | max-width css property for input element
+| `max-width` | `Number \| String` | no | 100% | max-width css property for input element
 | `settings` | `Object` | no | undefined | Fomantic progress bar settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/progress.html#/settings
 | `attached` | `top \| bottom` | no | undefined' | Fomantic attached option. Accepts only top or bottom, however this does not work properly in some cases. You might need to customise thru css to get a better look.
 
