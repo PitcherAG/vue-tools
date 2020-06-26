@@ -4,7 +4,7 @@ import {getTranslationIndex} from './plurals'
 import {renderSimpleContext} from '../utils'
 import Vue from 'vue'
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
-
+import VueCompositionApi from '@vue/composition-api'
 const defaultOptions = {
     availableLanguages: {en: 'English'},
     locale: 'en',
