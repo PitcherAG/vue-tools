@@ -9,6 +9,7 @@
 - should now be windows compatible
 - config-gettext-extract, config-gettext-translate and config-gettext-compile commands
 - i18n/browser.js to detect browser language
+- translate component and directive
 
 ### Changed
 - @vue/composition-api to 0.6.6
