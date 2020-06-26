@@ -217,18 +217,23 @@ const searchFields = ['name', 'age']
     </template>
 
     <!-- Inject template to body -->
-    <template #body="{ tableData, filteredFields, pagination, sortData }">
+    <template #body="{ tableData, filteredFields, mapper, pagination, sortData }">
         <tr v-for="(row, rKey) in tableData" :key="rKey">
-            <td v-for="(col, cKey) in row" :key="cKey">
+            <td v-for="col in row" :key="c.title">
                 {{ col }}
             </td>
         </tr>
-        <tr v-for="(row, rKey) in tableData" :key="rKey">
+        <tr v-for="row in tableData" :key="row.__rowID">
             <template v-for="(f, fKey) in filteredFields">
-                <td v-if="!f.hide" :key="fKey">
-                    if this field is not a slot
+                <td v-if="!f.hide" :key="fKey" :class="f.tdClass">
+                    <!-- if this field is not a slot -->
                     <template v-if="!f.slotName">
-                        {{ f.transform ? f.transform(row[f.dataField]) : row[f.dataField] }}
+                        <!-- Transform function, return mapped object, root object & field object -->
+                        {{
+                            f.transform
+                                ? f.transform(mapper(f.dataField, row), row, f)
+                                : mapper(f.dataField, row)
+                        }}
                     </template>
                 </td>
             </template>
@@ -280,7 +285,159 @@ const searchFields = ['name', 'age']
 
 
 ### Dropdown
-Fomantic Dropdown
+Fomantic Dropdown component
+
+#### Available props
+| prop | type | required | default | description |
+| :--- | :--- | :--- | :--- | :--- |
+| `v-model` | `String` | yes | - | model to track of selected values
+| `items` | `Array` | false | - | object array for dropdown items. Required if you want to use with JS declaration. Do not use items if you use default slot
+| `item-text` | `String` | no | 'text' | which property to map as text in your items declaration
+| `item-value` | `String` | no | 'value | which property to map as value in your items declaration
+| `icon` | `String` | no | 'dropdown' | default icon for dropdown. If anything else than dropdown, the icon will be placed to the left side
+| `default-text` | `String` | no | 'Select' | default text that will be show when there is not any value selected
+| `action` | `String` | no | 'activate' | default action when initializing fomantic dropdown element. Default is activate.
+| `settings` | `Object` | no | undefined | Fomantic dropdown settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/dropdown.html#/settings
+| `fluid` | `Boolean` | no | undefined | makes the component width thru adding fluid class to the container
+| `compact` | `Boolean` | no | undefined | makes the component compact thru adding compact class to the container. Width of dropdown increases the more you select from the dropdown
+| `selection` | `Boolean` | no | true | makes the component a selection dropdown thru adding selection class to the container
+| `multiple` | `Boolean` | no | undefined | enables multiple selection of items in dropdown thru adding multiple class to the container
+| `searchable` | `Boolean` | no | undefined | makes the dropdown searchable thru adding search class to the container
+| `clearable` | `Boolean` | no | undefined | makes the dropdown selection clearable. Note that combining searchable = true with selection = false is not recommended!
+| `disabled` | `Boolean` | no | undefined | disables the component thru adding disabled class to the container
+| `error` | `Boolean` | no | undefined | adds error class to the container
+| `color` | `String` | no | undefined | sets the color if it's button thru adding the color class to the container. (Check Fomantic for examples)
+| `size` | `String` | no | medium | tiny \| small \| medium \| large \| big \| huge \| massive 
+| `min-width` | `Number | String` | no | 50 | min-width css property for input element
+| `max-width` | `Number | String` | no | 100% | max-width css property for input element
+
+#### Available slots
+| slot | description |
+| :--- | :--- |
+| `default` | Default slot to replace the content of `div.ui.dropdown`. You can use this without naming the slot i.e. `<Dropdown>content</Dropdown>`. When using default slot, you need to add data-value and data-item options to each `div.item`. **Using slot option is a bit experimental.**
+
+#### Available events
+| slot | description |
+| :--- | :--- |
+| `@onSelected` | event that is triggered when user selects an item from dropdown. Returns selected item as an object. Does not work properly
+| `@input` | default v-model input event, returns the selected items value
+
+#### Definitions
+```javascript
+ // object array for items, here you define how your data will be presented in the dropdown and what value they will have on selection. You can also simply use a String array.
+items: Item[] | String[]
+
+// a single item definition inside items array
+item: {
+    // The name of your dropdown item. This will be shown as the name in the Dropdown. Also you can rename text to anything else. Let's say if you change text -> to name and set item-text="name" in your dropdown properties, dropdown will show name property as the text.
+    text: String,
+    // The value of your dropdown item that will be saved when you select. Same option as text applies to this property as well, combine with item-value property in dropdown.
+    value: String,
+    // Type of the dropdown item, default is 'item'
+    type: 'item | header | divider',
+    // Description for the item
+    description: String,
+    // icon name to prepend to the item text. use only icon name i.e. cog, times etc.
+    icon: String,
+    // image url to prepend an image to the item text.
+    image: String,
+    // to disable dropdown item
+    disabled: Boolean
+}
+```
+
+#### Usage
+```javascript
+import { Dropdown } from '@pitcher/vue-sdk'
+
+// data that will be presented in dropdown
+const items = [
+{
+    text: 'Cantons',
+    type: 'header'
+},
+{
+    text: 'Zürich',
+    value: 'zurich',
+    icon: 'city',
+    description: '10'
+},
+{
+    type: 'divider'
+},
+{
+    text: 'Aargau',
+    value: 'aargau',
+    image: 'https://image_url'
+},
+...
+...
+]
+
+// must be reactive
+const selectedItem = ''
+```
+
+```html
+<!-- Simple usage -->
+<Dropdown v-model="selectedItem" :items="items" clearable />
+
+<!-- Using multiple selection, search, clearable, compact -->
+<Dropdown v-model="selectedItem" :items="items" compact multiple searchable clearable />
+ 
+<!-- Using fomantic classes & multiple selection, search, filter icon etc. -->
+<Dropdown class="inline pointing" v-model="selectedItem" :items="items" icon="filter" />
+ 
+<!-- Usage with slot -->
+<Dropdown class="ui dropdown left pointing icon button" v-model="selectedItem">
+    <i class="settings icon" />
+    <div class="menu">
+        <div class="ui left search icon input">
+            <i class="search icon" />
+            <input type="text" name="search" placeholder="Search issues..." />
+        </div>
+        <div class="divider" />
+        <div class="header">
+            <i class="tags icon" />
+            Filter by tag
+        </div>
+        <div class="item" data-value="important">
+            <div class="ui red empty circular label" />
+            Important
+        </div>
+        <div class="item" data-value="announcement">
+            <div class="ui blue empty circular label" />
+            Announcement
+        </div>
+        <div class="item" data-value="discussion">
+            <div class="ui black empty circular label" />
+            Discussion
+        </div>
+    </div>
+</Dropdown>
+
+<!-- Usage with slot example 2 -->
+<Dropdown class="fluid multiple search selection" v-model="selectedItem">
+    <input type="hidden" name="country" />
+    <i class="dropdown icon" />
+    <div v-if="!selectedItem || selectedItem.length < 1" class="default">Select Country</div>
+    <div class="text" />
+    <div class="menu">
+        <div class="item" data-value="at"><i class="at flag" />Austria</div>
+        <div class="item" data-value="be"><i class="be flag" />Belgium</div>
+        <div class="item" data-value="dk"><i class="dk flag" />Denmark</div>
+        <div class="item" data-value="gb"><i class="gb flag" />England</div>
+        <div class="item" data-value="de"><i class="de flag" />Germany</div>
+        <div class="item" data-value="it"><i class="it flag" />Italy</div>
+        <div class="item" data-value="mx"><i class="mx flag" />Mexico</div>
+        <div class="item" data-value="pl"><i class="pl flag" />Poland</div>
+        <div class="item" data-value="se"><i class="se flag" />Sweden</div>
+        <div class="item" data-value="ch"><i class="ch flag" />Switzerland</div>
+        <div class="item" data-value="tr"><i class="tr flag" />Turkey</div>
+        <div class="item" data-value="us"><i class="us flag" />United States</div>
+    </div>
+</Dropdown>
+```
 
 ### Numpad Input
 Custom component

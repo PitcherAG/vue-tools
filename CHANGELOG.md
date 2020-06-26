@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.3.5
+
+### Added
+- Dropdown component added
+- added uid function to utils to generate unique ids
+- added fetch pollyfill
+- should now be windows compatible
+- config-gettext-extract, config-gettext-translate and config-gettext-compile commands
+- i18n/browser.js to detect browser language
+- translate component and directive
+
+### Changed
+- @vue/composition-api to 0.6.6
+- DataTable updated
+  - use uid for each table row (required for ui)
+  - return mapper function as a prop in body slot
+- trans to replace placeholders if no translation found
+- use impact system language
+
 ## 1.3.4
 
 - DataTable updated
