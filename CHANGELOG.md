@@ -17,6 +17,7 @@
   - use uid for each table row (required for ui)
   - return mapper function as a prop in body slot
 - trans to replace placeholders if no translation found
+- use impact system language
 
 ## 1.3.4
 
