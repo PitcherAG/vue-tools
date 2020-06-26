@@ -1,5 +1,10 @@
 import Vue from 'vue'
 import { trans, TranslationPlugin, useI18nStore } from '@/'
+import { createLocalVue } from '@vue/test-utils'
+import CompositionApi from '@vue/composition-api'
+
+const localVue = createLocalVue()
+localVue.use(CompositionApi)
 
 describe('i18n', () => {
     it('translations', () => {
@@ -20,7 +25,7 @@ describe('i18n', () => {
             },
             locale: 'en'
         }
-        store.patch(translations)
+        Object.assign(store.state,translations)
         store.setLanguage('en', false)
         expect(trans('Save')).toBe('Save')
         store.setLanguage('es', false)
@@ -41,7 +46,7 @@ describe('i18n', () => {
                 }
             }
         }
-        store.patch(translations)
+        Object.assign(store.state,translations)
         store.setLanguage('en_US', false)
         expect($ngettext('Ticket', 1)).toBe('Ticket')
         expect($ngettext('Ticket', 2)).toBe('Tickets')
@@ -62,7 +67,7 @@ describe('i18n', () => {
                 }
             }
         }
-        store.patch(translations)
+        Object.assign(store.state,translations)
         store.setLanguage('en_US', false)
         expect($ngettext('I have {num} Ticket.', 2, { num: 2 })).toBe('I have 2 Tickets.')
         expect(
