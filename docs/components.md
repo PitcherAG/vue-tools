@@ -305,6 +305,7 @@ Fomantic Dropdown component
 | `searchable` | `Boolean` | no | undefined | makes the dropdown searchable thru adding search class to the container
 | `clearable` | `Boolean` | no | undefined | makes the dropdown selection clearable. Note that combining searchable = true with selection = false is not recommended!
 | `disabled` | `Boolean` | no | undefined | disables the component thru adding disabled class to the container
+| `loading` | `Boolean` | no | false | sets the dropdown to loading state thru adding loading class to the container
 | `error` | `Boolean` | no | undefined | adds error class to the container
 | `color` | `String` | no | undefined | sets the color if it's button thru adding the color class to the container. (Check Fomantic for examples)
 | `size` | `String` | no | medium | tiny \| small \| medium \| large \| big \| huge \| massive 
@@ -519,6 +520,76 @@ Displays a salesforce object as a form, uses layouts if available otherwise uses
 ### ObjectFormField
 
 Displays a form field inside ObjectForm
+
+
+### Progress Bar
+Fomantic Progress Bar component
+
+#### Available props
+| prop | type | required | default | description |
+| :--- | :--- | :--- | :--- | :--- |
+| `value` | `Number | String` | yes | - | model to track the value of the progressbar
+| `total` | `Number | String` | no | 100 | total number to completion of progress
+| `show-progress` | `Boolean` | no | true | shows progress percentage on progress bar
+| `progress-center` | `Boolean` | no | undefined | centers the progress percentage on progress bar
+| `show-label` | `Boolean` | no | false | shows label under progress bar. Has a slot option if needed the customise label
+| `indicating` | `Boolean` | no | undefined | Fomantic indicating option
+| `auto-success` | `Boolean` | no | true | Fomantic autoSuccess setting. Makes the bar green when completed
+| `indicating` | `Boolean` | no | undefined | Fomantic indicating option, adds indicating class to the container
+| `loading` | `Boolean` | no | false | sets the progress bar to loading state thru adding loading class to the container
+| `disabled` | `Boolean` | no | undefined | disables progress bar thru adding disabled class to the container
+| `animate` | `Boolean` | no | false | disable/enable progress bar animation
+| `color` | `String` | no | undefined | Color of the progress bar. Details: https://fomantic-ui.com/modules/progress.html#color
+| `size` | `String` | no | medium | tiny \| small \| medium \| large \| big \| huge \| massive 
+| `max-width` | `Number | String` | no | 100% | max-width css property for input element
+| `settings` | `Object` | no | undefined | Fomantic progress bar settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/progress.html#/settings
+| `attached` | `top | bottom` | no | undefined' | Fomantic attached option. Accepts only top or bottom, however this does not work properly in some cases. You might need to customise thru css to get a better look.
+
+#### Available slots
+| slot | description |
+| :--- | :--- |
+| `label` | Label slot to replace the content of `.label`. Has `{percent, value, total}` props.
+
+#### Available events
+| slot | description |
+| :--- | :--- |
+| `@onChange` | fired when something is changed in progress bar
+| `@onSuccess` | fired when the progress is completed
+| `@onActive` | fired when progress bar is active
+| `@onError` | fired on error
+| `@onWarning` | fired on warning
+
+#### Available functions that you can call on the component
+| function name | description |
+| :--- | :--- |
+| `setProgressState(state, text, keepState = false)` | helper to call `$().progress('set STATE')` function. Example: `COMPONENT.setProgressState('warning', 'something is wrong', false)`
+| `exec(command, argument)` | helper to call any option on progress bar. Example: `COMPONENT.exec('get percent')`
+
+#### Usage
+```javascript
+import { ProgressBar } from '@pitcher/vue-sdk'
+
+// must be reactive
+const value = 0
+```
+
+```html
+<!-- Simple usage -->
+<ProgressBar :value="value" />
+
+<!-- Changing total, showing label, setting color -->
+<ProgressBar :value="value" :total="100" color="blue" show-label />
+
+<!-- Hiding progress text, setting size -->
+<ProgressBar :value="value" :show-progress="false" size="tiny" />
+ 
+<!-- Using fomantic classes & custom label slot -->
+<ProgressBar :value="value" :total="200">
+    <template #label="{ percent, value, total }">
+        percent: {{ percent }} value: {{ value }} total: {{ total }}
+    </template>
+</ProgressBar>
+```
 
 ### Sidebar
 
