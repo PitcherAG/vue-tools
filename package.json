@@ -1,6 +1,6 @@
 {
     "name": "@pitcher/vue-sdk",
-    "version": "1.3.5-beta.5",
+    "version": "1.3.5",
     "description": "VueJS Development Tools for the use in Pitcher Impact",
     "author": "Pitcher AG",
     "bin": {
