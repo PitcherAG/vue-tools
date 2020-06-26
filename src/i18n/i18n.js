@@ -1,7 +1,8 @@
-import { createStore } from 'pinia'
-import { getTranslationIndex } from './plurals'
-import { renderSimpleContext } from '../utils'
-import { fetch as fetchPolyfill } from 'whatwg-fetch'
+import Component from './component'
+import Directive from './directive'
+import {createStore} from 'pinia'
+import {getTranslationIndex} from './plurals'
+import {renderSimpleContext} from '../utils'
 
 const defaultOptions = {
     availableLanguages: {en: 'English'},
@@ -92,6 +93,12 @@ export function TranslationPlugin(Vue, options = {}) {
 
     const store = useI18nStore()
     store.patch(options)
+
+    // Makes <translate> available as a global component.
+    Vue.component('translate', Component)
+
+    // An option to support translation with HTML content: `v-translate`.
+    Vue.directive('translate', Directive)
 
     // Exposes instance methods.
     Vue.prototype.$gettext = $gettext
