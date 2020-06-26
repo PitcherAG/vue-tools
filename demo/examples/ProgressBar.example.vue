@@ -26,7 +26,7 @@ export default defineComponent({
         const state = reactive({
             barModel: 15,
             total: 100,
-            color: ''
+            color: 'blue'
         })
 
         function update() {
