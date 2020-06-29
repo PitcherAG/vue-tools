@@ -1,11 +1,5 @@
 // This is required to be able to use this package as an external package.
 // Otherwise it causes to throw error in the packages that are using this package as a dependency
-import Vue from 'vue'
-import VueCompositionApi from '@vue/composition-api'
-
-Vue.use(VueCompositionApi)
-
-
 export * from './store/store'
 
 export * from './db/contextQuery.js'

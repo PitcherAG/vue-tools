@@ -8,28 +8,26 @@
 <script>
 import { onMounted } from '@vue/composition-api'
 import Vue from 'vue'
-
-const s = {
-    id: 'sidebar',
-    state: () => ({
-        data: null,
-        open: false
-    }),
-    toggle() {
-        $('.ui.sidebar').sidebar('toggle')
-    },
-    show() {
-        $('.ui.sidebar').sidebar('show')
-    },
-    hide() {
-        $('.ui.sidebar').sidebar('hide')
-    }
-}
-
-const store = Vue.observable(s)
+import { createStore } from '..'
 
 export const useSidebarStore = () => {
-    return store
+    const s = {
+        id: 'sidebar',
+        state: () => ({
+            data: null,
+            open: false
+        }),
+        toggle() {
+            $('.ui.sidebar').sidebar('toggle')
+        },
+        show() {
+            $('.ui.sidebar').sidebar('show')
+        },
+        hide() {
+            $('.ui.sidebar').sidebar('hide')
+        }
+    }
+    return createStore(s)
 }
 
 export default {
