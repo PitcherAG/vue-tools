@@ -2,42 +2,42 @@ import { fireEvent } from './event'
 import Vue from 'vue'
 import { PLATFORM } from './platform'
 import { computed } from '@vue/composition-api'
+import { createStore } from './store/store'
 
-const s = {
-    id: 'config',
-    state: {
-        customCaches: null
-    },
-    getTableDict: computed(() => {
-        const d = {}
-        if (!s.state.customCaches) {
+export function useConfigStore(){
+    const s = {
+        id: 'config',
+        state: {
+            customCaches: null
+        },
+        getTableDict: computed(() => {
+            const d = {}
+            if (!s.state.customCaches) {
+                return d
+            }
+            for (let i = 0; i < s.state.customCaches.length; i++) {
+                const table = s.state.customCaches[i]
+                d[table.sfObjectName] = table.tableToCache
+                d[table.objectName] = table.tableToCache
+            }
             return d
-        }
-        for (let i = 0; i < s.state.customCaches.length; i++) {
-            const table = s.state.customCaches[i]
-            d[table.sfObjectName] = table.tableToCache
-            d[table.objectName] = table.tableToCache
-        }
-        return d
-    }),
-    getCacheDict: computed(() => {
-        const d = {}
-        if (!s.state.customCaches) {
+        }),
+        getCacheDict: computed(() => {
+            const d = {}
+            if (!s.state.customCaches) {
+                return d
+            }
+            for (let i = 0; i < s.state.customCaches.length; i++) {
+                const table = s.state.customCaches[i]
+                d[table.sfObjectName] = table
+                d[table.objectName] = table
+            }
             return d
-        }
-        for (let i = 0; i < s.state.customCaches.length; i++) {
-            const table = s.state.customCaches[i]
-            d[table.sfObjectName] = table
-            d[table.objectName] = table
-        }
-        return d
-    })
+        })
+    }
+    return createStore(s)
 }
-const store = Vue.observable(s)
 
-export const useConfigStore = () => {
-    return store
-}
 
 export async function loadConfig() {
     const store = useConfigStore()
