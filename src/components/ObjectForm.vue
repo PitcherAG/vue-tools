@@ -17,9 +17,9 @@
                 <Dropdown
                     :default-text="$gettext('Select Record Type')"
                     v-model="state.recordTypeSaved"
-                    :options="state.recordTypes"
-                    text-field="name"
-                    value-field="recordTypeId"
+                    :items="state.recordTypes"
+                    item-text="name"
+                    item-value="recordTypeId"
                 />
             </sui-form-field>
         </sui-form>

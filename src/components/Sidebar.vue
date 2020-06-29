@@ -6,40 +6,40 @@
 </template>
 
 <script>
-import { onMounted } from '@vue/composition-api'
-import Vue from 'vue'
-import { createStore } from '..'
+    import { onMounted, ref,shallowRef } from '@vue/composition-api'
+    import Vue from 'vue'
+    import { createStore } from '..'
 
-export const useSidebarStore = () => {
-    const s = {
-        id: 'sidebar',
-        state: () => ({
-            data: null,
-            open: false
-        }),
-        toggle() {
-            $('.ui.sidebar').sidebar('toggle')
-        },
-        show() {
-            $('.ui.sidebar').sidebar('show')
-        },
-        hide() {
-            $('.ui.sidebar').sidebar('hide')
+    const useSidebarStore = () => {
+        const s = {
+            id: 'sidebar',
+            state: {
+                data: shallowRef(),
+                open: false
+            },
+            toggle() {
+                $('.ui.sidebar').sidebar('toggle')
+            },
+            show() {
+                $('.ui.sidebar').sidebar('show')
+            },
+            hide() {
+                $('.ui.sidebar').sidebar('hide')
+            }
         }
+        return createStore(s)
     }
-    return createStore(s)
-}
 
-export default {
-    name: 'Sidebar',
-    setup(props, ctx) {
-        const store = useSidebarStore()
-        onMounted(() => {
-            $(ctx.refs.sidebar).sidebar('setting', 'onChange', () => {
-                store.state.open = !store.state.open
+    export default {
+        name: 'Sidebar',
+        setup(props, ctx) {
+            const store = useSidebarStore()
+            onMounted(() => {
+                $(ctx.refs.sidebar).sidebar('setting', 'onChange', () => {
+                    store.state.open = !store.state.open
+                })
             })
-        })
-    },
-    useSidebarStore
-}
+        },
+        useSidebarStore
+    }
 </script>
