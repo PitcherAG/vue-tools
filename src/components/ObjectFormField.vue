@@ -30,7 +30,7 @@
             :multiple="typ === 'multipicklist'"
             @input="$emit('input', $event)"
             :value="value"
-            :options="field.references"
+            :items="field.references"
             add-class="selection"
         />
 
@@ -61,11 +61,10 @@
                type="number"
                readonly="readonly"
                step="any"-->
-        <sui-checkbox
+        <Checkbox
             v-if="typ === 'boolean'"
             toggle
-            :value="value ? 'on' : 'off'"
-            @input="$emit('input', $event.target.value == 'on')"
+            v-model="value"
         />
     </sui-form-field>
 </template>
@@ -74,10 +73,11 @@
 import { computed, ref } from '@vue/composition-api'
 import Dropdown from './Dropdown'
 import Calendar from './Calendar'
+import Checkbox from './Checkbox'
 
 export default {
     name: 'ObjectFormField',
-    components: { Calendar, Dropdown },
+    components: { Checkbox, Calendar, Dropdown },
     props: {
         field: { required: true },
         index: {
