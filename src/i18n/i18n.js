@@ -5,6 +5,7 @@ import { renderSimpleContext } from '../utils'
 import Vue from 'vue'
 import { fetch as fetchPolyfill } from 'whatwg-fetch'
 import VueCompositionApi from '@vue/composition-api'
+import { createStore } from '..'
 
 const defaultOptions = {
     availableLanguages: { en: 'English' },
@@ -12,25 +13,24 @@ const defaultOptions = {
     messages: { en: {} }
 }
 
-const s = {
-    id: 'i18n',
-    state: defaultOptions,
-    setLanguage: async function(lang, load = true, dir = 'translations', app = 'app') {
-        if (!this.state.availableLanguages[lang]) {
-            throw new Error('invalid language')
-        }
-
-        if (load && lang != 'en') {
-            const response = await fetch(`${dir}/${lang}/${app}.json`)
-            this.state.messages[lang] = await response.json()
-        }
-
-        this.state.locale = lang
-    }
-}
-const store = Vue.observable(s)
 export const useI18nStore = () => {
-    return store
+    const s = {
+        id: 'i18n',
+        state: defaultOptions,
+        setLanguage: async function(lang, load = true, dir = 'translations', app = 'app') {
+            if (!this.state.availableLanguages[lang]) {
+                throw new Error('invalid language: '+lang)
+            }
+
+            if (load && lang != 'en') {
+                const response = await fetch(`${dir}/${lang}/${app}.json`)
+                this.state.messages[lang] = await response.json()
+            }
+
+            this.state.locale = lang
+        }
+    }
+    return createStore(s)
 }
 
 export function trans(msgid, n = 0, placeholders) {

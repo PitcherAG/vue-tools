@@ -5,6 +5,9 @@ import VueCompositionApi from '@vue/composition-api'
 
 Vue.use(VueCompositionApi)
 
+
+export * from './store/store'
+
 export * from './db/contextQuery.js'
 export * from './db/query.js'
 export * from './db/sfdcField.js'
