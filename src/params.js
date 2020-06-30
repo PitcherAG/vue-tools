@@ -2,7 +2,7 @@ import { fireEvent } from './event'
 import { waitForWindowProp } from './utils'
 import Vue from 'vue'
 import { computed } from '@vue/composition-api'
-import { createStore } from './store/store'
+import { createStore } from './store'
 
 /** For Pitcher Impact
  |--------------------------------------------------

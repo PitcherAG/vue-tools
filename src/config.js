@@ -1,10 +1,9 @@
 import { fireEvent } from './event'
-import Vue from 'vue'
 import { PLATFORM } from './platform'
 import { computed } from '@vue/composition-api'
-import { createStore } from './store/store'
+import { createStore } from './store'
 
-export function useConfigStore(){
+export function useConfigStore() {
     const s = {
         id: 'config',
         state: {
@@ -37,7 +36,6 @@ export function useConfigStore(){
     }
     return createStore(s)
 }
-
 
 export async function loadConfig() {
     const store = useConfigStore()
