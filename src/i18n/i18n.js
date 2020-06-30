@@ -1,11 +1,15 @@
+import Vue from 'vue'
+import VueCompositionApi from '@vue/composition-api'
+import { fetch as fetchPolyfill } from 'whatwg-fetch'
 import Component from './component'
 import Directive from './directive'
 import { getTranslationIndex } from './plurals'
 import { renderSimpleContext } from '../utils'
-import Vue from 'vue'
-import { fetch as fetchPolyfill } from 'whatwg-fetch'
-import VueCompositionApi from '@vue/composition-api'
 import { createStore } from '..'
+
+if (!window.fetch) {
+    import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch')
+}
 
 const defaultOptions = {
     availableLanguages: { en: 'English' },
@@ -19,7 +23,7 @@ export const useI18nStore = () => {
         state: defaultOptions,
         setLanguage: async function(lang, load = true, dir = 'translations', app = 'app') {
             if (!this.state.availableLanguages[lang]) {
-                throw new Error('invalid language: '+lang)
+                throw new Error('invalid language: ' + lang)
             }
 
             if (load && lang != 'en') {
