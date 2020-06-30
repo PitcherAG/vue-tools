@@ -6,30 +6,27 @@
 </template>
 
 <script>
-import { onMounted } from '@vue/composition-api'
-import Vue from 'vue'
+import { onMounted, shallowRef } from '@vue/composition-api'
+import { createStore } from '..'
 
-const s = {
-    id: 'sidebar',
-    state: () => ({
-        data: null,
-        open: false
-    }),
-    toggle() {
-        $('.ui.sidebar').sidebar('toggle')
-    },
-    show() {
-        $('.ui.sidebar').sidebar('show')
-    },
-    hide() {
-        $('.ui.sidebar').sidebar('hide')
+const useSidebarStore = () => {
+    const s = {
+        id: 'sidebar',
+        state: {
+            data: shallowRef(),
+            open: false
+        },
+        toggle() {
+            $('.ui.sidebar').sidebar('toggle')
+        },
+        show() {
+            $('.ui.sidebar').sidebar('show')
+        },
+        hide() {
+            $('.ui.sidebar').sidebar('hide')
+        }
     }
-}
-
-const store = Vue.observable(s)
-
-export const useSidebarStore = () => {
-    return store
+    return createStore(s)
 }
 
 export default {

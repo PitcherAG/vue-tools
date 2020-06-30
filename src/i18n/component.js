@@ -1,14 +1,13 @@
-import {trans} from './i18n'
-import {uid} from '../utils/uid'
-
+import { trans } from './i18n'
+import { uid } from '../utils/uid'
 
 /**
  * Translate content according to the current language.
  */
 export default {
     name: 'translate',
-    created: function () {
-        this.msgid = ''  // Don't crash the app with an empty component, i.e.: <translate></translate>.
+    created: function() {
+        this.msgid = '' // Don't crash the app with an empty component, i.e.: <translate></translate>.
 
         // Store the raw uninterpolated string to translate.
         // This is currently done by looking inside a private attribute `_renderChildren`.
@@ -29,46 +28,44 @@ export default {
     props: {
         tag: {
             type: String,
-            default: 'span',
+            default: 'span'
         },
         // Always use v-bind for dynamically binding the `translateN` prop to data on the parent,
         // i.e.: `:translateN`.
         translateN: {
             type: Number,
-            required: false,
+            required: false
         },
         translatePlural: {
             type: String,
-            required: false,
+            required: false
         },
         translateContext: {
             type: String,
-            required: false,
+            required: false
         },
         translateParams: {
             type: Object,
-            required: false,
+            required: false
         },
         // `translateComment` is used exclusively by `easygettext`'s `gettext-extract`.
         translateComment: {
             type: String,
-            required: false,
-        },
+            required: false
+        }
     },
     computed: {
-        translation: function () {
+        translation: function() {
             let context = this.$parent
 
             if (this.translateParams) {
                 context = Object.assign({}, this.$parent, this.translateParams)
             }
 
-            return this.isPlural
-                    ? trans(this.translatePlural, this.translateN, context)
-                    : trans(this.msgid, 0, context)
-        },
+            return this.isPlural ? trans(this.translatePlural, this.translateN, context) : trans(this.msgid, 0, context)
+        }
     },
-    render: function (createElement) {
+    render: function(createElement) {
         // Fix the problem with v-if, see #29.
         // Vue re-uses DOM elements for efficiency if they don't have a key attribute, see:
         // https://vuejs.org/v2/guide/conditional.html#Controlling-Reusable-Elements-with-key
@@ -80,5 +77,5 @@ export default {
         // The text must be wraped inside a root HTML element, so we use a <span> (by default).
         // https://github.com/vuejs/vue/blob/a4fcdb/src/compiler/parser/index.js#L209
         return createElement(this.tag, [this.translation])
-    },
+    }
 }
