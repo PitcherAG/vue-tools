@@ -99,6 +99,7 @@ export function TranslationPlugin(_Vue, options = {}) {
     const store = useI18nStore()
     Object.assign(options, store.state)
     // Makes <translate> available as a global component.
+    // eslint-disable-next-line vue/component-definition-name-casing
     _Vue.component('translate', Component)
 
     // An option to support translation with HTML content: `v-translate`.

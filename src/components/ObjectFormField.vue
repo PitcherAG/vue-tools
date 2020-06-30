@@ -61,11 +61,7 @@
                type="number"
                readonly="readonly"
                step="any"-->
-        <Checkbox
-            v-if="typ === 'boolean'"
-            toggle
-            v-model="value"
-        />
+        <Checkbox v-if="typ === 'boolean'" toggle v-model="value" />
     </sui-form-field>
 </template>
 
