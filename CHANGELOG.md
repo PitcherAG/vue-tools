@@ -11,6 +11,10 @@
 - eslint-plugin-vue to 7.0.0-alpha.7
 - Dropdown updated
   - emit string as value (Fomantic dropdown default)
+  - renamed prop: options -> items
+  - renamed prop: textField -> item-text
+  - renamed prop: valueField -> item-value
+  - renamed prop: setting -> settings
 
 ## 1.3.5
 
