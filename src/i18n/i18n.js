@@ -1,6 +1,3 @@
-import Vue from 'vue'
-import VueCompositionApi from '@vue/composition-api'
-import { fetch as fetchPolyfill } from 'whatwg-fetch'
 import Component from './component'
 import Directive from './directive'
 import { getTranslationIndex } from './plurals'
