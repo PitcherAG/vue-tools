@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import { onMounted, ref,shallowRef } from '@vue/composition-api'
+    import { onMounted, ref, shallowRef } from '@vue/composition-api'
     import Vue from 'vue'
     import { createStore } from '..'
 
