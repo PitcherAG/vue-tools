@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.3.6
+
+### Added
+- fetch polyfill with whatwg-fetch
+
+### Changed
+- Store related bugs are fixed
+- Dropdown related bugs in ObjectForm / ObjectFormField
+- eslint-plugin-vue to 7.0.0-alpha.7
+- Dropdown updated
+  - emit string as value (Fomantic dropdown default)
+
 ## 1.3.5
 
 ### Added

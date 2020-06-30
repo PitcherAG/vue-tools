@@ -2,9 +2,11 @@ import Component from './component'
 import Directive from './directive'
 import { getTranslationIndex } from './plurals'
 import { renderSimpleContext } from '../utils'
-import Vue from 'vue'
-import { fetch as fetchPolyfill } from 'whatwg-fetch'
-import VueCompositionApi from '@vue/composition-api'
+import { createStore } from '..'
+
+if (!window.fetch) {
+    import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch')
+}
 
 const defaultOptions = {
     availableLanguages: { en: 'English' },
@@ -12,25 +14,24 @@ const defaultOptions = {
     messages: { en: {} }
 }
 
-const s = {
-    id: 'i18n',
-    state: defaultOptions,
-    setLanguage: async function(lang, load = true, dir = 'translations', app = 'app') {
-        if (!this.state.availableLanguages[lang]) {
-            throw new Error('invalid language')
-        }
-
-        if (load && lang != 'en') {
-            const response = await fetch(`${dir}/${lang}/${app}.json`)
-            this.state.messages[lang] = await response.json()
-        }
-
-        this.state.locale = lang
-    }
-}
-const store = Vue.observable(s)
 export const useI18nStore = () => {
-    return store
+    const s = {
+        id: 'i18n',
+        state: defaultOptions,
+        setLanguage: async function(lang, load = true, dir = 'translations', app = 'app') {
+            if (!this.state.availableLanguages[lang]) {
+                throw new Error('invalid language: ' + lang)
+            }
+
+            if (load && lang != 'en') {
+                const response = await fetch(`${dir}/${lang}/${app}.json`)
+                this.state.messages[lang] = await response.json()
+            }
+
+            this.state.locale = lang
+        }
+    }
+    return createStore(s)
 }
 
 export function trans(msgid, n = 0, placeholders) {
@@ -98,6 +99,7 @@ export function TranslationPlugin(_Vue, options = {}) {
     const store = useI18nStore()
     Object.assign(options, store.state)
     // Makes <translate> available as a global component.
+    // eslint-disable-next-line vue/component-definition-name-casing
     _Vue.component('translate', Component)
 
     // An option to support translation with HTML content: `v-translate`.

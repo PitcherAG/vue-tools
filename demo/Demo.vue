@@ -4,8 +4,8 @@
         <div class="ui divider" />
         <!-- <NumpadInputEx /> -->
         <!-- <DataTableEx /> -->
-        <!-- <DropdownEx /> -->
-        <ProgressBarEx />
+        <DropdownEx />
+        <!-- <ProgressBarEx /> -->
     </div>
 </template>
 
