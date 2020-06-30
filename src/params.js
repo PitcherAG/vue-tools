@@ -14,7 +14,7 @@ window.getParameters = function(text) {
     window.params = JSON.parse(text)
 }
 
-export function useParamsStore(){
+export function useParamsStore() {
     const s = {
         id: 'params',
         state: {
