@@ -142,13 +142,6 @@ export default {
             hasDefaultSlot: !!slots.default
         })
 
-        const selectedValue = computed(() => {
-            if (Array.isArray(props.value)) {
-                return props.value.join(',')
-            }
-            return props.value
-        })
-
         const dropdownAttr = computed(() => ({
             class: {
                 fluid: props.fluid,
@@ -239,7 +232,6 @@ export default {
 
                         if (props.multiple || refs.dropdown.className.includes('multiple')) {
                             const split = value.split(',')
-                            emit('input', split)
                             // usage with items
                             if (props.items) {
                                 returnValue = props.items.filter(item => {
@@ -250,8 +242,6 @@ export default {
                                 })
                             }
                         } else {
-                            emit('input', value)
-
                             // usage with items
                             if (props.items) {
                                 returnValue = state.isSingleItem
@@ -259,6 +249,7 @@ export default {
                                     : props.items.find(item => item[props.itemValue] === value)
                             }
                         }
+                        emit('input', value)
                         emit('onSelected', returnValue)
                     }
                 },
@@ -288,7 +279,6 @@ export default {
 
         return {
             ...toRefs(state),
-            selectedValue,
             dropdownAttr,
             listItems,
             clearBtnAttr,
