@@ -1,5 +1,5 @@
 <template>
-    <sui-form-field :required="field.required" :error="error" :disabled="!field.updateable">
+    <sui-form-field v-if="field.updateable" :required="field.required" :error="error">
         <label>{{ label || field.label }}</label>
         <input
             v-if="typ === 'string' || typ === 'phone' || typ === 'url' || typ === 'combobox'"
@@ -63,6 +63,26 @@
                step="any"-->
         <Checkbox v-if="typ === 'boolean'" :value="value" toggle @input="v => $emit('input', v)" />
     </sui-form-field>
+    <!-- not updateable -->
+    <sui-form-field v-else>
+        <label>{{ label || field.label }}</label>
+        <!-- bool -->
+        <template v-if="typ === 'boolean'">
+            {{ value ? 'yes' : 'no' }}
+        </template>
+        <!-- currency -->
+        <template v-else-if="typ === 'currency'">
+            {{ formatCurrency(value) }}
+        </template>
+        <!-- date -->
+        <template v-else-if="typ === 'date' || typ === 'datetime'">
+            {{ formatDate(value) }}
+        </template>
+        <!-- default -->
+        <template v-else>
+            {{ value }}
+        </template>
+    </sui-form-field>
 </template>
 
 <script>
@@ -70,6 +90,7 @@ import { computed, ref } from '@vue/composition-api'
 import Dropdown from './Dropdown'
 import Calendar from './Calendar'
 import Checkbox from './Checkbox'
+import { formatDate, formatCurrency } from '..'
 
 export default {
     name: 'ObjectFormField',
@@ -85,14 +106,14 @@ export default {
             type: String
         }
     },
-    setup(props, attrs) {
+    setup(props, { emit }) {
         const typ = ref()
         const picklist = ref([])
         if (props.field) {
             const type = props.field.type
             typ.value = type
             if (typ === 'boolean' && !props.value) {
-                attrs.emit('input', false)
+                emit('input', false)
             }
         }
         if (props.field && props.field.picklistValues) {
@@ -109,7 +130,7 @@ export default {
             console.log(a, b, c)
         }
 
-        return { typ, picklist, error, log }
+        return { typ, picklist, error, log, formatDate, formatCurrency }
     }
 }
 </script>
