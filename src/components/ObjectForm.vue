@@ -35,9 +35,9 @@
         </sui-form>
         <sui-form v-if="!state.needsRecordType && !validationError && state.layout">
             <fragment
+                v-if="section.fieldCount > 0"
                 v-for="(section, sectionKey) in state.layout.editLayoutSections"
                 :key="sectionKey"
-                v-if="section.fieldCount > 0"
             >
                 <h4 class="ui header">{{ section.heading }}</h4>
                 <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">

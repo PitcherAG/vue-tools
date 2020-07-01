@@ -12,7 +12,6 @@ export default {
     name: 'Checkbox',
     props: {
         value: {
-            type: Boolean,
             required: true
         },
         label: {
@@ -20,6 +19,11 @@ export default {
         }
     },
     setup(props, ctx) {
+        if (props.value === null || props.value === undefined) {
+            ctx.emit('input', false)
+        } else if (typeof props.value === 'string') {
+            throw 'Checkbox value type can not be string!'
+        }
         onMounted(() => {
             $(ctx.refs.checkbox).checkbox('setting', 'onChange', () => {
                 ctx.emit('input', !props.value)
