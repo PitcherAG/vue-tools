@@ -34,25 +34,27 @@
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
         <sui-form v-if="!state.needsRecordType && !validationError && state.layout">
-            <template v-if="section.fieldCount > 0">
-                <fragment v-for="(section, sectionKey) in state.layout.editLayoutSections" :key="sectionKey">
-                    <h4 class="ui header">{{ section.heading }}</h4>
-                    <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
-                        <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
-                            <template v-for="(comp, compKey) in item.layoutComponents">
-                                <ObjectFormField
-                                    v-if="!comp.exclude"
-                                    v-model="state.obj[comp.value].value"
-                                    :key="compKey"
-                                    :field="comp.field"
-                                    :show-error="state.showErrors"
-                                    :label="item.label"
-                                />
-                            </template>
-                        </fragment>
-                    </div>
-                </fragment>
-            </template>
+            <fragment
+                v-for="(section, sectionKey) in state.layout.editLayoutSections"
+                :key="sectionKey"
+                v-if="section.fieldCount > 0"
+            >
+                <h4 class="ui header">{{ section.heading }}</h4>
+                <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
+                    <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
+                        <template v-for="(comp, compKey) in item.layoutComponents">
+                            <ObjectFormField
+                                v-if="!comp.exclude"
+                                v-model="state.obj[comp.value].value"
+                                :key="compKey"
+                                :field="comp.field"
+                                :show-error="state.showErrors"
+                                :label="item.label"
+                            />
+                        </template>
+                    </fragment>
+                </div>
+            </fragment>
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
     </div>
@@ -61,8 +63,8 @@
 <script>
 /* eslint-disable no-unused-vars, max-len */
 
-import { computed, onMounted, reactive, ref, watch } from '@vue/composition-api'
-import { contextQuery, Field, loadLayout, loadSchema, saveObject, useConfigStore } from '../index'
+import { computed, reactive, ref, watch, onMounted } from '@vue/composition-api'
+import { loadSchema, useConfigStore, contextQuery, saveObject, Field, loadLayout } from '../index'
 import ObjectFormField from './ObjectFormField'
 import Dropdown from './Dropdown'
 
@@ -338,13 +340,16 @@ export default {
                     }
                 }
                 for (const field of state.fields) {
-                    state.obj[field.name] = ref(null)
+                    if (!state.obj[field.name]) {
+                        state.obj[field.name] = ref(null)
+                    }
                     if (props.obj) {
                         state.obj[field.name].value = props.obj[field.name]
                     }
                 }
             }
         )
+
         const validationError = computed(() => {
             const configStore = useConfigStore()
             const table = configStore.getCacheDict.value[props.objectType]
@@ -375,7 +380,7 @@ export default {
                 if (state.fields.length === 0) {
                     return
                 }
-                if (!props.id) {
+                if (!props.id && !props.obj) {
                     for (const field of state.fields) {
                         if (state.obj[field.name].value !== '') {
                             state.obj[field.name].value = null

@@ -1,6 +1,6 @@
 import { useConfigStore } from '../config'
 import { query } from './query'
-import { execBool } from '../utils/contextExec'
+import { execBool } from '../utils'
 
 export class Field {
     constructor(obj, objectType) {
