@@ -26,7 +26,8 @@
         <sui-form v-if="!state.needsRecordType && !validationError && !state.layout">
             <ObjectFormField
                 v-for="(field, key) in state.fields"
-                v-model="state.obj[field.name].value"
+                v-model="state.obj[field.name]"
+                @input="emitUpdate"
                 :key="key"
                 :field="field"
                 :show-error="state.showErrors"
@@ -35,9 +36,9 @@
         </sui-form>
         <sui-form v-if="!state.needsRecordType && !validationError && state.layout">
             <fragment
-                v-if="section.fieldCount > 0"
                 v-for="(section, sectionKey) in state.layout.editLayoutSections"
                 :key="sectionKey"
+                v-if="section.fieldCount > 0"
             >
                 <h4 class="ui header">{{ section.heading }}</h4>
                 <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
@@ -45,7 +46,8 @@
                         <template v-for="(comp, compKey) in item.layoutComponents">
                             <ObjectFormField
                                 v-if="!comp.exclude"
-                                v-model="state.obj[comp.value].value"
+                                v-model="state.obj[comp.value]"
+                                @input="emitUpdate"
                                 :key="compKey"
                                 :field="comp.field"
                                 :show-error="state.showErrors"
@@ -99,7 +101,7 @@ export default {
         recordType: {
             type: String
         },
-        obj: {
+        value: {
             type: Object
         },
         onSave: {
@@ -111,7 +113,7 @@ export default {
         }
     },
 
-    setup: function(props) {
+    setup: function(props, attrs) {
         const excludes = [
             'attributes',
             'Id',
@@ -160,7 +162,7 @@ export default {
             isValid: computed(() => {
                 let valid = true
                 for (const field of state.fields) {
-                    if (!field.valid(state.obj[field.name].value)) {
+                    if (!field.valid(state.obj[field.name])) {
                         valid = false
                     }
                 }
@@ -173,11 +175,11 @@ export default {
                 }
                 let valid = true
                 for (const field of state.fields) {
-                    result[field.name] = state.obj[field.name].value
-                    if (field.relationshipName && state.obj[field.name].value) {
+                    result[field.name] = state.obj[field.name]
+                    if (field.relationshipName && state.obj[field.name]) {
                         let found = false
                         for (const ref of field.references) {
-                            if (ref.value === state.obj[field.name].value) {
+                            if (ref.value === state.obj[field.name]) {
                                 result[field.relationshipName] = {
                                     Id: ref.value,
                                     Name: ref.text
@@ -187,7 +189,7 @@ export default {
                                 break
                             }
                         }
-                        if (!found) console.log('ref not found:' + field.name, state.obj[field.name].value)
+                        if (!found) console.log('ref not found:' + field.name, state.obj[field.name])
                     }
                     if (
                         !field.nillable &&
@@ -352,11 +354,8 @@ export default {
                     }
                 }
                 for (const field of state.fields) {
-                    if (!state.obj[field.name]) {
-                        state.obj[field.name] = ref(null)
-                    }
-                    if (props.obj) {
-                        state.obj[field.name].value = props.obj[field.name]
+                    if (props.value) {
+                        state.obj = props.value
                     }
                 }
             }
@@ -392,10 +391,10 @@ export default {
                 if (state.fields.length === 0) {
                     return
                 }
-                if (!props.id && !props.obj) {
+                if (!props.id && !props.value) {
                     for (const field of state.fields) {
-                        if (state.obj[field.name].value !== '') {
-                            state.obj[field.name].value = null
+                        if (state.obj[field.name] !== '') {
+                            state.obj[field.name] = null
                         }
                     }
                 }
@@ -410,9 +409,7 @@ export default {
                 const data = await contextQuery(q, { id: props.id })
                 name.value = data.Name
                 state.loadedObj = data[0]
-                for (const field of state.fields) {
-                    state.obj[field.name].value = data[0][field.name]
-                }
+                state.obj = data[0]
             }
         )
 
@@ -467,9 +464,14 @@ export default {
 
         const clear = () => {
             for (const field of state.fields) {
-                state.obj[field.name].value = null
+                state.obj[field.name] = null
             }
             state.showErrors = false
+        }
+
+        const emitUpdate = () => {
+            console.log('update', state.obj)
+            attrs.emit('input', state.obj)
         }
 
         return {
@@ -480,7 +482,8 @@ export default {
             validationError,
             validationErrorTitle,
             validationErrorDescription,
-            name
+            name,
+            emitUpdate
         }
     }
 }
