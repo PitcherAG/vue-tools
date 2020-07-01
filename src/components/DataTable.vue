@@ -166,7 +166,11 @@ function sortBy(data, fields, by, order) {
         return orderBy(
             data,
             item => {
-                return new Date(mapper(field.dataField, item))
+                const val = mapper(field.dataField, item)
+                if (!val) {
+                    return ''
+                }
+                return new Date(val.split('+')[0])
             },
             [order]
         )
