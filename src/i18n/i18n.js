@@ -54,7 +54,7 @@ export function trans(msgid, n = 0, placeholders) {
                 translated = translated[index]
             }
         } else {
-            console.warn(`Untranslated ${language} key found: ${msgid}`)
+            // console.warn(`Untranslated ${language} key found: ${msgid}`)
         }
     } else {
         console.warn(`No translations found for ${language}`)
