@@ -26,7 +26,7 @@ function hasCached(query) {
     )
 }
 
-function query(query, db = null) {
+async function query(query, db = null) {
     return new Promise((resolve, reject) => {
         if (hasCached(query) && cacheEnabled) {
             console.log('cache hit')
@@ -42,6 +42,7 @@ function query(query, db = null) {
             .then(e => {
                 const result = []
                 if (e.error) {
+                    console.error(query)
                     reject(new Error(e.error))
                 }
                 for (let i = 0; i < e.results.length; i++) {

@@ -1,16 +1,16 @@
 import { useConfigStore } from '../config'
 import { query } from './query'
-import { execBool } from '../utils'
+import { execBool } from '../utils/contextExec'
+import { PLATFORM } from '../platform'
 
 export class Field {
     constructor(obj, objectType) {
-        for (const a in obj) {
-            this[a] = obj[a]
-        }
-        const self = this
-        this.parentObjectType = objectType
         this.referenceTo = []
         this.references = []
+        Object.assign(this, obj)
+        const self = this
+        this.parentObjectType = objectType
+
         this.required = !obj.nillable || obj.nameField
         this.valid = function(value) {
             if ((self.type === 'boolean' && value === true) || value === false) {
@@ -51,8 +51,13 @@ export class Field {
         if (targetTable.fieldTypes && targetTable.fieldTypes['Name']) {
             q += 'Name'
         } else if (reference === 'Account') {
-            q += 'account_name'
-            nameField = 'account_name'
+            if (PLATFORM === 'ANDROID') {
+                q += 'account_name'
+                nameField = 'account_name'
+            } else {
+                q += 'accountName'
+                nameField = 'accountName'
+            }
         } else if (reference === 'Contact') {
             q += 'name'
             nameField = 'name'
