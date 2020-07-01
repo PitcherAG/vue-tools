@@ -27,6 +27,7 @@ function hasCached(query) {
 }
 
 async function query(query, db = null) {
+    console.log(query)
     return new Promise((resolve, reject) => {
         if (hasCached(query) && cacheEnabled) {
             console.log('cache hit')
