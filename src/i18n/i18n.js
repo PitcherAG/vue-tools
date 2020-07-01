@@ -2,10 +2,11 @@ import Component from './component'
 import Directive from './directive'
 import { getTranslationIndex } from './plurals'
 import { renderSimpleContext } from '../utils'
-import Vue from 'vue'
-import { fetch as fetchPolyfill } from 'whatwg-fetch'
-import VueCompositionApi from '@vue/composition-api'
 import { createStore } from '..'
+
+if (!window.fetch) {
+    import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch')
+}
 
 const defaultOptions = {
     availableLanguages: { en: 'English' },
@@ -19,7 +20,7 @@ export const useI18nStore = () => {
         state: defaultOptions,
         setLanguage: async function(lang, load = true, dir = 'translations', app = 'app') {
             if (!this.state.availableLanguages[lang]) {
-                throw new Error('invalid language: '+lang)
+                throw new Error('invalid language: ' + lang)
             }
 
             if (load && lang != 'en') {
@@ -98,6 +99,7 @@ export function TranslationPlugin(_Vue, options = {}) {
     const store = useI18nStore()
     Object.assign(options, store.state)
     // Makes <translate> available as a global component.
+    // eslint-disable-next-line vue/component-definition-name-casing
     _Vue.component('translate', Component)
 
     // An option to support translation with HTML content: `v-translate`.

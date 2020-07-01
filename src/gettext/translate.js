@@ -7,15 +7,17 @@ const gettextParser = require('gettext-parser')
 const { Translate } = require('@google-cloud/translate').v2
 
 function formatForTranslation(str) {
-    return str.replace(/\\n/g, '<br>')
-            .replace(/{\S+}/, match => `<span class="notranslate">${match}</span>`)
-            .replace('%s', '{0}')
+    return str
+        .replace(/\\n/g, '<br>')
+        .replace(/{\S+}/, match => `<span class="notranslate">${match}</span>`)
+        .replace('%s', '{0}')
 }
 
 function formatFromTranslation(str) {
-    return str.replace(/<br>/g, '\n')
-            .replace(/<span class="notranslate">({\S+})<\/span>/, (match, label) => label)
-            .replace('{0}', '%s')
+    return str
+        .replace(/<br>/g, '\n')
+        .replace(/<span class="notranslate">({\S+})<\/span>/, (match, label) => label)
+        .replace('{0}', '%s')
 }
 
 async function main() {
@@ -72,7 +74,7 @@ async function main() {
 
         if (translateMsgIDs.length) {
             const translateInput = translateMsgIDs.map(formatForTranslation)
-            let [translations] = await translate.translate(translateInput, code)
+            const [translations] = await translate.translate(translateInput, code)
 
             translations.forEach((t, i) => {
                 const item = poTranslations[translateMsgIDs[i]]

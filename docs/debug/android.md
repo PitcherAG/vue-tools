@@ -34,8 +34,7 @@ And place it in your header of your `public/index.html` file.
 - open this url: `chrome://inspect/#devices` and connect to your webview
 - open console and enter: `window.location = "192.168.0.2:8000"` (replace 192.168.0.2 with your IP address)
 
-This will no open the version you `serve` and the `devtools` should be able to pick up your components tree 
-and your pinia store.
+This will no open the version you `serve` and the `devtools` should be able to pick up your components tree.
 
 To download the DB from the simulator run:
 
