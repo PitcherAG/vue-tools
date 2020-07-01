@@ -34,25 +34,27 @@
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
         <sui-form v-if="!state.needsRecordType && !validationError && state.layout">
-            <template v-if="section.fieldCount > 0">
-                <fragment v-for="(section, sectionKey) in state.layout.editLayoutSections" :key="sectionKey">
-                    <h4 class="ui header">{{ section.heading }}</h4>
-                    <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
-                        <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
-                            <template v-for="(comp, compKey) in item.layoutComponents">
-                                <ObjectFormField
-                                    v-if="!comp.exclude"
-                                    v-model="state.obj[comp.value].value"
-                                    :key="compKey"
-                                    :field="comp.field"
-                                    :show-error="state.showErrors"
-                                    :label="item.label"
-                                />
-                            </template>
-                        </fragment>
-                    </div>
-                </fragment>
-            </template>
+            <fragment
+                v-if="section.fieldCount > 0"
+                v-for="(section, sectionKey) in state.layout.editLayoutSections"
+                :key="sectionKey"
+            >
+                <h4 class="ui header">{{ section.heading }}</h4>
+                <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
+                    <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
+                        <template v-for="(comp, compKey) in item.layoutComponents">
+                            <ObjectFormField
+                                v-if="!comp.exclude"
+                                v-model="state.obj[comp.value].value"
+                                :key="compKey"
+                                :field="comp.field"
+                                :show-error="state.showErrors"
+                                :label="item.label"
+                            />
+                        </template>
+                    </fragment>
+                </div>
+            </fragment>
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
     </div>
