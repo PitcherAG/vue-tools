@@ -64,7 +64,7 @@
         <Checkbox v-if="typ === 'boolean'" :value="value" toggle @input="v => emitInput(v)" />
     </sui-form-field>
     <!-- not updateable -->
-    <sui-form-field v-else>
+    <sui-form-field v-else :style="{ minHeight: !value ? '60px' : undefined }">
         <label>{{ label || field.label }}</label>
         <!-- bool -->
         <template v-if="typ === 'boolean'">
