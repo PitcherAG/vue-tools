@@ -81,13 +81,13 @@
         props: {
             field: { required: true },
             index: {
-                type: Number
+                type: Number,
             },
             showError: {},
             value: {},
             label: {
-                type: String
-            }
+                type: String,
+            },
         },
         setup(props, attrs) {
             const typ = ref()
@@ -114,7 +114,7 @@
             }
 
             return { typ, picklist, error, log }
-        }
+        },
     }
 </script>
 

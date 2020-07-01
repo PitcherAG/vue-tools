@@ -2,7 +2,7 @@
     <div>
         <div class="ui red negative segment transition visible" v-if="validationError">
             <div class="ui red header">
-                <i class="disabled warning sign icon" />
+                <i class="disabled warning sign icon"/>
                 <div class="content">
                     {{ validationErrorTitle }}
                     <div class="sub header">
@@ -34,7 +34,8 @@
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
         <sui-form v-if="!state.needsRecordType && !validationError && state.layout">
-            <fragment v-for="(section, sectionKey) in state.layout.editLayoutSections" :key="sectionKey" v-if="section.fieldCount>0">
+            <fragment v-for="(section, sectionKey) in state.layout.editLayoutSections" :key="sectionKey"
+                      v-if="section.fieldCount>0">
                 <h4 class="ui header">{{ section.heading }}</h4>
                 <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
                     <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
@@ -59,8 +60,8 @@
 <script>
     /* eslint-disable no-unused-vars, max-len */
 
-    import { computed, reactive, ref, watch, onMounted } from '@vue/composition-api'
-    import { loadSchema, useConfigStore, contextQuery, saveObject, Field, loadLayout } from '../index'
+    import { computed, onMounted, reactive, ref, watch } from '@vue/composition-api'
+    import { contextQuery, Field, loadLayout, loadSchema, saveObject, useConfigStore } from '../index'
     import ObjectFormField from './ObjectFormField'
     import Dropdown from './Dropdown'
 
@@ -69,42 +70,42 @@
         props: {
             objectType: {
                 require: true,
-                type: String
+                type: String,
             },
             fields: {
                 default: () => [],
-                type: Array
+                type: Array,
             },
             excludeFields: {
                 default: () => [],
-                type: Array
+                type: Array,
             },
-            readOnlyFields:{
+            readOnlyFields: {
                 default: () => [],
-                type: Array
+                type: Array,
             },
-            customReferences:{
-                type:Object
+            customReferences: {
+                type: Object,
             },
             hasSave: {
-                type: Boolean
+                type: Boolean,
             },
             id: {
-                type: String
+                type: String,
             },
             recordType: {
-                type: String
+                type: String,
             },
             obj: {
-                type: Object
+                type: Object,
             },
             onSave: {
-                type: Function
+                type: Function,
             },
             ignoreExternalIdValidation: {
                 type: Boolean,
-                default: false
-            }
+                default: false,
+            },
         },
 
         setup: function(props) {
@@ -118,7 +119,7 @@
                 'LastActivityDate',
                 'LastModifiedById',
                 'LastModifiedDate',
-                'SystemModstamp'
+                'SystemModstamp',
             ]
             const state = reactive({
                 fields: [],
@@ -165,7 +166,7 @@
                 showErrors: true,
                 result: computed(() => {
                     const result = {
-                        ignoreFields: []
+                        ignoreFields: [],
                     }
                     let valid = true
                     for (const field of state.fields) {
@@ -176,7 +177,7 @@
                                 if (ref.value === state.obj[field.name].value) {
                                     result[field.relationshipName] = {
                                         Id: ref.value,
-                                        Name: ref.text
+                                        Name: ref.text,
                                     }
                                     result.ignoreFields.push(field.relationshipName)
                                     found = true
@@ -193,7 +194,7 @@
                         }
                     }
                     return result
-                })
+                }),
             })
 
             const name = ref()
@@ -235,7 +236,7 @@
                                 for (const field of state.schema.fields) {
                                     if (field.name === field_name.trim()) {
                                         const f = new Field(field, props.objectType)
-                                        if(props.readOnlyFields.includes(f.name) ){
+                                        if (props.readOnlyFields.includes(f.name)) {
                                             f.updateable = false
                                         }
                                         if (f.calculated || !f.updateable) {
@@ -257,7 +258,7 @@
                             layout = await loadLayout(props.objectType, state.recordTypeId)
                         } catch (e) {
                             console.warn(
-                                'layout support for this env not found. Cache table needs not only schema but layout describes as well'
+                                'layout support for this env not found. Cache table needs not only schema but layout describes as well',
                             )
                         }
 
@@ -269,17 +270,17 @@
                                 for (const row of section.layoutRows) {
                                     for (const row of section.layoutRows) {
                                         for (const item of row.layoutItems) {
-                                            if(item.layoutComponents) {
+                                            if (item.layoutComponents) {
                                                 for (const comp of item.layoutComponents) {
                                                     if (excludeFields.indexOf(comp.value) === -1) {
                                                         const field = new Field(comp.details)
-                                                        if(props.readOnlyFields.includes(field.name) ){
+                                                        if (props.readOnlyFields.includes(field.name)) {
                                                             field.updateable = false
                                                         }
                                                         fields.push(field)
                                                         comp.field = field
                                                         comp.exclude = false
-                                                        fieldCount ++
+                                                        fieldCount++
                                                     } else {
                                                         comp.exclude = true
                                                     }
@@ -308,7 +309,7 @@
                                         console.warn('removed field')
                                         continue
                                     }
-                                    if(props.readOnlyFields.includes(f.name) ){
+                                    if (props.readOnlyFields.includes(f.name)) {
                                         f.updateable = false
                                     }
                                     if (f.nillable && f.name !== 'Name') {
@@ -341,7 +342,7 @@
                             state.obj[field.name].value = props.obj[field.name]
                         }
                     }
-                }
+                },
             )
             const validationError = computed(() => {
                 const configStore = useConfigStore()
@@ -350,14 +351,14 @@
                     if (!table.externalField && !props.id) {
                         validationErrorTitle.value = $gettext('You can not add an object of this type.')
                         validationErrorDescription.value = $gettext(
-                            'This Object does not have an external ID field in the config.json.'
+                            'This Object does not have an external ID field in the config.json.',
                         )
                         return true
                     }
                     if (props.id && props.id.startsWith('PIT_') && !table.externalField) {
                         validationErrorTitle.value = $gettext('This Object is not editable. You need to sync first.')
                         validationErrorDescription.value = $gettext(
-                            'This Object does not have an external ID field in the config.json. Please provide one or sync first before editing.'
+                            'This Object does not have an external ID field in the config.json. Please provide one or sync first before editing.',
                         )
                         return true
                     }
@@ -394,7 +395,7 @@
                     for (const field of state.fields) {
                         state.obj[field.name].value = data[0][field.name]
                     }
-                }
+                },
             )
 
             const validate = () => {
@@ -420,14 +421,14 @@
                 }
                 const obj = {
                     ...state.result,
-                    ...extra
+                    ...extra,
                 }
                 if (state.recordTypeId && state.recordTypes.length > 1) {
                     for (const t of state.recordTypes) {
                         if (t.recordTypeId === state.recordTypeId) {
                             obj.RecordType = {
                                 Id: t.recordTypeId,
-                                Name: t.name
+                                Name: t.name,
                             }
                             obj.RecordTypeId = state.recordTypeId
                             obj.ignoreFields.push('RecordType')
@@ -461,9 +462,9 @@
                 validationError,
                 validationErrorTitle,
                 validationErrorDescription,
-                name
+                name,
             }
-        }
+        },
     }
 </script>
 
