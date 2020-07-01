@@ -4,7 +4,7 @@ import { execBool } from '../utils/contextExec'
 import { PLATFORM } from '../platform'
 
 export class Field {
-    constructor(obj, objectType) {
+    constructor(obj, objectType, load = true) {
         this.referenceTo = []
         this.references = []
         Object.assign(this, obj)
@@ -22,7 +22,9 @@ export class Field {
             return true
         }
         this.errors = []
-        this.load_refs()
+        if (load) {
+            this.load_refs()
+        }
     }
 
     load_refs() {
@@ -82,5 +84,13 @@ export class Field {
             result.push({ value: obj.Id, text: obj[nameField] })
         }
         this.references = this.references.concat(result)
+    }
+
+    loadExternalReferences(data, nameField = 'Name') {
+        const result = []
+        for (const obj of data) {
+            result.push({ value: obj.Id, text: obj[nameField] })
+        }
+        this.references = result
     }
 }
