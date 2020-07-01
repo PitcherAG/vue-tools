@@ -36,7 +36,7 @@ export async function getField(objectName, field_name) {
     throw new Error('field not found:' + field_name)
 }
 
-export async function labelToValue(objectName, fieldName, label){
+export async function labelToValue(objectName, fieldName, label) {
     const schema = await loadSchema(objectName)
     for (const field of schema.fields) {
         if (field.name === fieldName.trim()) {

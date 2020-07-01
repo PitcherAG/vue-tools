@@ -1,6 +1,6 @@
 // This is required to be able to use this package as an external package.
 // Otherwise it causes to throw error in the packages that are using this package as a dependency
-export * from './store/store'
+export * from './store'
 
 export * from './db/contextQuery.js'
 export * from './db/query.js'
