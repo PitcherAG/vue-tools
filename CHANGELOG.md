@@ -5,6 +5,9 @@
 - support package translations
 - support multiple categories
 
+### Fixed
+- store function binding
+
 ## 1.3.6
 
 ### Added
