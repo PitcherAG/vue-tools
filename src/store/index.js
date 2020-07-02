@@ -3,8 +3,13 @@ import Vue from 'vue'
 const stores = {}
 
 function transform(obj) {
-    const store = Vue.observable(obj)
-    stores[obj.id] = store
+    for (const prop in obj) {
+        if (typeof obj[prop] == 'function') {
+            obj[prop] = obj[prop].bind(obj)
+        }
+    }
+
+    stores[obj.id] = Vue.observable(obj)
 }
 
 export function createStore(obj) {
