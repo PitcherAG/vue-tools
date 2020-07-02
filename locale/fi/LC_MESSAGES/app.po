@@ -1,0 +1,197 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: fi\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "OLEN"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "huhtikuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "huhtikuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "elokuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "elokuu"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "Päivämäärä"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Treffiaika"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "joulukuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "joulukuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "helmikuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "helmikuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "tammikuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "tammikuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "heinäkuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "heinäkuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "kesäkuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "kesäkuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "meri"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "maaliskuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "saattaa"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "marraskuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "marraskuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Nyt"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "lokakuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "lokakuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "pääministeri"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "Tallentaa"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "valita"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "Valitse tietuetyyppi"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "syyskuu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "syyskuu"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "Tällä objektilla ei ole ulkoista tunnuskenttää config.json."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"Tällä objektilla ei ole ulkoista tunnuskenttää config.json. Anna yksi tai "
+"synkronoi ensin ennen muokkaamista."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "Tätä objektia ei voi muokata. Sinun on synkronoitava ensin."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Tänään"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "Et voi lisätä tämän tyyppistä objektia."

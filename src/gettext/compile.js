@@ -1,31 +1,72 @@
-#!/usr/bin/env node
-
-const config = require('./config')
+const _ = require('lodash')
 const fs = require('fs')
 const gettextParser = require('gettext-parser')
+const path = require('path')
 
-if (!fs.existsSync(config.jsonBaseDir)) {
-    fs.mkdirSync(config.jsonBaseDir)
+function compileConfig(config) {
+    const groupedByCategory = _.groupBy(config.translations, 'category')
+    const outputRoot = config.output && config.output.json ? config.output.json : 'public/translations'
+
+    for (const c in groupedByCategory) {
+        console.log(`[config-gettext-compile] compiling ${c}`)
+        const translations = groupedByCategory[c]
+
+        for (const l in config.languages) {
+            const data = {}
+            const output = path.join(outputRoot, l, `${c}.json`)
+
+            for (const t of translations) {
+                Object.assign(data, getTranslationData(path.join(getInputDirname(config, t), l, 'LC_MESSAGES', `${getCategory(t)}.po`)))
+            }
+
+            if (!fs.existsSync(path.dirname(output))) {
+                fs.mkdirSync(path.dirname(output), {recursive: true})
+            }
+
+            fs.writeFileSync(output, JSON.stringify({[l]: data}))
+        }
+    }
 }
 
-for (const code of Object.keys(config.availableLanguages)) {
-    if (!fs.existsSync(`${config.jsonBaseDir}/${code}`)) {
-        fs.mkdirSync(`${config.jsonBaseDir}/${code}`)
+function getTranslationData(path) {
+    const data = {}
+    const input = fs.readFileSync(path)
+    const po = gettextParser.po.parse(input)
+
+    for (const msgid in po.translations['']) {
+        if (msgid && po.translations[''][msgid].msgstr[0]) {
+            data[msgid] = po.translations[''][msgid].msgstr[0]
+        }
     }
 
-    const poInput = fs.readFileSync(`${config.poBaseDir}/${code}/LC_MESSAGES/${config.category}.po`)
-    const po = gettextParser.po.parse(poInput)
-    const poTranslations = po.translations['']
+    return data
+}
 
-    const data = Object.keys(poTranslations)
-        .filter(i => i)
-        .reduce(
-            (map, msgid) => ({
-                ...map,
-                [msgid]: poTranslations[msgid].msgstr[0]
-            }),
-            {}
-        )
+function getCategory(translation) {
+    if (translation.type == 'package' && translation.packageCategory) {
+        return translation.packageCategory
+    } else {
+        return translation.category
+    }
+}
 
-    fs.writeFileSync(`${config.jsonBaseDir}/${code}/${config.category}.json`, JSON.stringify(data, null, '  '))
+function getInputDirname(config, translation) {
+    if (translation.type == 'package') {
+        const packageConfig = require(path.join(process.cwd(), 'node_modules', translation.package, 'gettext.config.js'))
+        return path.join('node_modules', translation.package, getInputDirnameDefault(packageConfig))
+    } else {
+        return getInputDirnameDefault(config)
+    }
+}
+
+function getInputDirnameDefault(config) {
+    if (config.output && config.output.po) {
+        return config.output.po
+    } else {
+        return 'locale'
+    }
+}
+
+module.exports = {
+    compileConfig,
 }

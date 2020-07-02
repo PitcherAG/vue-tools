@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "pitcher-translate",
+  "private_key_id": "5b4a043b55e62f64e275c957eb295b30e74441a3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCs7JISgfklZocs\n3Thea10fzpxTDOAE0l3D5RgpcNIIUdqwTifxt/tlI7rrtmeNkoLzntrzW5EabMLA\nJpsEXh7oX7NhGqGQQ2lUIRCq6F4o8yBKT12kzFVz+VsA0PSWNNcSSN2gpFk//2Kt\nOAbbAlT7Yj6SAhNv8HYlZFYorZH5a2rXT0QpqmyQULtiEuz12kaffBx0bHKvNtv3\n28B+lnB4HrMS5tV5nQd0ZJErKY8th5RmlGuqxdxeL6k7ABdrfsLt6s/K8n9SMNil\nd4Pi6EBoBGPpwpW7YWIrwpSupE7Hq2Rki5ze4hIl1qMln3kZcOxqoSJlgcnZ/aNB\ncsGTy2MjAgMBAAECggEANIROYoeNopGuSO5QgcBqkk/dww08dcprxqQrf95vMy6k\n03mRAQSmuVMuIAsQDPtrgNCEX3c2LMfOJ6wx1RQ+n8T8xedgHN+UPAQkuzsB6b7Y\n1iifYH7cDvIydJ+BQKMAlGGDyZdQMbL+hWvoDRh6tbPjG9W8kHj/cKC11/nKxOwe\nGhQKSCDR5YJx+NpYByTnPvhMLVT1jb9wlpM9Nc51057UfTLFmMpWsshJK5mvsYXz\ngngUa+BH5UDOUvTa2RqWOKAKWuY6iBS4eRXVqK8u7ay1vg5a+lTMx27GItxDLoP6\n+eE/IJLW+fIFyO6wg9+Luq+foSuFd2xw/9MwwbdT4QKBgQDdZYRBPDPxpqxqnjoX\ngMLWzBYAqMdV13ajJC02z6xNjRuLHciQdV5xXqWIP9jQreCT7bOG8GEEO0CjSQVo\n/pyG+IVK9zU/vvWT8PZdDac4stomSrggwbA9AOXHUbjTcQxsEj00sjLsvxIw3Yj+\naUuR57CG1XVWXdF5zbFQuem6wwKBgQDH85UM61OPL3p7XD7YJvLxMASbGJcqTN3O\njCh5EJzTyH0RVTAjO8vqK0pWhh5abdsXv0Iu+ZOBHIAEJ26AEizFqDU9ym0RMMg1\ny0XXcrnrTbukE7YZxkdcGSnj22Mpp37aglFGa55fkqcZQebH7iwjEQxY2Y9O1ddv\nIQL1h+dwIQKBgQCVcOm10vpI+jVVflo99RcPQBD1/vcWVWrqMggnAEUQz9ewrrjr\n8Z1/LuDTOC2Upll54LAWvHjwD0LRNP/m4D4tyODIOleCINbJNpRFOWsPlYI06Kii\ny7q3Yry3Ls1wQ9WbuTABOuuu7EZOH6tR9ycgZGC+kqUyV/+GlTZEBEnlWwKBgQC+\n/BSUQHqRu6HcDqIgSCOo6Fqd4gERcFY0oX9PE+UYDNoZIitWnBkL1Mmul3CKo3+v\n0QlgYRbZLeXBEgDj53hIW4BvQtimoNe7Oiu9vGGFNbxS3lkDiXZDq+1tLPIsqUXr\nZKpI/yZI14UwBNhwgzg5TmFixHuzq2GZTgjLiUIwwQKBgQCOa2ky9KyQiv7EI5De\nZJMirXifTxODOALIWjGJ6UFW20BgI07p+p/1M4kaKuDAxAKdx4Q6AXapBR8BCfHl\nkV5NhbmDiGaA1of9DMoBhZ139yvKZDbebqALv1ezFaw/gSTq9FpPCxKcTKTDgI7w\nwskHe2Q6TrVbf5zA0Kdip8cs5g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "pitcher-js-sdk@pitcher-translate.iam.gserviceaccount.com",
+  "client_id": "110784209248163040490",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/pitcher-js-sdk%40pitcher-translate.iam.gserviceaccount.com"
+}

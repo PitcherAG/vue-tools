@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: hr\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "travnja"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "travanj"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "kolovoz"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "kolovoz"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Datum vrijeme"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "prosinca"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "prosinac"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "veljače"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "veljača"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "Jan"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "siječanj"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "srpnja"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "srpanj"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "lipnja"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "lipanj"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "More"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "ožujak"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "svibanj"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "studeni"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "studeni"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Sada"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "listopada"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "listopad"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "rujna"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "rujan"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Danas"
