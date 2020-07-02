@@ -1,4 +1,8 @@
 import { formatDate, useI18nStore } from '@/'
+import { createLocalVue } from '@vue/test-utils'
+import CompositionApi from '@vue/composition-api'
+const localVue = createLocalVue()
+localVue.use(CompositionApi)
 
 jest.mock('@/i18n/i18n')
 

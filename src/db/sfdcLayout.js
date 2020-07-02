@@ -1,10 +1,16 @@
-import { createStore } from 'pinia'
 import { getLayout } from '../app'
+import Vue from 'vue'
 
-export const useLayoutStore = createStore({
+const s = {
     id: 'layout',
-    state: () => ({})
-})
+    state: {}
+}
+
+const store = Vue.observable(s)
+
+export const useLayoutStore = () => {
+    return store
+}
 
 export async function loadLayout(objectName, objectTypeId) {
     const store = useLayoutStore()
@@ -12,10 +18,8 @@ export async function loadLayout(objectName, objectTypeId) {
         return store.state[objectTypeId]
     } else {
         const result = await getLayout(objectName, objectTypeId)
-        const patch = {}
-        patch[objectTypeId] = new Schema(result, objectName)
-        store.patch(patch)
-        return result
+        store.state[objectTypeId] = new Schema(result, objectName)
+        return store.state[objectTypeId]
     }
 }
 

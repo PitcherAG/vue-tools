@@ -91,14 +91,10 @@
 </template>
 
 <script>
-import { createStore } from 'pinia'
 import { defineComponent, reactive, toRefs, computed, onMounted, onUnmounted } from '@vue/composition-api'
+import Vue from 'vue'
 
-// Global store for numpad component
-const useNumpadStore = createStore({
-    id: 'numpad',
-    state: () => ({ groups: {} })
-})
+export const numpadStore = Vue.observable({ groups: {} })
 
 const parsePxStyle = val => {
     return val.toString().includes('%') || val.toString().includes('px') ? val : `${parseInt(val)}px`
@@ -174,7 +170,6 @@ export default defineComponent({
         }
     },
     setup(props, ctx) {
-        const { state } = useNumpadStore()
         const localState = reactive({
             numpadIsVisible: false,
             selfIndex: null,
@@ -218,15 +213,15 @@ export default defineComponent({
         }
 
         onMounted(() => {
-            if (!state.groups[props.group]) {
-                state.groups[props.group] = []
+            if (!numpadStore.groups[props.group]) {
+                numpadStore.groups[props.group] = []
             }
-            localState.groupIndex = Object.keys(state.groups).indexOf(props.group)
+            localState.groupIndex = Object.keys(numpadStore.groups).indexOf(props.group)
             // save item index in local state
-            localState.selfIndex = state.groups[props.group].length
+            localState.selfIndex = numpadStore.groups[props.group].length
             // push item to global state
-            state.groups[props.group].push({
-                id: `${props.group}_${state.groups[props.group].length}`,
+            numpadStore.groups[props.group].push({
+                id: `${props.group}_${numpadStore.groups[props.group].length}`,
                 input: ctx.refs.input
             })
 
@@ -326,7 +321,7 @@ export default defineComponent({
         function jumpNextSibling() {
             // destruct props
             const { selfIndex } = localState
-            const { [props.group]: numpadGroup } = state.groups
+            const { [props.group]: numpadGroup } = numpadStore.groups
 
             // check if the component is last in the group
             const isLast = selfIndex === numpadGroup.length - 1
@@ -344,7 +339,7 @@ export default defineComponent({
             // destruct
             const { groupIndex } = localState
             // map groups as array
-            const groups = Object.keys(state.groups).map(k => state.groups[k])
+            const groups = Object.keys(numpadStore.groups).map(k => numpadStore.groups[k])
             // if component group is last, go to 0, otherwise next group
             const nextIndex = groupIndex === groups.length - 1 ? 0 : groupIndex + 1
             groups[nextIndex][0].input.focus()

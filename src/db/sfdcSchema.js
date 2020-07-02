@@ -1,11 +1,18 @@
-import { createStore } from 'pinia'
 import { getSchema } from '../app'
 import { Field } from './sfdcField'
 
-export const useSchemaStore = createStore({
+import Vue from 'vue'
+
+const s = {
     id: 'schema',
-    state: () => ({})
-})
+    state: {}
+}
+
+const store = Vue.observable(s)
+
+export const useSchemaStore = () => {
+    return store
+}
 
 export async function loadSchema(objectName) {
     const store = useSchemaStore()
@@ -13,10 +20,8 @@ export async function loadSchema(objectName) {
         return store.state[objectName]
     } else {
         const result = await getSchema(objectName)
-        const patch = {}
-        patch[objectName] = result
-        store.patch(patch)
-        return result
+        store.state[objectName] = result
+        return store.state[objectName]
     }
 }
 
@@ -29,4 +34,13 @@ export async function getField(objectName, field_name) {
         }
     }
     throw new Error('field not found:' + field_name)
+}
+
+export async function labelToValue(objectName, fieldName, label) {
+    const schema = await loadSchema(objectName)
+    for (const field of schema.fields) {
+        if (field.name === fieldName.trim()) {
+            debugger
+        }
+    }
 }

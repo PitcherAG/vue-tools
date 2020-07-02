@@ -2,7 +2,7 @@
     <div class="ui calendar" ref="calendar">
         <div class="ui input left icon">
             <i class="calendar icon" />
-            <input ref="input" type="text" :placeholder="placeholder" v-model="value" />
+            <input ref="input" type="text" :placeholder="placeholder" :value="value" />
         </div>
     </div>
 </template>

@@ -1,6 +1,11 @@
 import { fireEvent } from '@/event'
 import { openLink } from '@/utils'
 import { getFilesWithKeyword } from '@/files'
+import { createLocalVue } from '@vue/test-utils'
+import CompositionApi from '@vue/composition-api'
+
+const localVue = createLocalVue()
+localVue.use(CompositionApi)
 
 jest.mock('@/event')
 jest.mock('@/files')

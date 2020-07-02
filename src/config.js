@@ -1,39 +1,41 @@
 import { fireEvent } from './event'
-import { createStore } from 'pinia'
 import { PLATFORM } from './platform'
+import { computed } from '@vue/composition-api'
+import { createStore } from './store'
 
-export const useConfigStore = createStore({
-    id: 'config',
-    state: () => ({
-        customCaches: null
-    }),
-    getters: {
-        getTableDict: state => {
+export function useConfigStore() {
+    const s = {
+        id: 'config',
+        state: {
+            customCaches: null
+        },
+        getTableDict: computed(() => {
             const d = {}
-            if (!state.customCaches) {
+            if (!s.state.customCaches) {
                 return d
             }
-            for (let i = 0; i < state.customCaches.length; i++) {
-                const table = state.customCaches[i]
+            for (let i = 0; i < s.state.customCaches.length; i++) {
+                const table = s.state.customCaches[i]
                 d[table.sfObjectName] = table.tableToCache
                 d[table.objectName] = table.tableToCache
             }
             return d
-        },
-        getCacheDict: state => {
+        }),
+        getCacheDict: computed(() => {
             const d = {}
-            if (!state.customCaches) {
+            if (!s.state.customCaches) {
                 return d
             }
-            for (let i = 0; i < state.customCaches.length; i++) {
-                const table = state.customCaches[i]
+            for (let i = 0; i < s.state.customCaches.length; i++) {
+                const table = s.state.customCaches[i]
                 d[table.sfObjectName] = table
                 d[table.objectName] = table
             }
             return d
-        }
+        })
     }
-})
+    return createStore(s)
+}
 
 export async function loadConfig() {
     const store = useConfigStore()
@@ -118,7 +120,8 @@ export async function loadConfig() {
     } else {
         throw new Error('platform not supported:' + PLATFORM)
     }
-
-    store.patch(result)
-    return result
+    for (const a in result) {
+        store.state[a] = result[a]
+    }
+    return store.state
 }

@@ -1,14 +1,13 @@
 import looseEqual from './looseEqual'
-import {trans, useI18nStore} from './i18n'
-import {uid} from '../utils/uid'
-
+import { trans, useI18nStore } from './i18n'
+import { uid } from '../utils/uid'
 
 const updateTranslation = (el, binding, vnode) => {
-    let attrs = vnode.data.attrs || {}
-    let msgid = el.dataset.msgid
-    let translateN = attrs['translate-n']
-    let translatePlural = attrs['translate-plural']
-    let isPlural = translateN !== undefined && translatePlural !== undefined
+    const attrs = vnode.data.attrs || {}
+    const msgid = el.dataset.msgid
+    const translateN = attrs['translate-n']
+    const translatePlural = attrs['translate-plural']
+    const isPlural = translateN !== undefined && translatePlural !== undefined
     let context = vnode.context
 
     if (!isPlural && (translateN || translatePlural)) {
@@ -16,16 +15,17 @@ const updateTranslation = (el, binding, vnode) => {
     }
 
     if (attrs['translate-params']) {
-        console.warn(`\`translate-params\` is required as an expression for v-translate directive. Please change to \`v-translate='params'\`: ${msgid}`)
+        console.warn(
+            // eslint-disable-next-line max-len
+            `\`translate-params\` is required as an expression for v-translate directive. Please change to \`v-translate='params'\`: ${msgid}`
+        )
     }
 
     if (binding.value && typeof binding.value === 'object') {
         context = Object.assign({}, vnode.context, binding.value)
     }
 
-    el.innerHTML = isPlural
-            ? trans(translatePlural, translateN, context)
-            : trans(msgid, 0, context)
+    el.innerHTML = isPlural ? trans(translatePlural, translateN, context) : trans(msgid, 0, context)
 }
 
 /**
@@ -82,5 +82,5 @@ export default {
         if (doUpdate) {
             updateTranslation(el, binding, vnode)
         }
-    },
+    }
 }

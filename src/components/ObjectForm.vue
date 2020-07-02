@@ -17,9 +17,9 @@
                 <Dropdown
                     :default-text="$gettext('Select Record Type')"
                     v-model="state.recordTypeSaved"
-                    :options="state.recordTypes"
-                    text-field="name"
-                    value-field="recordTypeId"
+                    :items="state.recordTypes"
+                    item-text="name"
+                    item-value="recordTypeId"
                 />
             </sui-form-field>
         </sui-form>
@@ -59,8 +59,8 @@
 <script>
 /* eslint-disable no-unused-vars, max-len */
 
-import { computed, reactive, ref, watch } from '@vue/composition-api'
-import { loadSchema, useConfigStore, contextQuery, saveObject, Field, loadLayout } from '../utils'
+import { computed, reactive, ref, watch, onMounted } from '@vue/composition-api'
+import { loadSchema, useConfigStore, contextQuery, saveObject, Field, loadLayout } from '../index'
 import ObjectFormField from './ObjectFormField'
 import Dropdown from './Dropdown'
 
@@ -93,6 +93,10 @@ export default {
         },
         onSave: {
             type: Function
+        },
+        ignoreExternalIdValidation: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -187,16 +191,18 @@ export default {
 
         const name = ref()
 
-        watch(
-            () => [props.objectType],
-            async () => {
-                if (!props.objectType) {
-                    return
-                }
-                const schema = await loadSchema(props.objectType)
-                state.schema = schema
+        const initSchema = async () => {
+            if (!props.objectType) {
+                return
             }
-        )
+            const schema = await loadSchema(props.objectType)
+            state.schema = schema
+        }
+        onMounted(async () => {
+            initSchema()
+        })
+
+        watch(() => [props.objectType], initSchema)
 
         watch(
             () => [props.objectType, state.recordTypeId, state.schema],
@@ -319,19 +325,21 @@ export default {
         const validationError = computed(() => {
             const configStore = useConfigStore()
             const table = configStore.getCacheDict.value[props.objectType]
-            if (!table.externalField && !props.id) {
-                validationErrorTitle.value = $gettext('You can not add an object of this type.')
-                validationErrorDescription.value = $gettext(
-                    'This Object does not have an external ID field in the config.json.'
-                )
-                return true
-            }
-            if (props.id && props.id.startsWith('PIT_') && !table.externalField) {
-                validationErrorTitle.value = $gettext('This Object is not editable. You need to sync first.')
-                validationErrorDescription.value = $gettext(
-                    'This Object does not have an external ID field in the config.json. Please provide one or sync first before editing.'
-                )
-                return true
+            if (!props.ignoreExternalIdValidation) {
+                if (!table.externalField && !props.id) {
+                    validationErrorTitle.value = $gettext('You can not add an object of this type.')
+                    validationErrorDescription.value = $gettext(
+                        'This Object does not have an external ID field in the config.json.'
+                    )
+                    return true
+                }
+                if (props.id && props.id.startsWith('PIT_') && !table.externalField) {
+                    validationErrorTitle.value = $gettext('This Object is not editable. You need to sync first.')
+                    validationErrorDescription.value = $gettext(
+                        'This Object does not have an external ID field in the config.json. Please provide one or sync first before editing.'
+                    )
+                    return true
+                }
             }
             return false
         })
