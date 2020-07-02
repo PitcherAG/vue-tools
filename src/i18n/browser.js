@@ -1,6 +1,8 @@
 export function useBrowserLanguage() {
     function getAvailableBrowserLanguage(availableLanguages) {
-        return getBrowserLanguages().filter(l => availableLanguages.includes(l) || availableLanguages.includes(l.split(/[_-]/)[0]))[0]
+        return getBrowserLanguages().filter(
+            l => availableLanguages.includes(l) || availableLanguages.includes(l.split(/[_-]/)[0])
+        )[0]
     }
 
     function getBrowserLanguages() {
@@ -13,7 +15,7 @@ export function useBrowserLanguage() {
                 }
             }
 
-            ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'].forEach(prop => {
+            ;['language', 'browserLanguage', 'systemLanguage', 'userLanguage'].forEach(prop => {
                 if (navigator[prop]) {
                     languages.add(navigator[prop])
                 }
@@ -25,6 +27,6 @@ export function useBrowserLanguage() {
 
     return {
         getAvailableBrowserLanguage,
-        getBrowserLanguages,
+        getBrowserLanguages
     }
 }

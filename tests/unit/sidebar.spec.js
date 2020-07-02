@@ -1,6 +1,7 @@
 import CompositionApi from '@vue/composition-api'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Sidebar from '@/components/Sidebar.vue'
+
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
 

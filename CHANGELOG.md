@@ -1,15 +1,33 @@
 # Changelog
 
+## 1.3.6
+
+### Added
+- fetch polyfill with whatwg-fetch
+
+### Changed
+- Store related bugs are fixed
+- Dropdown related bugs in ObjectForm / ObjectFormField
+- eslint-plugin-vue to 7.0.0-alpha.7
+- Dropdown updated
+  - emit string as value (Fomantic dropdown default)
+  - renamed prop: options -> items
+  - renamed prop: textField -> item-text
+  - renamed prop: valueField -> item-value
+  - renamed prop: setting -> settings
+
 ## 1.3.5
 
 ### Added
 - Dropdown component added
+- ProgressBar component added
 - added uid function to utils to generate unique ids
 - added fetch pollyfill
 - should now be windows compatible
 - config-gettext-extract, config-gettext-translate and config-gettext-compile commands
 - i18n/browser.js to detect browser language
 - translate component and directive
+- removed pinia
 
 ### Changed
 - @vue/composition-api to 0.6.6
