@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased]
+### Changed
+- support package translations
+- support multiple categories
+
 ## 1.3.6
 
 ### Added
