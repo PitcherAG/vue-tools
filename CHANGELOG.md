@@ -16,6 +16,7 @@
   - accepting undefined/null as value now and transforms to false by default
 - Sidebar
   - new prop: type, default value remains as 'push'
+- replaced moments.js with luxor.js to reduce build size
 
 ## 1.3.6
 
