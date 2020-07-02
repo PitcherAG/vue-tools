@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ secrets.GOOGLE_JSON }} > google.json
+      - run: cat google.json
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: Cache node modules
