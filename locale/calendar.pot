@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+
+#: src/components/Calendar.vue
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "AM"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Apr"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "April"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Aug"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "August"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Date/Time"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Dec"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "December"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Feb"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "February"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Jan"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "January"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Jul"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "July"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Jun"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "June"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Mar"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "March"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "May"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Nov"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "November"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Now"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Oct"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "October"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "PM"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Sep"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "September"
+msgstr ""
+
+#: src/components/Calendar.vue
+msgid "Today"
+msgstr ""
