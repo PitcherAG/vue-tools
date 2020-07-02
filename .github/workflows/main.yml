@@ -17,10 +17,12 @@ jobs:
           path: ./node_modules
           key: node-modules
       - run: npm install
-      - run: 'echo "$GOOGLE_JSON" > google.json'
-        shell: bash
+      - name: Decrypt large secret
+        run: ./.github/scripts/decrypt_secret.sh
         env:
-          GOOGLE_JSON: ${{secrets.GOOGLE_JSON}}
+          GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
+      - name: Test printing your secret (Remove this step in production)
+        run: cat $HOME/secrets/my_secret.json
       - name: unittest
         run: npm run test:unit
         env:

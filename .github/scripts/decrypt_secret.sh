@@ -1,8 +1,10 @@
 #!/bin/sh
 
+mkdir $HOME/secrets
+
 gpg --quiet \
 --batch \
 --yes \
 --decrypt \
 --passphrase="$GOOGLE_SECRET" \
---output $HOME/google.json google.json.gpg
+--output $HOME/secrets/google.json google.json.gpg
