@@ -21,7 +21,6 @@ jobs:
         shell: bash
         env:
           GOOGLE_JSON: ${{secrets.GOOGLE_JSON}}
-      - run: cat google.json
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: Cache node modules
