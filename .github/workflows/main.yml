@@ -22,8 +22,6 @@ jobs:
         run: ./.github/scripts/decrypt_secret.sh
         env:
           GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
-      - name: Test printing your secret (Remove this step in production)
-        run: cat $HOME/secrets/google.json
       - run: echo ::set-env name=GOOGLE_APPLICATION_CREDENTIALS::$HOME/secrets/google.json
         shell: bash
       - name: unittest
