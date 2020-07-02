@@ -26,22 +26,31 @@
         <sui-form v-if="!state.needsRecordType && !validationError && !state.layout">
             <ObjectFormField
                 v-for="(field, key) in state.fields"
-                v-model="state.obj[field.name].value"
+                v-model="state.obj[field.name]"
+                :value-label="toLabel(state.obj, field.name)"
+                @input="emitUpdate"
                 :key="key"
                 :field="field"
                 :show-error="state.showErrors"
+                @fieldChange="v => $emit('fieldChange', v)"
             />
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
         <sui-form v-if="!state.needsRecordType && !validationError && state.layout">
-            <fragment v-for="(section, sectionKey) in state.layout.editLayoutSections" :key="sectionKey">
+            <fragment
+                v-for="(section, sectionKey) in state.layout.editLayoutSections"
+                :key="sectionKey"
+                v-if="section.fieldCount > 0"
+            >
                 <h4 class="ui header">{{ section.heading }}</h4>
                 <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
                     <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
                         <template v-for="(comp, compKey) in item.layoutComponents">
                             <ObjectFormField
                                 v-if="!comp.exclude"
-                                v-model="state.obj[comp.value].value"
+                                v-model="state.obj[comp.value]"
+                                :value-label="toLabel(state.obj, comp.value)"
+                                @input="emitUpdate"
                                 :key="compKey"
                                 :field="comp.field"
                                 :show-error="state.showErrors"
@@ -79,6 +88,13 @@ export default {
             default: () => [],
             type: Array
         },
+        readOnlyFields: {
+            default: () => [],
+            type: Array
+        },
+        customReferences: {
+            type: Object
+        },
         hasSave: {
             type: Boolean
         },
@@ -88,7 +104,7 @@ export default {
         recordType: {
             type: String
         },
-        obj: {
+        value: {
             type: Object
         },
         onSave: {
@@ -100,7 +116,7 @@ export default {
         }
     },
 
-    setup: function(props) {
+    setup: function(props, attrs) {
         const excludes = [
             'attributes',
             'Id',
@@ -149,7 +165,7 @@ export default {
             isValid: computed(() => {
                 let valid = true
                 for (const field of state.fields) {
-                    if (!field.valid(state.obj[field.name].value)) {
+                    if (!field.valid(state.obj[field.name])) {
                         valid = false
                     }
                 }
@@ -162,11 +178,11 @@ export default {
                 }
                 let valid = true
                 for (const field of state.fields) {
-                    result[field.name] = state.obj[field.name].value
-                    if (field.relationshipName && state.obj[field.name].value) {
+                    result[field.name] = state.obj[field.name]
+                    if (field.relationshipName && state.obj[field.name]) {
                         let found = false
                         for (const ref of field.references) {
-                            if (ref.value === state.obj[field.name].value) {
+                            if (ref.value === state.obj[field.name]) {
                                 result[field.relationshipName] = {
                                     Id: ref.value,
                                     Name: ref.text
@@ -176,7 +192,7 @@ export default {
                                 break
                             }
                         }
-                        if (!found) console.log('ref not found:' + field.name, state.obj[field.name].value)
+                        if (!found) console.log('ref not found:' + field.name, state.obj[field.name])
                     }
                     if (
                         !field.nillable &&
@@ -227,7 +243,15 @@ export default {
                         if (field_name.trim()) {
                             for (const field of state.schema.fields) {
                                 if (field.name === field_name.trim()) {
-                                    const f = new Field(field, props.objectType)
+                                    const f = new Field(field, props.objectType, false)
+
+                                    if (props.readOnlyFields.includes(f.name)) {
+                                        f.updateable = false
+                                    } else if (props.customReferences && props.customReferences[f.name]) {
+                                        f.loadExternalReferences(props.customReferences[f.name])
+                                    } else {
+                                        f.load_refs()
+                                    }
                                     if (f.calculated || !f.updateable) {
                                         continue
                                     }
@@ -255,22 +279,37 @@ export default {
                         const data = []
                         const filed = []
                         for (const section of layout.editLayoutSections) {
+                            let fieldCount = 0
                             for (const row of section.layoutRows) {
                                 for (const row of section.layoutRows) {
                                     for (const item of row.layoutItems) {
-                                        for (const comp of item.layoutComponents) {
-                                            if (excludeFields.indexOf(comp.value) === -1) {
-                                                const field = new Field(comp.details)
-                                                fields.push(field)
-                                                comp.field = field
-                                                comp.exclude = false
-                                            } else {
-                                                comp.exclude = true
+                                        if (item.layoutComponents) {
+                                            for (const comp of item.layoutComponents) {
+                                                if (excludeFields.indexOf(comp.value) === -1) {
+                                                    const field = new Field(comp.details, null, false)
+                                                    if (props.readOnlyFields.includes(field.name)) {
+                                                        field.updateable = false
+                                                    } else if (
+                                                        props.customReferences &&
+                                                        props.customReferences[field.name]
+                                                    ) {
+                                                        field.loadExternalReferences(props.customReferences[field.name])
+                                                    } else {
+                                                        field.load_refs()
+                                                    }
+                                                    fields.push(field)
+                                                    comp.field = field
+                                                    comp.exclude = false
+                                                    fieldCount++
+                                                } else {
+                                                    comp.exclude = true
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
+                            section.fieldCount = fieldCount
                         }
                         state.layout = layout
                         state.fields = fields
@@ -289,6 +328,9 @@ export default {
                                     excludeFields.push(field.name)
                                     console.warn('removed field')
                                     continue
+                                }
+                                if (props.readOnlyFields.includes(f.name)) {
+                                    f.updateable = false
                                 }
                                 if (f.nillable && f.name !== 'Name') {
                                     fields.push(f)
@@ -315,13 +357,13 @@ export default {
                     }
                 }
                 for (const field of state.fields) {
-                    state.obj[field.name] = ref(null)
-                    if (props.obj) {
-                        state.obj[field.name].value = props.obj[field.name]
+                    if (props.value) {
+                        state.obj = props.value
                     }
                 }
             }
         )
+
         const validationError = computed(() => {
             const configStore = useConfigStore()
             const table = configStore.getCacheDict.value[props.objectType]
@@ -352,10 +394,10 @@ export default {
                 if (state.fields.length === 0) {
                     return
                 }
-                if (!props.id) {
+                if (!props.id && !props.value) {
                     for (const field of state.fields) {
-                        if (state.obj[field.name].value !== '') {
-                            state.obj[field.name].value = null
+                        if (state.obj[field.name] !== '') {
+                            state.obj[field.name] = null
                         }
                     }
                 }
@@ -370,9 +412,7 @@ export default {
                 const data = await contextQuery(q, { id: props.id })
                 name.value = data.Name
                 state.loadedObj = data[0]
-                for (const field of state.fields) {
-                    state.obj[field.name].value = data[0][field.name]
-                }
+                state.obj = data[0]
             }
         )
 
@@ -427,12 +467,32 @@ export default {
 
         const clear = () => {
             for (const field of state.fields) {
-                state.obj[field.name].value = null
+                state.obj[field.name] = null
             }
             state.showErrors = false
         }
 
+        const emitUpdate = () => {
+            console.log('update', state.obj)
+            attrs.emit('input', state.obj)
+        }
+
+        const toLabel = (obj, path) => {
+            let newPath = path.substr(0, path.length - 1) + 'r'
+            if (obj[newPath]) {
+                return obj[newPath].Name
+            }
+            if (path.substr(path.length - 2) === 'Id') {
+                newPath = path.substr(0, path.length - 2)
+                if (obj[newPath]) {
+                    return obj[newPath].Name
+                }
+            }
+            return ''
+        }
+
         return {
+            toLabel,
             state,
             save,
             validate,
@@ -440,7 +500,8 @@ export default {
             validationError,
             validationErrorTitle,
             validationErrorDescription,
-            name
+            name,
+            emitUpdate
         }
     }
 }

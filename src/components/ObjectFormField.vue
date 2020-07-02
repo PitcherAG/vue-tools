@@ -1,17 +1,17 @@
 <template>
-    <sui-form-field :required="field.required" :error="error" :disabled="!field.updateable">
+    <sui-form-field v-if="field.updateable" :required="field.required" :error="error">
         <label>{{ label || field.label }}</label>
         <input
             v-if="typ === 'string' || typ === 'phone' || typ === 'url' || typ === 'combobox'"
             type="text"
             placeholder=""
             :value="value"
-            @input="$emit('input', $event.target.value)"
+            @input="emitInput($event.target.value)"
             :maxlength="field.length"
         />
         <textarea
             v-if="typ === 'textarea' || typ === 'address'"
-            @input="$emit('input', $event.target.value)"
+            @input="emitInput($event.target.value)"
             :value="value"
             :maxlength="field.length"
         />
@@ -19,16 +19,16 @@
             v-if="typ === 'picklist' || typ === 'multipicklist'"
             :default-text="$gettext('Select')"
             :multiple="typ === 'multipicklist'"
-            @input="$emit('input', $event)"
+            @input="emitInput($event)"
             :value="value"
-            :options="picklist"
+            :items="picklist"
             add-class="selection"
         />
         <Dropdown
             v-if="typ === 'reference'"
             :default-text="$gettext('Select')"
             :multiple="typ === 'multipicklist'"
-            @input="$emit('input', $event)"
+            @input="emitInput($event)"
             :value="value"
             :items="field.references"
             add-class="selection"
@@ -37,7 +37,7 @@
         <Calendar
             v-if="typ === 'date' || typ === 'datetime'"
             :type="typ"
-            @input="$emit('input', $event)"
+            @input="emitInput($event)"
             :default-text="typ === 'date' ? $gettext('Date') : $gettext('Date/Time')"
             :value="value"
         />
@@ -48,7 +48,7 @@
             :numpadGroup="'ObjectFormField'"
             :numpadDecimalPlaces="field.digits"
             :value="value"
-            @input="$emit('input', $event.target.value)"
+            @input="emitInput($event.target.value)"
             placeholder=""
             style="width:85px;"
             type="number"
@@ -61,7 +61,27 @@
                type="number"
                readonly="readonly"
                step="any"-->
-        <Checkbox v-if="typ === 'boolean'" toggle v-model="value" />
+        <Checkbox v-if="typ === 'boolean'" :value="value" toggle @input="v => emitInput(v)" />
+    </sui-form-field>
+    <!-- not updateable -->
+    <sui-form-field v-else :style="{ minHeight: !value ? '60px' : undefined }">
+        <label>{{ label || field.label }}</label>
+        <!-- bool -->
+        <template v-if="typ === 'boolean'">
+            {{ value ? 'yes' : 'no' }}
+        </template>
+        <!-- currency -->
+        <template v-else-if="typ === 'currency'">
+            {{ formatCurrency(value) }}
+        </template>
+        <!-- date -->
+        <template v-else-if="typ === 'date' || typ === 'datetime'">
+            {{ formatDate(value) }}
+        </template>
+        <!-- default -->
+        <template v-else>
+            {{ valueLabel || value }}
+        </template>
     </sui-form-field>
 </template>
 
@@ -70,6 +90,7 @@ import { computed, ref } from '@vue/composition-api'
 import Dropdown from './Dropdown'
 import Calendar from './Calendar'
 import Checkbox from './Checkbox'
+import { formatDate, formatCurrency } from '..'
 
 export default {
     name: 'ObjectFormField',
@@ -81,18 +102,19 @@ export default {
         },
         showError: {},
         value: {},
+        valueLabel: {},
         label: {
             type: String
         }
     },
-    setup(props, attrs) {
+    setup(props, { emit }) {
         const typ = ref()
         const picklist = ref([])
         if (props.field) {
             const type = props.field.type
             typ.value = type
             if (typ === 'boolean' && !props.value) {
-                attrs.emit('input', false)
+                emit('input', false)
             }
         }
         if (props.field && props.field.picklistValues) {
@@ -105,11 +127,24 @@ export default {
             return props.field && !props.field.valid(props.value) && props.showError
         })
 
+        function emitInput(value) {
+            const fieldChange = {
+                value,
+                oldValue: props.value,
+                field: props.field,
+                label: props.label,
+                type: typ.value,
+                showError: props.showError
+            }
+            emit('fieldChange', fieldChange)
+            emit('input', value)
+        }
+
         const log = (a, b, c) => {
             console.log(a, b, c)
         }
 
-        return { typ, picklist, error, log }
+        return { typ, picklist, emitInput, error, log, formatDate, formatCurrency }
     }
 }
 </script>
