@@ -33,7 +33,7 @@ export const useI18nStore = () => {
                             this.state.messages[locale][msgid] = data[locale][msgid]
                         }
                     } else {
-                        this.state.messages[locale] = data.locale
+                        this.state.messages[locale] = data[locale]
                     }
                 }
             }
