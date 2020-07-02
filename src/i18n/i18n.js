@@ -1,8 +1,12 @@
 import Component from './component'
 import Directive from './directive'
-import {createStore} from 'pinia'
 import {getTranslationIndex} from './plurals'
 import {renderSimpleContext} from '../utils'
+import {createStore} from '..'
+
+if (!window.fetch) {
+    import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch')
+}
 
 const defaultOptions = {
     availableLanguages: {en: 'English'},
@@ -10,24 +14,35 @@ const defaultOptions = {
     messages: {en: {}},
 }
 
-export const useI18nStore = createStore({
-    id: 'i18n',
-    state: () => defaultOptions,
-    actions: {
+export const useI18nStore = () => {
+    const s = {
+        id: 'i18n',
+        state: defaultOptions,
         setLanguage: async function (lang, load = true, dir = 'translations', app = 'app') {
             if (!this.state.availableLanguages[lang]) {
-                throw new Error('invalid language')
+                throw new Error('invalid language: ' + lang)
             }
 
             if (load && lang != 'en') {
                 const response = await fetch(`${dir}/${lang}/${app}.json`)
-                this.state.messages[lang] = await response.json()
+                const data = await response.json()
+
+                for (const locale in data) {
+                    if (this.state.messages[locale]) {
+                        for (const msgid in data[locale]) {
+                            this.state.messages[locale][msgid] = data[locale][msgid]
+                        }
+                    } else {
+                        this.state.messages[locale] = data.locale
+                    }
+                }
             }
 
             this.state.locale = lang
         },
-    },
-})
+    }
+    return createStore(s)
+}
 
 export function trans(msgid, n = 0, placeholders) {
     if (msgid == '') {
@@ -82,7 +97,7 @@ window.$ngettext = function (msgid, n, context) {
     return trans(msgid, n, context)
 }
 
-export function TranslationPlugin(Vue, options = {}) {
+export function TranslationPlugin(_Vue, options = {}) {
     Object.keys(options).forEach(key => {
         if (Object.keys(defaultOptions).indexOf(key) === -1) {
             throw new Error(`${key} is an invalid option for the translate plugin.`)
@@ -92,16 +107,15 @@ export function TranslationPlugin(Vue, options = {}) {
     options = Object.assign(defaultOptions, options)
 
     const store = useI18nStore()
-    store.patch(options)
-
+    Object.assign(options, store.state)
     // Makes <translate> available as a global component.
-    Vue.component('translate', Component)
+    // eslint-disable-next-line vue/component-definition-name-casing
+    _Vue.component('translate', Component)
 
     // An option to support translation with HTML content: `v-translate`.
-    Vue.directive('translate', Directive)
-
+    _Vue.directive('translate', Directive)
     // Exposes instance methods.
-    Vue.prototype.$gettext = $gettext
-    Vue.prototype.$ngettext = $ngettext
-    Vue.prototype.$t = $gettext
+    _Vue.prototype.$gettext = $gettext
+    _Vue.prototype.$ngettext = $ngettext
+    _Vue.prototype.$t = $gettext
 }
