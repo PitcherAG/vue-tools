@@ -12,6 +12,7 @@
   - bug fixes
   - checkbox inside template v-model => value & emit input
   - new event emitter @fieldUpdate that is forwarded from ObjectFormField
+  - .fields margin-bottom reduced
 - Checkbox
   - accepting undefined/null as value now and transforms to false by default
 - Sidebar

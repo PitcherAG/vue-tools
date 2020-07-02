@@ -512,6 +512,10 @@ export default {
     color: #7d7d7d;
 }
 
+.ui.form .fields {
+    margin: 0 -0.5em 0.5em;
+}
+
 .ui.form .field {
     margin-bottom: 1.3em !important;
 }
