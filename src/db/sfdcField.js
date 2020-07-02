@@ -1,16 +1,16 @@
 import { useConfigStore } from '../config'
 import { query } from './query'
 import { execBool } from '../utils/contextExec'
+import { PLATFORM } from '../platform'
 
 export class Field {
-    constructor(obj, objectType) {
-        for (const a in obj) {
-            this[a] = obj[a]
-        }
-        const self = this
-        this.parentObjectType = objectType
+    constructor(obj, objectType, load = true) {
         this.referenceTo = []
         this.references = []
+        Object.assign(this, obj)
+        const self = this
+        this.parentObjectType = objectType
+
         this.required = !obj.nillable || obj.nameField
         this.valid = function(value) {
             if ((self.type === 'boolean' && value === true) || value === false) {
@@ -22,7 +22,9 @@ export class Field {
             return true
         }
         this.errors = []
-        this.load_refs()
+        if (load) {
+            this.load_refs()
+        }
     }
 
     load_refs() {
@@ -51,8 +53,13 @@ export class Field {
         if (targetTable.fieldTypes && targetTable.fieldTypes['Name']) {
             q += 'Name'
         } else if (reference === 'Account') {
-            q += 'account_name'
-            nameField = 'account_name'
+            if (PLATFORM === 'ANDROID') {
+                q += 'account_name'
+                nameField = 'account_name'
+            } else {
+                q += 'accountName'
+                nameField = 'accountName'
+            }
         } else if (reference === 'Contact') {
             q += 'name'
             nameField = 'name'
@@ -77,5 +84,13 @@ export class Field {
             result.push({ value: obj.Id, text: obj[nameField] })
         }
         this.references = this.references.concat(result)
+    }
+
+    loadExternalReferences(data, nameField = 'Name') {
+        const result = []
+        for (const obj of data) {
+            result.push({ value: obj.Id, text: obj[nameField] })
+        }
+        this.references = result
     }
 }

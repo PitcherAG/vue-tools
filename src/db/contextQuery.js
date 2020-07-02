@@ -30,7 +30,6 @@ export async function contextQuery(query, context, db = null) {
         tableDict.locale = params.locale
     }
     const q = renderContext(query, tableDict)
-    window.console.log(q)
     try {
         const result = await oQuery(q, db)
         return result
