@@ -1,0 +1,58 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: id\n"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "Tanggal"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Tanggal Waktu"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "Menyimpan"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "Pilih"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "Pilih Jenis Rekam"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "Objek ini tidak memiliki bidang ID eksternal di config.json."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"Objek ini tidak memiliki bidang ID eksternal di config.json. Harap berikan "
+"satu atau sinkronkan terlebih dahulu sebelum mengedit."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr ""
+"Objek ini tidak dapat diedit. Anda harus melakukan sinkronisasi terlebih "
+"dahulu."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "Anda tidak dapat menambahkan objek jenis ini."

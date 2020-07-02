@@ -1,0 +1,56 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: sw\n"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "Tarehe"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Tarehe / Wakati"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "Okoa"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "Chagua"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "Chagua Aina ya Rekodi"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "Kitu hiki hakina uwanja wa kitambulisho cha nje kwenye usanidi.json."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"Kitu hiki hakina uwanja wa kitambulisho cha nje kwenye usanidi.json. "
+"Tafadhali toa moja au usawazishe kwanza kabla ya kuhariri."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "Kitu hiki hakijaandaliwa. Unahitaji kusawazisha kwanza."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "Hauwezi kuongeza kitu cha aina hii."
