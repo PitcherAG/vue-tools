@@ -22,7 +22,7 @@
         "core-js": "^3.6.4",
         "fuse.js": "^6.0.4",
         "lodash": "^4.17.15",
-        "moment": "^2.26.0",
+        "luxon": "^1.24.1",
         "whatwg-fetch": "^3.0.0"
     },
     "devDependencies": {

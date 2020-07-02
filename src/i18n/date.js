@@ -1,5 +1,5 @@
 import { useI18nStore } from './i18n'
-import moment from 'moment'
+import { DateTime } from 'luxon'
 
 export function formatDate(date, showYear = true) {
     if (!date) {
@@ -17,7 +17,6 @@ export function formatDate(date, showYear = true) {
         throw new Error('locale not defined')
     }
     const l = locale.split('_').join('-')
-    const m = moment(date)
-    const d = m.toDate()
-    return d.toLocaleDateString(l, options)
+    const dt = DateTime.fromISO(date, { locale: l })
+    return dt.toLocaleString(options) //=> 'April 20'(l, options)
 }

@@ -11,12 +11,14 @@ describe('i18n', () => {
         let resp = { state: { locale: 'de-CH' } }
         useI18nStore.mockReturnValue(resp)
         expect(formatDate('2020-02-20')).toBe('20.02.20')
+        expect(formatDate('2020-02-20', false)).toBe('20. Feb.')
         resp = { state: { locale: 'en-US' } }
         useI18nStore.mockReturnValue(resp)
         expect(formatDate('2020-05-11T19:12:11.000+0000')).toBe('05/11/20')
         expect(formatDate('2020-02-20')).toBe('02/20/20')
+        expect(formatDate('2020-02-20', false)).toBe('Feb 20')
         expect(formatDate()).toBe('')
-        expect(formatDate('abcdfef')).toBe('Invalid Date')
+        expect(formatDate('abcdfef')).toBe('Invalid DateTime')
         resp = { state: { locale: null } }
         useI18nStore.mockReturnValue(resp)
         expect(() => {
