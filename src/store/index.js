@@ -4,7 +4,7 @@ const stores = {}
 
 function transform(obj) {
     for (const prop in obj) {
-        if (typeof obj[prop] == 'function') {
+        if (typeof obj[prop] === 'function') {
             obj[prop] = obj[prop].bind(obj)
         }
     }
