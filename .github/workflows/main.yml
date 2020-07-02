@@ -18,9 +18,9 @@ jobs:
           key: node-modules
       - run: npm install
       - run: 'echo "$GOOGLE_JSON" > google.json'
-          shell: bash
-          env:
-            GOOGLE_JSON: ${{secrets.GOOGLE_JSON}}
+        shell: bash
+        env:
+          GOOGLE_JSON: ${{secrets.GOOGLE_JSON}}
       - name: unittest
         run: npm run test:unit
         env:
