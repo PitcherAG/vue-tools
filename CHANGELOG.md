@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.7
+
+- object form bugfixes
+- ios wkview detection
+
 ## 1.3.6
 
 ### Added

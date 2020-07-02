@@ -40,7 +40,11 @@ export async function labelToValue(objectName, fieldName, label) {
     const schema = await loadSchema(objectName)
     for (const field of schema.fields) {
         if (field.name === fieldName.trim()) {
-            debugger
+            for (const pick of field.picklistValues) {
+                if (pick.label === label) {
+                    return pick.value
+                }
+            }
         }
     }
 }
