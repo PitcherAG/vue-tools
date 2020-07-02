@@ -1,9 +1,10 @@
+*.mo
+*.po~
 .DS_Store
 .idea
+.vscode
+coverage
+google.json
 node_modules
 package-lock.json
 pitcher-vue-sdk.iml
-coverage
-*.mo
-*.po~
-.vscode
