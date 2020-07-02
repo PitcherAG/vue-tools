@@ -27,6 +27,7 @@
             <ObjectFormField
                 v-for="(field, key) in state.fields"
                 v-model="state.obj[field.name]"
+                :value-label="toLabel(state.obj, field.name)"
                 @input="emitUpdate"
                 :key="key"
                 :field="field"
@@ -48,6 +49,7 @@
                             <ObjectFormField
                                 v-if="!comp.exclude"
                                 v-model="state.obj[comp.value]"
+                                :value-label="toLabel(state.obj, comp.value)"
                                 @input="emitUpdate"
                                 :key="compKey"
                                 :field="comp.field"
@@ -475,7 +477,22 @@ export default {
             attrs.emit('input', state.obj)
         }
 
+        const toLabel = (obj, path) => {
+            let newPath = path.substr(0, path.length - 1) + 'r'
+            if (obj[newPath]) {
+                return obj[newPath].Name
+            }
+            if (path.substr(path.length - 2) === 'Id') {
+                newPath = path.substr(0, path.length - 2)
+                if (obj[newPath]) {
+                    return obj[newPath].Name
+                }
+            }
+            return ''
+        }
+
         return {
+            toLabel,
             state,
             save,
             validate,

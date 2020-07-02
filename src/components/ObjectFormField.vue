@@ -80,7 +80,7 @@
         </template>
         <!-- default -->
         <template v-else>
-            {{ value }}
+            {{ valueLabel || value }}
         </template>
     </sui-form-field>
 </template>
@@ -102,6 +102,7 @@ export default {
         },
         showError: {},
         value: {},
+        valueLabel: {},
         label: {
             type: String
         }
