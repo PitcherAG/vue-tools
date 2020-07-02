@@ -22,7 +22,7 @@ jobs:
         env:
           GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
       - name: Test printing your secret (Remove this step in production)
-        run: cat $HOME/secrets/my_secret.json
+        run: cat $HOME/secrets/google.json
       - name: unittest
         run: npm run test:unit
         env:
