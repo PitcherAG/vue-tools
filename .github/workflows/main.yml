@@ -24,7 +24,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: unittest
         run: npm run test:unit
-        with:
+        env:
           GOOGLE_APPLICATION_CREDENTIALS: google.json
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v1.1.0
