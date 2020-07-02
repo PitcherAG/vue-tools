@@ -9,9 +9,9 @@ if (!window.fetch) {
 }
 
 const defaultOptions = {
-    availableLanguages: {en: 'English'},
+    availableLanguages: { en: 'English' },
     locale: 'en',
-    messages: {en: {}},
+    messages: { en: {} }
 }
 
 export const useI18nStore = () => {
@@ -81,19 +81,19 @@ export function trans(msgid, n = 0, placeholders) {
     return translated
 }
 
-window.$gettext = function (msgid, context) {
+window.$gettext = function(msgid, context) {
     return trans(msgid, 1, context)
 }
 
-window.translateUI = function (json) {
+window.translateUI = function(json) {
     console.warn('not implemented', JSON.parse(json))
 }
 
-window.$t = function (msgid, context) {
+window.$t = function(msgid, context) {
     return trans(msgid, 1, context)
 }
 
-window.$ngettext = function (msgid, n, context) {
+window.$ngettext = function(msgid, n, context) {
     return trans(msgid, n, context)
 }
 

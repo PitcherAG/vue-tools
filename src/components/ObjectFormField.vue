@@ -2,7 +2,7 @@
     <sui-form-field :required="field.required" :error="error" :disabled="!field.updateable">
         <label>{{ label || field.label }}</label>
         <input
-            v-if="type === 'string' || type === 'phone' || type === 'url' || type === 'combobox'"
+            v-if="typ === 'string' || typ === 'phone' || typ === 'url' || typ === 'combobox'"
             type="text"
             placeholder=""
             :value="value"
@@ -10,40 +10,40 @@
             :maxlength="field.length"
         />
         <textarea
-            v-if="type === 'textarea' || type === 'address'"
+            v-if="typ === 'textarea' || typ === 'address'"
             @input="$emit('input', $event.target.value)"
             :value="value"
             :maxlength="field.length"
         />
         <Dropdown
-            v-if="type === 'picklist' || type === 'multipicklist'"
+            v-if="typ === 'picklist' || typ === 'multipicklist'"
             :default-text="$gettext('Select')"
-            :multiple="type === 'multipicklist'"
+            :multiple="typ === 'multipicklist'"
             @input="$emit('input', $event)"
             :value="value"
             :options="picklist"
             add-class="selection"
         />
         <Dropdown
-            v-if="type === 'reference'"
+            v-if="typ === 'reference'"
             :default-text="$gettext('Select')"
-            :multiple="type === 'multipicklist'"
+            :multiple="typ === 'multipicklist'"
             @input="$emit('input', $event)"
             :value="value"
-            :options="field.references"
+            :items="field.references"
             add-class="selection"
         />
 
         <Calendar
-            v-if="type === 'date' || type === 'datetime'"
-            :type="type"
+            v-if="typ === 'date' || typ === 'datetime'"
+            :type="typ"
             @input="$emit('input', $event)"
-            :default-text="type == 'date' ? $gettext('Date') : $gettext('Date/Time')"
+            :default-text="typ === 'date' ? $gettext('Date') : $gettext('Date/Time')"
             :value="value"
         />
 
         <input
-            v-if="type === 'double' || type === 'currency' || type === 'int'"
+            v-if="typ === 'double' || typ === 'currency' || typ === 'int'"
             :numpadIndex="index"
             :numpadGroup="'ObjectFormField'"
             :numpadDecimalPlaces="field.digits"
@@ -61,12 +61,7 @@
                type="number"
                readonly="readonly"
                step="any"-->
-        <sui-checkbox
-            v-if="type === 'boolean'"
-            toggle
-            :value="value ? 'on' : 'off'"
-            @input="$emit('input', $event.target.value == 'on')"
-        />
+        <Checkbox v-if="typ === 'boolean'" toggle v-model="value" />
     </sui-form-field>
 </template>
 
@@ -74,29 +69,47 @@
 import { computed, ref } from '@vue/composition-api'
 import Dropdown from './Dropdown'
 import Calendar from './Calendar'
+import Checkbox from './Checkbox'
 
 export default {
     name: 'ObjectFormField',
-    components: { Calendar, Dropdown },
-    props: ['field', 'index', 'showError', 'value', 'label'],
+    components: { Checkbox, Calendar, Dropdown },
+    props: {
+        field: { required: true },
+        index: {
+            type: Number
+        },
+        showError: {},
+        value: {},
+        label: {
+            type: String
+        }
+    },
     setup(props, attrs) {
-        const type = props.field.type
+        const typ = ref()
         const picklist = ref([])
-        for (const v of props.field.picklistValues) {
-            picklist.value.push({ text: v.label, value: v.value })
+        if (props.field) {
+            const type = props.field.type
+            typ.value = type
+            if (typ === 'boolean' && !props.value) {
+                attrs.emit('input', false)
+            }
+        }
+        if (props.field && props.field.picklistValues) {
+            for (const v of props.field.picklistValues) {
+                picklist.value.push({ text: v.label, value: v.value })
+            }
         }
 
         const error = computed(() => {
-            return !props.field.valid(props.value) && props.showError
+            return props.field && !props.field.valid(props.value) && props.showError
         })
 
         const log = (a, b, c) => {
             console.log(a, b, c)
         }
-        if (type === 'boolean' && !props.value) {
-            attrs.emit('input', false)
-        }
-        return { type, picklist, error, log }
+
+        return { typ, picklist, error, log }
     }
 }
 </script>
