@@ -89,6 +89,10 @@ window.translateUI = function(json) {
     console.warn('not implemented', JSON.parse(json))
 }
 
+window._ = function(msgid, context) {
+    return trans(msgid, 1, context)
+}
+
 window.$t = function(msgid, context) {
     return trans(msgid, 1, context)
 }
