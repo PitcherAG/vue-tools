@@ -28,32 +28,3 @@ for (const t of config.translations) {
 }
 
 module.exports = config
-
-/*const defaultOptions = {
-    allCategories: function() {
-      return [this, ...this.subCategories]
-    },
-    availableLanguages: {en: 'English'},
-    category: 'app',
-    importCategories: {},
-    jsonBaseDir: 'public/translations',
-    poBaseDir: 'locale',
-    sourceBaseDir: 'src',
-    sourceExcludePaths: [
-        '*-cli.js',
-    ],
-    sourceIncludePaths: [
-        '*.html',
-        '*.js',
-        '*.vue',
-    ],
-    subCategories: [],
-}
-
-const projectConfig = Object.assign({}, defaultOptions, require(configPath))
-
-for (let i = 0; i < projectConfig.subCategories.length; i++) {
-    projectConfig.subCategories[i] = Object.assign({}, projectConfig, projectConfig.subCategories[i])
-}
-
-module.exports = projectConfig*/
