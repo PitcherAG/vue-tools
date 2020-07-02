@@ -18,7 +18,7 @@ export const useI18nStore = () => {
     const s = {
         id: 'i18n',
         state: defaultOptions,
-        setLanguage: async function (lang, load = true, {app = 'app', dir = 'translations'} = {}) {
+        setLanguage: async function (lang, {app = 'app', dir = 'translations', load = true} = {}) {
             if (!this.state.availableLanguages[lang]) {
                 throw new Error('invalid language: ' + lang)
             }
