@@ -14,7 +14,8 @@ jobs:
         env:
           cache-name: cache-node-modules
         with:
-          path: ./node_modules
+          path: |
+            **/node_modules
           key: node-modules
       - run: npm install
       - name: Decrypt large secret
