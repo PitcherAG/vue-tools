@@ -26,7 +26,7 @@ jobs:
       - name: unittest
         run: npm run test:unit
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ HOME }}/secrets/google.json
+          GOOGLE_APPLICATION_CREDENTIALS: "$HOME"/secrets/google.json
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v1.1.0
         with:
