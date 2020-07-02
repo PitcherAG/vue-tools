@@ -6,12 +6,12 @@
             type="text"
             placeholder=""
             :value="value"
-            @input="$emit('input', $event.target.value)"
+            @input="emitInput($event.target.value)"
             :maxlength="field.length"
         />
         <textarea
             v-if="typ === 'textarea' || typ === 'address'"
-            @input="$emit('input', $event.target.value)"
+            @input="emitInput($event.target.value)"
             :value="value"
             :maxlength="field.length"
         />
@@ -19,7 +19,7 @@
             v-if="typ === 'picklist' || typ === 'multipicklist'"
             :default-text="$gettext('Select')"
             :multiple="typ === 'multipicklist'"
-            @input="$emit('input', $event)"
+            @input="emitInput($event)"
             :value="value"
             :items="picklist"
             add-class="selection"
@@ -28,7 +28,7 @@
             v-if="typ === 'reference'"
             :default-text="$gettext('Select')"
             :multiple="typ === 'multipicklist'"
-            @input="$emit('input', $event)"
+            @input="emitInput($event)"
             :value="value"
             :items="field.references"
             add-class="selection"
@@ -37,7 +37,7 @@
         <Calendar
             v-if="typ === 'date' || typ === 'datetime'"
             :type="typ"
-            @input="$emit('input', $event)"
+            @input="emitInput($event)"
             :default-text="typ === 'date' ? $gettext('Date') : $gettext('Date/Time')"
             :value="value"
         />
@@ -48,7 +48,7 @@
             :numpadGroup="'ObjectFormField'"
             :numpadDecimalPlaces="field.digits"
             :value="value"
-            @input="$emit('input', $event.target.value)"
+            @input="emitInput($event.target.value)"
             placeholder=""
             style="width:85px;"
             type="number"
@@ -61,10 +61,10 @@
                type="number"
                readonly="readonly"
                step="any"-->
-        <Checkbox v-if="typ === 'boolean'" :value="value" toggle @input="v => $emit('input', v)" />
+        <Checkbox v-if="typ === 'boolean'" :value="value" toggle @input="v => emitInput(v)" />
     </sui-form-field>
     <!-- not updateable -->
-    <sui-form-field v-else>
+    <sui-form-field v-else :style="{ minHeight: !value ? '60px' : undefined }">
         <label>{{ label || field.label }}</label>
         <!-- bool -->
         <template v-if="typ === 'boolean'">
@@ -126,11 +126,24 @@ export default {
             return props.field && !props.field.valid(props.value) && props.showError
         })
 
+        function emitInput(value) {
+            const fieldChange = {
+                value,
+                oldValue: props.value,
+                field: props.field,
+                label: props.label,
+                type: typ.value,
+                showError: props.showError
+            }
+            emit('fieldChange', fieldChange)
+            emit('input', value)
+        }
+
         const log = (a, b, c) => {
             console.log(a, b, c)
         }
 
-        return { typ, picklist, error, log, formatDate, formatCurrency }
+        return { typ, picklist, emitInput, error, log, formatDate, formatCurrency }
     }
 }
 </script>

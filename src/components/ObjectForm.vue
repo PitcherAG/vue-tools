@@ -31,6 +31,7 @@
                 :key="key"
                 :field="field"
                 :show-error="state.showErrors"
+                @fieldChange="v => $emit('fieldChange', v)"
             />
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
