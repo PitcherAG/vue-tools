@@ -26,9 +26,9 @@ describe('i18n', () => {
             locale: 'en'
         }
         Object.assign(store.state, translations)
-        store.setLanguage('en', false)
+        store.setLanguage('en', {load: false})
         expect(trans('Save')).toBe('Save')
-        store.setLanguage('es', false)
+        store.setLanguage('es', {load: false})
         expect(trans('Save')).toBe('Guardar')
         expect($gettext('Save')).toBe('Guardar')
     })
@@ -47,7 +47,7 @@ describe('i18n', () => {
             }
         }
         Object.assign(store.state, translations)
-        store.setLanguage('en_US', false)
+        store.setLanguage('en_US', {load: false})
         expect($ngettext('Ticket', 1)).toBe('Ticket')
         expect($ngettext('Ticket', 2)).toBe('Tickets')
     })
@@ -68,7 +68,7 @@ describe('i18n', () => {
             }
         }
         Object.assign(store.state, translations)
-        store.setLanguage('en_US', false)
+        store.setLanguage('en_US', {load: false})
         expect($ngettext('I have {num} Ticket.', 2, { num: 2 })).toBe('I have 2 Tickets.')
         expect(
             $gettext('I have { a } and { b }.', {
