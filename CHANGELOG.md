@@ -2,8 +2,20 @@
 
 ## 1.3.7
 
-- object form bugfixes
+### Changed
 - ios wkview detection
+- ObjectFormField
+  - show labels if a field is not updateable
+  - new event emitter: @fieldUpdate
+  - fixed height for empty fields
+- ObjectForm
+  - bug fixes
+  - checkbox inside template v-model => value & emit input
+  - new event emitter @fieldUpdate that is forwarded from ObjectFormField
+- Checkbox
+  - accepting undefined/null as value now and transforms to false by default
+- Sidebar
+  - new prop: type, default value remains as 'push'
 
 ## 1.3.6
 
@@ -16,6 +28,10 @@
 - eslint-plugin-vue to 7.0.0-alpha.7
 - Dropdown updated
   - emit string as value (Fomantic dropdown default)
+  - renamed prop: options -> items
+  - renamed prop: textField -> item-text
+  - renamed prop: valueField -> item-value
+  - renamed prop: setting -> settings
 
 ## 1.3.5
 
