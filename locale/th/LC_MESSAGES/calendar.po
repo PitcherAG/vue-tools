@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: th\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "เมษายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "เมษายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "สิงหาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "สิงหาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "วันเวลา"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "ธันวาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "ธันวาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "กุมภาพันธ์"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "กุมภาพันธ์"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "ม.ค."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "มกราคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "กรกฎาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "กรกฎาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "มิถุนายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "มิถุนายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "ทะเล"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "มีนาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "อาจ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "พฤศจิกายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "พฤศจิกายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "ตอนนี้"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "ตุลาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "ตุลาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "กันยายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "กันยายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "ในวันนี้"
