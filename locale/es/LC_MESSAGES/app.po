@@ -1,0 +1,197 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: es\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "A.M"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "abr"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "abril"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "ago"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "agosto"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "Fecha"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Fecha y hora"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "dic"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "diciembre"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "feb"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "febrero"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "ene"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "enero"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "jul"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "julio"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "jun"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "junio"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Mar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "marzo"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Mayo"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "nov"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "noviembre"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Ahora"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "oct"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "octubre"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "Salvar"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "Seleccione"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "Seleccionar tipo de registro"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "sep"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "septiembre"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "Este objeto no tiene un campo de ID externo en config.json."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"Este objeto no tiene un campo de ID externo en config.json. Proporcione uno "
+"o sincronice primero antes de editar."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "Este objeto no es editable. Necesitas sincronizar primero."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Hoy"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "No puede agregar un objeto de este tipo."

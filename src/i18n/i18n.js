@@ -1,8 +1,8 @@
 import Component from './component'
 import Directive from './directive'
-import { getTranslationIndex } from './plurals'
-import { renderSimpleContext } from '../utils'
-import { createStore } from '..'
+import {getTranslationIndex} from './plurals'
+import {renderSimpleContext} from '../utils'
+import {createStore} from '..'
 
 if (!window.fetch) {
     import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch')
@@ -18,18 +18,28 @@ export const useI18nStore = () => {
     const s = {
         id: 'i18n',
         state: defaultOptions,
-        setLanguage: async function(lang, load = true, dir = 'translations', app = 'app') {
+        setLanguage: async function (lang, {app = 'app', dir = 'translations', load = true} = {}) {
             if (!this.state.availableLanguages[lang]) {
                 throw new Error('invalid language: ' + lang)
             }
 
             if (load && lang != 'en') {
                 const response = await fetch(`${dir}/${lang}/${app}.json`)
-                this.state.messages[lang] = await response.json()
+                const data = await response.json()
+
+                for (const locale in data) {
+                    if (this.state.messages[locale]) {
+                        for (const msgid in data[locale]) {
+                            this.state.messages[locale][msgid] = data[locale][msgid]
+                        }
+                    } else {
+                        this.state.messages[locale] = data[locale]
+                    }
+                }
             }
 
             this.state.locale = lang
-        }
+        },
     }
     return createStore(s)
 }
@@ -77,6 +87,10 @@ window.$gettext = function(msgid, context) {
 
 window.translateUI = function(json) {
     console.warn('not implemented', JSON.parse(json))
+}
+
+window._ = function(msgid, context) {
+    return trans(msgid, 1, context)
 }
 
 window.$t = function(msgid, context) {

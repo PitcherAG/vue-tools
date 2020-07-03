@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: uk\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "Квітень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "Квітень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "Серпень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "Серпень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Дата, час"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "Груд"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "Грудень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "Лют"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "Лютий"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "Січ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "Січень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "Лип"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "Липень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "Червень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "Червень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Море"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "Березень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Може"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "Лис"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "Листопад"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Тепер"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "Жовт"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "Жовтень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "ПМ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "Вересень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "Вересень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Сьогодні"
