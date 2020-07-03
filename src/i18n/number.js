@@ -1,5 +1,6 @@
 import { useParamsStore } from '../params'
 import { useI18nStore } from './i18n'
+import { PLATFORM } from '../platform'
 
 const currencyDict = {
     Euro: 'EUR',
@@ -20,7 +21,19 @@ export function formatCurrency(value, currency) {
         throw 'locale not defined'
     }
     locale = locale.split('_').join('-')
-    return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(value)
+    const minus = value < 0
+    if (minus) {
+        value *= -1
+    }
+    let result = new Intl.NumberFormat(locale, { style: 'currency', currency }).format(value)
+    if (minus) {
+        // IE11 bullshit
+        result = '-' + result
+    }
+    if (PLATFORM === 'WINDOWS') {
+        result = result.split(currency.toUpperCase()).join(currency.toUpperCase() + ' ')
+    }
+    return result
 }
 
 export function formatDecimal(value, maximumFractionDigits = 1, minimumFractionDigits = 0) {
