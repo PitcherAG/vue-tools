@@ -66,7 +66,7 @@
     <!-- not updateable -->
     <sui-form-field v-else :style="{ minHeight: !value ? '60px' : undefined }">
         <label>{{ label || field.label }}</label>
-        <div class="pt-2" style="font-size:1.2em">
+        <div class="pt-2" style="font-size:1.175em">
             <!-- bool -->
             <template v-if="typ === 'boolean'">
                 {{ value ? 'yes' : 'no' }}
