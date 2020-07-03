@@ -1,0 +1,197 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: be\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "Крас"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "Красавік"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "Жнівень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "Жнівень"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "Дата"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Дата / Час"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "Снеж"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "Снежань"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "Лют"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "Люты"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "Ян"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "Студзень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "Ліпень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "Ліпень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "Чэрвень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "Чэрвень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Мора"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "Сакавік"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Мая"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "Ліс"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "Лістапада"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Цяпер"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "Кастрычнік"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "Кастрычніцкая"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "Захаваць"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "Абярыце"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "Выберыце Тып запісу"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "Верасень"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "Верасень"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "Гэты аб'ект не мае вонкавага поля ідэнтыфікатара ў config.json."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"Гэты аб'ект не мае вонкавага поля ідэнтыфікатара ў config.json. Перш чым "
+"рэдагаваць, дайце адзін альбо сінхранізаваць."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "Гэты аб'ект нельга рэдагаваць. Спачатку трэба сінхранізаваць."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Сёння"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "Вы не можаце дадаць аб'ект такога тыпу."

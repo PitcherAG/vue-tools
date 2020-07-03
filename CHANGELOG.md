@@ -12,10 +12,16 @@
   - bug fixes
   - checkbox inside template v-model => value & emit input
   - new event emitter @fieldUpdate that is forwarded from ObjectFormField
+  - .fields margin-bottom reduced
 - Checkbox
   - accepting undefined/null as value now and transforms to false by default
 - Sidebar
   - new prop: type, default value remains as 'push'
+- support package translations
+- support multiple categories
+
+### Fixed
+- store function binding
 
 ## 1.3.6
 

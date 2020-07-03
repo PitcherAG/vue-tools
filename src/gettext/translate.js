@@ -1,100 +1,106 @@
-#!/usr/bin/env node
-
 const _ = require('lodash')
-const config = require('./config')
+const chalk = require('chalk')
 const fs = require('fs')
 const gettextParser = require('gettext-parser')
-const { Translate } = require('@google-cloud/translate').v2
+const path = require('path')
+const {Translate} = require('@google-cloud/translate').v2
+
+const translate = new Translate()
 
 function formatForTranslation(str) {
     return str
-        .replace(/\\n/g, '<br>')
-        .replace(/{\S+}/, match => `<span class="notranslate">${match}</span>`)
-        .replace('%s', '{0}')
+            .replace(/\\n/g, '<br>')
+            .replace(/{\S+}/, match => `<span class="notranslate">${match}</span>`)
+            .replace('%s', '{0}')
 }
 
 function formatFromTranslation(str) {
     return str
-        .replace(/<br>/g, '\n')
-        .replace(/<span class="notranslate">({\S+})<\/span>/, (match, label) => label)
-        .replace('{0}', '%s')
+            .replace(/<br>/g, '\n')
+            .replace(/<span class="notranslate">({\S+})<\/span>/, (match, label) => label)
+            .replace('{0}', '%s')
 }
 
-async function main() {
-    const translate = new Translate()
+async function parseFile(file) {
+    const data = fs.readFileSync(file)
+    return gettextParser.po.parse(data)
+}
 
+async function translateConfig(config) {
     const [languages] = await translate.getLanguages()
+    const output = config.output && config.output.po ? config.output.po : 'locale'
 
-    const potPath = `${config.poBaseDir}/${config.category}.pot`
-    const potInput = fs.readFileSync(potPath)
-    const pot = gettextParser.po.parse(potInput)
-    const potTranslations = pot.translations['']
+    for (const t of config.translations) {
+        console.log(`[config-gettext-translate] translating ${t.category}`)
 
-    for (const code of Object.keys(config.availableLanguages)) {
-        if (!languages.find(l => l.code === code)) {
-            console.error(`unsupported language: ${code}`)
-            continue
-        }
+        for (const language in config.languages) {
+            if (!languages.find(l => l.code === language)) {
+                console.error(chalk.red`[config-gettext-translate] language ${language} not supported`)
+                continue
+            }
 
-        const poDir = `${config.poBaseDir}/${code}/LC_MESSAGES`
-        const poPath = `${poDir}/${config.category}.po`
-
-        if (!fs.existsSync(`${config.poBaseDir}/${code}/LC_MESSAGES`)) {
-            fs.mkdirSync(`${config.poBaseDir}/${code}/LC_MESSAGES`, { recursive: true })
-        }
-
-        if (!fs.existsSync(poPath)) {
-            fs.copyFileSync(potPath, poPath)
-        }
-
-        const poInput = fs.readFileSync(poPath)
-        const po = gettextParser.po.parse(poInput)
-        const poTranslations = po.translations['']
-
-        if (!po.headers.Language) {
-            po.headers.Language = code
-        }
-
-        // add new messages
-        for (const msgid of Object.keys(potTranslations)) {
-            if (!poTranslations[msgid]) {
-                poTranslations[msgid] = Object.assign({}, potTranslations[msgid])
+            if (t.type == 'source') {
+                await translateFile(path.join(output, `${t.category}.pot`), language, path.join(output, language, 'LC_MESSAGES', `${t.category}.po`))
             }
         }
+    }
+}
 
-        // remove missing messages
-        for (const msgid of Object.keys(poTranslations)) {
-            if (!potTranslations[msgid]) {
-                delete poTranslations[msgid]
-            }
+async function translateFile(file, language, output) {
+    const pot = await parseFile(file)
+    const po = await parseFile(fs.existsSync(output) ? output : file)
+
+    po.headers.Language = language
+
+    // add new messages
+    for (const msgid of Object.keys(pot.translations[''])) {
+        if (!po.translations[''][msgid]) {
+            po.translations[''][msgid] = Object.assign({}, pot.translations[''][msgid])
         }
+    }
 
-        // translate empty message strings
-        const translateMsgIDs = Object.keys(_.pickBy(poTranslations, msg => msg.msgid && !msg.msgstr[0]))
+    // remove missing messages
+    for (const msgid of Object.keys(po.translations[''])) {
+        if (!pot.translations[''][msgid]) {
+            delete po.translations[''][msgid]
+        }
+    }
 
-        if (translateMsgIDs.length) {
-            const translateInput = translateMsgIDs.map(formatForTranslation)
-            const [translations] = await translate.translate(translateInput, code)
+    // translate empty message strings
+    const msgids = Object.keys(_.pickBy(po.translations[''], msg => msg.msgid && !msg.msgstr[0]))
+    console.log(chalk.grey`[config-gettext-translate] ${language} has ${msgids.length} untranslated messages`)
 
-            translations.forEach((t, i) => {
-                const item = poTranslations[translateMsgIDs[i]]
+    if (msgids.length) {
+        const translations = await translateMessages(msgids, language)
 
-                if (t) {
-                    item.msgstr = formatFromTranslation(t)
-                } else {
-                    item.msgstr = ''
-                }
+        translations.forEach((t, i) => {
+            if (t) {
+                const item = po.translations[''][msgids[i]]
+                item.msgstr = t
 
                 if (!item.comments) {
                     item.comments = {}
                 }
 
                 item.comments.flag = 'fuzzy'
-            })
-        }
-
-        fs.writeFileSync(poPath, gettextParser.po.compile(po))
+            }
+        })
     }
+
+    if (!fs.existsSync(path.dirname(output))) {
+        fs.mkdirSync(path.dirname(output), {recursive: true})
+    }
+
+    fs.writeFileSync(output, gettextParser.po.compile(po))
 }
 
-main().catch(console.error)
+async function translateMessages(messages, language) {
+    const input = messages.map(formatForTranslation)
+    const [translations] = await translate.translate(input, language)
+    return translations.map(formatFromTranslation)
+}
+
+module.exports = {
+    translateConfig,
+    translateFile,
+}
