@@ -71,7 +71,7 @@ export default {
 <style>
 .fade-enter-active,
 .fade-leave-active {
-    transition-duration: 0.3s;
+    transition-duration: 0.4s;
     transition-property: height, opacity;
     transition-timing-function: ease;
     /*  overflow: hidden;*/
@@ -106,7 +106,7 @@ export default {
 
 .zoom-enter-active,
 .zoom-leave-active {
-    animation-duration: 0.5s;
+    animation-duration: 0.8s;
     animation-fill-mode: both;
     animation-name: zoom;
 }

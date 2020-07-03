@@ -36,7 +36,7 @@
             />
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
-        <sui-form v-if="!state.needsRecordType && !validationError && state.layout">
+        <sui-form v-if="!state.needsRecordType && !validationError && state.layout && state.ready">
             <fragment
                 v-for="(section, sectionKey) in state.layout.editLayoutSections"
                 :key="sectionKey"
@@ -130,6 +130,7 @@ export default {
             'SystemModstamp'
         ]
         const state = reactive({
+            ready: false,
             fields: [],
             id: props.id,
             obj: {},
@@ -261,6 +262,7 @@ export default {
                         }
                     }
                     state.fields = req_fields
+                    state.ready = true
                 } else {
                     if (!state.recordTypeId) {
                         return
@@ -278,6 +280,7 @@ export default {
                     if (layout) {
                         const data = []
                         const filed = []
+                        const fieldDict = {}
                         for (const section of layout.editLayoutSections) {
                             let fieldCount = 0
                             for (const row of section.layoutRows) {
@@ -286,18 +289,26 @@ export default {
                                         if (item.layoutComponents) {
                                             for (const comp of item.layoutComponents) {
                                                 if (excludeFields.indexOf(comp.value) === -1) {
-                                                    const field = new Field(comp.details, null, false)
-                                                    if (props.readOnlyFields.includes(field.name)) {
-                                                        field.updateable = false
-                                                    } else if (
-                                                        props.customReferences &&
-                                                        props.customReferences[field.name]
-                                                    ) {
-                                                        field.loadExternalReferences(props.customReferences[field.name])
+                                                    let field
+                                                    if (fieldDict[comp.details.name]) {
+                                                        field = fieldDict[comp.details.name]
                                                     } else {
-                                                        field.load_refs()
+                                                        field = new Field(comp.details, null, false)
+                                                        fieldDict[comp.details.name] = field
+                                                        fields.push(field)
+                                                        if (props.readOnlyFields.includes(field.name)) {
+                                                            field.updateable = false
+                                                        } else if (
+                                                            props.customReferences &&
+                                                            props.customReferences[field.name]
+                                                        ) {
+                                                            field.loadExternalReferences(
+                                                                props.customReferences[field.name]
+                                                            )
+                                                        } else {
+                                                            field.load_refs()
+                                                        }
                                                     }
-                                                    fields.push(field)
                                                     comp.field = field
                                                     comp.exclude = false
                                                     fieldCount++
@@ -313,6 +324,7 @@ export default {
                         }
                         state.layout = layout
                         state.fields = fields
+                        state.ready = true
                     } else {
                         // handle if no field list is provided and we dont have a layout
                         for (const field of state.schema.fields) {
@@ -354,6 +366,7 @@ export default {
                             return true
                         })
                         state.fields = req_fields
+                        state.ready = true
                     }
                 }
                 for (const field of state.fields) {
