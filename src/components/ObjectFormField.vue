@@ -66,22 +66,24 @@
     <!-- not updateable -->
     <sui-form-field v-else :style="{ minHeight: !value ? '60px' : undefined }">
         <label>{{ label || field.label }}</label>
-        <!-- bool -->
-        <template v-if="typ === 'boolean'">
-            {{ value ? 'yes' : 'no' }}
-        </template>
-        <!-- currency -->
-        <template v-else-if="typ === 'currency'">
-            {{ formatCurrency(value) }}
-        </template>
-        <!-- date -->
-        <template v-else-if="typ === 'date' || typ === 'datetime'">
-            {{ formatDate(value) }}
-        </template>
-        <!-- default -->
-        <template v-else>
-            {{ valueLabel || value }}
-        </template>
+        <div class="pt-2" style="font-size:1.2em">
+            <!-- bool -->
+            <template v-if="typ === 'boolean'">
+                {{ value ? 'yes' : 'no' }}
+            </template>
+            <!-- currency -->
+            <template v-else-if="typ === 'currency'">
+                {{ formatCurrency(value) }}
+            </template>
+            <!-- date -->
+            <template v-else-if="typ === 'date' || typ === 'datetime'">
+                {{ formatDate(value) }}
+            </template>
+            <!-- default -->
+            <template v-else>
+                {{ valueLabel || value }}
+            </template>
+        </div>
     </sui-form-field>
 </template>
 
