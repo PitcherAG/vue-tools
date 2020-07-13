@@ -3,8 +3,8 @@
         <h2>Demo Page</h2>
         <div class="ui divider" />
         <!-- <NumpadInputEx /> -->
-        <!-- <DataTableEx /> -->
-        <DropdownEx />
+        <DataTableEx />
+        <!-- <DropdownEx /> -->
         <!-- <ProgressBarEx /> -->
     </div>
 </template>
