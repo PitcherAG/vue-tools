@@ -49,6 +49,8 @@ Fomantic DataTable with pagination
 | `heading-row` | Slot to overwrite the content of ```thead > tr``` | ```{ filteredFields, sortData, sortTable, getClass(field) }```
 | `FIELDTITLE__slot` | Dynamic slot to overwrite content of targeted field ```thead > tr > th``` | ```{ field }```
 | `body` | Slot to overwrite the content of ```tbody``` | ```{ tableData, filteredFields, sortData, pagination }```
+| `prepend-tbody` | Slot to prepend ```<tr>``` in to the ```tbody``` | ```{ mapper }```
+| `append-tbody` | Slot to append ```<tr>``` in to the ```tbody``` | ```{ mapper }```
 | `row` | Slot to overwrite the content of ```tbody > tr``` | ```{ rowData, raw, sortData, pagination }```
 | `t-foot` | Slot to overwrite the content of ```tfoot``` | ```{ tableData, sortData, pagination, paginate(n) }```
 | `no-data-template` | Slot to overwrite the content that shows when table has not any data | ```{ noDataText }```
@@ -94,6 +96,10 @@ field: {
 
 // array of fields that are filtered. Does not include fields with hide: true and slotName
 filteredFields: Field[]
+
+// function to map dotted fields from an object
+// ex: mapper('object.nested.field.title', object_that_includes_target_property)
+mapper: Function(key, obj)
 
 // data array that is currently shown in the table, according to pagination
 tableData: Object[]
@@ -218,6 +224,16 @@ const searchFields = ['name', 'age']
         </th>
     </template>
 
+    <!-- Prepend to tbody before data line items -->
+    <template #prepend-tbody="{ mapper }">
+        <tr>
+            <td colspan="2">Prepend Test</td>
+            <td>Test</td>
+            <td colspan="3" />
+            <td>test</td>
+        </tr>
+    </template>
+
     <!-- Inject template to body -->
     <template #body="{ tableData, filteredFields, mapper, pagination, sortData }">
         <tr v-for="(row, rKey) in tableData" :key="rKey">
@@ -239,6 +255,14 @@ const searchFields = ['name', 'age']
                     </template>
                 </td>
             </template>
+        </tr>
+    </template>
+
+    <!-- Append to tbody after data line items -->
+    <template #append-tbody="{ mapper }">
+        <tr>
+            <td colspan="2">Append test</td>
+            <td colspan="4">test</td>
         </tr>
     </template>
 

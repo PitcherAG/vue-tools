@@ -6,6 +6,20 @@
             <input type="text" v-model="options.searchFor" />
         </div>
         <DataTable class="celled" :data="data" :fields="fields" v-bind="options">
+            <template #prepend-tbody="{ mapper }">
+                <tr>
+                    <td colspan="2">Prepend Test</td>
+                    <td>Test</td>
+                    <td colspan="3" />
+                    <td>test</td>
+                </tr>
+            </template>
+            <template #append-tbody="{ mapper }">
+                <tr>
+                    <td colspan="2">Append test</td>
+                    <td colspan="4">test</td>
+                </tr>
+            </template>
             <!-- <template #heading-row="{ fields, sort, getClass }">
                 <th v-for="(f, fKey) in fields" :key="fKey" @click="sort(f.dataField)" :class="getClass(f)">
                     <i v-if="f.icon" class="icon" :class="f.icon" />
