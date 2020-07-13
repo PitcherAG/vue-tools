@@ -14,7 +14,7 @@ Fomantic Calendar
 
 Displays a fomantic checkbox
 ```javascript
-import { Checkbox ] from '@pitcher/vue-sdk'
+import { Checkbox } from '@pitcher/vue-sdk'
 ```
 
 ```html
@@ -622,7 +622,7 @@ const value = 0
 Fomantic Sidebar component
 
 ```javascript
-import { Sidebar ] from '@pitcher/vue-sdk'
+import { Sidebar } from '@pitcher/vue-sdk'
 ```
 ```html
 <Sidebar>
@@ -646,7 +646,7 @@ setup(){
 and somewhere else:
 
 ```javascript
-import { Sidebar ] from '@pitcher/vue-sdk'
+import { Sidebar } from '@pitcher/vue-sdk'
 
 setup() {
     const showSidebar = (product) => {
