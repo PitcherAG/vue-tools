@@ -39,6 +39,12 @@
             </tr>
         </thead>
         <tbody>
+            <!-- prepend-body slot -->
+            <template v-if="hasPrependTbodySlot">
+                <slot name="prepend-tbody" :mapper="mapper" />
+            </template>
+
+            <!-- body slot -->
             <template v-if="hasBodySlot">
                 <slot
                     name="body"
@@ -88,6 +94,11 @@
                     </td>
                 </template>
             </tr>
+
+            <!-- append-body slot -->
+            <template v-if="hasAppendTbodySlot">
+                <slot name="append-tbody" :mapper="mapper" />
+            </template>
         </tbody>
 
         <!-- TFoot slot -->
@@ -247,6 +258,8 @@ export default defineComponent({
         const slotChecks = {
             hasRowSlot: !!slots.row,
             hasHeadingRowSlot: !!slots['heading-row'],
+            hasAppendTbodySlot: !!slots['append-tbody'],
+            hasPrependTbodySlot: !!slots['prepend-tbody'],
             hasBodySlot: !!slots.body,
             hasTFootSlot: !!slots['t-foot'],
             hasNoDataSlot: !!slots['no-data-template']

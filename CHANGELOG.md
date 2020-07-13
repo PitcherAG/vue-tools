@@ -5,6 +5,8 @@
 ### Changed
 - DataTable updated
   - added tooltipText as a prop to field definition for defining custom tooltipText
+  - added new slots: append-tbody, prepend-tbody
+
 ## 1.3.8
 
 ### Fixed
