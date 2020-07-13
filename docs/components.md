@@ -81,7 +81,9 @@ field: {
     // default: string
     sortType: 'string | number | date'
     // enable tooltip for <th> element
-    tooltip: Boolean,
+    tooltip: 'top left | top center | top right | bottom left | bottom center | bottom right | right center | left center',
+    // Custom text for tooltip. Uses title as text if not defined
+    tooltipText: String,
     // property in your data that you don't want to show in your table i.e. ID etc.
     hide: Boolean,
     // sets width style to the <th> element, accepts only string
