@@ -24,7 +24,7 @@
                         @click="f.sortable ? sortTable(f) : null"
                     >
                         <!-- default -->
-                        <span :data-tooltip="f.tooltip ? f.title : undefined" :data-position="f.tooltip">
+                        <span :data-tooltip="getTooltip(f)" :data-position="f.tooltip">
                             <!-- custom header injection -->
                             <template v-if="hasSlot(`${f.title}__slot`)">
                                 <slot :name="`${f.title}__slot`" :field="f" />
@@ -363,6 +363,18 @@ export default defineComponent({
             return filtered
         }
 
+        // get tooltip
+        function getTooltip(f) {
+            if (!f.tooltip) {
+                return undefined
+            }
+
+            if (!f.tooltipText) {
+                return f.title
+            }
+            return f.tooltipText
+        }
+
         // Calculate pagination data
         function calculatePagination(data) {
             if (props.noPagination) {
@@ -448,6 +460,7 @@ export default defineComponent({
             sortTable,
             getTHClass,
             getScopeData,
+            getTooltip,
             hasSlot,
             tableData,
             paginate,

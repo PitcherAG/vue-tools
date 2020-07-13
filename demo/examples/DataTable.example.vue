@@ -104,7 +104,8 @@ export default {
                     thClass: 'left aligned',
                     tdClass: 'left aligned',
                     sortable: true,
-                    tooltip: 'top left'
+                    tooltip: 'top left',
+                    tooltipText: 'Testing the tooltip'
                 },
                 {
                     title: 'Url',

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.9
+
+### Changed
+- DataTable updated
+  - added tooltipText as a prop to field definition for defining custom tooltipText
 ## 1.3.8
 
 ### Fixed
