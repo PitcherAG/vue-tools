@@ -2,7 +2,8 @@
     <div class="pt-4 fill-height">
         <h2>Demo Page</h2>
         <div class="ui divider" />
-        <NumpadInputEx />
+        <ModalEx />
+        <!-- <NumpadInputEx /> -->
         <!-- <DataTableEx /> -->
         <!-- <DropdownEx /> -->
         <!-- <ProgressBarEx /> -->
@@ -10,16 +11,18 @@
 </template>
 
 <script>
-import NumpadInputEx from './examples/NumpadInput.example.vue'
 import DataTableEx from './examples/DataTable.example.vue'
 import DropdownEx from './examples/Dropdown.example.vue'
+import ModalEx from './examples/Modal.example.vue'
+import NumpadInputEx from './examples/NumpadInput.example.vue'
 import ProgressBarEx from './examples/ProgressBar.example.vue'
 
 export default {
     components: {
-        NumpadInputEx,
         DataTableEx,
         DropdownEx,
+        ModalEx,
+        NumpadInputEx,
         ProgressBarEx
     },
     setup() {}
