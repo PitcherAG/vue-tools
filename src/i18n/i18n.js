@@ -1,8 +1,8 @@
 import Component from './component'
 import Directive from './directive'
-import {getTranslationIndex} from './plurals'
-import {renderSimpleContext} from '../utils'
-import {createStore} from '..'
+import { getTranslationIndex } from './plurals'
+import { renderSimpleContext } from '../utils'
+import { createStore } from '..'
 
 if (!window.fetch) {
     import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch')
@@ -18,7 +18,7 @@ export const useI18nStore = () => {
     const s = {
         id: 'i18n',
         state: defaultOptions,
-        setLanguage: async function (lang, {app = 'app', dir = 'translations', load = true} = {}) {
+        setLanguage: async function(lang, { app = 'app', dir = 'translations', load = true } = {}) {
             if (!this.state.availableLanguages[lang]) {
                 throw new Error('invalid language: ' + lang)
             }
@@ -39,7 +39,7 @@ export const useI18nStore = () => {
             }
 
             this.state.locale = lang
-        },
+        }
     }
     return createStore(s)
 }
