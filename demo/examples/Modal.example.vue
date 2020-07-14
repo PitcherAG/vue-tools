@@ -3,11 +3,18 @@
         <h3>Modal</h3>
         <div class="ui divider" />
         <div class="ui button" @click="show = !show">Show modal</div>
-        <Modal v-model="show" content-class="test hulo yeah">
-            <template #header>
+        <Modal
+            v-model="show"
+            approve-text="Submit"
+            deny-text="Cancel"
+            title="Register"
+            title-icon="user"
+            hide-close-icon
+        >
+            <!-- <template #header>
                 <i class="setting icon" />
                 Settings
-            </template>
+            </template> -->
             <form class="ui form">
                 <div class="field">
                     <label>First Name</label>
@@ -24,9 +31,9 @@
                     </div>
                 </div>
             </form>
-            <template #actions>
+            <!-- <template #actions>
                 <button class="ui button primary">Submit</button>
-            </template>
+            </template> -->
         </Modal>
         <br />
         <br />

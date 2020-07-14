@@ -1,16 +1,43 @@
 <template>
     <div class="ui modal" ref="modal" v-bind="modalAttr">
-        <!-- Header slot -->
-        <div v-if="hasHeaderSlot" class="header">
-            <slot name="header" />
-        </div>
-        <!-- Content/Default slot -->
-        <div class="content" v-bind="contentAttr">
-            <slot />
-        </div>
-        <div v-if="hasActionsSlot" class="actions" :class="actionsClass">
-            <slot name="actions" />
-        </div>
+        <!-- If has custom slot to replace whole content -->
+        <template v-if="hasCustomSlot">
+            <slot name="custom" />
+        </template>
+        <!-- Default content -->
+        <template v-else>
+            <!-- Has header slot -->
+            <div v-if="hasHeaderSlot" class="header">
+                <slot name="header" />
+            </div>
+            <!-- Header with title prop / default -->
+            <div v-else-if="title" class="header d-flex">
+                <i v-if="titleIcon" :class="`${titleIcon} icon`" />
+                {{ title }}
+                <i
+                    v-if="!hideCloseIcon"
+                    class="times icon ml-auto mr-0"
+                    style="cursor: pointer"
+                    @click="emit('input', false)"
+                />
+            </div>
+
+            <!-- Content/Default slot -->
+            <div class="content" :class="contentAttr">
+                <slot />
+            </div>
+
+            <!-- Actions slot -->
+            <div v-if="hasActionsSlot" class="actions">
+                <slot name="actions" />
+            </div>
+            <div v-else-if="approveText || denyText" class="actions">
+                <button v-if="denyText" class="ui button negative" @click="emit('onDeny')">{{ denyText }}</button>
+                <button v-if="approveText" class="ui button positive" @click="emit('onApprove')">
+                    {{ approveText }}
+                </button>
+            </div>
+        </template>
     </div>
 </template>
 
@@ -23,6 +50,14 @@ export default defineComponent({
         value: {
             type: Boolean,
             required: true
+        },
+        title: String,
+        titleIcon: String,
+        approveText: String,
+        denyText: String,
+        hideCloseIcon: {
+            type: Boolean,
+            default: false
         },
         basic: Boolean,
         fullscreen: Boolean,
@@ -56,10 +91,6 @@ export default defineComponent({
             type: String,
             default: ''
         },
-        actionsClass: {
-            type: String,
-            default: ''
-        },
         size: {
             type: String,
             validator: val => validateSize(val, 'Modal')
@@ -79,7 +110,8 @@ export default defineComponent({
     setup(props, { refs, slots, emit }) {
         const state = reactive({
             hasHeaderSlot: !!slots.header,
-            hasActionsSlot: !!slots.actions
+            hasActionsSlot: !!slots.actions,
+            hasCustomSlot: !!slots.custom
         })
 
         const modalAttr = computed(() => ({
@@ -98,16 +130,14 @@ export default defineComponent({
         }))
 
         const contentAttr = computed(() => {
-            const attrs = {
-                class: {
-                    scrolling: props.scrollingContent,
-                    image: props.imageContent
-                }
+            const cls = {
+                scrolling: props.scrollingContent,
+                image: props.imageContent
             }
             props.contentClass.split(' ').forEach(v => {
-                attrs.class[v] = true
+                cls[v] = true
             })
-            return attrs
+            return cls
         })
 
         const initModal = () => {
@@ -154,7 +184,7 @@ export default defineComponent({
             return $(refs.modal).progress(comm)
         }
 
-        return { ...toRefs(state), modalAttr, contentAttr, exec }
+        return { ...toRefs(state), modalAttr, contentAttr, exec, emit }
     }
 })
 </script>
