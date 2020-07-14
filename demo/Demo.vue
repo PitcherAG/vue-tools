@@ -2,8 +2,8 @@
     <div class="pt-4 fill-height">
         <h2>Demo Page</h2>
         <div class="ui divider" />
-        <!-- <NumpadInputEx /> -->
-        <DataTableEx />
+        <NumpadInputEx />
+        <!-- <DataTableEx /> -->
         <!-- <DropdownEx /> -->
         <!-- <ProgressBarEx /> -->
     </div>
