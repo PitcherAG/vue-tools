@@ -6,7 +6,7 @@
             <i v-if="leftIcon" class="icon" :class="leftIcon" style="z-index: 1" />
             <slot v-if="labelLeftSlot" name="labelLeft" />
             <input
-                :value="value"
+                :value="localValue"
                 type="text"
                 readonly="readonly"
                 class="number-input"
@@ -22,66 +22,66 @@
         </div>
         <!-- Numpad -->
         <div v-if="numpadIsVisible" class="ui segment pa-0 mt-0 numpad" ref="numpad">
-            <div class="keys">
-                <div class="keys__row">
-                    <button class="keys__row--number" @mousedown.prevent @click="addVal(1)">
+            <div class="numpad__keys">
+                <div class="numpad__keys--row">
+                    <button class="row--number" @mousedown.prevent @click="addVal(1)">
                         1
                     </button>
-                    <button class="keys__row--number" @mousedown.prevent @click="addVal(2)">
+                    <button class="row--number" @mousedown.prevent @click="addVal(2)">
                         2
                     </button>
-                    <button class="keys__row--number" @mousedown.prevent @click="addVal(3)">
+                    <button class="row--number" @mousedown.prevent @click="addVal(3)">
                         3
                     </button>
                     <!-- Clear -->
-                    <button class="keys__row--number" @mousedown.prevent @click="reset">
+                    <button class="row--number" @mousedown.prevent @click="reset">
                         <i class="times icon thinner" />
                     </button>
                 </div>
-                <div class="keys__row">
-                    <button class="keys__row--number" @mousedown.prevent @click="addVal(4)">
+                <div class="numpad__keys--row">
+                    <button class="row--number" @mousedown.prevent @click="addVal(4)">
                         4
                     </button>
-                    <button class="keys__row--number" @mousedown.prevent @click="addVal(5)">
+                    <button class="row--number" @mousedown.prevent @click="addVal(5)">
                         5
                     </button>
-                    <button class="keys__row--number" @mousedown.prevent @click="addVal(6)">
+                    <button class="row--number" @mousedown.prevent @click="addVal(6)">
                         6
                     </button>
                     <!-- Backspace -->
-                    <button class="keys__row--number" @mousedown.prevent @click="backspace">
+                    <button class="row--number" @mousedown.prevent @click="backspace">
                         <i class="backspace thin icon" />
                     </button>
                 </div>
-                <div class="keys__row">
-                    <button class="keys__row--number" @mousedown.prevent @click="addVal(7)">
+                <div class="numpad__keys--row">
+                    <button class="row--number" @mousedown.prevent @click="addVal(7)">
                         7
                     </button>
-                    <button class="keys__row--number" @mousedown.prevent @click="addVal(8)">
+                    <button class="row--number" @mousedown.prevent @click="addVal(8)">
                         8
                     </button>
-                    <button class="keys__row--number" @mousedown.prevent @click="addVal(9)">
+                    <button class="row--number" @mousedown.prevent @click="addVal(9)">
                         9
                     </button>
                     <!-- Next in group -->
-                    <button class="keys__row--number" @mousedown.prevent @click="jumpNextSibling">
+                    <button class="row--number" @mousedown.prevent @click="jumpNextSibling">
                         <i class="chevron right thin icon" />
                     </button>
                 </div>
-                <div class="keys__row">
+                <div class="numpad__keys--row">
                     <!-- Plus -->
-                    <button class="keys__row--number" @mousedown.prevent @click="incDec('inc')">
+                    <button class="row--number" @mousedown.prevent @click="incDec('inc')">
                         <i class="plus icon thinner" />
                     </button>
-                    <button class="keys__row--number" @mousedown.prevent @click="addVal(0)">
+                    <button class="row--number" @mousedown.prevent @click="addVal(0)">
                         0
                     </button>
                     <!-- Minus -->
-                    <button class="keys__row--number" @mousedown.prevent @click="incDec('dec')">
+                    <button class="row--number" @mousedown.prevent @click="incDec('dec')">
                         <i class="minus icon thinner" />
                     </button>
                     <!-- Next group -->
-                    <button class="keys__row--number" @mousedown.prevent @click="jumpNextGroup">
+                    <button class="row--number" @mousedown.prevent @click="jumpNextGroup">
                         <i class="chevron down thin icon" />
                     </button>
                 </div>
@@ -105,6 +105,7 @@ export default defineComponent({
         value: {
             type: [String, Number]
         },
+        lazy: Boolean,
         decimals: {
             type: Number,
             default: 2,
@@ -175,7 +176,8 @@ export default defineComponent({
             selfIndex: null,
             groupIndex: null,
             labelLeftSlot: !!ctx.slots.labelLeft,
-            labelRightSlot: !!ctx.slots.labelRight
+            labelRightSlot: !!ctx.slots.labelRight,
+            localValue: props.value
         })
 
         const inputAttrs = computed(() => {
@@ -207,9 +209,15 @@ export default defineComponent({
 
         // to check outer click
         const determineOuterClick = e => {
-            if (!e.target.className.includes('number')) {
-                focus(false)
+            // if number input & keys row, do nothing
+            if (
+                e.target.className.includes('numpad') ||
+                e.target.className.includes('number-input') ||
+                e.target.className.includes('row--number')
+            ) {
+                return
             }
+            focus(false)
         }
 
         onMounted(() => {
@@ -234,60 +242,68 @@ export default defineComponent({
             document.removeEventListener('click', determineOuterClick)
         })
 
+        // function to emit data if not lazy
         function emit(val) {
-            const parsed = typeof props.value === 'number' ? parseFloat(val) : val
-            ctx.emit('input', parsed)
+            const parsed = typeof localState.localValue === 'number' ? parseFloat(val) : val
+            localState.localValue = parsed
+
+            if (!props.lazy) {
+                ctx.emit('input', localState.localValue)
+            }
         }
 
         function addVal(val) {
             // before adding a new value, check if next value will pass over the max number
-            if (props.max && (parseFloat(props.value) >= props.max || parseInt('1' + props.value) >= props.max)) {
+            if (
+                props.max &&
+                (parseFloat(localState.localValue) >= props.max || parseInt('1' + localState.localValue) >= props.max)
+            ) {
                 // max number passing on next click, don't add value
                 return
             }
 
             // parse current value as Integer
-            const parsed = parseInt(props.value.toString().replace(/\D/g, ''))
+            const parsed = parseInt(localState.localValue.toString().replace(/\D/g, ''))
             // concatenate incoming value as string with parsed value
             const value = parsed + val.toString()
             // mask the value with decimals
             const masked = (value / dividerValue).toFixed(props.decimals)
             // set value
-            emit(masked.toString())
+            emit(masked)
         }
 
         function incDec(action) {
-            if (props.value === '') {
+            if (localState.localValue === '') {
                 emit(defaultValue)
             }
             // parse the number with decimals
-            let parsedNumber = parseFloat(props.value).toFixed(props.decimals)
+            let parsedNumber = parseFloat(localState.localValue).toFixed(props.decimals)
 
             if (action === 'dec' && parsedNumber >= 1) {
                 // decrease action
                 parsedNumber--
-                emit(parsedNumber.toFixed(props.decimals).toString())
+                emit(parsedNumber.toFixed(props.decimals))
             } else if (action === 'inc') {
                 // increase action
                 parsedNumber++
-                if (props.max && parseFloat(props.value) + 1 >= props.max) {
+                if (props.max && parseFloat(localState.localValue) + 1 >= props.max) {
                     parsedNumber = props.max
                 }
-                emit(parsedNumber.toFixed(props.decimals).toString())
+                emit(parsedNumber.toFixed(props.decimals))
             }
         }
 
         function backspace() {
             // parse current value as Integer & convert to string
-            const parsed = parseInt(props.value.toString().replace(/\D/g, '')).toString()
+            const parsed = parseInt(localState.localValue.toString().replace(/\D/g, '')).toString()
             // remove last char
             const value = parsed.slice(0, -1)
             // mask the value with decimals
-            const masked = (value / dividerValue).toFixed(props.decimals)
+            const masked = value / dividerValue
 
-            if (masked !== 0) {
-                // set value
-                emit(masked.toString())
+            if (masked > 0) {
+                // emit value as fixed
+                emit(masked.toFixed(props.decimals))
             } else {
                 // set default value as it is now 0
                 emit(defaultValue)
@@ -305,7 +321,7 @@ export default defineComponent({
             if (visibility) {
                 checkOverlap()
                 // visible, if value empty set default
-                if (props.value === '') {
+                if (localState.localValue === '') {
                     emit(defaultValue)
                 }
                 if (props.noAnimation) {
@@ -315,6 +331,11 @@ export default defineComponent({
                 // if animation is active, animate
                 ctx.refs.inputDiv.classList.add('animate')
                 setTimeout(() => ctx.refs.inputDiv.classList.remove('animate'), 300)
+            }
+
+            // if blur & lazy model is active
+            if (!visibility && props.lazy) {
+                ctx.emit('input', localState.localValue)
             }
         }
 
@@ -416,13 +437,13 @@ $border-radius: 8.4px;
         }
 
         // default number style
-        .keys {
-            &__row {
+        &__keys {
+            &--row {
                 &:not(:last-child) {
                     border-bottom: $border;
                 }
 
-                &--number {
+                .row--number {
                     width: $number-w;
                     height: $number-h;
                     padding: 0;
