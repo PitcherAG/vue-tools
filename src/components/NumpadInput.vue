@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive, toRefs, computed, onMounted, onUnmounted } from '@vue/composition-api'
+import { defineComponent, reactive, toRefs, computed, watch, onMounted, onUnmounted } from '@vue/composition-api'
 import Vue from 'vue'
 
 export const numpadStore = Vue.observable({ groups: {} })
@@ -242,13 +242,20 @@ export default defineComponent({
             document.removeEventListener('click', determineOuterClick)
         })
 
+        // Watch props.value
+        watch(
+            () => props.value,
+            val => {
+                localState.localValue = val
+            }
+        )
+
         // function to emit data if not lazy
         function emit(val) {
             const parsed = typeof localState.localValue === 'number' ? parseFloat(val) : val
-            localState.localValue = parsed
 
             if (!props.lazy) {
-                ctx.emit('input', localState.localValue)
+                ctx.emit('input', parsed)
             }
         }
 
