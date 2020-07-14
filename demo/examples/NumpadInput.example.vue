@@ -20,7 +20,7 @@ export default {
     props: {},
     setup() {
         const state = reactive({
-            test: '',
+            test: 55.55,
             test2: '',
             recordTypeSaved: 'test1',
             recordTypes: [
