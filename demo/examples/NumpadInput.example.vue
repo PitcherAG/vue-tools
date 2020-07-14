@@ -21,22 +21,7 @@ export default {
     setup() {
         const state = reactive({
             test: '55.55',
-            test2: '',
-            recordTypeSaved: 'test1',
-            recordTypes: [
-                {
-                    text: 'test 1',
-                    value: 'test1'
-                },
-                {
-                    text: 'test 2',
-                    value: 'test2'
-                },
-                {
-                    text: 'test 3',
-                    value: 'test3'
-                }
-            ]
+            test2: ''
         })
 
         return { ...toRefs(state) }
