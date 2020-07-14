@@ -111,6 +111,7 @@ export default {
             validator: val => {
                 const valid =
                     val === '' ||
+                    val === 'mini' ||
                     val === 'tiny' ||
                     val === 'small' ||
                     val === 'medium' ||
