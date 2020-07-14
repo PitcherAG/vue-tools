@@ -5,10 +5,10 @@
         <div class="ui button" @click="show = !show">Show modal</div>
         <Modal
             v-model="show"
-            approve-text="Submit"
-            deny-text="Cancel"
             title="Register"
             title-icon="user"
+            approve-text="Submit"
+            deny-text="Cancel"
             hide-close-icon
         >
             <!-- <template #header>
