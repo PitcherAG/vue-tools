@@ -43,7 +43,7 @@
 
 <script>
 import { defineComponent, reactive, toRefs, computed, watch, onMounted } from '@vue/composition-api'
-import { parsePxStyle, validateSize } from './utils'
+import { parsePxStyle, validateSize } from './mixins'
 
 export default defineComponent({
     props: {
@@ -93,7 +93,7 @@ export default defineComponent({
         },
         size: {
             type: String,
-            validator: val => validateSize(val, 'Modal')
+            validator: val => validateSize(val, 'Modal.vue')
         },
         settings: {
             type: Object,
