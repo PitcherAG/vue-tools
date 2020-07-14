@@ -473,6 +473,7 @@ Custom component
 | prop | type | required | default | description |
 | :--- | :--- | :--- | :--- | :--- |
 | `v-model` | `String \| Number` | yes | - | input value
+| `lazy` | `Boolean` | no | undefined | set v-model value on blur event. This is useful if you do calculations based on your v-model value after updating it
 | `decimals` | `Number` | no | 2 | decimal value for input
 | `max` | `Number` | no | undefined | maximum number that input can reach
 | `min-width` | `Number \| String` | no | 50 | min-width css property for input element
