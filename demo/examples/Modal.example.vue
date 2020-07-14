@@ -51,7 +51,7 @@ export default {
     props: {},
     setup() {
         const state = reactive({
-            show: true,
+            show: false,
             agreed: false
         })
 
