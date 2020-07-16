@@ -65,7 +65,6 @@ export default defineComponent({
         fullscreen: Boolean,
         overlay: Boolean,
         inverted: Boolean,
-        long: Boolean,
         scrollingContent: Boolean,
         imageContent: Boolean,
         duration: {
@@ -84,10 +83,6 @@ export default defineComponent({
         blurring: {
             type: Boolean,
             default: false
-        },
-        scrollbarWidth: {
-            type: Number,
-            default: 10
         },
         contentClass: {
             type: String,
@@ -157,7 +152,6 @@ export default defineComponent({
                 blurring: props.blurring,
                 closable: props.closable,
                 duration: props.duration,
-                scrollbarWidth: props.scrollbarWidth,
                 // merge with settings object
                 ...props.settings,
                 onHide: () => {
