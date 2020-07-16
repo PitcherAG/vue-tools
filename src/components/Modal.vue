@@ -198,15 +198,3 @@ export default defineComponent({
     }
 })
 </script>
-<style lang="scss" scoped>
-// @import '@/styles/mixins.scss';
-
-// @include polyfillIE {
-//     .ui.fullscreen.modal .header {
-//         margin-top: 16px !important;
-//     }
-// }
-// .actions.left {
-//     text-align: left !important;
-// }
-</style>
