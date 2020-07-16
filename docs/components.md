@@ -334,17 +334,17 @@ Fomantic Dropdown component
 | `loading` | `Boolean` | no | false | sets the dropdown to loading state thru adding loading class to the container
 | `error` | `Boolean` | no | undefined | adds error class to the container
 | `color` | `String` | no | undefined | sets the color if it's button thru adding the color class to the container. (Check Fomantic for examples)
-| `size` | `String` | no | medium | tiny \| small \| medium \| large \| big \| huge \| massive 
-| `min-width` | `Number \| String` | no | 50 | min-width css property for input element
+| `size` | `String` | no | medium | mini \| tiny \| small \| medium \| large \| big \| huge \| massive 
+| `min-width` | `Number \| String` | no | undefined | min-width css property for input element
 | `max-width` | `Number \| String` | no | 100% | max-width css property for input element
 
 #### Available slots
 | slot | description |
 | :--- | :--- |
-| `default` | Default slot to replace the content of `div.ui.dropdown`. You can use this without naming the slot i.e. `<Dropdown>content</Dropdown>`. When using default slot, you need to add data-value and data-item options to each `div.item`. **Using slot option is a bit experimental.**
+| `default` | Default slot to replace the content of `div.ui.dropdown`. You can use this without naming the slot i.e. `<Dropdown>content</Dropdown>`. When using default slot, you need to add data-value and data-item options to each `div.item`. **Using slot option in dropdown is a little bit experimental.**
 
 #### Available events
-| slot | description |
+| event | description |
 | :--- | :--- |
 | `@onSelected` | event that is triggered when user selects an item from dropdown. Returns selected item as an object. Does not work properly
 | `@input` | default v-model input event, returns the selected items value
@@ -466,6 +466,59 @@ const selectedItem = ''
 </Dropdown>
 ```
 
+### Modal
+Fomantic Modal component
+
+#### Available props
+| prop | type | required | default | description |
+| :--- | :--- | :--- | :--- | :--- |
+| `v-model` | `Boolean` | yes | - | true/false to show modal
+| `title` | `String` | no | undefined | Modal header title
+| `title-icon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
+| `approve-text` | `String` | no | undefined | Text for Approve button
+| `deny-text` | `String` | no | undefined | Text for Deny button
+| `hide-close-icon` | `Boolean` | no | false | Hide close button on the top right. NOTE: This is not shown if title prop is not set
+| `basic` | `Boolean` | no | undefined | Basic style modal (Fomantic)
+| `fullscreen` | `Boolean` | no | undefined | Fullscreen modal
+| `overlay` | `Boolean` | no | undefined | Modal as an overlay
+| `inverted` | `Boolean` | no | undefined | Inverted colors on modal
+| `scrolling-content` | `Boolean` | no | undefined | Makes the content of modal scrollable no matter how long the scrollHeight of the content
+| `image-content` | `Boolean` | no | undefined | Modal Image content style (Fomantic)
+| `duration` | `Number` | no | 400 | Animation duration on show/hide
+| `align` | `top \| center \| bottom` | no | center | Align modal to top/center/bottom, default is center
+| `size` | `String` | no | medium | mini \| tiny \| small \| medium \| large \| big \| huge \| massive 
+| `min-width` | `Number \| String` | no | undefined | min-width css property for input element
+| `max-width` | `Number \| String` | no | 100% | max-width css property for input element
+| `multiple` | `Boolean` | no | undefined | Allow multiple modals. NOTE: If you combine 2 modals to show multiple, both components must to have multiple prop. allowMultiple prop in Fomantic
+| `closable` | `Boolean` | no | true | Allow modal to be closable or not
+| `blurring` | `Boolean` | no | false | Modal dimmer makes background blurred
+| `content-class` | `String` | no | '' | Inject class to the `div.content`, inside modal
+| `approve-class` | `String` | no | 'positive' | Inject class to the approve button. Details: https://fomantic-ui.com/elements/button.html#colored
+| `deny-class` | `String` | no | 'negative' | Inject class to the deny button.
+| `settings` | `Object` | no | {} | Fomantic modal settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/modal.html#/settings
+
+#### Available slots
+| slot | description |
+| :--- | :--- |
+| `header` | Slot to overwrite the content of ```.ui.modal > .header```
+| `content` | Slot to overwrite the content of ```.ui.modal > .content```
+| `actions` | Slot to overwrite the content of ```.ui.modal > .actions```
+| `custom` | Slot to overwrite the content of ```.ui.modal```
+
+#### Available events
+| event | description |
+| :--- | :--- |
+| `@onClosed` | fired before modal is closed
+| `@onHidden` | fired when modal is closed
+| `@onShow` | fired when modal will be visible
+| `@onVisible` | fired when modal is visible
+
+#### Available functions that you can call on the component
+| function name | description |
+| :--- | :--- |
+| `exec(command)` | helper to call any option on modal. Example: `COMPONENT.exec('can fit')` Details: https://fomantic-ui.com/modules/modal.html#behavior
+
+
 ### Numpad Input
 Custom component
 
@@ -482,7 +535,7 @@ Custom component
 | `fluid` | `Boolean` | no | undefined | makes the input fluid
 | `transparent` | `Boolean` | no | undefined | fomantic transparent input style
 | `disabled` | `Boolean` | no | undefined | disabled input
-| `size` | `String` | no | medium | tiny \| small \| medium \| large \| big \| huge \| massive 
+| `size` | `String` | no | medium | mini \| tiny \| small \| medium \| large \| big \| huge \| massive 
 | `right-icon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
 | `left-icon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
 | `placeholder` | `String` | no | '' | placeholder for input element
@@ -567,10 +620,10 @@ Fomantic Progress Bar component
 | `disabled` | `Boolean` | no | undefined | disables progress bar thru adding disabled class to the container
 | `animate` | `Boolean` | no | false | disable/enable progress bar animation
 | `color` | `String` | no | undefined | Color of the progress bar. Details: https://fomantic-ui.com/modules/progress.html#color
-| `size` | `String` | no | medium | tiny \| small \| medium \| large \| big \| huge \| massive 
+| `size` | `String` | no | medium | mini \| tiny \| small \| medium \| large \| big \| huge \| massive 
 | `max-width` | `Number \| String` | no | 100% | max-width css property for input element
 | `settings` | `Object` | no | undefined | Fomantic progress bar settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/progress.html#/settings
-| `attached` | `top \| bottom` | no | undefined' | Fomantic attached option. Accepts only top or bottom, however this does not work properly in some cases. You might need to customise thru css to get a better look.
+| `attached` | `top \| bottom` | no | undefined | Fomantic attached option. Accepts only top or bottom, however this does not work properly in some cases. You might need to customise thru css to get a better look.
 
 #### Available slots
 | slot | description |
@@ -578,7 +631,7 @@ Fomantic Progress Bar component
 | `label` | Label slot to replace the content of `.label`. Has `{percent, value, total}` props.
 
 #### Available events
-| slot | description |
+| event | description |
 | :--- | :--- |
 | `@onChange` | fired when something is changed in progress bar
 | `@onSuccess` | fired when the progress is completed
@@ -640,7 +693,7 @@ import { Sidebar } from '@pitcher/vue-sdk'
 setup(){
      const sidebar = Sidebar.useSidebarStore()
      const data = sidebar.state.data
-     return {data}
+     return { data }
 }
 ```
 
