@@ -2,10 +2,20 @@
 
 ## 1.3.9
 
+### Added
+- Modal component
+
 ### Changed
 - DataTable updated
   - added tooltipText as a prop to field definition for defining custom tooltipText
   - added new slots: append-tbody, prepend-tbody
+  - added rowClick event to the table
+- NumpadInput updated
+  - added lazy property to change value when blur event occurs
+- created mixins.js for components to reduce redundant functions
+
+### Fixed
+- various typos fixed in the documentation
 
 ## 1.3.8
 
