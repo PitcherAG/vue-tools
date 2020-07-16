@@ -32,8 +32,10 @@
                 <slot name="actions" />
             </div>
             <div v-else-if="approveText || denyText" class="actions">
-                <button v-if="denyText" class="ui button negative" @click="emit('onDeny')">{{ denyText }}</button>
-                <button v-if="approveText" class="ui button positive" @click="emit('onApprove')">
+                <button v-if="denyText" class="ui button" :class="denyClass" @click="emit('onDeny')">
+                    {{ denyText }}
+                </button>
+                <button v-if="approveText" class="ui button" :class="approveClass" @click="emit('onApprove')">
                     {{ approveText }}
                 </button>
             </div>
@@ -90,6 +92,14 @@ export default defineComponent({
         contentClass: {
             type: String,
             default: ''
+        },
+        approveClass: {
+            type: String,
+            default: 'positive'
+        },
+        denyClass: {
+            type: String,
+            default: 'negative'
         },
         size: {
             type: String,
