@@ -56,7 +56,7 @@
                 />
             </template>
 
-            <tr v-else v-for="item in tableData" :key="item.__rowID">
+            <tr v-else v-for="item in tableData" :key="item.__rowID" @click="emit('rowClick', item)">
                 <!-- If row slot exist, override with a slot -->
                 <template v-if="hasRowSlot">
                     <!-- map only visible fields, return rawData as well -->
@@ -253,7 +253,7 @@ export default defineComponent({
             default: false
         }
     },
-    setup(props, { slots }) {
+    setup(props, { slots, emit }) {
         // Check slots if they exist
         const slotChecks = {
             hasRowSlot: !!slots.row,
@@ -477,6 +477,7 @@ export default defineComponent({
             hasSlot,
             tableData,
             paginate,
+            emit,
             mapper
         }
     }

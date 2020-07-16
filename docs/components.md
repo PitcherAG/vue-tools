@@ -43,6 +43,11 @@ Fomantic DataTable with pagination
 | `align-pagination` | `String` | no | right | right \| left \| center 
 | `no-pagination` | `Boolean` | no | false | to disable pagination in the table
 
+#### Available events
+| event | description |
+| :--- | :--- |
+| `@rowClick` | event that is triggered when user clicks a row, sends clicked item as a parameter
+
 #### Available slots
 | slot | description | props
 | :--- | :--- | :--- | 
