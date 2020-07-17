@@ -18,7 +18,7 @@
                 <template v-else v-for="f in fields">
                     <th
                         v-if="!f.hide"
-                        :key="f.title"
+                        :key="f.__colID"
                         :class="getTHClass(f)"
                         :style="{ width: f.width }"
                         @click="f.sortable ? sortTable(f) : null"
@@ -71,7 +71,7 @@
 
                 <!-- Default Row content -->
                 <template v-else v-for="f in fields">
-                    <td v-if="!f.hide" :key="f.title" :class="f.tdClass">
+                    <td v-if="!f.hide" :key="f.__colID" :class="f.tdClass">
                         <!-- if this field is a slot, get the slot -->
                         <template v-if="!!f.slotName">
                             <slot
@@ -294,9 +294,14 @@ export default defineComponent({
             }
         }))
 
-        // generate rowID to each row
+        // generate rowID for each row
         props.data.forEach(i => {
             i.__rowID = uid()
+        })
+
+        // generate colID for each field
+        props.fields.forEach(i => {
+            i.__colID = uid()
         })
 
         // Where data is distributed to the table
