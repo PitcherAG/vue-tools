@@ -33,7 +33,7 @@ describe('NumpadInput.vue', () => {
 
     it('Numpad Input emits value changes', async () => {
         // get first number input button & click
-        wrapper.find('.keys__row--number').trigger('click')
+        wrapper.find('.row--number').trigger('click')
         await wrapper.vm.$nextTick()
         expect(wrapper.emitted().input).toBeTruthy()
     })
