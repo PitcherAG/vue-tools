@@ -1,8 +1,6 @@
 export function useBrowserLanguage() {
     function getAvailableBrowserLanguage(availableLanguages) {
-        return getBrowserLanguages().filter(
-            l => availableLanguages.includes(l) || availableLanguages.includes(l.split(/[_-]/)[0])
-        )[0]
+        return getBrowserLanguages().find(l => availableLanguages.includes(l))
     }
 
     function getBrowserLanguages() {
@@ -20,6 +18,10 @@ export function useBrowserLanguage() {
                     languages.add(navigator[prop])
                 }
             })
+        }
+
+        for (let l of languages.values()) {
+            languages.add(l.split('-')[0])
         }
 
         return [...languages]
