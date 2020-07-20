@@ -3,22 +3,22 @@ const chalk = require('chalk')
 const fs = require('fs')
 const gettextParser = require('gettext-parser')
 const path = require('path')
-const {Translate} = require('@google-cloud/translate').v2
+const { Translate } = require('@google-cloud/translate').v2
 
 const translate = new Translate()
 
 function formatForTranslation(str) {
     return str
-            .replace(/\\n/g, '<br>')
-            .replace(/{\S+}/, match => `<span class="notranslate">${match}</span>`)
-            .replace('%s', '{0}')
+        .replace(/\\n/g, '<br>')
+        .replace(/{\S+}/, match => `<span class="notranslate">${match}</span>`)
+        .replace('%s', '{0}')
 }
 
 function formatFromTranslation(str) {
     return str
-            .replace(/<br>/g, '\n')
-            .replace(/<span class="notranslate">({\S+})<\/span>/, (match, label) => label)
-            .replace('{0}', '%s')
+        .replace(/<br>/g, '\n')
+        .replace(/<span class="notranslate">({\S+})<\/span>/, (match, label) => label)
+        .replace('{0}', '%s')
 }
 
 async function parseFile(file) {
@@ -40,7 +40,11 @@ async function translateConfig(config) {
             }
 
             if (t.type == 'source') {
-                await translateFile(path.join(output, `${t.category}.pot`), language, path.join(output, language, 'LC_MESSAGES', `${t.category}.po`))
+                await translateFile(
+                    path.join(output, `${t.category}.pot`),
+                    language,
+                    path.join(output, language, 'LC_MESSAGES', `${t.category}.po`)
+                )
             }
         }
     }
@@ -88,7 +92,7 @@ async function translateFile(file, language, output) {
     }
 
     if (!fs.existsSync(path.dirname(output))) {
-        fs.mkdirSync(path.dirname(output), {recursive: true})
+        fs.mkdirSync(path.dirname(output), { recursive: true })
     }
 
     fs.writeFileSync(output, gettextParser.po.compile(po))
@@ -102,5 +106,5 @@ async function translateMessages(messages, language) {
 
 module.exports = {
     translateConfig,
-    translateFile,
+    translateFile
 }

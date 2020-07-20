@@ -16,14 +16,17 @@ function compileConfig(config) {
             const output = path.join(outputRoot, l, `${c}.json`)
 
             for (const t of translations) {
-                Object.assign(data, getTranslationData(path.join(getInputDirname(config, t), l, 'LC_MESSAGES', `${getCategory(t)}.po`)))
+                Object.assign(
+                    data,
+                    getTranslationData(path.join(getInputDirname(config, t), l, 'LC_MESSAGES', `${getCategory(t)}.po`))
+                )
             }
 
             if (!fs.existsSync(path.dirname(output))) {
-                fs.mkdirSync(path.dirname(output), {recursive: true})
+                fs.mkdirSync(path.dirname(output), { recursive: true })
             }
 
-            fs.writeFileSync(output, JSON.stringify({[l]: data}))
+            fs.writeFileSync(output, JSON.stringify({ [l]: data }))
         }
     }
 }
@@ -52,7 +55,12 @@ function getCategory(translation) {
 
 function getInputDirname(config, translation) {
     if (translation.type == 'package') {
-        const packageConfig = require(path.join(process.cwd(), 'node_modules', translation.package, 'gettext.config.js'))
+        const packageConfig = require(path.join(
+            process.cwd(),
+            'node_modules',
+            translation.package,
+            'gettext.config.js'
+        ))
         return path.join('node_modules', translation.package, getInputDirnameDefault(packageConfig))
     } else {
         return getInputDirnameDefault(config)
@@ -68,5 +76,5 @@ function getInputDirnameDefault(config) {
 }
 
 module.exports = {
-    compileConfig,
+    compileConfig
 }

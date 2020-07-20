@@ -18,13 +18,13 @@
                 <template v-else v-for="f in fields">
                     <th
                         v-if="!f.hide"
-                        :key="f.title"
+                        :key="f.__colID"
                         :class="getTHClass(f)"
                         :style="{ width: f.width }"
                         @click="f.sortable ? sortTable(f) : null"
                     >
                         <!-- default -->
-                        <span :data-tooltip="f.tooltip ? f.title : undefined" :data-position="f.tooltip">
+                        <span :data-tooltip="getTooltip(f)" :data-position="f.tooltip">
                             <!-- custom header injection -->
                             <template v-if="hasSlot(`${f.title}__slot`)">
                                 <slot :name="`${f.title}__slot`" :field="f" />
@@ -39,6 +39,12 @@
             </tr>
         </thead>
         <tbody>
+            <!-- prepend-body slot -->
+            <template v-if="hasPrependTbodySlot">
+                <slot name="prepend-tbody" :mapper="mapper" />
+            </template>
+
+            <!-- body slot -->
             <template v-if="hasBodySlot">
                 <slot
                     name="body"
@@ -50,7 +56,7 @@
                 />
             </template>
 
-            <tr v-else v-for="item in tableData" :key="item.__rowID">
+            <tr v-else v-for="item in tableData" :key="item.__rowID" @click="emit('rowClick', item)">
                 <!-- If row slot exist, override with a slot -->
                 <template v-if="hasRowSlot">
                     <!-- map only visible fields, return rawData as well -->
@@ -65,7 +71,7 @@
 
                 <!-- Default Row content -->
                 <template v-else v-for="f in fields">
-                    <td v-if="!f.hide" :key="f.title" :class="f.tdClass">
+                    <td v-if="!f.hide" :key="f.__colID" :class="f.tdClass">
                         <!-- if this field is a slot, get the slot -->
                         <template v-if="!!f.slotName">
                             <slot
@@ -88,6 +94,11 @@
                     </td>
                 </template>
             </tr>
+
+            <!-- append-body slot -->
+            <template v-if="hasAppendTbodySlot">
+                <slot name="append-tbody" :mapper="mapper" />
+            </template>
         </tbody>
 
         <!-- TFoot slot -->
@@ -242,11 +253,13 @@ export default defineComponent({
             default: false
         }
     },
-    setup(props, { slots }) {
+    setup(props, { slots, emit }) {
         // Check slots if they exist
         const slotChecks = {
             hasRowSlot: !!slots.row,
             hasHeadingRowSlot: !!slots['heading-row'],
+            hasAppendTbodySlot: !!slots['append-tbody'],
+            hasPrependTbodySlot: !!slots['prepend-tbody'],
             hasBodySlot: !!slots.body,
             hasTFootSlot: !!slots['t-foot'],
             hasNoDataSlot: !!slots['no-data-template']
@@ -281,9 +294,14 @@ export default defineComponent({
             }
         }))
 
-        // generate rowID to each row
+        // generate rowID for each row
         props.data.forEach(i => {
             i.__rowID = uid()
+        })
+
+        // generate colID for each field
+        props.fields.forEach(i => {
+            i.__colID = uid()
         })
 
         // Where data is distributed to the table
@@ -361,6 +379,18 @@ export default defineComponent({
                 }
             })
             return filtered
+        }
+
+        // get tooltip
+        function getTooltip(f) {
+            if (!f.tooltip) {
+                return undefined
+            }
+
+            if (!f.tooltipText) {
+                return f.title
+            }
+            return f.tooltipText
         }
 
         // Calculate pagination data
@@ -448,9 +478,11 @@ export default defineComponent({
             sortTable,
             getTHClass,
             getScopeData,
+            getTooltip,
             hasSlot,
             tableData,
             paginate,
+            emit,
             mapper
         }
     }

@@ -22,10 +22,8 @@
 </template>
 <script>
 import { computed, reactive, toRefs, watch, onMounted } from '@vue/composition-api'
+import { parsePxStyle, validateSize } from './mixins'
 
-const parsePxStyle = val => {
-    return val.toString().includes('%') || val.toString().includes('px') ? val : `${parseInt(val)}px`
-}
 export default {
     props: {
         value: {
@@ -82,23 +80,7 @@ export default {
         },
         size: {
             type: String,
-            validator: val => {
-                const valid =
-                    val === '' ||
-                    val === 'tiny' ||
-                    val === 'small' ||
-                    val === 'medium' ||
-                    val === 'large' ||
-                    val === 'big' ||
-                    val === 'huge' ||
-                    val === 'massive'
-                if (!valid) {
-                    console.error('[Vue warn]: Validation error in NumpadInput.vue!')
-                    console.error('[Vue warn]: prop.size is not valid!')
-                    throw `Accepted values: tiny | small | medium | large | big | huge | massive`
-                }
-                return valid
-            }
+            validator: val => validateSize(val, 'ProgressBar.vue')
         }
     },
 
