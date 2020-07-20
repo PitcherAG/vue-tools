@@ -1,28 +1,26 @@
 const fs = require('fs')
 const gettextParser = require('gettext-parser')
-const {compileConfig} = require('../../src/gettext/compile')
-const {extractConfig} = require('../../src/gettext/extract')
-const {translateConfig} = require('../../src/gettext/translate')
+const { compileConfig } = require('../../src/gettext/compile')
+const { extractConfig } = require('../../src/gettext/extract')
+const { translateConfig } = require('../../src/gettext/translate')
 
 describe('gettext', () => {
-    const time = (new Date()).getTime()
+    const time = new Date().getTime()
 
     const config = {
         languages: {
-            'de': 'Deutsch',
-            'en': 'English'
+            de: 'Deutsch',
+            en: 'English'
         },
-        translations: [
-            {category: 'app', type: 'source', patterns: [`/tmp/${time}.js`]},
-        ],
+        translations: [{ category: 'app', type: 'source', patterns: [`/tmp/${time}.js`] }],
         output: {
             po: `/tmp/${time}/po`,
-            json: `/tmp/${time}/json`,
-        },
+            json: `/tmp/${time}/json`
+        }
     }
 
-    fs.mkdirSync(`/tmp/${time}/po`, {recursive: true})
-    fs.mkdirSync(`/tmp/${time}/json`, {recursive: true})
+    fs.mkdirSync(`/tmp/${time}/po`, { recursive: true })
+    fs.mkdirSync(`/tmp/${time}/json`, { recursive: true })
     fs.writeFileSync(`/tmp/${time}.js`, '$gettext("Hello World!")')
 
     function parseFile(path) {
