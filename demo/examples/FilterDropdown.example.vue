@@ -4,7 +4,19 @@
         <div class="ui divider" />
 
         <!-- default usage -->
-        <FilterDropdown title="Cities" v-model="recordTypeSaved" :items="recordTypes" @input="test" />
+        <!-- <FilterDropdown title="Cities" v-model="recordTypeSaved" :items="recordTypes" return-type="object" @input="test" /> -->
+        <template v-for="(f, i) in filters">
+            <FilterDropdown
+                v-model="f.val"
+                class="mr-2"
+                :key="i"
+                :title="f.name"
+                :items="f.options"
+                return-type="object"
+                @input="test"
+                basic
+            />
+        </template>
     </div>
 </template>
 
@@ -70,7 +82,7 @@ export default {
                     field: 'product.SCT_Division__c',
                     object: 'Product2',
                     name: 'Division',
-                    val: '',
+                    val: [],
                     options: [
                         { value: 'Others', text: 'Others' },
                         { value: 'Novartis PH', text: 'Novartis PH' },
@@ -85,7 +97,7 @@ export default {
                     field: 'product.SCT_Brand__c',
                     object: 'Product2',
                     name: 'Brand',
-                    val: '',
+                    val: [],
                     options: [
                         { value: 'qw41', text: 'qw41' },
                         { value: 'qw17', text: 'qw17' },
@@ -194,7 +206,7 @@ export default {
                     field: 'product.SCT_Dosage_Form__c',
                     object: 'Product2',
                     name: 'Dosage Form',
-                    val: '',
+                    val: [],
                     options: [
                         { value: 'TABLET', text: 'TABLET' },
                         { value: 'HARD GELATINE CAPSULE', text: 'HARD GELATINE CAPSULE' },
@@ -216,7 +228,7 @@ export default {
                     field: 'product.SCT_Molecule__c',
                     object: 'Product2',
                     name: 'Molecule',
-                    val: '',
+                    val: [],
                     options: [
                         { value: 'qw41', text: 'qw41' },
                         { value: 'qw17', text: 'qw17' },
@@ -325,7 +337,7 @@ export default {
         })
 
         function test(v) {
-            console.log(v)
+            // console.log(v)
         }
 
         return { ...toRefs(state), test }
