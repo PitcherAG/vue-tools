@@ -1,23 +1,48 @@
 <template>
-    <div class="ui dropdown pitcher-filter" ref="filter">
-        <button class="ui right labeled icon button" v-bind="buttonAttr">
-            <span><i class="filter icon" /> {{ title }}</span>
-            <i class="chevron down icon" />
-        </button>
+    <div class="ui dropdown pitcher-filter" ref="filter" :class="{ fluid }">
+        <div class="ui buttons" :class="{ fluid }">
+            <button class="ui button" v-bind="buttonAttr" ref="button">
+                <span><i class="icon" :class="icon" /> {{ buttonText }}</span>
+                <i
+                    v-if="!value.length"
+                    class="chevron icon right-icon"
+                    :class="{ down: !menuIsOpen, up: menuIsOpen }"
+                />
+            </button>
+            <template v-if="value.length > 0">
+                <!-- separator -->
+                <!-- clear button -->
+                <button
+                    v-if="value.length > 0"
+                    class="ui icon button"
+                    :class="buttonAttr.class"
+                    style="flex: 0;"
+                    @click.stop="reset"
+                >
+                    <i class="times icon right-icon" />
+                </button>
+            </template>
+        </div>
         <div v-bind="menuAttr">
             <div class="h-container d-flex align-items-center pa-3">
                 <h3 class="ui header ma-0">
                     {{ title }}
-                    <div class="ui grey circular label">2</div>
+                    <div v-if="value.length" class="ui circular label" :class="{ [color]: !!color, grey: !color }">
+                        {{ value.length }}
+                    </div>
                 </h3>
                 <!-- Close button -->
                 <i class="times icon thin ml-auto" style="cursor: pointer; font-size: 1.1em" @click="closeMenu" />
             </div>
             <!-- actions -->
             <div class="a-container mb-4">
-                <a href="#">Select all</a>
+                <a href="#" @click="selectAll">
+                    <span class="ui text" :class="{ [color]: !!color }">Select all</span>
+                </a>
                 <span class="ui large grey text mx-2">|</span>
-                <a href="#">Reset</a>
+                <a href="#" @click="reset">
+                    <span class="ui text" :class="{ [color]: !!color }">Reset</span>
+                </a>
             </div>
             <div class="s-container mb-4">
                 <div class="ui fluid icon small input">
@@ -30,7 +55,7 @@
                 <div
                     v-for="(item, index) in listItems"
                     :key="index"
-                    :class="[item.type, { disabled: item.disabled, active: isSelected(item)}]"
+                    :class="[item.type, { disabled: item.disabled, active: isSelected(item) }]"
                     @click.stop="item.type === 'item' ? handleItemClick(item) : undefined"
                 >
                     <!-- if this is an item -->
@@ -54,8 +79,8 @@
     </div>
 </template>
 <script>
-import { computed, reactive, toRefs, onMounted } from '@vue/composition-api'
-import { parsePxStyle, validateSize } from './mixins'
+import { computed, reactive, toRefs, onMounted, watch } from '@vue/composition-api'
+import { parsePxStyle, validateSize, countLines } from './mixins'
 import { search } from '../utils'
 
 export default {
@@ -81,7 +106,12 @@ export default {
         icon: {
             default: 'filter'
         },
+        fluid: Boolean,
+        basic: Boolean,
         minWidth: {
+            type: [String, Number]
+        },
+        menuMinWidth: {
             type: [String, Number],
             default: 300
         },
@@ -100,26 +130,48 @@ export default {
         // local state
         const state = reactive({
             searchKey: '',
+            menuIsOpen: false,
             isSingleItem: false,
             hasCustomIcon: props.icon !== 'filter',
-            hasDefaultSlot: !!slots.default
+            hasDefaultSlot: !!slots.default,
         })
 
         const buttonAttr = computed(() => ({
             class: {
-                [props.color]: !!props.color
+                basic: props.basic,
+                [props.color]: !!props.color,
+                active: props.basic && props.value.length > 0,
+                ['right labeled icon']: !props.value.length
             },
             style: {
-                paddingLeft: '1em !important'
+                flex: 1,
+                paddingLeft: '8px !important',
+                textAlign: 'left',
+                minWidth: props.minWidth ? parsePxStyle(props.minWidth) : undefined
             }
         }))
+
+        // Button text
+        const buttonText = computed(() => {
+            if (!props.value.length) {
+                return props.title
+            }
+
+            if (refs.button) {
+                // TODO: Calc lines & see if its overflowing, return managed value
+                console.log('lines', countLines(refs.button))
+            }
+
+            const selectedItems = listItems.value.filter(i => isSelected(i)).map(i => i.text)
+            return selectedItems.join(', ')
+        })
 
         const menuAttr = computed(() => ({
             class: {
                 ['ui grid fluid vertical menu mt-2']: true
             },
             style: {
-                minWidth: props.minWidth ? parsePxStyle(props.minWidth) : undefined
+                minWidth: props.menuMinWidth ? parsePxStyle(props.menuMinWidth) : undefined
             }
         }))
 
@@ -178,9 +230,11 @@ export default {
             // initialize
             $(refs.filter).dropdown({
                 onShow: () => {
+                    state.menuIsOpen = true
                     refresh()
                 },
                 onHide: () => {
+                    state.menuIsOpen = false
                     refresh()
                 }
             })
@@ -195,6 +249,10 @@ export default {
         }
 
         onMounted(() => {
+            // save initial button width
+            refs.filter.style.maxWidth = window.getComputedStyle(refs.button).width
+            console.log('width', window.getComputedStyle(refs.button).width);
+            // init
             initFilter()
         })
 
@@ -207,7 +265,6 @@ export default {
 
         // handle item click, without preventing default event
         function handleItemClick(item) {
-            console.log(isSelected(item))
             // select
             if (!isSelected(item)) {
                 return props.returnType === 'object'
@@ -227,15 +284,34 @@ export default {
                   )
         }
 
+        function selectAll() {
+            const notSelectedItems = listItems.value
+                .filter(i => !i.disabled)
+                .filter(i => i.type === 'item')
+                .filter(i => !isSelected(i))
+            return props.returnType === 'object'
+                ? emit('input', [...props.value, ...notSelectedItems])
+                : emit('input', [...props.value, ...notSelectedItems.map(i => i[props.returnType])])
+        }
+
+        function reset() {
+            emit('input', [])
+        }
+
         return {
             ...toRefs(state),
             menuAttr,
             buttonAttr,
+            buttonText,
             listItems,
             initFilter,
             handleItemClick,
-            isSelected,
             closeMenu,
+            selectAll,
+            reset,
+            isSelected,
+            emit,
+            refresh,
             parsePxStyle
         }
     }
@@ -244,6 +320,25 @@ export default {
 
 <style lang="scss" scoped>
 .ui.dropdown.pitcher-filter {
+    .ui.buttons {
+        max-width: 100%;
+
+        & > button {
+            width: 100%;
+            &.basic:hover {
+                background-color: inherit;
+            }
+        }
+
+        .right-icon {
+            background: transparent !important;
+            background-color: transparent !important;
+            top: 1px;
+            height: calc(100% - 2px);
+            right: 1px;
+        }
+    }
+
     .sub-menu {
         display: block !important;
         position: relative;
@@ -252,9 +347,11 @@ export default {
         box-shadow: none !important;
         border: none !important;
         overflow-y: auto;
+        min-width: inherit;
 
         .item {
             font-size: 1rem !important;
+            white-space: pre-wrap;
 
             label:hover {
                 cursor: pointer;
