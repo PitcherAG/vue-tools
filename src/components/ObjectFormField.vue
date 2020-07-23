@@ -136,8 +136,6 @@ export default {
             return props.field && !props.field.valid(props.value) && props.showError
         })
 
-        const input = ref()
-
         function emitInput(value) {
             const fieldChange = {
                 value,
@@ -155,7 +153,7 @@ export default {
             console.log(a, b, c)
         }
 
-        return { input, typ, picklist, emitInput, error, log, formatDate, formatCurrency }
+        return { typ, picklist, emitInput, error, log, formatDate, formatCurrency }
     }
 }
 </script>
