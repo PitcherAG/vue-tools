@@ -1,17 +1,17 @@
 <template>
     <div class="ui dropdown pitcher-filter" ref="filter">
-        <button class="ui right labeled icon button">
+        <button class="ui right labeled icon button" v-bind="buttonAttr">
+            <span><i class="filter icon" /> {{ title }}</span>
             <i class="chevron down icon" />
-            <span>{{ titleTest }}</span>
         </button>
         <div v-bind="menuAttr">
             <div class="h-container d-flex align-items-center pa-3">
                 <h3 class="ui header ma-0">
-                    {{ titleTest }}
+                    {{ title }}
                     <div class="ui grey circular label">2</div>
                 </h3>
                 <!-- Close button -->
-                <i class="times icon thin ml-auto" style="cursor: pointer; font-size: 1.1em" @click="hideMenu" />
+                <i class="times icon thin ml-auto" style="cursor: pointer; font-size: 1.1em" @click="closeMenu" />
             </div>
             <!-- actions -->
             <div class="a-container mb-4">
@@ -22,61 +22,97 @@
             <div class="s-container mb-4">
                 <div class="ui fluid icon small input">
                     <input type="text" placeholder="Search" />
-                    <i class="times thin icon" @click="" />
+                    <i v-if="searchKey" class="times thin icon" @click="searchKey = ''" />
                 </div>
             </div>
-            <div class="item" @click.stop>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example" />
-                    <label>Zurich</label>
+            <!-- Items -->
+            <div class="ui grid fluid vertical menu sub-menu" :style="{ maxHeight: parsePxStyle(scrollHeight) }">
+                <div
+                    v-for="(item, index) in listItems"
+                    :key="index"
+                    :class="[item.type, { disabled: item.disabled, active: isSelected(item)}]"
+                    @click.stop="item.type === 'item' ? handleItemClick(item) : undefined"
+                >
+                    <!-- if this is an item -->
+                    <template v-if="item.type === 'item'">
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="example" :checked="isSelected(item)" />
+                            <label>{{ item.text }}</label>
+                        </div>
+                        <div v-if="item.description" class="description">{{ item.description }}</div>
+                    </template>
+                    <template v-else>{{ item.text }}</template>
                 </div>
             </div>
-            <div class="item" @click.stop>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example" />
-                    <label>Winterthur</label>
-                </div>
-            </div>
-            <div class="item" @click.stop>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example" />
-                    <label>Bern</label>
-                </div>
+            <!-- Close button -->
+            <div class="pa-2">
+                <button class="ui basic button fluid" @click="closeMenu">
+                    Close
+                </button>
             </div>
         </div>
     </div>
 </template>
 <script>
-import { computed, reactive, toRefs, onMounted, watchEffect } from '@vue/composition-api'
+import { computed, reactive, toRefs, onMounted } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
+import { search } from '../utils'
 
 export default {
     props: {
         value: {
-            // required: true
+            required: true
         },
+        title: String,
         items: {
             type: Array,
             required: false
         },
+        itemText: {
+            default: 'text'
+        },
+        itemValue: {
+            default: 'value'
+        },
+        returnType: {
+            type: String,
+            default: 'value'
+        },
+        icon: {
+            default: 'filter'
+        },
         minWidth: {
             type: [String, Number],
             default: 300
+        },
+        scrollHeight: {
+            type: [String, Number],
+            default: 250
+        },
+        color: String,
+        size: {
+            type: String,
+            validator: val => validateSize(val, 'Dropdown.vue')
         }
     },
 
     setup(props, { refs, emit, slots }) {
-
         // local state
         const state = reactive({
-            titleTest: 'Filter menu',
-            check: false,
-            searchIsVisible: false,
-            isSearching: false,
+            searchKey: '',
             isSingleItem: false,
-            hasCustomIcon: props.icon !== 'dropdown',
+            hasCustomIcon: props.icon !== 'filter',
             hasDefaultSlot: !!slots.default
         })
+
+        const buttonAttr = computed(() => ({
+            class: {
+                [props.color]: !!props.color
+            },
+            style: {
+                paddingLeft: '1em !important'
+            }
+        }))
 
         const menuAttr = computed(() => ({
             class: {
@@ -86,6 +122,35 @@ export default {
                 minWidth: props.minWidth ? parsePxStyle(props.minWidth) : undefined
             }
         }))
+
+        // TODO: SEARCH
+        // search(temp, props.searchFor, props.searchFields)
+
+        // transform list items for dropdown
+        const listItems = computed(() => {
+            if (!props.items) {
+                return []
+            }
+            return props.items.map(item => {
+                if (item.constructor === Object) {
+                    return {
+                        text: item[props.itemText],
+                        value: item[props.itemValue],
+                        type: item.type ? item.type : 'item',
+                        description: item.description,
+                        disabled: item.disabled
+                    }
+                } else {
+                    // if not key/value pair
+                    state.isSingleItem = true
+                    return {
+                        text: item,
+                        value: item,
+                        type: 'item'
+                    }
+                }
+            })
+        })
 
         // const dropdownAttr = computed(() => ({
         //     class: {
@@ -125,7 +190,7 @@ export default {
             $(refs.filter).dropdown('refresh')
         }
 
-        const hideMenu = () => {
+        const closeMenu = () => {
             $(refs.filter).dropdown('hide')
         }
 
@@ -133,21 +198,45 @@ export default {
             initFilter()
         })
 
+        const isSelected = item => {
+            if (props.returnType === 'object') {
+                return props.value.some(i => i.value === item.value)
+            }
+            return props.value.includes(item[props.returnType])
+        }
+
         // handle item click, without preventing default event
         function handleItemClick(item) {
-            if (props.searchable && props.value === item.value) {
-                refs.search.value = ''
-                state.isSearching = false
+            console.log(isSelected(item))
+            // select
+            if (!isSelected(item)) {
+                return props.returnType === 'object'
+                    ? emit('input', [...props.value, item])
+                    : emit('input', [...props.value, item[props.returnType]])
             }
+
+            // unselect
+            return props.returnType === 'object'
+                ? emit(
+                      'input',
+                      props.value.filter(i => i.value !== item.value)
+                  )
+                : emit(
+                      'input',
+                      props.value.filter(v => v !== item[props.returnType])
+                  )
         }
 
         return {
             ...toRefs(state),
-            // dropdownAttr,
             menuAttr,
+            buttonAttr,
+            listItems,
             initFilter,
             handleItemClick,
-            hideMenu
+            isSelected,
+            closeMenu,
+            parsePxStyle
         }
     }
 }
@@ -155,46 +244,22 @@ export default {
 
 <style lang="scss" scoped>
 .ui.dropdown.pitcher-filter {
-    // // default text color
-    // .default {
-    //     color: rgba(191, 191, 191, 0.87) !important;
-    //     display: inline-block;
-    //     pointer-events: none;
-    // }
+    .sub-menu {
+        display: block !important;
+        position: relative;
+        margin: 0 !important;
+        left: 0;
+        box-shadow: none !important;
+        border: none !important;
+        overflow-y: auto;
 
-    // &.multiple.search {
-    //     .default {
-    //         position: absolute;
-    //         left: 8px;
-    //     }
-    // }
+        .item {
+            font-size: 1rem !important;
 
-    // // image in list
-    // .item img {
-    //     vertical-align: top;
-    //     width: auto;
-    //     margin: -0.5em 0.5em -0.5em 0;
-    //     max-height: 2em;
-    // }
-
-    // &.not-selection:not(.labeled) {
-    //     // any icon other than .dropdown
-    //     & > .icon:not(.dropdown) {
-    //         margin-left: 8px;
-    //         margin-right: 0;
-    //     }
-
-    //     // when it is not a selection list
-    //     & > .icon.dropdown {
-    //         margin: 0 0.2em 0 1em;
-    //     }
-    // }
-
-    // &.multiple {
-    //     .default {
-    //         padding-top: 8px;
-    //         padding-left: 8px;
-    //     }
-    // }
+            label:hover {
+                cursor: pointer;
+            }
+        }
+    }
 }
 </style>
