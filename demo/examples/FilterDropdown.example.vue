@@ -4,7 +4,7 @@
         <div class="ui divider" />
 
         <!-- default usage -->
-        <FilterDropdown :items="recordTypes" />
+        <FilterDropdown title="Cities" v-model="recordTypeSaved" :items="recordTypes" @input="test" />
     </div>
 </template>
 
@@ -19,47 +19,52 @@ export default {
     props: {},
     setup() {
         const state = reactive({
-            recordTypeSaved: '',
+            recordTypeSaved: [],
             recordTypes: [
                 {
                     text: 'Cantons',
-                    type: 'header'
+                    type: 'header',
+                    description: 5
                 },
                 {
                     text: 'Zürich',
                     value: 'zurich',
-                    icon: 'cog'
+                    description: 15
                 },
                 {
                     text: 'Aargau',
                     value: 'aargau',
-                    type: 'item'
+                    description: 2
                 },
                 {
                     text: 'Vaud',
                     value: 'vaud',
-                    disabled: true
+                    disabled: true,
+                    description: 0
                 },
                 {
                     text: 'Ticino',
-                    value: 'ticino'
+                    value: 'ticino',
+                    description: 3
                 },
                 {
                     text: 'Bern',
-                    value: 'bern'
+                    value: 'bern',
+                    description: 12
                 },
                 {
                     text: 'Lucerne',
                     value: 'lucerne',
-                    // image: 'https://fomantic-ui.com/images/avatar/small/jenny.jpg',
-                    icon: 'users'
+                    description: 123
                 },
                 {
                     text: 'Geneva',
-                    value: 'geneva'
+                    value: 'geneva',
+                    description: 44
                 }
             ],
             recordTypesSingle: ['Zurich', 'Ticino', 'Vaud', 'Lucerne', 'Geneva'],
+            selectedFilter: '',
             filters: [
                 {
                     field: 'product.SCT_Division__c',
