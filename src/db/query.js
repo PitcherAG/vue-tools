@@ -21,7 +21,7 @@ function hasCached(query) {
         cacheEnabled &&
         !query.toLowerCase().includes('delete') &&
         !query.toLowerCase().includes('insert') &&
-        cache.hasOwnProperty(query) &&
+        Object.prototype.hasOwnProperty.call(cache, query) &&
         cache[query].time + cacheTimeout > Date.now()
     )
 }
@@ -63,7 +63,7 @@ async function query(query, db = null) {
                         ) {
                             const o = JSON.parse(res[j])
                             for (const n in o) {
-                                if (o.hasOwnProperty(n) && n !== 'attributes') {
+                                if (Object.prototype.hasOwnProperty.call(o, n) && n !== 'attributes') {
                                     obj[n] = o[n]
                                 }
                             }

@@ -242,7 +242,7 @@ export default {
         }
 
         // function to run onSearch
-        const onSearch = e => {
+        const onSearch = () => {
             state.isSearching = refs.search && !!refs.search.value
         }
 

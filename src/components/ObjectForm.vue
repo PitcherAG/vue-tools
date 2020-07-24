@@ -37,11 +37,7 @@
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
         <sui-form v-if="!state.needsRecordType && !validationError && state.layout && state.ready">
-            <fragment
-                v-for="(section, sectionKey) in state.layout.editLayoutSections"
-                :key="sectionKey"
-                v-if="section.fieldCount > 0"
-            >
+            <fragment v-for="(section, sectionKey) in state.layout.visibleEditLayoutSections" :key="sectionKey">
                 <h4 class="ui header">{{ section.heading }}</h4>
                 <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
                     <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
@@ -284,6 +280,15 @@ export default {
                     }
 
                     if (layout) {
+                        layout.visibleEditLayoutSections = computed(() => {
+                            const result = []
+                            for (const section of layout.editLayoutSections) {
+                                if (section.fieldCount > 0) {
+                                    result.push(section)
+                                }
+                            }
+                            return result
+                        })
                         const data = []
                         const filed = []
                         const fieldDict = {}
