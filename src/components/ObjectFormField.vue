@@ -6,45 +6,47 @@
             :value="value"
             @input="emitInput($event.target.value)"
             placeholder=""
-            v-bind="field.settings"
             type="text"
-            v-if="typ === 'string' || typ === 'phone' || typ === 'url' || typ === 'combobox'"
+            v-bind="field.settings"
+            v-if="
+                field.type === 'string' || field.type === 'phone' || field.type === 'url' || field.type === 'combobox'
+            "
         />
         <textarea
             :maxlength="field.length"
             :value="value"
             @input="emitInput($event.target.value)"
             v-bind="field.settings"
-            v-if="typ === 'textarea' || typ === 'address'"
+            v-if="field.type === 'textarea' || field.type === 'address'"
         />
         <Dropdown
             :default-text="$gettext('Select')"
             :items="picklist"
-            :multiple="typ === 'multipicklist'"
+            :multiple="field.type === 'multipicklist'"
             :value="value"
             @input="emitInput($event)"
             add-class="selection"
             v-bind="field.settings"
-            v-if="typ === 'picklist' || typ === 'multipicklist'"
+            v-if="field.type === 'picklist' || field.type === 'multipicklist'"
         />
         <Dropdown
             :default-text="$gettext('Select')"
             :items="field.references"
-            :multiple="typ === 'multipicklist'"
+            :multiple="field.type === 'multipicklist'"
             :value="value"
             @input="emitInput($event)"
             add-class="selection"
             v-bind="field.settings"
-            v-if="typ === 'reference'"
+            v-if="field.type === 'reference'"
         />
 
         <Calendar
-            :default-text="typ === 'date' ? $gettext('Date') : $gettext('Date/Time')"
-            :type="typ"
+            :default-text="field.type === 'date' ? $gettext('Date') : $gettext('Date/Time')"
+            :type="field.type"
             :value="value"
             @input="emitInput($event)"
-            v-if="typ === 'date' || typ === 'datetime'"
             v-bind="field.settings"
+            v-if="field.type === 'date' || typ === 'datetime'"
         />
 
         <input
@@ -54,35 +56,41 @@
             :value="value"
             @input="emitInput($event.target.value)"
             placeholder=""
-            v-bind="field.settings"
             step="any"
             style="width:85px;"
             type="number"
-            v-if="typ === 'double' || typ === 'currency' || typ === 'int'"
+            v-bind="field.settings"
+            v-if="field.type === 'double' || field.type === 'currency' || field.type === 'int'"
         />
-        <!--input v-if="type=== 'double' || type==='currency' || type==='int'" :numpadIndex="index"
+        <!--input v-if="field.type=== 'double' || field.type==='currency' || field.type==='int'" :numpadIndex="index"
                :numpadGroup="'ObjectFormField'" :numpadDecimalPlaces="field.digits" v-model="value"
                placeholder=""
                style="width:85px;"
                type="number"
                readonly="readonly"
                step="any"-->
-        <Checkbox :value="value" @input="v => emitInput(v)" v-bind="field.settings" toggle v-if="typ === 'boolean'" />
+        <Checkbox
+            :value="value"
+            @input="v => emitInput(v)"
+            toggle
+            v-bind="field.settings"
+            v-if="field.type === 'boolean'"
+        />
     </sui-form-field>
     <!-- not updateable -->
     <sui-form-field :style="{ minHeight: !value ? '60px' : undefined }" v-else>
         <label>{{ label || field.label }}</label>
         <div class="pt-2" style="font-size:1.175em">
             <!-- bool -->
-            <template v-if="typ === 'boolean'">
+            <template v-if="field.type === 'boolean'">
                 {{ value ? 'yes' : 'no' }}
             </template>
             <!-- currency -->
-            <template v-else-if="typ === 'currency'">
+            <template v-else-if="field.type === 'currency'">
                 {{ formatCurrency(value) }}
             </template>
             <!-- date -->
-            <template v-else-if="typ === 'date' || typ === 'datetime'">
+            <template v-else-if="field.type === 'date' || field.type === 'datetime'">
                 {{ formatDate(value) }}
             </template>
             <!-- default -->
@@ -94,7 +102,7 @@
 </template>
 
 <script>
-import { computed, ref, onMounted } from '@vue/composition-api'
+import { computed, ref } from '@vue/composition-api'
 import Dropdown from './Dropdown'
 import Calendar from './Calendar'
 import Checkbox from './Checkbox'
@@ -120,8 +128,6 @@ export default {
         const typ = ref()
         const picklist = ref([])
         if (props.field) {
-            const type = props.field.type
-            typ.value = type
             if (typ.value === 'boolean' && !props.value) {
                 emit('input', false)
             }
@@ -142,7 +148,7 @@ export default {
                 oldValue: props.value,
                 field: props.field,
                 label: props.label,
-                type: typ.value,
+                type: props.field.type,
                 showError: props.showError
             }
             emit('fieldChange', fieldChange)
@@ -153,7 +159,7 @@ export default {
             console.log(a, b, c)
         }
 
-        return { typ, picklist, emitInput, error, log, formatDate, formatCurrency }
+        return { picklist, emitInput, error, log, formatDate, formatCurrency }
     }
 }
 </script>
