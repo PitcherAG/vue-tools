@@ -4,7 +4,17 @@
         <div class="ui divider" />
 
         <!-- default usage -->
-        <!-- <FilterDropdown title="Cities" v-model="recordTypeSaved" :items="recordTypes" return-type="object" @input="test" /> -->
+        <h4>Default usage</h4>
+        <FilterDropdown title="Cities" v-model="recordTypeSaved" :items="recordTypes" @input="test" />
+        <br />
+        <br />
+
+        <h4>String array example</h4>
+        <FilterDropdown title="Cities" v-model="recordTypeSingleSaved" :items="recordTypesSingle" @input="test" />
+        <br />
+        <br />
+
+        <h4>Complex example</h4>
         <template v-for="(f, i) in filters">
             <FilterDropdown
                 v-model="f.val"
@@ -75,6 +85,7 @@ export default {
                 }
             ],
             recordTypesSingle: ['Zurich', 'Ticino', 'Vaud', 'Lucerne', 'Geneva'],
+            recordTypeSingleSaved: [],
             selectedFilter: '',
             filters: [
                 {
@@ -83,7 +94,6 @@ export default {
                     name: 'Division',
                     val: [],
                     options: [
-                        { value: 'Test header', text: 'Others' },
                         { value: 'Others', text: 'Others' },
                         { value: 'Novartis PH', text: 'Novartis PH' },
                         { value: 'Hexal', text: 'Hexal' },
