@@ -137,6 +137,7 @@ export default {
         fluid: Boolean,
         compact: Boolean,
         basic: Boolean,
+        disabled: Boolean,
         hideSearch: Boolean,
         truncateText: {
             type: Boolean,
@@ -171,7 +172,7 @@ export default {
             menuIsOpen: false,
             hasMoreSelected: null,
             buttonText: props.title,
-            isSingleItem: false,
+            shouldSort: false,
             hasCustomIcon: props.icon !== 'filter',
             hasDefaultSlot: !!slots.default
         })
@@ -180,7 +181,8 @@ export default {
             const attr = {
                 class: {
                     fluid: !!props.fluid,
-                    [props.size]: !!props.size
+                    [props.size]: !!props.size,
+                    disabled: !!props.disabled
                 },
                 style: {}
             }
@@ -238,7 +240,6 @@ export default {
                     }
                 } else {
                     // if not key/value pair
-                    state.isSingleItem = true
                     return {
                         text: item,
                         value: item,
@@ -256,7 +257,10 @@ export default {
                 temp = search(temp, state.searchKey, ['value', 'text'])
             }
 
-            temp.sort((a, b) => (isSelected(a) > isSelected(b) ? -1 : 1))
+            if (state.shouldSort) {
+                temp = temp.sort((a, b) => (isSelected(a) > isSelected(b) ? -1 : 1))
+                state.shouldSort = false
+            }
 
             return temp
         })
@@ -307,6 +311,7 @@ export default {
                 onHide: () => {
                     state.menuIsOpen = false
                     state.searchKey = ''
+                    state.shouldSort = true
                     refresh()
                 }
             })
