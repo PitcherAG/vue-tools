@@ -1,10 +1,20 @@
 <template>
-    <div class="ui dropdown pitcher-filter" ref="filter" :class="{ fluid }">
-        <div class="ui buttons" :class="{ fluid }" :style="{ minWidth: minWidth ? parsePxStyle(minWidth) : undefined }">
+    <div class="ui dropdown pitcher-filter" v-bind="containerAttr" ref="filter">
+        <div
+            class="ui buttons"
+            :class="{ fluid, [size]: !!size }"
+            :style="{ minWidth: width ? parsePxStyle(width) : undefined }"
+        >
             <button class="ui button" v-bind="buttonAttr" ref="button">
                 <div class="d-flex">
                     <i class="icon" :class="icon" />
-                    <span class="button-text">{{ buttonText }}</span>
+                    <span
+                        ref="buttonTextRef"
+                        class="button-text"
+                        :style="{ whiteSpace: truncateText ? 'nowrap' : undefined }"
+                    >
+                        {{ buttonText }}
+                    </span>
                     <span class="ml-1">{{ hasMoreSelected }}</span>
                 </div>
                 <i
@@ -47,10 +57,10 @@
                     <span class="ui text" :class="{ [color]: !!color }">Reset</span>
                 </a>
             </div>
-            <div class="s-container mb-4">
+            <div v-if="!hideSearch" class="s-container mb-4">
                 <div class="ui fluid icon small input">
-                    <input type="text" placeholder="Search" />
-                    <i v-if="searchKey" class="times thin icon" @click="searchKey = ''" />
+                    <input v-model="searchKey" type="text" placeholder="Search" />
+                    <i v-if="searchKey" class="times thin icon link" @click="searchKey = ''" />
                 </div>
             </div>
             <!-- Items -->
@@ -63,7 +73,7 @@
                 >
                     <!-- if this is an item -->
                     <template v-if="item.type === 'item'">
-                        <div class="ui checkbox">
+                        <div class="ui checkbox" :class="{ [size]: !!size }">
                             <input type="checkbox" name="example" :checked="isSelected(item)" />
                             <label>{{ item.text }}</label>
                         </div>
@@ -71,12 +81,6 @@
                     </template>
                     <template v-else>{{ item.text }}</template>
                 </div>
-            </div>
-            <!-- Close button -->
-            <div class="pa-2">
-                <button class="ui basic button fluid" @click="closeMenu">
-                    Close
-                </button>
             </div>
         </div>
     </div>
@@ -110,8 +114,14 @@ export default {
             default: 'filter'
         },
         fluid: Boolean,
+        compact: Boolean,
         basic: Boolean,
-        minWidth: {
+        hideSearch: Boolean,
+        truncateText: {
+            type: Boolean,
+            default: true
+        },
+        width: {
             type: [String, Number]
         },
         menuMinWidth: {
@@ -141,6 +151,27 @@ export default {
             hasDefaultSlot: !!slots.default
         })
 
+        const containerAttr = computed(() => {
+            const attr = {
+                class: {
+                    fluid: !!props.fluid,
+                    [props.size]: !!props.size
+                },
+                style: {}
+            }
+
+            if (props.width) {
+                // validate
+                if (props.compact) {
+                    throw `Combining compact = true with width is not recommended!`
+                }
+                attr.style.width = parsePxStyle(props.width)
+                attr.style.maxWidth = parsePxStyle(props.width)
+            }
+
+            return attr
+        })
+
         const buttonAttr = computed(() => ({
             class: {
                 basic: props.basic,
@@ -151,6 +182,7 @@ export default {
             style: {
                 flex: 1,
                 paddingLeft: '8px !important',
+                paddingRight: props.value.length > 0 ? '8px !important' : undefined,
                 textAlign: 'left',
                 overflow: 'hidden'
             }
@@ -198,7 +230,6 @@ export default {
         watch(
             () => props.value,
             async () => {
-                console.log('change')
                 if (!props.value.length) {
                     state.buttonText = props.title
                     state.hasMoreSelected = ''
@@ -206,56 +237,29 @@ export default {
                 }
 
                 state.buttonText = ''
-
                 const selectedItems = listItems.value.filter(i => isSelected(i)).map(i => i.text)
                 let lineBreakIndex = 0
-                let hasLineBreak = false
+                let textFitsContainer = true
 
                 for (const [index, text] of selectedItems.entries()) {
                     state.buttonText += index === 0 ? `${text}` : `, ${text}`
                     await root.$nextTick()
-                    if (countLines(refs.button) > 1) {
+
+                    if (refs.buttonTextRef && refs.buttonTextRef.scrollWidth > refs.buttonTextRef.offsetWidth) {
                         lineBreakIndex = index
-                        hasLineBreak = true
-                        console.log('HOOO', index)
+                        textFitsContainer = false
                         break
                     }
                 }
 
-                // has line break
-                if (hasLineBreak) {
-                    console.log(selectedItems.slice(0, lineBreakIndex))
-                    state.buttonText =
-                        lineBreakIndex === 0
-                            ? selectedItems.join(', ')
-                            : selectedItems.slice(0, lineBreakIndex).join(', ')
-                    state.hasMoreSelected = ` +${selectedItems.slice(lineBreakIndex).length}`
+                if (!textFitsContainer) {
+                    state.buttonText = selectedItems.join(', ')
+                    state.hasMoreSelected = ` +${selectedItems.length - lineBreakIndex}`
                 } else {
                     state.hasMoreSelected = ''
                 }
             }
         )
-
-        // const dropdownAttr = computed(() => ({
-        //     class: {
-        //         fluid: props.fluid,
-        //         compact: props.compact,
-        //         search: props.searchable,
-        //         // false by default if default slot is used
-        //         selection: state.hasDefaultSlot ? false : props.selection,
-        //         'not-selection': !props.selection,
-        //         multiple: props.multiple,
-        //         loading: props.loading,
-        //         disabled: props.disabled || props.loading,
-        //         error: props.error,
-        //         [props.color]: !!props.color,
-        //         [props.size]: !!props.size
-        //     },
-        //     style: {
-        //         minWidth: props.minWidth ? parsePxStyle(props.minWidth) : undefined,
-        //         maxWidth: parsePxStyle(props.maxWidth)
-        //     }
-        // }))
 
         // fomantic dropdown initialization
         const initFilter = () => {
@@ -319,19 +323,25 @@ export default {
         }
 
         function reset() {
+            state.searchKey = ''
             emit('input', [])
         }
 
         onMounted(() => {
             // save initial button width
-            refs.filter.style.maxWidth = window.getComputedStyle(refs.button).width
-            console.log('width', window.getComputedStyle(refs.button).width)
+            if (!props.compact && !props.width) {
+                const initialWidth = window.getComputedStyle(refs.button).width
+                refs.filter.style.width = initialWidth
+                refs.filter.style.maxWidth = initialWidth
+                console.log('width', window.getComputedStyle(refs.button).width)
+            }
             // init
             initFilter()
         })
 
         return {
             ...toRefs(state),
+            containerAttr,
             menuAttr,
             buttonAttr,
             listItems,
@@ -352,10 +362,12 @@ export default {
 <style lang="scss" scoped>
 .ui.dropdown.pitcher-filter {
     .ui.buttons {
+        width: 100%;
         max-width: 100%;
 
         & > button {
             width: 100%;
+            line-height: 1.3em;
 
             &.basic:hover {
                 background-color: inherit;
@@ -363,7 +375,8 @@ export default {
 
             .button-text {
                 flex: 1;
-                white-space: nowrap;
+                // controlled by js
+                // white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
