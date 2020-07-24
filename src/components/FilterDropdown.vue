@@ -138,6 +138,7 @@ export default {
         compact: Boolean,
         basic: Boolean,
         disabled: Boolean,
+        inverted: Boolean,
         hideSearch: Boolean,
         truncateText: {
             type: Boolean,
@@ -202,6 +203,7 @@ export default {
         const buttonAttr = computed(() => ({
             class: {
                 basic: props.basic,
+                inverted: !!props.inverted,
                 [props.color]: !!props.color,
                 active: props.basic && props.value.length > 0,
                 ['right labeled icon']: !props.value.length
