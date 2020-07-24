@@ -14,7 +14,6 @@
                 :items="f.options"
                 return-type="object"
                 @input="test"
-                width="250px"
             />
         </template>
     </div>
@@ -84,6 +83,7 @@ export default {
                     name: 'Division',
                     val: [],
                     options: [
+                        { value: 'Test header', text: 'Others' },
                         { value: 'Others', text: 'Others' },
                         { value: 'Novartis PH', text: 'Novartis PH' },
                         { value: 'Hexal', text: 'Hexal' },

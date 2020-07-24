@@ -1,17 +1,22 @@
 <template>
     <div class="ui dropdown pitcher-filter" v-bind="containerAttr" ref="filter">
+        <!-- Button group for filter button -->
         <div
             class="ui buttons"
             :class="{ fluid, [size]: !!size }"
             :style="{ minWidth: width ? parsePxStyle(width) : undefined }"
         >
+            <!-- Dropdown button text, +N text & icon -->
             <button class="ui button" v-bind="buttonAttr" ref="button">
                 <div class="d-flex">
                     <i class="icon" :class="icon" />
                     <span
                         ref="buttonTextRef"
                         class="button-text"
-                        :style="{ whiteSpace: truncateText ? 'nowrap' : undefined }"
+                        :style="{
+                            whiteSpace: truncateText ? 'nowrap' : undefined,
+                            textOverflow: truncateText && value.length > 0 ? 'ellipsis' : undefined
+                        }"
                     >
                         {{ buttonText }}
                     </span>
@@ -23,8 +28,8 @@
                     :class="{ down: !menuIsOpen, up: menuIsOpen }"
                 />
             </button>
+            <!-- clear button on side-->
             <template v-if="value.length > 0">
-                <!-- clear button -->
                 <button
                     v-if="value.length > 0"
                     class="ui icon button"
@@ -36,7 +41,10 @@
                 </button>
             </template>
         </div>
+
+        <!-- Dropdown menu -->
         <div v-bind="menuAttr">
+            <!-- Header & Close button -->
             <div class="h-container d-flex align-items-center pa-3">
                 <h3 class="ui header ma-0">
                     {{ title }}
@@ -47,7 +55,8 @@
                 <!-- Close button -->
                 <i class="times icon thin ml-auto" style="cursor: pointer; font-size: 1.1em" @click="closeMenu" />
             </div>
-            <!-- actions -->
+
+            <!-- Actions container -->
             <div class="a-container mb-4">
                 <a href="#" @click="selectAll">
                     <span class="ui text" :class="{ [color]: !!color }">Select all</span>
@@ -57,14 +66,25 @@
                     <span class="ui text" :class="{ [color]: !!color }">Reset</span>
                 </a>
             </div>
+
+            <!-- Search container -->
             <div v-if="!hideSearch" class="s-container mb-4">
                 <div class="ui fluid icon small input">
                     <input v-model="searchKey" type="text" placeholder="Search" />
                     <i v-if="searchKey" class="times thin icon link" @click="searchKey = ''" />
                 </div>
+                <!-- No data text -->
+                <span v-if="listItems.length === 0" class="ui text grey mt-4 d-flex justify-content-center">{{
+                    noDataText
+                }}</span>
             </div>
+
             <!-- Items -->
-            <div class="ui grid fluid vertical menu sub-menu" :style="{ maxHeight: parsePxStyle(scrollHeight) }">
+            <div
+                v-if="listItems.length > 0"
+                class="ui grid fluid vertical menu sub-menu"
+                :style="{ maxHeight: parsePxStyle(scrollHeight) }"
+            >
                 <div
                     v-for="(item, index) in listItems"
                     :key="index"
@@ -79,6 +99,7 @@
                         </div>
                         <div v-if="item.description" class="description">{{ item.description }}</div>
                     </template>
+                    <!-- not an item, put as plain text -->
                     <template v-else>{{ item.text }}</template>
                 </div>
             </div>
@@ -87,7 +108,7 @@
 </template>
 <script>
 import { computed, reactive, toRefs, onMounted, watch } from '@vue/composition-api'
-import { parsePxStyle, validateSize, countLines } from './mixins'
+import { parsePxStyle, validateSize } from './mixins'
 import { search } from '../utils'
 
 export default {
@@ -120,6 +141,10 @@ export default {
         truncateText: {
             type: Boolean,
             default: true
+        },
+        noDataText: {
+            type: String,
+            default: 'No results'
         },
         width: {
             type: [String, Number]
@@ -197,14 +222,11 @@ export default {
             }
         }))
 
-        // TODO: SEARCH
-        // search(temp, props.searchFor, props.searchFields)
-
-        // transform list items for dropdown
-        const listItems = computed(() => {
+        const parsedItems = computed(() => {
             if (!props.items) {
                 return []
             }
+
             return props.items.map(item => {
                 if (item.constructor === Object) {
                     return {
@@ -226,6 +248,19 @@ export default {
             })
         })
 
+        // transform list items for dropdown
+        const listItems = computed(() => {
+            let temp = parsedItems.value
+
+            if (state.searchKey) {
+                temp = search(temp, state.searchKey, ['value', 'text'])
+            }
+
+            temp.sort((a, b) => (isSelected(a) > isSelected(b) ? -1 : 1))
+
+            return temp
+        })
+
         // value watcher
         watch(
             () => props.value,
@@ -237,7 +272,7 @@ export default {
                 }
 
                 state.buttonText = ''
-                const selectedItems = listItems.value.filter(i => isSelected(i)).map(i => i.text)
+                const selectedItems = parsedItems.value.filter(i => isSelected(i)).map(i => i.text)
                 let lineBreakIndex = 0
                 let textFitsContainer = true
 
@@ -271,6 +306,7 @@ export default {
                 },
                 onHide: () => {
                     state.menuIsOpen = false
+                    state.searchKey = ''
                     refresh()
                 }
             })
@@ -377,8 +413,8 @@ export default {
                 flex: 1;
                 // controlled by js
                 // white-space: nowrap;
+                // text-overflow: ellipsis;
                 overflow: hidden;
-                text-overflow: ellipsis;
             }
         }
 
