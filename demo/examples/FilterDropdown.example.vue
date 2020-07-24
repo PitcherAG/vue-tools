@@ -10,22 +10,33 @@
         <br />
 
         <h4>String array example</h4>
-        <FilterDropdown title="Cities" v-model="recordTypeSingleSaved" :items="recordTypesSingle" @input="test" />
+        <FilterDropdown
+            title="Cities"
+            color="blue"
+            inverted
+            v-model="recordTypeSingleSaved"
+            :items="recordTypesSingle"
+            @input="test"
+        />
         <br />
         <br />
 
         <h4>Complex example</h4>
-        <template v-for="(f, i) in filters">
-            <FilterDropdown
-                v-model="f.val"
-                class="mr-2"
-                :key="i"
-                :title="f.name"
-                :items="f.options"
-                return-type="object"
-                @input="test"
-            />
-        </template>
+        <div class="d-flex">
+            <template v-for="(f, i) in filters">
+                <FilterDropdown
+                    v-model="f.val"
+                    class="mx-1"
+                    :key="i"
+                    :title="f.name"
+                    :items="f.options"
+                    return-type="object"
+                    basic
+                    fluid
+                    @input="test"
+                />
+            </template>
+        </div>
     </div>
 </template>
 
