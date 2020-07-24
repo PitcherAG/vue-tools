@@ -14,8 +14,7 @@
                 :items="f.options"
                 return-type="object"
                 @input="test"
-                min-width="250px"
-                basic
+                width="250px"
             />
         </template>
     </div>
