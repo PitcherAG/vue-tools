@@ -95,6 +95,10 @@ export default {
         customReferences: {
             type: Object
         },
+        customSettings: {
+            type: Object,
+            default: () => {}
+        },
         hasSave: {
             type: Boolean
         },
@@ -245,7 +249,9 @@ export default {
                             for (const field of state.schema.fields) {
                                 if (field.name === field_name.trim()) {
                                     const f = new Field(field, props.objectType, false)
-
+                                    if (props.customSettings.includes[f.name]) {
+                                        f.settings = props.customSettings[f.name]
+                                    }
                                     if (props.readOnlyFields.includes(f.name)) {
                                         f.updateable = false
                                     } else if (props.customReferences && props.customReferences[f.name]) {
@@ -296,6 +302,9 @@ export default {
                                                         field = new Field(comp.details, null, false)
                                                         fieldDict[comp.details.name] = field
                                                         fields.push(field)
+                                                        if (props.customSettings[field.name]) {
+                                                            field.settings = props.customSettings[field.name]
+                                                        }
                                                         if (props.readOnlyFields.includes(field.name)) {
                                                             field.updateable = false
                                                         } else if (
