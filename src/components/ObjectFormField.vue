@@ -125,10 +125,9 @@ export default {
     },
     setup(props, ctxt) {
         const emit = ctxt.emit
-        const typ = ref()
         const picklist = ref([])
         if (props.field) {
-            if (typ.value === 'boolean' && !props.value) {
+            if (props.field.type === 'boolean' && !props.value) {
                 emit('input', false)
             }
         }
