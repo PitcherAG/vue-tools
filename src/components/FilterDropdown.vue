@@ -1,8 +1,12 @@
 <template>
     <div class="ui dropdown pitcher-filter" ref="filter" :class="{ fluid }">
-        <div class="ui buttons" :class="{ fluid }">
+        <div class="ui buttons" :class="{ fluid }" :style="{ minWidth: minWidth ? parsePxStyle(minWidth) : undefined }">
             <button class="ui button" v-bind="buttonAttr" ref="button">
-                <span><i class="icon" :class="icon" /> {{ buttonText }}</span>
+                <div class="d-flex">
+                    <i class="icon" :class="icon" />
+                    <span class="button-text">{{ buttonText }}</span>
+                    <span class="ml-1">{{ hasMoreSelected }}</span>
+                </div>
                 <i
                     v-if="!value.length"
                     class="chevron icon right-icon"
@@ -10,7 +14,6 @@
                 />
             </button>
             <template v-if="value.length > 0">
-                <!-- separator -->
                 <!-- clear button -->
                 <button
                     v-if="value.length > 0"
@@ -126,14 +129,16 @@ export default {
         }
     },
 
-    setup(props, { refs, emit, slots }) {
+    setup(props, { refs, emit, slots, root }) {
         // local state
         const state = reactive({
             searchKey: '',
             menuIsOpen: false,
+            hasMoreSelected: null,
+            buttonText: props.title,
             isSingleItem: false,
             hasCustomIcon: props.icon !== 'filter',
-            hasDefaultSlot: !!slots.default,
+            hasDefaultSlot: !!slots.default
         })
 
         const buttonAttr = computed(() => ({
@@ -147,24 +152,9 @@ export default {
                 flex: 1,
                 paddingLeft: '8px !important',
                 textAlign: 'left',
-                minWidth: props.minWidth ? parsePxStyle(props.minWidth) : undefined
+                overflow: 'hidden'
             }
         }))
-
-        // Button text
-        const buttonText = computed(() => {
-            if (!props.value.length) {
-                return props.title
-            }
-
-            if (refs.button) {
-                // TODO: Calc lines & see if its overflowing, return managed value
-                console.log('lines', countLines(refs.button))
-            }
-
-            const selectedItems = listItems.value.filter(i => isSelected(i)).map(i => i.text)
-            return selectedItems.join(', ')
-        })
 
         const menuAttr = computed(() => ({
             class: {
@@ -203,6 +193,48 @@ export default {
                 }
             })
         })
+
+        // value watcher
+        watch(
+            () => props.value,
+            async () => {
+                console.log('change')
+                if (!props.value.length) {
+                    state.buttonText = props.title
+                    state.hasMoreSelected = ''
+                    return
+                }
+
+                state.buttonText = ''
+
+                const selectedItems = listItems.value.filter(i => isSelected(i)).map(i => i.text)
+                let lineBreakIndex = 0
+                let hasLineBreak = false
+
+                for (const [index, text] of selectedItems.entries()) {
+                    state.buttonText += index === 0 ? `${text}` : `, ${text}`
+                    await root.$nextTick()
+                    if (countLines(refs.button) > 1) {
+                        lineBreakIndex = index
+                        hasLineBreak = true
+                        console.log('HOOO', index)
+                        break
+                    }
+                }
+
+                // has line break
+                if (hasLineBreak) {
+                    console.log(selectedItems.slice(0, lineBreakIndex))
+                    state.buttonText =
+                        lineBreakIndex === 0
+                            ? selectedItems.join(', ')
+                            : selectedItems.slice(0, lineBreakIndex).join(', ')
+                    state.hasMoreSelected = ` +${selectedItems.slice(lineBreakIndex).length}`
+                } else {
+                    state.hasMoreSelected = ''
+                }
+            }
+        )
 
         // const dropdownAttr = computed(() => ({
         //     class: {
@@ -248,14 +280,6 @@ export default {
             $(refs.filter).dropdown('hide')
         }
 
-        onMounted(() => {
-            // save initial button width
-            refs.filter.style.maxWidth = window.getComputedStyle(refs.button).width
-            console.log('width', window.getComputedStyle(refs.button).width);
-            // init
-            initFilter()
-        })
-
         const isSelected = item => {
             if (props.returnType === 'object') {
                 return props.value.some(i => i.value === item.value)
@@ -298,11 +322,18 @@ export default {
             emit('input', [])
         }
 
+        onMounted(() => {
+            // save initial button width
+            refs.filter.style.maxWidth = window.getComputedStyle(refs.button).width
+            console.log('width', window.getComputedStyle(refs.button).width)
+            // init
+            initFilter()
+        })
+
         return {
             ...toRefs(state),
             menuAttr,
             buttonAttr,
-            buttonText,
             listItems,
             initFilter,
             handleItemClick,
@@ -325,8 +356,16 @@ export default {
 
         & > button {
             width: 100%;
+
             &.basic:hover {
                 background-color: inherit;
+            }
+
+            .button-text {
+                flex: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
 
