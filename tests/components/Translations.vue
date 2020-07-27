@@ -1,7 +1,6 @@
 <template>
     <div>
         <div>Translations</div>
-        <div>{{ 'as a filter in template' | translate }}</div>
         <div>{{ $gettext('with gettext in template') }}</div>
         <div>{{ $ngettext('with gettext in template plural', na) }}</div>
         <div>{{ b }}</div>

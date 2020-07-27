@@ -1,5 +1,5 @@
 <template>
-    <div class="ui calendar" ref="calendar">
+    <div ref="calendar" class="ui calendar">
         <div class="ui input left icon">
             <i class="calendar icon" />
             <input ref="input" type="text" :placeholder="placeholder" :value="value" />

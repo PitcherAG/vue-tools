@@ -1,5 +1,5 @@
 <template>
-    <div class="ui modal" ref="modal" v-bind="modalAttr">
+    <div ref="modal" class="ui modal" v-bind="modalAttr">
         <!-- If has custom slot to replace whole content -->
         <template v-if="hasCustomSlot">
             <slot name="custom" />
