@@ -64,6 +64,9 @@ export default {
                     description: 15
                 },
                 {
+                    type: 'divider'
+                },
+                {
                     text: 'Aargau',
                     value: 'aargau',
                     description: 2
