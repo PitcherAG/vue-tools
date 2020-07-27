@@ -45,7 +45,10 @@
         <!-- Dropdown menu -->
         <div v-bind="menuAttr">
             <!-- Header & Close button -->
-            <div class="h-container d-flex align-items-center pa-3">
+            <template v-if="hasHeaderSlot" :closeMenu="closeMenu">
+                <slot name="header" />
+            </template>
+            <div v-else class="h-container d-flex align-items-center pa-3">
                 <h3 class="ui header ma-0">
                     {{ title }}
                     <div v-if="value.length" class="ui circular label" :class="{ [color]: !!color, grey: !color }">
@@ -57,7 +60,10 @@
             </div>
 
             <!-- Actions container -->
-            <div class="a-container mb-4">
+            <template v-if="hasActionsSlot" :selectAll="selectAll" :reset="reset">
+                <slot name="actions" />
+            </template>
+            <div v-else class="a-container mb-4">
                 <a href="#" @click="selectAll">
                     <span class="ui text" :class="{ [color]: !!color }">Select all</span>
                 </a>
@@ -79,6 +85,11 @@
                 }}</span>
             </div>
 
+            <!-- Prepend list slot -->
+            <div v-if="hasPrependListSlot">
+                <slot name="prepend-list" />
+            </div>
+
             <!-- Items -->
             <div
                 v-if="listItems.length > 0"
@@ -89,12 +100,12 @@
                     v-for="(item, index) in listItems"
                     :key="index"
                     :class="[item.type, { disabled: item.disabled, active: isSelected(item) }]"
-                    @click.stop="item.type === 'item' ? handleItemClick(item) : undefined"
+                    @click.stop="item.type.includes('item') ? handleItemClick(item) : undefined"
                 >
                     <!-- if this is an item -->
-                    <template v-if="item.type === 'item'">
+                    <template v-if="item.type.includes('item')">
                         <div class="ui checkbox" :class="{ [size]: !!size }">
-                            <input type="checkbox" name="example" :checked="isSelected(item)" />
+                            <input type="checkbox" :name="item.value" :checked="isSelected(item)" />
                             <label>{{ item.text }}</label>
                         </div>
                         <div v-if="item.description" class="description">{{ item.description }}</div>
@@ -102,6 +113,11 @@
                     <!-- not an item, put as plain text -->
                     <template v-else>{{ item.text }}</template>
                 </div>
+            </div>
+
+            <!-- Append list slot -->
+            <div v-if="hasAppendListSlot">
+                <slot name="append-list" />
             </div>
         </div>
     </div>
@@ -166,7 +182,7 @@ export default {
         }
     },
 
-    setup(props, { refs, emit, slots, root }) {
+    setup(props, { refs, emit, root, slots }) {
         // local state
         const state = reactive({
             searchKey: '',
@@ -175,7 +191,10 @@ export default {
             buttonText: props.title,
             shouldSort: false,
             hasCustomIcon: props.icon !== 'filter',
-            hasDefaultSlot: !!slots.default
+            hasHeaderSlot: !!slots.header,
+            hasActionsSlot: !!slots.actions,
+            hasPrependListSlot: !!slots['prepend-list'],
+            hasAppendListSlot: !!slots['append-list']
         })
 
         const containerAttr = computed(() => {
@@ -358,7 +377,7 @@ export default {
         function selectAll() {
             const notSelectedItems = listItems.value
                 .filter(i => !i.disabled)
-                .filter(i => i.type === 'item')
+                .filter(i => i.type.includes('item'))
                 .filter(i => !isSelected(i))
             return props.returnType === 'object'
                 ? emit('input', [...props.value, ...notSelectedItems])
@@ -376,7 +395,6 @@ export default {
                 const initialWidth = window.getComputedStyle(refs.button).width
                 refs.filter.style.width = initialWidth
                 refs.filter.style.maxWidth = initialWidth
-                console.log('width', window.getComputedStyle(refs.button).width)
             }
             // init
             initFilter()
