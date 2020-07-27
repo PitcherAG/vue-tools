@@ -134,12 +134,13 @@ import { search } from '../utils'
 export default {
     props: {
         value: {
+            type: Array,
             required: true
         },
         title: String,
         items: {
             type: Array,
-            required: false
+            required: true
         },
         itemText: {
             default: 'text'
