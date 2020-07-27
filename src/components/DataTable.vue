@@ -15,7 +15,7 @@
                 </template>
 
                 <!-- default table heading -->
-                <template v-else v-for="f in fields">
+                <template v-for="f in fields" v-else>
                     <th
                         v-if="!f.hide"
                         :key="f.__colID"
@@ -56,7 +56,7 @@
                 />
             </template>
 
-            <tr v-else v-for="item in tableData" :key="item.__rowID" @click="emit('rowClick', item)">
+            <tr v-for="item in tableData" v-else :key="item.__rowID" @click="emit('rowClick', item)">
                 <!-- If row slot exist, override with a slot -->
                 <template v-if="hasRowSlot">
                     <!-- map only visible fields, return rawData as well -->
@@ -70,7 +70,7 @@
                 </template>
 
                 <!-- Default Row content -->
-                <template v-else v-for="f in fields">
+                <template v-for="f in fields" v-else>
                     <td v-if="!f.hide" :key="f.__colID" :class="f.tdClass">
                         <!-- if this field is a slot, get the slot -->
                         <template v-if="!!f.slotName">

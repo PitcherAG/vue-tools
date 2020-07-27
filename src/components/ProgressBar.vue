@@ -1,10 +1,10 @@
 <template>
     <div
+        ref="progress"
         class="ui progress pitcher-progress"
         v-bind="progressBarAttr"
         :data-value="value"
         :data-total="total"
-        ref="progress"
     >
         <div class="bar">
             <div v-if="showProgress" class="progress" :class="{ centered: progressCenter }" />
