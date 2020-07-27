@@ -5,10 +5,6 @@ import FilterDropdown from '@/components/FilterDropdown'
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
 
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms))
-}
-
 describe('FilterDropdown.vue', () => {
     const items = [
         { name: 'Hello', value: 'hello', type: 'item hello' },
