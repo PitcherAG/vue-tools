@@ -324,12 +324,12 @@ Fomantic Dropdown component
 | `v-model` | `String` | yes | - | model to track of selected values
 | `items` | `Array` | false | - | object array for dropdown items. Required if you want to use with JS declaration. Do not use items if you use default slot
 | `item-text` | `String` | no | 'text' | which property to map as text in your items declaration
-| `item-value` | `String` | no | 'value | which property to map as value in your items declaration
+| `item-value` | `String` | no | 'value' | which property to map as value in your items declaration
 | `icon` | `String` | no | 'dropdown' | default icon for dropdown. If anything else than dropdown, the icon will be placed to the left side
 | `default-text` | `String` | no | 'Select' | default text that will be show when there is not any value selected
 | `action` | `String` | no | 'activate' | default action when initializing fomantic dropdown element. Default is activate.
 | `settings` | `Object` | no | undefined | Fomantic dropdown settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/dropdown.html#/settings
-| `fluid` | `Boolean` | no | undefined | makes the component width thru adding fluid class to the container
+| `fluid` | `Boolean` | no | undefined | makes the component width fluid `100%` by adding fluid class to the container
 | `compact` | `Boolean` | no | undefined | makes the component compact thru adding compact class to the container. Width of dropdown increases the more you select from the dropdown
 | `selection` | `Boolean` | no | true | makes the component a selection dropdown thru adding selection class to the container
 | `multiple` | `Boolean` | no | undefined | enables multiple selection of items in dropdown thru adding multiple class to the container
@@ -338,7 +338,7 @@ Fomantic Dropdown component
 | `disabled` | `Boolean` | no | undefined | disables the component thru adding disabled class to the container
 | `loading` | `Boolean` | no | false | sets the dropdown to loading state thru adding loading class to the container
 | `error` | `Boolean` | no | undefined | adds error class to the container
-| `color` | `String` | no | undefined | sets the color if it's button thru adding the color class to the container. (Check Fomantic for examples)
+| `color` | `String` | no | undefined | sets the color of button thru adding the color class to the container. (check available colors at Fomantic)
 | `size` | `String` | no | medium | mini \| tiny \| small \| medium \| large \| big \| huge \| massive 
 | `min-width` | `Number \| String` | no | undefined | min-width css property for input element
 | `max-width` | `Number \| String` | no | 100% | max-width css property for input element
@@ -469,6 +469,122 @@ const selectedItem = ''
         <div class="item" data-value="us"><i class="us flag" />United States</div>
     </div>
 </Dropdown>
+```
+
+### Filter Dropdown
+Custom filter component built with Fomantic Dropdown
+
+#### Available props
+| prop | type | required | default | description |
+| :--- | :--- | :--- | :--- | :--- |
+| `v-model` | `Array` | yes | - | model to track of selected values
+| `items` | `Array` | true | - | object array for filter items.
+| `item-text` | `String` | no | 'text' | which property to map as text in your items declaration
+| `item-value` | `String` | no | 'value' | which property to map as value in your items declaration
+| `title` | `String` | no | undefined | title text that will be shown inside button by default when there is not any value selected
+| `return-type` | `String` | no | 'value' | which property of item object will be saved inside model. Saves `item.value` by default. You can use `object` if you want to store whole item object inside v-model
+| `icon` | `String` | no | 'filter' | default icon for the button
+| `fluid` | `Boolean` | no | undefined | makes the component width fluid `100%` by adding fluid class to the container
+| `compact` | `Boolean` | no | undefined | makes the component compact thru adding compact class to the container. Width of dropdown increases/decreases when you select/unselect filters from the dropdown
+| `hide-search` | `Boolean` | no | undefined | hide/show search bar inside menu
+| `truncate-text` | `Boolean` | no | true | text truncation when the container has multiple selections and no space left inside button.
+| `no-data-text` | `String` | no | 'No results' | text to show when there are no items or search results
+| `width` | `Number \| String` | no | undefined | fixed width for dropdown button
+| `menu-width` | `Number \| String` | no | 300 | fixed width for filter menu 300px defualt
+| `scroll-height` | `Number \| String` | no | 250 | scroll height for menu, 250px by default
+| `basic` | `Boolean` | no | undefined | adds basic class to the button (fomantic basic button styling)
+| `disabled` | `Boolean` | no | undefined | disables the component thru adding disabled class to the container
+| `color` | `String` | no | undefined | sets the color of button and some elements inside. (check available colors at Fomantic)
+| `inverted` | `Boolean` | no | undefined | adds inverted class to the button and some elements inside to invert colors
+| `size` | `String` | no | medium | mini \| tiny \| small \| medium \| large \| big \| huge \| massive 
+
+#### Available slots
+| slot | description | props
+| :--- | :--- | :--- |
+| `header` | header slot to replace `.h-container` | ```{ closeMenu }```
+| `actions` | actions slot to replace `.a-container` | ```{ selectAll, reset }```
+| `prepend-list` | slot to prepend content before `.sub-menu` | -
+| `append-list` | slot to append content before `.sub-menu` | -
+
+#### Available events
+| event | description |
+| :--- | :--- |
+| `@input` | default v-model input event
+
+
+#### Definitions
+```javascript
+ // object array for items, here you define how your data will be presented in the FilterDropdown and what value they will have on selection. You can also simply use a String array.
+items: Item[] | String[]
+
+// a single item definition inside items array
+item: {
+    // The name of your filter item. This will be shown as the name in the menu. Also you can rename text to anything else. Let's say if you change text -> to name and set item-text="name" in your FilterDropdown properties, FilterDropdown will show name property as the text.
+    text: String,
+    // The value of your filter item that will be saved when you select. Same option as text applies to this property as well, combine with item-value property in FilterDropdown.
+    value: String,
+    // Type of the FilterDropdown item, default is 'item'
+    type: 'item | header | divider',
+    // Description for the item
+    description: String,
+    // to disable FilterDropdown item. NOTE: If you will change this later on the fly, you need to declare disable: false initially
+    disabled: Boolean
+}
+```
+
+#### Usage
+```javascript
+import { FilterDropdown } from '@pitcher/vue-sdk'
+
+// data that will be presented in dropdown
+const items = [
+{
+    text: 'Cantons',
+    type: 'header'
+},
+{
+    text: 'Zürich',
+    value: 'zurich',
+    description: '10'
+},
+{
+    text: 'Bern',
+    value: 'bern',
+    disabled: true
+},
+{
+    type: 'divider'
+},
+{
+    text: 'Aargau',
+    value: 'aargau',
+},
+...
+...
+]
+
+// must be reactive
+const selectedFilter = ''
+```
+
+```html
+<!-- Simple usage -->
+<FilterDropdown title="Cities" v-model="selectedFilter" :items="items" />
+
+<!-- Using basic, fluid, fixed menu width, higher scroll-height, smaller -->
+<FilterDropdown title="Cities" v-model="selectedFilter" :items="items" basic fluid size="small" menu-width="500px" scroll-height="600px" />
+ 
+<!-- Using different return-type than default, different text property to map -->
+<FilterDropdown title="Cities" v-model="selectedFilter" :items="items" return-type="object" item-text="name" />
+ 
+<!-- Usage with slot -->
+<FilterDropdown title="Cities" v-model="selectedFilter" :items="items">
+    <template #actions="{ selectAll, reset }">
+        <button class="ui button" @click="selectAll">Select all</button>
+        <button class="ui button" @click="reset">Reset</button>
+    </template>
+</FilterDropdown>
+
 ```
 
 ### Modal
