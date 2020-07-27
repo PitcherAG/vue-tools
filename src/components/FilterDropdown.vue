@@ -48,6 +48,8 @@
             <template v-if="hasHeaderSlot" :closeMenu="closeMenu">
                 <slot name="header" />
             </template>
+
+            <!-- Default header -->
             <div v-else class="h-container d-flex align-items-center pa-3">
                 <h3 class="ui header ma-0">
                     {{ title }}
@@ -63,6 +65,8 @@
             <template v-if="hasActionsSlot" :selectAll="selectAll" :reset="reset">
                 <slot name="actions" />
             </template>
+
+            <!-- Default actions -->
             <div v-else class="a-container mb-4">
                 <a href="#" @click="selectAll">
                     <span class="ui text" :class="{ [color]: !!color }">Select all</span>
