@@ -1,5 +1,5 @@
 <template>
-    <div class="ui dropdown pitcher-dropdown" v-bind="dropdownAttr" ref="dropdown">
+    <div ref="dropdown" class="ui dropdown pitcher-dropdown" v-bind="dropdownAttr">
         <template v-if="hasDefaultSlot">
             <slot />
         </template>
@@ -17,10 +17,10 @@
             <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
 
             <!-- selected text -->
-            <div class="text" v-show="value" />
+            <div v-show="value" class="text" />
 
             <!-- placeholder -->
-            <div class="default" v-show="!value && !isSearching" :style="{ left: hasCustomIcon ? '32px' : '' }">
+            <div v-show="!value && !isSearching" class="default" :style="{ left: hasCustomIcon ? '32px' : '' }">
                 {{ defaultText }}
             </div>
 

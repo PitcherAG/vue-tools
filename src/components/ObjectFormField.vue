@@ -1,52 +1,52 @@
 <template>
-    <sui-form-field :error="error" :required="field.required" v-if="field.updateable">
+    <sui-form-field v-if="field.updateable" :error="error" :required="field.required">
         <label>{{ label || field.label }}</label>
         <input
-            :maxlength="field.length"
-            :value="value"
-            @input="emitInput($event.target.value)"
-            placeholder=""
-            type="text"
-            v-bind="field.settings"
             v-if="
                 field.type === 'string' || field.type === 'phone' || field.type === 'url' || field.type === 'combobox'
             "
-        />
-        <textarea
             :maxlength="field.length"
             :value="value"
-            @input="emitInput($event.target.value)"
+            placeholder=""
+            type="text"
             v-bind="field.settings"
+            @input="emitInput($event.target.value)"
+        />
+        <textarea
             v-if="field.type === 'textarea' || field.type === 'address'"
+            :maxlength="field.length"
+            :value="value"
+            v-bind="field.settings"
+            @input="emitInput($event.target.value)"
         />
         <Dropdown
+            v-if="field.type === 'picklist' || field.type === 'multipicklist'"
             :default-text="$gettext('Select')"
             :items="picklist"
             :multiple="field.type === 'multipicklist'"
             :value="value"
-            @input="emitInput($event)"
             add-class="selection"
             v-bind="field.settings"
-            v-if="field.type === 'picklist' || field.type === 'multipicklist'"
+            @input="emitInput($event)"
         />
         <Dropdown
+            v-if="field.type === 'reference'"
             :default-text="$gettext('Select')"
             :items="field.references"
             :multiple="field.type === 'multipicklist'"
             :value="value"
-            @input="emitInput($event)"
             add-class="selection"
             v-bind="field.settings"
-            v-if="field.type === 'reference'"
+            @input="emitInput($event)"
         />
 
         <Calendar
+            v-if="field.type === 'date' || typ === 'datetime'"
             :default-text="field.type === 'date' ? $gettext('Date') : $gettext('Date/Time')"
             :type="field.type"
             :value="value"
-            @input="emitInput($event)"
             v-bind="field.settings"
-            v-if="field.type === 'date' || typ === 'datetime'"
+            @input="emitInput($event)"
         />
 
         <input
@@ -54,13 +54,13 @@
             :numpadGroup="'ObjectFormField'"
             :numpadIndex="index"
             :value="value"
-            @input="emitInput($event.target.value)"
             placeholder=""
+            v-if="field.type === 'double' || field.type === 'currency' || field.type === 'int'"
             step="any"
             style="width:85px;"
             type="number"
             v-bind="field.settings"
-            v-if="field.type === 'double' || field.type === 'currency' || field.type === 'int'"
+            @input="emitInput($event.target.value)"
         />
         <!--input v-if="field.type=== 'double' || field.type==='currency' || field.type==='int'" :numpadIndex="index"
                :numpadGroup="'ObjectFormField'" :numpadDecimalPlaces="field.digits" v-model="value"
@@ -70,15 +70,15 @@
                readonly="readonly"
                step="any"-->
         <Checkbox
+            v-if="field.type === 'boolean'"
             :value="value"
-            @input="v => emitInput(v)"
             toggle
             v-bind="field.settings"
-            v-if="field.type === 'boolean'"
+            @input="v => emitInput(v)"
         />
     </sui-form-field>
     <!-- not updateable -->
-    <sui-form-field :style="{ minHeight: !value ? '60px' : undefined }" v-else>
+    <sui-form-field v-else :style="{ minHeight: !value ? '60px' : undefined }">
         <label>{{ label || field.label }}</label>
         <div class="pt-2" style="font-size:1.175em">
             <!-- bool -->

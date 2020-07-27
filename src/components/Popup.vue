@@ -1,7 +1,7 @@
 <template>
     <div>
         <slot ref="trigger" />
-        <div class="ui popup" ref="popup">
+        <div ref="popup" class="ui popup">
             <slot name="content" />
         </div>
     </div>

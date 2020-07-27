@@ -97,7 +97,26 @@ module.exports = {
         'vue/custom-event-name-casing': 0,
         'vue/no-setup-props-destructure': 'warn',
         'vue/no-template-shadow': 'error',
-        'vue/no-deprecated-filter': 'warn'
+        'vue/no-deprecated-filter': 'warn',
+        'vue/attributes-order': [
+            'error',
+            {
+                order: [
+                    'DEFINITION',
+                    'LIST_RENDERING',
+                    'CONDITIONALS',
+                    'RENDER_MODIFIERS',
+                    'GLOBAL',
+                    'UNIQUE',
+                    'TWO_WAY_BINDING',
+                    'OTHER_DIRECTIVES',
+                    'OTHER_ATTR',
+                    'EVENTS',
+                    'CONTENT'
+                ],
+                alphabetical: false
+            }
+        ]
     },
     overrides: [
         {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="ui red negative segment transition visible" v-if="validationError">
+        <div v-if="validationError" class="ui red negative segment transition visible">
             <div class="ui red header">
                 <i class="disabled warning sign icon" />
                 <div class="content">
@@ -15,8 +15,8 @@
             <sui-form-field :required="true" :error="state.showErrors && !state.recordType">
                 <label>Please select a Record Type</label>
                 <Dropdown
-                    :default-text="$gettext('Select Record Type')"
                     v-model="state.recordTypeSaved"
+                    :default-text="$gettext('Select Record Type')"
                     :items="state.recordTypes"
                     item-text="name"
                     item-value="recordTypeId"
@@ -26,12 +26,12 @@
         <sui-form v-if="!state.needsRecordType && !validationError && !state.layout">
             <ObjectFormField
                 v-for="(field, key) in state.fields"
+                :key="key"
                 v-model="state.obj[field.name]"
                 :value-label="toLabel(state.obj, field.name)"
-                @input="emitUpdate"
-                :key="key"
                 :field="field"
                 :show-error="state.showErrors"
+                @input="emitUpdate"
                 @fieldChange="v => $emit('fieldChange', v)"
             />
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
@@ -39,18 +39,18 @@
         <sui-form v-if="!state.needsRecordType && !validationError && state.layout && state.ready">
             <fragment v-for="(section, sectionKey) in state.layout.visibleEditLayoutSections" :key="sectionKey">
                 <h4 class="ui header">{{ section.heading }}</h4>
-                <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
+                <div v-for="(row, rowKey) in section.layoutRows" :key="rowKey" class="two fields">
                     <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
                         <template v-for="(comp, compKey) in item.layoutComponents">
                             <ObjectFormField
                                 v-if="!comp.exclude"
+                                :key="compKey"
                                 v-model="state.obj[comp.value]"
                                 :value-label="toLabel(state.obj, comp.value)"
-                                @input="emitUpdate"
-                                :key="compKey"
                                 :field="comp.field"
                                 :show-error="state.showErrors"
                                 :label="item.label"
+                                @input="emitUpdate"
                             />
                         </template>
                     </fragment>
