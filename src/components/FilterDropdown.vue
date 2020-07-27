@@ -1,5 +1,5 @@
 <template>
-    <div class="ui dropdown pitcher-filter" v-bind="containerAttr" ref="filter">
+    <div ref="filter" class="ui dropdown pitcher-filter" v-bind="containerAttr">
         <!-- Button group for filter button -->
         <div
             class="ui buttons"
@@ -7,7 +7,7 @@
             :style="{ minWidth: width ? parsePxStyle(width) : undefined }"
         >
             <!-- Dropdown button text, +N text & icon -->
-            <button class="ui button" v-bind="buttonAttr" ref="button">
+            <button ref="button" class="ui button" v-bind="buttonAttr">
                 <div class="d-flex">
                     <i class="icon" :class="icon" />
                     <span

@@ -50,12 +50,12 @@
         />
 
         <input
+            v-if="field.type === 'double' || field.type === 'currency' || field.type === 'int'"
             :numpadDecimalPlaces="field.digits"
             :numpadGroup="'ObjectFormField'"
             :numpadIndex="index"
             :value="value"
             placeholder=""
-            v-if="field.type === 'double' || field.type === 'currency' || field.type === 'int'"
             step="any"
             style="width:85px;"
             type="number"
