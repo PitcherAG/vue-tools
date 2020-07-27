@@ -12,8 +12,8 @@
         </a>
         <a
             v-for="(p, i) in pagination.pages"
-            class="item"
             :key="i"
+            class="item"
             :class="{ active: p === pagination.currentPage }"
             @click="paginate(p)"
         >

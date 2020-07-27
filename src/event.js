@@ -42,7 +42,7 @@ function fireEvent(name, params) {
             destroyEvent()
         }
 
-        if (window.hasOwnProperty('Ti')) {
+        if (Object.prototype.hasOwnProperty.call(window, 'Ti')) {
             window.Ti.App.fireEvent(name, params)
         } else {
             reject('Ti not found')

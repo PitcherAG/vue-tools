@@ -1,6 +1,6 @@
 <template>
     <!-- eslint-disable max-len -->
-    <div class="ui sidebar right wide vertical menu" v-bind="sidebarAttr" ref="sidebar">
+    <div ref="sidebar" class="ui sidebar right wide vertical menu" v-bind="sidebarAttr">
         <slot />
     </div>
 </template>
