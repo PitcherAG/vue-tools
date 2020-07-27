@@ -17,7 +17,8 @@ const updateTranslation = (el, binding, vnode) => {
     if (attrs['translate-params']) {
         console.warn(
             // eslint-disable-next-line max-len
-            `\`translate-params\` is required as an expression for v-translate directive. Please change to \`v-translate='params'\`: ${msgid}`
+            `\`translate-params\` is required as an expression for 
+            v-translate directive. Please change to \`v-translate='params'\`: ${msgid}`
         )
     }
 
