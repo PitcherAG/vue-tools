@@ -411,13 +411,11 @@ export default {
             menuAttr,
             buttonAttr,
             listItems,
-            initFilter,
             handleItemClick,
             closeMenu,
             selectAll,
             reset,
             isSelected,
-            emit,
             refresh,
             parsePxStyle
         }
