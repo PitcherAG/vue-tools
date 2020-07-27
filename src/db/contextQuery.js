@@ -12,7 +12,7 @@ export async function contextQuery(query, context, db = null) {
     query = query.split('TODAY').join("date('now')")
     const tableDict = configStore.getTableDict.value
     for (const a in context) {
-        if (context.hasOwnProperty(a)) {
+        if (Object.prototype.hasOwnProperty.call(context, a)) {
             tableDict[a] = context[a]
         }
     }
