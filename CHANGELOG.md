@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.3.10
+
+### Added
+- FilterDropdown component
+
+### Changed
+- ObjectForm updated
+  - added prop customSettings to allow custom settings for the fields
+
+### Fixed
+- Encountering error when `en-US` sent as a param to translation plugin
+- Lint errors
+- Dropdown typos fixed in the documentation
+
+
 ## 1.3.9
 
 ### Added
