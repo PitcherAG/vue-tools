@@ -36,6 +36,7 @@
                     :class="buttonAttr.class"
                     style="flex: 0;"
                     @click.stop="reset"
+                    @touchstart.stop="reset"
                 >
                     <i class="times icon right-icon" />
                 </button>
