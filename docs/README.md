@@ -15,6 +15,7 @@ Please open a pull request if you want to change something
     - [Windows](debug/windows.md)
 - [How to deploy](deployment.md)
 - [How to change this docs](docs.md)
+- [How to contribute](contribute.md)
 
 ## Documentation
 
