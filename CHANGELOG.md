@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.11
+
+### Added
+
+### Changed
+
+### Fixed
+- FilterDropdown clicking filter fast unselect option before
+
+
 ## 1.3.10
 
 ### Added
