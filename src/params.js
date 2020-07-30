@@ -31,7 +31,6 @@ export function useParamsStore() {
                 return s.state.user.LanguageLocaleKey.split('_').join('-')
             }
         }),
-
         language: computed(() => {
             if (s.state.salesForceUser) {
                 return s.state.salesForceUser.LanguageLocaleKey.split('_')[0].toLowerCase()
@@ -39,7 +38,9 @@ export function useParamsStore() {
             if (s.state.user) {
                 return s.state.user.LanguageLocaleKey.split('_')[0].toLowerCase()
             }
-            if (s.state.config) {
+        }),
+        deviceLanguage: computed(() => {
+            if (s.state.langV) {
                 const isoLocaleMap = {
                     AUSDE: 'de',
                     BI: 'id',
@@ -60,10 +61,10 @@ export function useParamsStore() {
                     VN: 'vi'
                 }
 
-                if (isoLocaleMap[s.state.config.langV]) {
-                    return isoLocaleMap[s.state.config.langV]
+                if (isoLocaleMap[s.state.langV]) {
+                    return isoLocaleMap[s.state.langV]
                 } else {
-                    return s.state.config.langV.toLowerCase()
+                    return s.state.langV.toLowerCase()
                 }
             }
         }),
