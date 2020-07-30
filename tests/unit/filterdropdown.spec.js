@@ -1,5 +1,5 @@
 import CompositionApi from '@vue/composition-api'
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import FilterDropdown from '@/components/FilterDropdown'
 
 const localVue = createLocalVue()
@@ -11,7 +11,7 @@ describe('FilterDropdown.vue', () => {
         { name: 'World', value: 'world', type: 'item world' }
     ]
 
-    const wrapper = shallowMount(FilterDropdown, {
+    const wrapper = mount(FilterDropdown, {
         localVue,
         propsData: {
             value: [],
