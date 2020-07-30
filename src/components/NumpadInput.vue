@@ -2,17 +2,17 @@
     <!-- Numpad -->
     <div class="numpad-input" :class="[group]" :style="{ display: fluid ? 'block' : 'inline-block' }">
         <!-- Input -->
-        <div class="ui" :class="inputAttrs.class" ref="inputDiv">
+        <div ref="inputDiv" class="ui" :class="inputAttrs.class">
             <i v-if="leftIcon" class="icon" :class="leftIcon" style="z-index: 1" />
             <slot v-if="labelLeftSlot" name="labelLeft" />
             <input
+                ref="input"
                 :value="localValue"
                 type="text"
                 readonly="readonly"
                 class="number-input"
                 :style="inputAttrs.style"
                 :placeholder="placeholder"
-                ref="input"
                 @focus="focus(true)"
                 @blur="focus(false)"
                 @keypress.prevent
@@ -21,7 +21,7 @@
             <slot v-if="labelRightSlot" name="labelRight" />
         </div>
         <!-- Numpad -->
-        <div v-if="numpadIsVisible" class="ui segment pa-0 mt-0 numpad" ref="numpad">
+        <div v-if="numpadIsVisible" ref="numpad" class="ui segment pa-0 mt-0 numpad">
             <div class="numpad__keys">
                 <div class="numpad__keys--row">
                     <button class="row--number" @mousedown.prevent @click="addVal(1)">

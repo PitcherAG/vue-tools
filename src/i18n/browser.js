@@ -20,7 +20,7 @@ export function useBrowserLanguage() {
             })
         }
 
-        for (let l of languages.values()) {
+        for (const l of languages.values()) {
             languages.add(l.split('-')[0])
         }
 

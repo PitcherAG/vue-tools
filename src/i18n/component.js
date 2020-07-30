@@ -13,7 +13,7 @@ export default {
         // This is currently done by looking inside a private attribute `_renderChildren`.
         // I haven't (yet) found a better way to access the raw content of the component.
         if (this.$options._renderChildren) {
-            if (this.$options._renderChildren[0].hasOwnProperty('text')) {
+            if (Object.prototype.hasOwnProperty.call(this.$options._renderChildren[0], 'text')) {
                 this.msgid = this.$options._renderChildren[0].text
             } else {
                 this.msgid = this.$options._renderChildren[0]
