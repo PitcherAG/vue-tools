@@ -24,10 +24,10 @@ describe('Checkbox.vue', () => {
     // Tests
     it('checkbox test', async () => {
         expect(wrapper.find('input').element.checked).toBe(true)
-        wrapper.find('.ui.toggle.checkbox').trigger('click')
+        wrapper.find('.ui.checkbox').trigger('click')
         await updateValue(false)
 
-        wrapper.find('.ui.toggle.checkbox').trigger('click')
+        wrapper.find('.ui.checkbox').trigger('click')
         await wrapper.vm.$nextTick()
         expect(wrapper.text()).toBe('hello')
         expect(wrapper.emitted().input).toStrictEqual([[false], [true]])
