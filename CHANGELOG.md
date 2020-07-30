@@ -9,7 +9,9 @@
 
 ### Changed
 - Checkbox.vue
-    - added relevant props and events from Fomantic
+  - added relevant props and events from Fomantic
+- FilterDropdown.vue
+  - using built-in checkbox component now
 
 ### Fixed
 - FilterDropdown clicking filter fast unselect option before
