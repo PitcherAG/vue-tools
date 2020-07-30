@@ -5,12 +5,7 @@
 
         <!-- default usage -->
         <h4>Default usage</h4>
-        <div>{{ testVal }}</div>
-        <br />
-        <Checkbox v-model="testVal2" :uncheckable="testVal" label="test" />
-        <button @click="testVal = false">test</button>
-
-        <!-- <FilterDropdown title="Cities" v-model="recordTypeSaved" :items="recordTypes" @input="test" />
+        <FilterDropdown title="Cities" v-model="recordTypeSaved" :items="recordTypes" @input="test" />
         <br />
         <br />
 
@@ -41,25 +36,21 @@
                     @input="test"
                 />
             </template>
-        </div> -->
+        </div>
     </div>
 </template>
 
 <script>
 import FilterDropdown from '@/components/FilterDropdown'
-import Checkbox from '@/components/Checkbox'
 import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
     components: {
-        FilterDropdown,
-        Checkbox
+        FilterDropdown
     },
     props: {},
     setup() {
         const state = reactive({
-            testVal: true,
-            testVal2: true,
             recordTypeSaved: [],
             recordTypes: [
                 {
