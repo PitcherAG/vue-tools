@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.3.11
+
+### Breaking
+- Checkbox.vue updated, by default it comes as a checkbox. You can add fomantic UI options as props now. Default checkboxes had toggle by default, this must be added.
+
+### Added
+
+### Changed
+- Checkbox.vue
+  - added relevant props and events from Fomantic
+- FilterDropdown.vue
+  - using built-in checkbox component now
+
+### Fixed
+- FilterDropdown clicking filter fast unselect option before
+
+
 ## 1.3.10
 
 ### Added
