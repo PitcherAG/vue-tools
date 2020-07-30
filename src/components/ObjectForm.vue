@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="ui red negative segment transition visible" v-if="validationError">
+        <div v-if="validationError" class="ui red negative segment transition visible">
             <div class="ui red header">
                 <i class="disabled warning sign icon" />
                 <div class="content">
@@ -15,8 +15,8 @@
             <sui-form-field :required="true" :error="state.showErrors && !state.recordType">
                 <label>Please select a Record Type</label>
                 <Dropdown
-                    :default-text="$gettext('Select Record Type')"
                     v-model="state.recordTypeSaved"
+                    :default-text="$gettext('Select Record Type')"
                     :items="state.recordTypes"
                     item-text="name"
                     item-value="recordTypeId"
@@ -26,35 +26,31 @@
         <sui-form v-if="!state.needsRecordType && !validationError && !state.layout">
             <ObjectFormField
                 v-for="(field, key) in state.fields"
+                :key="key"
                 v-model="state.obj[field.name]"
                 :value-label="toLabel(state.obj, field.name)"
-                @input="emitUpdate"
-                :key="key"
                 :field="field"
                 :show-error="state.showErrors"
+                @input="emitUpdate"
                 @fieldChange="v => $emit('fieldChange', v)"
             />
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
         <sui-form v-if="!state.needsRecordType && !validationError && state.layout && state.ready">
-            <fragment
-                v-for="(section, sectionKey) in state.layout.editLayoutSections"
-                :key="sectionKey"
-                v-if="section.fieldCount > 0"
-            >
+            <fragment v-for="(section, sectionKey) in state.layout.visibleEditLayoutSections" :key="sectionKey">
                 <h4 class="ui header">{{ section.heading }}</h4>
-                <div class="two fields" v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
+                <div v-for="(row, rowKey) in section.layoutRows" :key="rowKey" class="two fields">
                     <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
                         <template v-for="(comp, compKey) in item.layoutComponents">
                             <ObjectFormField
                                 v-if="!comp.exclude"
+                                :key="compKey"
                                 v-model="state.obj[comp.value]"
                                 :value-label="toLabel(state.obj, comp.value)"
-                                @input="emitUpdate"
-                                :key="compKey"
                                 :field="comp.field"
                                 :show-error="state.showErrors"
                                 :label="item.label"
+                                @input="emitUpdate"
                             />
                         </template>
                     </fragment>
@@ -94,6 +90,10 @@ export default {
         },
         customReferences: {
             type: Object
+        },
+        customSettings: {
+            type: Object,
+            default: () => {}
         },
         hasSave: {
             type: Boolean
@@ -245,7 +245,9 @@ export default {
                             for (const field of state.schema.fields) {
                                 if (field.name === field_name.trim()) {
                                     const f = new Field(field, props.objectType, false)
-
+                                    if (props.customSettings.includes[f.name]) {
+                                        f.settings = props.customSettings[f.name]
+                                    }
                                     if (props.readOnlyFields.includes(f.name)) {
                                         f.updateable = false
                                     } else if (props.customReferences && props.customReferences[f.name]) {
@@ -278,6 +280,15 @@ export default {
                     }
 
                     if (layout) {
+                        layout.visibleEditLayoutSections = computed(() => {
+                            const result = []
+                            for (const section of layout.editLayoutSections) {
+                                if (section.fieldCount > 0) {
+                                    result.push(section)
+                                }
+                            }
+                            return result
+                        })
                         const data = []
                         const filed = []
                         const fieldDict = {}
@@ -296,6 +307,9 @@ export default {
                                                         field = new Field(comp.details, null, false)
                                                         fieldDict[comp.details.name] = field
                                                         fields.push(field)
+                                                        if (props.customSettings[field.name]) {
+                                                            field.settings = props.customSettings[field.name]
+                                                        }
                                                         if (props.readOnlyFields.includes(field.name)) {
                                                             field.updateable = false
                                                         } else if (

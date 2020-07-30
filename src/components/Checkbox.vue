@@ -1,5 +1,5 @@
 <template>
-    <div class="ui toggle checkbox" ref="checkbox">
+    <div ref="checkbox" class="ui toggle checkbox">
         <input type="checkbox" tabindex="0" class="hidden" :value="value" :checked="value" />
         <label v-if="label">{{ label }}</label>
     </div>

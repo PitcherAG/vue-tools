@@ -1,6 +1,7 @@
 export function assign(source, target) {
+    console.warn('deprecated')
     for (const a in source) {
-        if (target.hasOwnProperty(a)) {
+        if (Object.prototype.hasOwnProperty.call(target, a)) {
             target[a] = source[a]
         }
     }
