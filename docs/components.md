@@ -11,14 +11,51 @@
 Fomantic Calendar 
 
 ### Checkbox
-
 Displays a fomantic checkbox
+#### Available props
+| prop | type | required | default | description |
+| :--- | :--- | :--- | :--- | :--- |
+| `v-model` | `Boolean` | yes | - | model to track checkbox status
+| `label` | `String` | no | undefined | checkbox label text
+| `radio` | `Boolean` | no | undefined | radio style checkbox
+| `toggle` | `Boolean` | no | undefined | toggle style checkbox
+| `slider` | `Boolean` | no | undefined | slider style checkbox
+| `readonly` | `Boolean` | no | undefined | readonly checkbox
+| `disabled` | `Boolean` | no | undefined | disable checkbox
+| `fitted` | `Boolean` | no | undefined | remove the padding for the input box. Useful when you dont have a label to have equal spacing
+| `uncheckable` | `Boolean` | no | true | make the checbox uncheckable. Can be useful for radio style checboxes
+| `inverted` | `Boolean` | no | undefined | inverts the color of checkbox
+| `size` | `String` | no | medium | mini \| tiny \| small \| medium \| large \| big \| huge \| massive 
+
+#### Available events
+| event | description |
+| :--- | :--- |
+| `@input` | default v-model input event, returns the current value
+| `@onUnchecked` | event to hook just after the input is unchecked, returns the current value
+| `@beforeChecked` | event to hook just before the input is checked, returns the current value (value before update)
+| `@beforeUnchecked` | event to hook just before the input is unchecked, returns the current value (value before update)
+
+#### Available functions that you can call on the component
+| function name | description |
+| :--- | :--- |
+| `exec(command)` | helper to call any option on checkbox. Example: `COMPONENT.exec('indeterminate')` Details: https://fomantic-ui.com/modules/checkbox.html#behavior
+
+#### Usage
 ```javascript
 import { Checkbox } from '@pitcher/vue-sdk'
+
+const myLabel = 'Check me'
+const myBoolean = false
 ```
 
 ```html
-<Checkbox :label="'myLabel'"  v-model="myBoolean"/>
+<!-- Simple usage -->
+<Checkbox v-model="myBoolean" :label="myLabel"/>
+
+<!-- Usage with props -->
+<Checkbox v-model="myBoolean" label="mylabel_directly_here" toggle />
+
+<Checkbox v-model="myBoolean" slider />
 ```
 
 ### DataTable
