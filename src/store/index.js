@@ -41,7 +41,6 @@ export function transform(obj) {
             }
         }
     })
-    console.log(result)
     result = reactive(result)
 
     Object.keys(obj).forEach(key => {
