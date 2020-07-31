@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.4.0
+
+### New Store backend
+
+createStore() now accepts class instances
+class getter are automatically converted to computed
+on_state_account(){} gets converted to state.account watcher
+
+### breaking changes
+
+store getters do not need .value at the end anymore
+
+
 ## 1.3.10
 
 ### Added
