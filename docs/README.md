@@ -22,6 +22,7 @@ Please open a pull request if you want to change something
 - [SDK Installation](sdk-install.md)
 - [Initialization (getParameters & loadServerJSON)](params.md)
 - [Events and Ti.App](events.md)
+- [State](state.md)
 - [Db queries](db.md)
 - [Save & Resume](resume.md)
 - [Config.json](config.md)
