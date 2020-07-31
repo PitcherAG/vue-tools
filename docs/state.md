@@ -37,13 +37,16 @@ export function useMyStore(){
 
 ```
 
+The `id` property is the only thing required. Everything else is optional. Internally the object
+will be converted to a reactive Observable.
+
 Class Store
 ---
 
 We now support class based stores. Getters will be automatically converted
-to computed.
+to a vue computed.
 
-If a function starts with on_ it will be converted to a watcher.
+If a function starts with `on_` it will be converted to a watcher.
 
 Example:
 
