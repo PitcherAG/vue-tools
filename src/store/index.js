@@ -1,35 +1,91 @@
-import Vue from 'vue'
-import { computed, watch, reactive, watchEffect } from '@vue/composition-api'
-import { arrowBind, isArrowFn } from '../utils/bind'
+import { computed, reactive, watch } from '@vue/composition-api'
+import { getAttr } from '../utils/getAttr'
+
 const stores = {}
 
-function transform(obj) {
+export function transform(obj) {
     const prototype = Object.getPrototypeOf(obj)
     const descriptors = Object.getOwnPropertyDescriptors(prototype)
-    obj = Vue.observable(obj)
-    for (const prop in obj) {
-        if (typeof obj[prop] === 'function' && prototype.constructor.name === 'Object') {
-            if (isArrowFn(obj[prop])) {
-                obj[prop] = arrowBind(obj, obj[prop])
-            } else {
-                obj[prop] = obj[prop].bind(obj)
-            }
-        }
-        if (prop !== 'constructor' && !prop.startsWith('__') && descriptors[prop]) {
-            const get = descriptors[prop].get
-            const set = descriptors[prop].set
-            const value = descriptors[prop].value
-            if (prop.startsWith('on_')) {
-                watchEffect(value[0])
-            } else if (get && set) {
-                obj[prop] = computed({ get: get, set: set })
-            } else if (get) {
-                obj[prop] = computed(get)
-            }
-        }
-    }
+    let result = {}
 
-    stores[obj.id] = obj
+    // data, string watches
+    Object.keys(obj).forEach(key => {
+        const value = obj[key]
+        if (key.startsWith('on_')) {
+            return
+        } else {
+            result[key] = value
+            if (typeof result[key] === 'function') {
+                result[key].bind(result)
+            }
+        }
+    })
+
+    // function watches, methods, computed
+    Object.keys(descriptors).forEach(key => {
+        if (key !== 'constructor' && !key.startsWith('__')) {
+            const get = descriptors[key].get
+            const set = descriptors[key].set
+            const value = descriptors[key].value
+            if (key.startsWith('on_')) {
+                return
+            } else if (value) {
+                result[key] = value
+                if (typeof result[key] === 'function') {
+                    result[key].bind(result)
+                }
+            } else if (get && set) {
+                result[key] = computed({ get: get.bind(result), set: set.bind(result) })
+            } else if (get) {
+                result[key] = computed(get.bind(result))
+            }
+        }
+    })
+    console.log(result)
+    result = reactive(result)
+
+    Object.keys(obj).forEach(key => {
+        const value = obj[key]
+        if (key.startsWith('on_')) {
+            result[key] = watch(
+                computed(() =>
+                    getAttr(
+                        result,
+                        key
+                            .substring(3)
+                            .split('_')
+                            .join('.')
+                    )
+                ),
+                value
+            )
+        }
+    })
+
+    // function watches, methods, computed
+    Object.keys(descriptors).forEach(key => {
+        if (key !== 'constructor' && !key.startsWith('__')) {
+            const get = descriptors[key].get
+            const set = descriptors[key].set
+            const value = descriptors[key].value
+            if (key.startsWith('on_')) {
+                result[key] = watch(
+                    computed(() =>
+                        getAttr(
+                            result,
+                            key
+                                .substring(3)
+                                .split('_')
+                                .join('.')
+                        )
+                    ),
+                    value
+                )
+            }
+        }
+    })
+
+    stores[obj.id] = result
 }
 
 export function createStore(obj) {

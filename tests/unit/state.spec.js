@@ -9,6 +9,7 @@ class TestStore {
     count = 5
 
     get double() {
+        console.log('double')
         return this.count * 2
     }
 
@@ -29,21 +30,23 @@ describe('state', () => {
         const a = {
             id: 'test',
             state: { count: 5 },
-            double: computed(() => a.state.count * 2),
+            double: computed(() => {
+                return a.state.count * 2
+            }),
             treble: function() {
-                console.log(this)
                 return this.state.count * 3
             }
         }
         const store = createStore(a)
-        expect(store.double.value).toBe(10)
+        expect(store.double).toBe(10)
+        expect(store.double).toBe(10)
         expect(store.treble()).toBe(15)
         store.state.count = 10
-        expect(store.double.value).toBe(20)
+        expect(store.double).toBe(20)
     })
     it('class state', () => {
         const store = createStore(new TestStore())
-
+        expect(store.double).toBe(10)
         expect(store.double).toBe(10)
         expect(store.doubleState).toBe(12)
         store.state.state_count = 10

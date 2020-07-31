@@ -393,7 +393,7 @@ export default {
 
         const validationError = computed(() => {
             const configStore = useConfigStore()
-            const table = configStore.getCacheDict.value[props.objectType]
+            const table = configStore.getCacheDict[props.objectType]
             if (!props.ignoreExternalIdValidation) {
                 if (!table.externalField && !props.id) {
                     validationErrorTitle.value = $gettext('You can not add an object of this type.')
