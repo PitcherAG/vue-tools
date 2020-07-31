@@ -105,14 +105,13 @@
                     v-for="(item, index) in listItems"
                     :key="index"
                     :class="[item.type, { disabled: item.disabled, active: isSelected(item) }]"
+                    @click.prevent
                     @click.stop="item.type.includes('item') ? handleItemClick(item) : undefined"
+                    @touchstart.prevent="item.type.includes('item') ? handleItemClick(item) : undefined"
                 >
                     <!-- if this is an item -->
                     <template v-if="item.type.includes('item')">
-                        <div class="ui checkbox" :class="{ [size]: !!size }">
-                            <input type="checkbox" :name="item.value" :checked="isSelected(item)" />
-                            <label>{{ item.text }}</label>
-                        </div>
+                        <Checkbox :value="isSelected(item)" :label="item.text" :size="size" />
                         <div v-if="item.description" class="description">{{ item.description }}</div>
                     </template>
                     <!-- not an item, put as plain text -->
@@ -129,10 +128,14 @@
 </template>
 <script>
 import { computed, reactive, toRefs, onMounted, watch } from '@vue/composition-api'
+import Checkbox from './Checkbox'
 import { parsePxStyle, validateSize } from './mixins'
 import { search } from '../utils'
 
 export default {
+    components: {
+        Checkbox
+    },
     props: {
         value: {
             type: Array,
