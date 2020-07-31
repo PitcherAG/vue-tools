@@ -83,7 +83,6 @@ export function transform(obj) {
             }
         }
     })
-
     stores[obj.id] = result
 }
 
