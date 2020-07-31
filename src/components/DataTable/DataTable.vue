@@ -1,5 +1,10 @@
 <template>
-    <table v-if="tableData.length > 0" class="ui table pitcher mb-6" :class="tableAttr.class" :style="tableAttr.style">
+    <table
+        v-if="tableData.length > 0 || Object.keys(tableData).length > 0"
+        class="ui table pitcher mb-6"
+        :class="tableAttr.class"
+        :style="tableAttr.style"
+    >
         <thead v-if="!noHeader">
             <tr>
                 <!-- If heading-row slot exist, override with a slot -->
@@ -7,7 +12,7 @@
                     <!-- map only visible fields, return rawData as well -->
                     <slot
                         name="heading-row"
-                        :filteredFields="fields.filter(f => !f.hide)"
+                        :filteredFields="filteredFields"
                         :sortData="sort"
                         :sortTable="sortTable"
                         :getClass="getTHClass"
@@ -15,7 +20,7 @@
                 </template>
 
                 <!-- default table heading -->
-                <template v-for="f in fields" v-else>
+                <template v-else v-for="f in fields">
                     <th
                         v-if="!f.hide"
                         :key="f.__colID"
@@ -50,16 +55,62 @@
                     name="body"
                     :tableData="tableData"
                     :mapper="mapper"
-                    :filteredFields="fields.filter(f => !f.hide)"
+                    :filteredFields="filteredFields"
                     :sortData="sort"
                     :pagination="pagination"
                 />
             </template>
 
-            <tr v-for="item in tableData" v-else :key="item.__rowID" @click="emit('rowClick', item)">
-                <!-- If row slot exist, override with a slot -->
-                <template v-if="hasRowSlot">
-                    <!-- map only visible fields, return rawData as well -->
+            <template v-else-if="groupBy" v-for="(group, key) in tableData">
+                <tr :key="key">
+                    <td colspan="100%">
+                        <div class="ui large ribbon label blue">{{ key }}</div>
+                    </td>
+                </tr>
+
+                <TableRow
+                    v-for="item in group"
+                    :key="item.__rowID"
+                    :item="item"
+                    :fields="filteredFields"
+                    :has-row-slot="hasRowSlot"
+                    @click="emit('rowClick', item)"
+                >
+                    <!-- forward row slot -->
+                    <template v-if="hasRowSlot" #row>
+                        <slot
+                            name="row"
+                            :rowData="getScopeData(item)"
+                            :raw="item"
+                            :sortData="sort"
+                            :pagination="pagination"
+                        />
+                    </template>
+
+                    <!-- forward field slots -->
+                    <template v-for="field in filteredFields.filter(f => !!f.slotName)" #[field.slotName]>
+                        <slot
+                            :name="field.slotName"
+                            :rowData="item"
+                            :value="mapper(field.dataField, item)"
+                            :rowField="field"
+                            :sortData="sort"
+                        />
+                    </template>
+                </TableRow>
+            </template>
+
+            <TableRow
+                v-else
+                v-for="item in tableData"
+                :key="item.__rowID"
+                :item="item"
+                :fields="filteredFields"
+                :has-row-slot="hasRowSlot"
+                @click="emit('rowClick', item)"
+            >
+                <!-- forward row slot -->
+                <template v-if="hasRowSlot" #row>
                     <slot
                         name="row"
                         :rowData="getScopeData(item)"
@@ -69,31 +120,17 @@
                     />
                 </template>
 
-                <!-- Default Row content -->
-                <template v-for="f in fields" v-else>
-                    <td v-if="!f.hide" :key="f.__colID" :class="f.tdClass">
-                        <!-- if this field is a slot, get the slot -->
-                        <template v-if="!!f.slotName">
-                            <slot
-                                :name="f.slotName"
-                                :rowData="item"
-                                :value="mapper(f.dataField, item)"
-                                :rowField="f"
-                                :sortData="sort"
-                            />
-                        </template>
-                        <!-- otherwise use the prop from data -->
-                        <template v-else>
-                            <!-- Transform function, return mapped object, root object & field object -->
-                            {{
-                                f.transform
-                                    ? f.transform(mapper(f.dataField, item), item, f)
-                                    : mapper(f.dataField, item)
-                            }}
-                        </template>
-                    </td>
+                <!-- forward field slots -->
+                <template v-for="field in filteredFields.filter(f => !!f.slotName)" #[field.slotName]>
+                    <slot
+                        :name="field.slotName"
+                        :rowData="item"
+                        :value="mapper(field.dataField, item)"
+                        :rowField="field"
+                        :sortData="sort"
+                    />
                 </template>
-            </tr>
+            </TableRow>
 
             <!-- append-body slot -->
             <template v-if="hasAppendTbodySlot">
@@ -135,64 +172,18 @@
 
 <script>
 import { defineComponent, computed, reactive, toRefs, watch, onMounted } from '@vue/composition-api'
+import { search, uid } from '@/utils'
+import { mapper, sortBy } from './table.helpers'
+import groupBy from 'lodash/groupBy'
 import orderBy from 'lodash/orderBy'
 import range from 'lodash/range'
-import Pagination from './DataTable.Pagination.vue'
-import { search, uid } from '../utils'
-
-function mapper(key, obj) {
-    if (!key) {
-        return null
-    }
-
-    // map dotted objects
-    if (key.includes('.')) {
-        return key.split('.').reduce((o, i) => o[i], obj)
-    }
-    // map simple key
-    return obj[key]
-}
-
-function sortBy(data, fields, by, order) {
-    const field = fields.find(f => f.dataField === by)
-    if (!field) {
-        return data
-    }
-
-    if (typeof field.sortType === 'undefined' || field.sortType === 'string') {
-        // sortType: string or sortType: undefined
-        return orderBy(data, [by], [order])
-    } else if (field.sortType === 'number') {
-        // sortType: number
-        return orderBy(
-            data,
-            item => {
-                const val = mapper(field.dataField, item) === '' ? -1 : mapper(field.dataField, item)
-                return Number(val)
-            },
-            [order]
-        )
-    } else if (field.sortType === 'date') {
-        // sortType: date
-        return orderBy(
-            data,
-            item => {
-                const val = mapper(field.dataField, item)
-                if (!val) {
-                    return ''
-                }
-                return new Date(val.split('+')[0])
-            },
-            [order]
-        )
-    }
-
-    return orderBy(data, [by], [order])
-}
+import Pagination from './Pagination.vue'
+import TableRow from './TableRow.vue'
 
 export default defineComponent({
     components: {
-        Pagination
+        Pagination,
+        TableRow
     },
     props: {
         data: {
@@ -208,6 +199,9 @@ export default defineComponent({
             default: ''
         },
         searchFields: Array,
+        groupBy: {
+            default: undefined
+        },
         width: {
             type: String,
             default: '100%'
@@ -320,11 +314,28 @@ export default defineComponent({
 
             // pagination active & paginate
             if (!props.noPagination) {
+                // if grouping active, sort before by group property
+                temp = props.groupBy ? orderBy(temp, [props.groupBy], ['asc']) : temp
+
                 calculatePagination(temp)
                 temp = temp.slice(state.pagination.startIndex, state.pagination.startIndex + props.perPage)
             }
 
+            // Group logic
+            if (props.groupBy) {
+                temp = groupBy(temp, props.groupBy)
+
+                if (temp.undefined) {
+                    temp['Not Grouped'] = temp.undefined
+                    delete temp.undefined
+                }
+            }
+
             return temp
+        })
+
+        const filteredFields = computed(() => {
+            return props.fields.filter(f => !f.hide)
         })
 
         // Calculate pagination data
@@ -474,13 +485,14 @@ export default defineComponent({
         return {
             ...toRefs(state),
             ...slotChecks,
+            tableData,
+            filteredFields,
             tableAttr,
             sortTable,
             getTHClass,
             getScopeData,
             getTooltip,
             hasSlot,
-            tableData,
             paginate,
             emit,
             mapper

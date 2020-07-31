@@ -3,7 +3,7 @@
 // Vue Components
 export { default as Calendar } from './Calendar.vue'
 export { default as Checkbox } from './Checkbox.vue'
-export { default as DataTable } from './DataTable.vue'
+export { default as DataTable } from './DataTable/DataTable.vue'
 export { default as Dropdown } from './Dropdown.vue'
 export { default as FilterDropdown } from './FilterDropdown.vue'
 export { default as Modal } from './Modal.vue'
