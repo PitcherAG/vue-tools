@@ -1,17 +1,14 @@
 import { getSchema } from '../app'
 import { Field } from './sfdcField'
+import { createStore } from '../store'
 
-import Vue from 'vue'
-
-const s = {
-    id: 'schema',
-    state: {}
+class SchemaStore {
+    id = 'schema'
+    state = {}
 }
 
-const store = Vue.observable(s)
-
 export const useSchemaStore = () => {
-    return store
+    return createStore(new SchemaStore())
 }
 
 export async function loadSchema(objectName) {
