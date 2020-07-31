@@ -22,6 +22,8 @@ use the sdk store.
 
 Example:
 ```javascript
+import { createStore } from '@pitcher/vue-sdk'
+
 const store = {
     id:'myStoreId',
     state:{
@@ -46,6 +48,9 @@ If a function starts with on_ it will be converted to a watcher.
 Example:
 
 ```javascript
+
+import { createStore } from '@pitcher/vue-sdk'
+
 class MyStore {
     id='myStoreId'
     state={
