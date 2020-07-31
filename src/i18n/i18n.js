@@ -14,34 +14,34 @@ const defaultOptions = {
     messages: { en: {} }
 }
 
-export const useI18nStore = () => {
-    const s = {
-        id: 'i18n',
-        state: defaultOptions,
-        setLanguage: async function(lang, { app = 'app', dir = 'translations', load = true } = {}) {
-            if (!this.state.availableLanguages[lang]) {
-                throw new Error('invalid language: ' + lang)
-            }
+class I18nStore {
+    id = 'i18n'
+    state = defaultOptions
+    async setLanguage(lang, { app = 'app', dir = 'translations', load = true } = {}) {
+        if (!this.state.availableLanguages[lang]) {
+            throw new Error('invalid language: ' + lang)
+        }
 
-            if (load && lang != 'en') {
-                const response = await fetch(`${dir}/${lang}/${app}.json`)
-                const data = await response.json()
+        if (load && lang !== 'en') {
+            const response = await fetch(`${dir}/${lang}/${app}.json`)
+            const data = await response.json()
 
-                for (const locale in data) {
-                    if (this.state.messages[locale]) {
-                        for (const msgid in data[locale]) {
-                            this.state.messages[locale][msgid] = data[locale][msgid]
-                        }
-                    } else {
-                        this.state.messages[locale] = data[locale]
+            for (const locale in data) {
+                if (this.state.messages[locale]) {
+                    for (const msgid in data[locale]) {
+                        this.state.messages[locale][msgid] = data[locale][msgid]
                     }
+                } else {
+                    this.state.messages[locale] = data[locale]
                 }
             }
-
-            this.state.locale = lang
         }
+        this.state.locale = lang
     }
-    return createStore(s)
+}
+
+export const useI18nStore = () => {
+    return createStore(new I18nStore())
 }
 
 export function trans(msgid, n = 0, placeholders) {

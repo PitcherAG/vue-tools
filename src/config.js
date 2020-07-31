@@ -1,40 +1,42 @@
 import { fireEvent } from './event'
 import { PLATFORM } from './platform'
-import { computed } from '@vue/composition-api'
 import { createStore } from './store'
 
-export function useConfigStore() {
-    const s = {
-        id: 'config',
-        state: {
-            customCaches: null
-        },
-        getTableDict: computed(() => {
-            const d = {}
-            if (!s.state.customCaches) {
-                return d
-            }
-            for (let i = 0; i < s.state.customCaches.length; i++) {
-                const table = s.state.customCaches[i]
-                d[table.sfObjectName] = table.tableToCache
-                d[table.objectName] = table.tableToCache
-            }
-            return d
-        }),
-        getCacheDict: computed(() => {
-            const d = {}
-            if (!s.state.customCaches) {
-                return d
-            }
-            for (let i = 0; i < s.state.customCaches.length; i++) {
-                const table = s.state.customCaches[i]
-                d[table.sfObjectName] = table
-                d[table.objectName] = table
-            }
-            return d
-        })
+class ConfigStore {
+    id = 'config'
+    state = {
+        customCaches: null
     }
-    return createStore(s)
+
+    get getTableDict() {
+        const d = {}
+        if (!this.state.customCaches) {
+            return d
+        }
+        for (let i = 0; i < this.state.customCaches.length; i++) {
+            const table = this.state.customCaches[i]
+            d[table.sfObjectName] = table.tableToCache
+            d[table.objectName] = table.tableToCache
+        }
+        return d
+    }
+
+    get getCacheDict() {
+        const d = {}
+        if (!this.state.customCaches) {
+            return d
+        }
+        for (let i = 0; i < this.state.customCaches.length; i++) {
+            const table = this.state.customCaches[i]
+            d[table.sfObjectName] = table
+            d[table.objectName] = table
+        }
+        return d
+    }
+}
+
+export function useConfigStore() {
+    return createStore(new ConfigStore())
 }
 
 export async function loadConfig() {
