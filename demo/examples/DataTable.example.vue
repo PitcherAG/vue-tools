@@ -5,8 +5,8 @@
         <div class="ui input">
             <input type="text" v-model="options.searchFor" />
         </div>
-        <DataTable class="celled" :data="data" :fields="fields" v-bind="options">
-            <template #prepend-tbody="{ mapper }">
+        <DataTable class="celled" :data="data" :fields="fields" v-bind="options" @onSearch="test">
+            <!-- <template #prepend-tbody="{ mapper }">
                 <tr>
                     <td colspan="2">Prepend Test</td>
                     <td>Test</td>
@@ -19,7 +19,7 @@
                     <td colspan="2">Append test</td>
                     <td colspan="4">test</td>
                 </tr>
-            </template>
+            </template> -->
             <!-- <template #heading-row="{ fields, sort, getClass }">
                 <th v-for="(f, fKey) in fields" :key="fKey" @click="sort(f.dataField)" :class="getClass(f)">
                     <i v-if="f.icon" class="icon" :class="f.icon" />
@@ -53,7 +53,7 @@
             </template> -->
             <template #actions="{ value }">
                 <button class="ui button basic right aligned">
-                    <i class="icon edit" />
+                    <i class="icon edit fitted" />
                     {{ value }}
                 </button>
             </template>
@@ -81,8 +81,8 @@
 </template>
 
 <script>
-import Pagination from '@/components/DataTable.Pagination'
-import DataTable from '@/components/DataTable'
+import Pagination from '@/components/DataTable/Pagination'
+import DataTable from '@/components/DataTable/DataTable.vue'
 import { reactive, toRefs } from '@vue/composition-api'
 import data from './dummy.table.js'
 
@@ -100,6 +100,8 @@ export default {
                 noHeader: false,
                 noPagination: false,
                 // noDataText: '',
+                groupBy: 'group',
+                searchFields: ['title'],
                 fixedHeader: false,
                 width: '100%',
                 perPage: 10
@@ -109,6 +111,10 @@ export default {
                     title: 'Id',
                     dataField: 'id',
                     hide: true
+                },
+                {
+                    title: 'Group',
+                    dataField: 'group'
                 },
                 {
                     title: 'Title',
@@ -169,7 +175,11 @@ export default {
             ]
         })
 
-        return { ...toRefs(state) }
+        const test = i => {
+            console.log(i)
+        }
+
+        return { ...toRefs(state), test }
     }
 }
 </script>
