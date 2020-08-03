@@ -30,9 +30,9 @@ export class Field {
     load_refs() {
         const store = useConfigStore()
         if (this.referenceTo.length) {
-            const sourceTable = store.getCacheDict.value[this.parentObjectType]
+            const sourceTable = store.getCacheDict[this.parentObjectType]
             for (const reference of this.referenceTo) {
-                const targetTable = store.getCacheDict.value[reference]
+                const targetTable = store.getCacheDict[reference]
                 if (!targetTable) {
                     window.console.warn('referenced object not found: ' + reference)
                     return
