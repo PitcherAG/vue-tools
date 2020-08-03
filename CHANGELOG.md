@@ -5,7 +5,7 @@
 ### New Store backend
 createStore() now accepts class instances
 class getter are automatically converted to computed
-on_state_account(){} gets converted to state.account watcher
+on_state_account() {} gets converted to state.account watcher
 
 ### Breaking changes
 - Store getters do not need .value at the end anymore
@@ -16,6 +16,11 @@ on_state_account(){} gets converted to state.account watcher
   - added relevant props and events from Fomantic
 - FilterDropdown.vue
   - using built-in checkbox component now
+- DataTable.vue
+  - added `tr-class` property to be able to add class to `<tr>` of line-items dynamically
+  - added 2 new events, @onSort & @onSearch
+  - grouping feature for line items thru prop `group-by`
+  - updated row slot to return `filteredFields` & `mapper` function
 
 ### Fixed
 - FilterDropdown clicking filter fast unselect option before
