@@ -5,7 +5,7 @@
         <div class="ui input">
             <input type="text" v-model="options.searchFor" />
         </div>
-        <DataTable class="celled" :data="data" :fields="fields" v-bind="options">
+        <DataTable class="celled" :data="data" :fields="fields" v-bind="options" @onSearch="test">
             <!-- <template #prepend-tbody="{ mapper }">
                 <tr>
                     <td colspan="2">Prepend Test</td>
@@ -114,7 +114,7 @@ export default {
                 },
                 {
                     title: 'Group',
-                    dataField: 'group',
+                    dataField: 'group'
                 },
                 {
                     title: 'Title',
@@ -175,7 +175,11 @@ export default {
             ]
         })
 
-        return { ...toRefs(state) }
+        const test = i => {
+            console.log(i)
+        }
+
+        return { ...toRefs(state), test }
     }
 }
 </script>

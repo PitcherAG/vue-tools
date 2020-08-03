@@ -68,6 +68,7 @@ Fomantic DataTable with pagination
 | `fields` | `Array` | yes | - | object array for field options. Inside fields you define your table headings and the options for the column
 | `search-for` | `String \| Number` | no | '' | search key for searching the table. This prop can be bound to an input outside of DataTable
 | `search-fields` | `Array` | no | [] | string array to specify which object properties you want to search inside your data array
+| `tr-class` | `String \| Function` | no | undefined | prop to add class to ```tr``` of a line item. Can be string or function that sends line item as a parameter i.e. `:tr-class="item => item.valid && 'red' "`
 | `width` | `String` | no | 100% | table width
 | `max-width` | `String` | no | - | table max-width
 | `no-data-text` | `String` | no | Table has not any data to show | text to show when your table has not any data to show
@@ -84,6 +85,8 @@ Fomantic DataTable with pagination
 | event | description |
 | :--- | :--- |
 | `@rowClick` | event that is triggered when user clicks a row, sends clicked item as a parameter
+| `@onSort` | event that is triggered when sorts a column, sends current state of sort ``` { by, order } ```
+| `@onSearch` | event that is triggered when user types for searching, sends search key and results ``` { key, result } ```
 
 #### Available slots
 | slot | description | props
@@ -93,7 +96,7 @@ Fomantic DataTable with pagination
 | `body` | Slot to overwrite the content of ```tbody``` | ```{ tableData, filteredFields, sortData, pagination }```
 | `prepend-tbody` | Slot to prepend ```<tr>``` in to the ```tbody``` | ```{ mapper }```
 | `append-tbody` | Slot to append ```<tr>``` in to the ```tbody``` | ```{ mapper }```
-| `row` | Slot to overwrite the content of ```tbody > tr``` | ```{ rowData, raw, sortData, pagination }```
+| `row` | Slot to overwrite the content of ```tbody > tr``` | ```{ rowData, raw, sortData, filteredFields, mapper, pagination }```
 | `t-foot` | Slot to overwrite the content of ```tfoot``` | ```{ tableData, sortData, pagination, paginate(n) }```
 | `no-data-template` | Slot to overwrite the content that shows when table has not any data | ```{ noDataText }```
 
