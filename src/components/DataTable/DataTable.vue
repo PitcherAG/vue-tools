@@ -61,10 +61,16 @@
                 />
             </template>
 
+            <!-- Body with grouping -->
             <template v-else-if="groupBy" v-for="(group, key) in tableData">
                 <tr :key="key">
                     <td colspan="100%">
-                        <div class="ui large ribbon label blue">{{ key }}</div>
+                        <div
+                            class="ui large label blue"
+                            :style="{ opacity: key === 'undefined' || (key === 'null' && 0) }"
+                        >
+                            {{ key }}
+                        </div>
                     </td>
                 </tr>
 
@@ -73,6 +79,7 @@
                     :key="item.__rowID"
                     :item="item"
                     :fields="filteredFields"
+                    :tr-class="trClass"
                     :has-row-slot="hasRowSlot"
                     @click="emit('rowClick', item)"
                 >
@@ -80,8 +87,10 @@
                     <template v-if="hasRowSlot" #row>
                         <slot
                             name="row"
+                            :filteredFields="filteredFields"
                             :rowData="getScopeData(item)"
                             :raw="item"
+                            :mapper="mapper"
                             :sortData="sort"
                             :pagination="pagination"
                         />
@@ -100,12 +109,14 @@
                 </TableRow>
             </template>
 
+            <!-- Default body without groups -->
             <TableRow
                 v-else
                 v-for="item in tableData"
                 :key="item.__rowID"
                 :item="item"
                 :fields="filteredFields"
+                :tr-class="trClass"
                 :has-row-slot="hasRowSlot"
                 @click="emit('rowClick', item)"
             >
@@ -113,8 +124,10 @@
                 <template v-if="hasRowSlot" #row>
                     <slot
                         name="row"
+                        :filteredFields="filteredFields"
                         :rowData="getScopeData(item)"
                         :raw="item"
+                        :mapper="mapper"
                         :sortData="sort"
                         :pagination="pagination"
                     />
@@ -172,11 +185,11 @@
 
 <script>
 import { defineComponent, computed, reactive, toRefs, watch, onMounted } from '@vue/composition-api'
-import { search, uid } from '@/utils'
-import { mapper, sortBy } from './table.helpers'
 import groupBy from 'lodash/groupBy'
 import orderBy from 'lodash/orderBy'
 import range from 'lodash/range'
+import { mapper, sortBy } from './table.helpers'
+import { search, uid } from '../../utils'
 import Pagination from './Pagination.vue'
 import TableRow from './TableRow.vue'
 
@@ -200,6 +213,10 @@ export default defineComponent({
         },
         searchFields: Array,
         groupBy: {
+            default: undefined
+        },
+        trClass: {
+            type: [String, Function],
             default: undefined
         },
         width: {
@@ -369,6 +386,7 @@ export default defineComponent({
                     delete field.sorted
                     break
             }
+            emit('onSort', state.sort)
         }
 
         // helper for building th class
@@ -480,6 +498,7 @@ export default defineComponent({
                 } else if (newVal.length === 0 && oldVal.length > 0) {
                     paginate(1)
                 }
+                emit('onSearch', { key: props.searchFor, result: tableData.value })
             }
         )
         return {

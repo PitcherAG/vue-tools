@@ -1,5 +1,5 @@
 <template>
-    <tr>
+    <tr v-bind="trAttr">
         <!-- If row slot exist, override with a slot -->
         <template v-if="hasRowSlot">
             <slot name="row" />
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, computed } from '@vue/composition-api'
 import { mapper } from './table.helpers'
 
 export default defineComponent({
@@ -36,13 +36,21 @@ export default defineComponent({
             type: Object,
             required: true
         },
+        trClass: {
+            type: [String, Function],
+            default: undefined
+        },
         hasRowSlot: {
             default: false,
             required: true
         }
     },
     setup(props, { emit }) {
-        return { emit, mapper }
+        const trAttr = computed(() => ({
+            class: typeof props.trClass === 'function' ? props.trClass(props.item) : props.trClass
+        }))
+
+        return { trAttr, emit, mapper }
     }
 })
 </script>
