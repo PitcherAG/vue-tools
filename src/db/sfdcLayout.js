@@ -1,15 +1,13 @@
 import { getLayout } from '../app'
-import Vue from 'vue'
+import { createStore } from '../store'
 
-const s = {
-    id: 'layout',
-    state: {}
+class LayoutStore {
+    id = 'layout'
+    state = {}
 }
 
-const store = Vue.observable(s)
-
 export const useLayoutStore = () => {
-    return store
+    return createStore(new LayoutStore())
 }
 
 export async function loadLayout(objectName, objectTypeId) {

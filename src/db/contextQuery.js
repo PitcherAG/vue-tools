@@ -10,7 +10,7 @@ export async function contextQuery(query, context, db = null) {
     const configStore = useConfigStore()
     const params = useParamsStore().state
     query = query.split('TODAY').join("date('now')")
-    const tableDict = configStore.getTableDict.value
+    const tableDict = configStore.getTableDict
     for (const a in context) {
         if (Object.prototype.hasOwnProperty.call(context, a)) {
             tableDict[a] = context[a]

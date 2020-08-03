@@ -2,10 +2,14 @@
 
 ## 1.4.0
 
-### Breaking
-- Checkbox.vue updated, by default it comes as a checkbox. You can add fomantic UI options as props now. Default checkboxes had toggle by default, this must be added.
+### New Store backend
+createStore() now accepts class instances
+class getter are automatically converted to computed
+on_state_account(){} gets converted to state.account watcher
 
-### Added
+### Breaking changes
+- Store getters do not need .value at the end anymore
+- Checkbox.vue updated, by default it comes as a checkbox. You can add fomantic UI options as props now. Default checkboxes had toggle by default, this must be added.
 
 ### Changed
 - Checkbox.vue
