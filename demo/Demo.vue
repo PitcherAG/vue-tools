@@ -4,9 +4,9 @@
         <div class="ui divider" />
         <!-- <ModalEx /> -->
         <!-- <NumpadInputEx /> -->
-        <!-- <DataTableEx /> -->
+        <DataTableEx />
         <!-- <DropdownEx /> -->
-        <FilterEx />
+        <!-- <FilterEx /> -->
         <!-- <ProgressBarEx /> -->
     </div>
 </template>

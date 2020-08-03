@@ -1,6 +1,6 @@
 import CompositionApi from '@vue/composition-api'
 import { mount, createLocalVue } from '@vue/test-utils'
-import DataTable from '@/components/DataTable.vue'
+import DataTable from '@/components/DataTable/DataTable.vue'
 import data from '../helpers/dummyData'
 
 const localVue = createLocalVue()
