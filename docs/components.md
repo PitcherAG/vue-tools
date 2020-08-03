@@ -69,6 +69,7 @@ Fomantic DataTable with pagination
 | `search-for` | `String \| Number` | no | '' | search key for searching the table. This prop can be bound to an input outside of DataTable
 | `search-fields` | `Array` | no | [] | string array to specify which object properties you want to search inside your data array
 | `tr-class` | `String \| Function` | no | undefined | prop to add class to ```tr``` of a line item. Can be string or function that sends line item as a parameter i.e. `:tr-class="item => item.valid && 'red' "`
+| `group-by` | `String` | no | undefined | prop to group line items thru a property i.e. `item.brand` field would be the property to group line items thru.
 | `width` | `String` | no | 100% | table width
 | `max-width` | `String` | no | - | table max-width
 | `no-data-text` | `String` | no | Table has not any data to show | text to show when your table has not any data to show
