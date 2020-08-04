@@ -62,12 +62,12 @@
             </template>
 
             <!-- Body with grouping -->
-            <template v-else-if="groupBy" v-for="(group, key) in tableData">
+            <template v-else-if="groupBy && shouldGroup" v-for="(group, key) in tableData">
                 <tr :key="key">
                     <td colspan="100%">
                         <div
                             class="ui large label blue"
-                            :style="{ opacity: key === 'undefined' || (key === 'null' && 0) }"
+                            :style="{ opacity: key === 'undefined' || key === 'null' ? 0 : undefined }"
                         >
                             {{ key }}
                         </div>
@@ -290,7 +290,8 @@ export default defineComponent({
                 startIndex: 0,
                 endIndex: 0,
                 pages: []
-            }
+            },
+            shouldGroup: false
         })
 
         // Table classes
@@ -318,6 +319,7 @@ export default defineComponent({
         // Where data is distributed to the table
         const tableData = computed(() => {
             let temp = props.data
+            let backup = null
 
             // if search word exist
             if (props.searchFor !== '') {
@@ -340,12 +342,17 @@ export default defineComponent({
 
             // Group logic
             if (props.groupBy) {
+                backup = temp
                 temp = groupBy(temp, props.groupBy)
 
-                if (temp.undefined) {
-                    temp['Not Grouped'] = temp.undefined
-                    delete temp.undefined
+                // if length is 1 and has only undefined key group
+                if (Object.keys(temp).length === 1 && Object.keys(temp).includes('undefined')) {
+                    temp = backup
+                    state.shouldGroup = false
+                    return temp
                 }
+
+                state.shouldGroup = true
             }
 
             return temp
