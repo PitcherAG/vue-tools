@@ -9,7 +9,7 @@
             </div>
             <!-- New -->
             <div v-if="isNew" class="file-card__stacked right">
-                <div class="ui red mini label">New</div>
+                <div class="ui red mini label">{{ newText }}</div>
             </div>
 
             <!-- Actions -->
@@ -84,6 +84,10 @@ export default defineComponent({
             type: String,
             default: 'Share'
         },
+        newText: {
+            type: String,
+            default: 'New'
+        },
         fileOptionsItems: {
             type: Array,
             default: function() {
@@ -130,7 +134,7 @@ $card-content-height: 210px;
     width: calc(20% - 16px);
     max-width: calc(20% - 16px);
     height: $card-height;
-    margin-right: 16px;
+    // margin-right: 16px;
     min-width: 0;
 
     @include md-only {
