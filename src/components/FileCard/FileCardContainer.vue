@@ -11,10 +11,9 @@ export default {}
 <style lang="scss" scoped>
 .file-card-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     align-items: flex-start;
     align-content: flex-start;
-    justify-content: space-between;
-    width: 100%;
+    margin-right: -16px;
 }
 </style>

@@ -1,8 +1,15 @@
 <template>
-    <div class="file-card">
-        <div class="file-card__content ui segment pa-0">
+    <div class="file-card" :style="{ height: styles.containerH }">
+        <div class="file-card__content ui segment pa-0" :style="{ height: styles.contentH }">
             <!-- Thumbnail -->
-            <div class="file-card__content--image" :style="imgStyle" @click="emit('onClickImage')" />
+            <div
+                class="file-card__content--image"
+                :style="{
+                    backgroundImage: styles.imgUrl,
+                    height: styles.contentH
+                }"
+                @click="emit('onClickImage')"
+            />
             <!-- Favorite -->
             <div class="file-card__stacked button left" @click="emit('onClickFavorite')">
                 <i class="star icon large" :class="{ outline: !isFavorite ? 'outline' : '' }" />
@@ -88,6 +95,10 @@ export default defineComponent({
             type: String,
             default: 'New'
         },
+        height: {
+            type: [String, Number],
+            default: 295
+        },
         fileOptionsItems: {
             type: Array,
             default: function() {
@@ -112,11 +123,13 @@ export default defineComponent({
             hasItemsSlot: !!slots.items
         })
 
-        const imgStyle = computed(() => {
-            return `background-image: url('${props.imgUrl}');`
-        })
+        const styles = computed(() => ({
+            containerH: `${parseInt(props.height)}px`,
+            contentH: `${Math.ceil(parseInt(props.height) * 0.71)}px`,
+            imgUrl: `url(${props.imgUrl})`
+        }))
 
-        return { ...toRefs(state), imgStyle, emit }
+        return { ...toRefs(state), styles, emit }
     }
 })
 </script>
@@ -134,8 +147,8 @@ $card-content-height: 210px;
     width: calc(20% - 16px);
     max-width: calc(20% - 16px);
     height: $card-height;
-    // margin-right: 16px;
     min-width: 0;
+    margin-right: 16px;
 
     @include md-only {
         width: calc(25% - 16px);
