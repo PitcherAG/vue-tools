@@ -9,6 +9,7 @@ export default [
         isFavorite: false
     },
     {
+        body: 'very long name of the file',
         s3Url: 'https://btocpitcher.s3.amazonaws.com/thumbs/1415267145904_99313680.png',
         keywords: 'Sys:AllowDownload',
         startDate: '',
@@ -16,6 +17,7 @@ export default [
         isFavorite: true
     },
     {
+        body: 'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.',
         s3Url: 'https://btocpitcher.s3.amazonaws.com/thumbs/1450100793180_153693233.png',
         keywords: 'p:Edoxaban, Sys:AllowDownload',
         startDate: 1568126347,
