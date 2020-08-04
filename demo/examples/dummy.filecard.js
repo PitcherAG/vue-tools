@@ -25,6 +25,7 @@ export default [
         isFavorite: false
     },
     {
+        body: 'Mauris ut neque sed lectus ornare egestas',
         s3Url: 'https://btocpitcher.s3.amazonaws.com/thumbs/-Lo-oIt-AnDufzOPYhcD.png',
         keywords: 'c:AP, Sys:PContent',
         startDate: 1568126209,
@@ -32,26 +33,31 @@ export default [
         isFavorite: true
     },
     {
+        body: 'Phasellus quis lectus',
         s3Url: 'https://btocpitcher.s3.amazonaws.com/thumbs/232793_1503650029.png',
         keywords: 'Epic Tool, p:Epic',
         startDate: 1505490292
     },
     {
+        body: 'Nulla non lacus neque. Etiam ornare tristique nunc in pulvinar',
         s3Url: 'https://btocpitcher.s3.amazonaws.com/thumbs/125229_1460012085.png',
         keywords: 'p:XBan',
         startDate: 1460014396
     },
     {
+        body: 'Presentation 2',
         s3Url: 'https://btocpitcher.s3.amazonaws.com/thumbs/742391_1576688589.png',
         keywords: 'Sys:PContent, p:Test',
         startDate: 1584691106
     },
     {
+        body: 'Annual Report',
         s3Url: 'https://btocpitcher.s3.amazonaws.com/thumbs/38959_1389180808.png',
         keywords: 'p:test',
         startDate: 1543420909
     },
     {
+        body: 'Pellentesque varius lacus',
         s3Url: 'https://btocpitcher.s3.amazonaws.com/thumbs/-LoQnVA7OPGQQuc7PWKp.png',
         keywords: 'p:Test, Sys:AllowDownload',
         startDate: 1568204175
