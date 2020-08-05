@@ -218,9 +218,9 @@ export default defineComponent({
         searchOptions: {
             type: Object,
             default: () => ({
-                threshold: 0.3,
-                useExtendedSearch: true,
-                distance: 1000
+                threshold: 0.15,
+                distance: 1000,
+                useExtendedSearch: true
             })
         },
         trClass: {
