@@ -7,5 +7,6 @@ module.exports = {
             // the source template
             template: 'demo/index.html'
         }
-    }
+    },
+    transpileDependencies: ['fuse.js']
 }

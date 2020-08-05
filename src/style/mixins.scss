@@ -1,0 +1,59 @@
+  @mixin no-scroll-bar {
+    // Hide scrollbar
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  // ONLY mixins
+  @mixin xs-only {
+    @media (max-width: 599px) { @content; }
+  }
+  @mixin sm-only {
+    @media (min-width: 600px) and (max-width: 959px) { @content; }
+  }
+  @mixin md-only {
+    @media (min-width: 960px) and (max-width: 1263px) { @content; }
+  }
+  @mixin lg-only {
+    @media (min-width: 1264px) and (max-width: 1903px) { @content; }
+  }
+  @mixin xl-only {
+    @media (min-width: 1904px) { @content; }
+  }
+  
+  // DOWN mixins
+  @mixin sm-and-down {
+    @media (max-width: 959px) { @content; }
+  }
+  @mixin md-and-down {
+    @media (max-width: 1263px) { @content; }
+  }
+  @mixin lg-and-down {
+    @media (max-width: 1903px) { @content; }
+  }
+  
+  // UP mixins
+  @mixin sm-and-up {
+    @media (min-width: 600px) { @content; }
+  }
+  @mixin md-and-up {
+    @media (min-width: 960px) { @content; }
+  }
+  @mixin lg-and-up {
+    @media (min-width: 1264px) { @content; }
+  }
+  
+  @mixin polyfillIE {
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+      @content;
+    }
+  }
+  
+  @mixin polyfillEDGE {
+    @supports (-ms-ime-align: auto) {
+      @content;
+    }
+  }
+  
