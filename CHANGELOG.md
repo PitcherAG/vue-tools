@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1
+
+### Changed
+- DataTable.vue
+  - added `search-options` property to be able to set fuse.js search options
+
 ## 1.4.0
 
 ### New Store backend

@@ -215,6 +215,12 @@ export default defineComponent({
         groupBy: {
             default: undefined
         },
+        searchOptions: {
+            type: Object,
+            default: () => ({
+                threshold: 0.3
+            })
+        },
         trClass: {
             type: [String, Function],
             default: undefined
