@@ -567,8 +567,9 @@ DefaultFileOptions = [
 
 #### Usage
 ```javascript
-import { FileCard, FileCardContainer } from '@pitcher/vue-sdk'
+import { FileCard, FileCardContainer, getFilesWithKeyword } from '@pitcher/vue-sdk'
 
+// Usage with plain JS, for example connect or something else
 const files = [
     {
         id: 1,
@@ -595,6 +596,9 @@ const files = [
     ...
     ...
 ]
+
+// Usage within Native application
+const files = await getFilesWithKeyword('pitcher-keyword')
 ```
 
 ```html
