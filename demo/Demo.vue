@@ -4,10 +4,10 @@
         <div class="ui divider" />
         <!-- <ModalEx /> -->
         <!-- <NumpadInputEx /> -->
-        <!-- <DataTableEx /> -->
+        <DataTableEx />
         <!-- <DropdownEx /> -->
         <!-- <FilterEx /> -->
-        <FileCardEx />
+        <!-- <FileCardEx /> -->
         <!-- <ProgressBarEx /> -->
     </div>
 </template>
