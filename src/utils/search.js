@@ -20,13 +20,19 @@ import Fuse from 'fuse.js'
  * ```
  **/
 
-export const search = (data, searchFor, fields, options = { threshold: 0.3 }, returnFull = false) => {
+export const search = (
+    data,
+    searchFor,
+    fields,
+    options = { threshold: 0.3, useExtendedSearch: true, distance: 1000 },
+    returnFull = false
+) => {
     if (fields) {
         options.keys = fields
     }
     const fuse = new Fuse(data, { ...options })
 
-    const result = fuse.search(searchFor)
+    const result = fuse.search(`'${searchFor}`)
 
     if (returnFull) {
         return result
