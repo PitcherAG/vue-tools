@@ -352,7 +352,10 @@ export default defineComponent({
                 temp = groupBy(temp, props.groupBy)
 
                 // if length is 1 and has only undefined key group
-                if (Object.keys(temp).length === 1 && Object.keys(temp).includes('undefined')) {
+                if (
+                    Object.keys(temp).length === 1 &&
+                    (Object.keys(temp).includes('undefined') || Object.keys(temp).includes('null'))
+                ) {
                     temp = backup
                     state.shouldGroup = false
                     return temp
