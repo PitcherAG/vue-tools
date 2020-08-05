@@ -107,7 +107,7 @@
                     :class="[item.type, { disabled: item.disabled, active: isSelected(item) }]"
                     @click.prevent
                     @click.stop="item.type.includes('item') ? handleItemClick(item) : undefined"
-                    @touchstart.prevent="item.type.includes('item') ? handleItemClick(item) : undefined"
+                    @touchend.prevent="item.type.includes('item') ? handleItemClick(item) : undefined"
                 >
                     <!-- if this is an item -->
                     <template v-if="item.type.includes('item')">
