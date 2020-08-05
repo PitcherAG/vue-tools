@@ -512,6 +512,139 @@ const selectedItem = ''
 </Dropdown>
 ```
 
+### FileCard
+Custom Card component for files
+
+#### Available props
+| prop | type | required | default | description |
+| :--- | :--- | :--- | :--- | :--- |
+| `body` | `String` | no | '' | file name
+| `img-url` | `String` | no | - | file image url to show in card
+| `date` | `String` | no | - | file publish date
+| `keywords` | `String` | no | '' | file keywords
+| `is-favorite` | `Boolean` | no | - | control behaviour of favorite icon
+| `is-new` | `Boolean` | no | - | control behaviour of new label, shows/hides new label
+| `show-file-options` | `Boolean` | no | `true` | shows/hides file options button
+| `new-text` | `String` | no | 'New' | text inside `New` label, can be used for translation
+| `download-text` | `String` | no | 'Download' | text inside file options dropdown, can be used for translation
+| `share-text` | `String` | no | 'Share' | text inside file options dropdown, can be used for translation
+| `height` | `String \| Number` | no | 295 | height of the card, content height is calculated percentually thru this
+| `file-options-items` | `Array` | no | `DefaultFileOptions[]` | object array for file options items, to see default definition of this array check the definitions
+
+
+#### Available slots
+| slot | description | props
+| :--- | :--- | :--- |
+| `items` | slot to replace file options menu items. As long is this is a dropdown menu, you must to follow dropdown menu items structure. Check usage example to see how it's used.
+
+#### Available events
+| event | description |
+| :--- | :--- |
+| `@onClickImage` | triggered when user clicks the card image
+| `@onClickFavorite` | triggered when user clicks the favorite icon
+| `@onClickDownload` | triggered when user clicks the Download item in file options menu. If you customize file options with slots or prop, this might not be available.
+| `@onClickShare` | triggered when user clicks the Share item in file options menu. If you customize file options with slots or prop, this might not be available.
+
+
+#### Definitions
+```javascript
+ // Default File Options
+DefaultFileOptions = [
+    {
+        // downloadText, gets from the props
+        text: props.downloadText,
+        icon: 'download icon thin',
+        click: () => emit('onClickDownload')
+    },
+    {
+        // shareText, gets from the props
+        text: props.shareText,
+        icon: 'share icon thin',
+        click: () => emit('onClickShare')
+    }
+]
+```
+
+#### Usage
+```javascript
+import { FileCard, FileCardContainer, getFilesWithKeyword } from '@pitcher/vue-sdk'
+
+// Usage with plain JS, for example connect or something else
+const files = [
+    {
+        id: 1,
+        body: 'very long file name is going to be here',
+        image: 'https://img.url.com',
+        keywords: 'Keyword 1, Keyword 2',
+        startDate: '23 June',
+        isNew: false,
+        isFavorite: true,
+        // NOTE: define options only if you need to customize the file options
+        options: [
+            {
+                text: 'custom download text',
+                icon: 'download icon thin',
+                click: () => emit('onClickDownload')
+            },
+            {
+                text: 'custom share text',
+                icon: 'share icon thin',
+                click: () => emit('onClickShare')
+            }
+        ]
+    },
+    ...
+    ...
+]
+
+// Usage within Native application
+const files = await getFilesWithKeyword('pitcher-keyword')
+```
+
+```html
+<!-- Simple usage, FileCardContainer is required to keep the box layout align and responsive -->
+<FileCardContainer>
+    <FileCard
+        v-for="f in files"
+        :key="f.id"
+        :img-url="f.image"
+        :body="f.body"
+        :keywords="f.keywords"
+        :date="f.startDate"
+        :is-new="f.isNew"
+        :is-favorite="f.isFavorite"
+        @onClickImage="openFile(f.id)"
+        @onClickFavorite="favoriteFile(f.id)"
+        @onClickDownload="download(f)"
+        @onClickShare="share(f)"
+    />
+</FileCardContainer>
+
+<!-- Usage with slot -->
+<FileCardContainer>
+    <FileCard
+        v-for="f in files"
+        :key="f.id"
+        :img-url="f.image"
+        :body="f.body"
+        :keywords="f.keywords"
+        :date="f.startDate"
+        :is-new="f.isNew"
+        :is-favorite="f.isFavorite"
+        :fileOptionsItems="f.options"
+    >
+        <template #items>
+            <div v-for="(o, i) in f.options" :key="i" class="item" @click.stop="o.click">
+                <i class="icon thin" :class="o.icon" />
+                <span>{{ o.text }}</span>
+            </div>
+        </template>
+    </FileCard>
+</FileCardContainer>
+
+```
+
+
 ### Filter Dropdown
 Custom filter component built with Fomantic Dropdown
 
@@ -519,7 +652,7 @@ Custom filter component built with Fomantic Dropdown
 | prop | type | required | default | description |
 | :--- | :--- | :--- | :--- | :--- |
 | `v-model` | `Array` | yes | - | model to track of selected values
-| `items` | `Array` | true | - | object array for filter items.
+| `items` | `Array` | yes | - | object array for filter items.
 | `item-text` | `String` | no | 'text' | which property to map as text in your items declaration
 | `item-value` | `String` | no | 'value' | which property to map as value in your items declaration
 | `title` | `String` | no | undefined | title text that will be shown inside button by default when there is not any value selected

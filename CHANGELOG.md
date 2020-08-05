@@ -11,6 +11,9 @@ on_state_account() {} gets converted to state.account watcher
 - Store getters do not need .value at the end anymore
 - Checkbox.vue updated, by default it comes as a checkbox. You can add fomantic UI options as props now. Default checkboxes had toggle by default, this must be added.
 
+### Added
+- FileCard & FileCardContainer component
+ 
 ### Changed
 - Checkbox.vue
   - added relevant props and events from Fomantic
