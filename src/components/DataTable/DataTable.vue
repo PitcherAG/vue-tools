@@ -329,7 +329,7 @@ export default defineComponent({
 
             // if search word exist
             if (props.searchFor !== '') {
-                temp = search(temp, props.searchFor, props.searchFields)
+                temp = search(temp, props.searchFor, props.searchFields, props.searchOptions)
             }
 
             // sort
