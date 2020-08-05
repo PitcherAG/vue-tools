@@ -35,7 +35,7 @@
                             <template v-else v-for="(o, i) in fileOptionsItems">
                                 <div :key="i" class="item" @click.stop="o.click">
                                     <i class="icon thin" :class="o.icon" />
-                                    {{ o.text }}
+                                    <span>{{ o.text }}</span>
                                 </div>
                             </template>
                         </div>
