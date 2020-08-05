@@ -34,7 +34,7 @@ const data = [
 const searchFields = ['author', 'details.shop']
 // fuse.js options - https://fusejs.io/api/options.html#basic-options
 const options = {
-    threshold: 0.3  // how strict the search should be
+    threshold: 0.15  // how strict the search should be
     useExtendedSearch: true,
     distance: 1000
     ...

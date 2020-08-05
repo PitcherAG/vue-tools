@@ -24,15 +24,16 @@ export const search = (
     data,
     searchFor,
     fields,
-    options = { threshold: 0.3, useExtendedSearch: true, distance: 1000 },
+    options = { threshold: 0.15, distance: 1000, useExtendedSearch: true },
     returnFull = false
 ) => {
     if (fields) {
         options.keys = fields
     }
+
     const fuse = new Fuse(data, { ...options })
 
-    const result = fuse.search(`'${searchFor}`)
+    const result = fuse.search(`${options.useExtendedSearch ? "'" : ''}${searchFor}`)
 
     if (returnFull) {
         return result
