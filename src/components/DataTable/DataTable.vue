@@ -62,7 +62,7 @@
             </template>
 
             <!-- Body with grouping -->
-            <template v-else-if="groupBy && shouldGroup" v-for="(group, key) in tableData">
+            <template v-else-if="!!groupBy && shouldGroup" v-for="(group, key) in tableData">
                 <tr :key="key">
                     <td colspan="100%">
                         <div
@@ -314,20 +314,26 @@ export default defineComponent({
             }
         }))
 
-        // generate rowID for each row
-        props.data.forEach(i => {
-            i.__rowID = uid()
-        })
-
         // generate colID for each field
         props.fields.forEach(i => {
             i.__colID = uid()
         })
 
+        const injectIDs = (items, key) => {
+            items.forEach(i => {
+                i[key] = uid()
+            })
+        }
+
         // Where data is distributed to the table
         const tableData = computed(() => {
             let temp = props.data
             let backup = null
+
+            // generate rowID for each row
+            if (temp.find(i => !i.__rowID)) {
+                injectIDs(temp, '__rowID')
+            }
 
             // if search word exist
             if (props.searchFor !== '') {
@@ -341,22 +347,27 @@ export default defineComponent({
 
             // pagination active & paginate
             if (!props.noPagination) {
-                // if grouping active, sort before by group property
-                temp = props.groupBy ? orderBy(temp, [props.groupBy], ['asc']) : temp
-
                 calculatePagination(temp)
                 temp = temp.slice(state.pagination.startIndex, state.pagination.startIndex + props.perPage)
             }
 
             // Group logic
             if (props.groupBy) {
+                // take a backup
                 backup = temp
+                // sort before by group property
+                temp = orderBy(temp, [props.groupBy], ['asc'])
+                // group
                 temp = groupBy(temp, props.groupBy)
 
                 // if length is 1 and has only undefined key group
+                // if searching or sorting
+                // disable grouping
                 if (
-                    Object.keys(temp).length === 1 &&
-                    (Object.keys(temp).includes('undefined') || Object.keys(temp).includes('null'))
+                    (Object.keys(temp).length === 1 &&
+                        (Object.keys(temp).includes('undefined') || Object.keys(temp).includes('null'))) ||
+                    state.sort.by ||
+                    props.searchFor
                 ) {
                     temp = backup
                     state.shouldGroup = false
