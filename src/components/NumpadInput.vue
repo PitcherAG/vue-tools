@@ -16,6 +16,7 @@
                 @focus="focus(true)"
                 @blur="focus(false)"
                 @keypress.prevent
+                @touchstart.stop
             />
             <i v-if="rightIcon" class="icon" :class="rightIcon" />
             <slot v-if="labelRightSlot" name="labelRight" />
@@ -208,10 +209,12 @@ export default defineComponent({
             localState.groupIndex = Object.keys(numpadStore.groups).indexOf(props.group)
             // save item index in local state
             localState.selfIndex = numpadStore.groups[props.group].length
+            localState.selfId = `${props.group}_${numpadStore.groups[props.group].length}`
             // push item to global state
             numpadStore.groups[props.group].push({
-                id: `${props.group}_${numpadStore.groups[props.group].length}`,
-                input: ctx.refs.input
+                id: localState.selfId,
+                input: ctx.refs.input,
+                blur: () => focus(false)
             })
 
             // outer click listener
@@ -302,11 +305,19 @@ export default defineComponent({
             emit(defaultValue)
         }
 
+        function blurOthers() {
+            const groupArray = Object.keys(numpadStore.groups).map(k => numpadStore.groups[k])
+            const allItems = [].concat(...groupArray).filter(i => i.id !== localState.selfId)
+            allItems.forEach(i => i.blur())
+        }
+
         function focus(visibility) {
+            // blurAll()
             // set visibility
             localState.numpadIsVisible = visibility
 
             if (visibility) {
+                blurOthers()
                 checkOverlap()
                 // visible, if value empty set default
                 if (localState.localValue === '') {
@@ -404,6 +415,11 @@ $border-radius: 8.4px;
 
         input {
             text-align: right;
+
+            &:active,
+            &:visited {
+                border-color: #85b7d9;
+            }
         }
     }
 
