@@ -100,6 +100,8 @@
                 v-if="listItems.length > 0"
                 class="ui grid fluid vertical menu sub-menu"
                 :style="{ maxHeight: parsePxStyle(scrollHeight) }"
+                @touchstart="isScrolling = false"
+                @touchmove="isScrolling = true"
             >
                 <div
                     v-for="(item, index) in listItems"
@@ -190,7 +192,7 @@ export default {
             validator: val => validateSize(val, 'Dropdown.vue')
         }
     },
-
+    emits: ['input'],
     setup(props, { refs, emit, root, slots }) {
         // local state
         const state = reactive({
@@ -199,6 +201,7 @@ export default {
             hasMoreSelected: null,
             buttonText: props.title,
             shouldSort: false,
+            isScrolling: false,
             hasCustomIcon: props.icon !== 'filter',
             hasHeaderSlot: !!slots.header,
             hasActionsSlot: !!slots.actions,
@@ -364,6 +367,11 @@ export default {
 
         // handle item click, without preventing default event
         function handleItemClick(item) {
+            // do nothing if scrolling
+            if (state.isScrolling) {
+                return
+            }
+
             // select
             if (!isSelected(item)) {
                 return props.returnType === 'object'
