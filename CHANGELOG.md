@@ -2,10 +2,12 @@
 
 ## 1.4.2
 
-### Changed
+### Fixed
 - NumpadInput.vue
   - store registration & unregistration bug fixed
-  - NumpadInput not using it is own store anymore. When jumping to next sibling or group, finding elements directly from the current DOM tree
+  - NumpadInput not using it is own store anymore. When jumping to next sibling or group, finding elements directly from the current DOM tree. This is changed because of when using NumpadInput inside a table and sorting the table, numpad references are not valid anymore.
+- FilterDropdown.vue
+  - Touch/Scroll glitch is fixed in filters menu
 
 ## 1.4.1
 
