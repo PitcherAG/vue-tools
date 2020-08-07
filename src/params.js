@@ -45,6 +45,7 @@ export function useParamsStore() {
                     AUSDE: 'de',
                     BI: 'id',
                     BR: 'pt',
+                    BROLD: 'pt',
                     BU: 'bg',
                     CAFR: 'fr',
                     CZ: 'cs',
