@@ -34,9 +34,10 @@ export function useParamsStore() {
         language: computed(() => {
             if (s.state.salesForceUser) {
                 return s.state.salesForceUser.LanguageLocaleKey.split('_')[0].toLowerCase()
-            }
-            if (s.state.user) {
+            } else if (s.state.user) {
                 return s.state.user.LanguageLocaleKey.split('_')[0].toLowerCase()
+            } else {
+                return s.deviceLanguage.value
             }
         }),
         deviceLanguage: computed(() => {
