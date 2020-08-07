@@ -68,6 +68,7 @@ Fomantic DataTable with pagination
 | `fields` | `Array` | yes | - | object array for field options. Inside fields you define your table headings and the options for the column
 | `search-for` | `String \| Number` | no | '' | search key for searching the table. This prop can be bound to an input outside of DataTable
 | `search-fields` | `Array` | no | [] | string array to specify which object properties you want to search inside your data array
+| `search-options` | `Object` | no | ```{ threshold: 0.15, useExtendedSearch: true, distance: 1000 }``` | fuse.js search options, default threshold is 0.3 which shows matching results. If you need exact search results set this to 0. For details: https://fusejs.io/api/options.html
 | `tr-class` | `String \| Function` | no | undefined | prop to add class to ```tr``` of a line item. Can be string or function that sends line item as a parameter i.e. `:tr-class="item => item.valid && 'red' "`
 | `group-by` | `String` | no | undefined | prop to group line items thru a property i.e. `item.brand` field would be the property to group line items thru.
 | `width` | `String` | no | 100% | table width

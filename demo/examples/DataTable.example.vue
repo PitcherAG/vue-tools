@@ -5,7 +5,7 @@
         <div class="ui input">
             <input type="text" v-model="options.searchFor" />
         </div>
-        <DataTable class="celled" :data="data" :fields="fields" v-bind="options" @onSearch="test">
+        <DataTable class="celled" :data="data" :fields="fields" v-bind="options">
             <!-- <template #prepend-tbody="{ mapper }">
                 <tr>
                     <td colspan="2">Prepend Test</td>

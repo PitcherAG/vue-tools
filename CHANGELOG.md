@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.1
+
+### Changed
+- DataTable.vue
+  - added `search-options` property to be able to set fuse.js search options
+  - fixed grouping bug depending on group keys undefined & null and group length
+
 ## 1.4.0
 
 ### New Store backend
