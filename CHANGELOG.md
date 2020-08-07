@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.2
+
+### Changed
+- NumpadInput.vue
+  - store registration & unregistration bug fixed
+  - NumpadInput not using it is own store anymore. When jumping to next sibling or group, finding elements directly from the current DOM tree
+
 ## 1.4.1
 
 ### Changed
