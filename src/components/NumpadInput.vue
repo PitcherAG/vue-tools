@@ -329,7 +329,7 @@ export default defineComponent({
 
                 // if animation is active, animate
                 ctx.refs.inputDiv.classList.add('animate')
-                setTimeout(() => ctx.refs.inputDiv.classList.remove('animate'), 300)
+                setTimeout(() => ctx.refs.inputDiv && ctx.refs.inputDiv.classList.remove('animate'), 300)
             }
 
             // if blur & lazy model is active
@@ -367,6 +367,9 @@ export default defineComponent({
 
         function checkOverlap() {
             ctx.root.$nextTick(() => {
+                if (!ctx.refs.input || !ctx.refs.numpad) {
+                    return
+                }
                 const inputRect = ctx.refs.input.getBoundingClientRect()
                 const numpadRect = ctx.refs.numpad.getBoundingClientRect()
 
