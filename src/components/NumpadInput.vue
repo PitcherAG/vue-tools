@@ -1,6 +1,11 @@
 <template>
     <!-- Numpad -->
-    <div class="numpad-input" :class="[group]" :style="{ display: fluid ? 'block' : 'inline-block' }">
+    <div
+        class="numpad-input"
+        :class="[group]"
+        :data-group="group"
+        :style="{ display: fluid ? 'block' : 'inline-block' }"
+    >
         <!-- Input -->
         <div ref="inputDiv" class="ui" :class="inputAttrs.class">
             <i v-if="leftIcon" class="icon" :class="leftIcon" style="z-index: 1" />
@@ -93,13 +98,7 @@
 
 <script>
 import { defineComponent, reactive, toRefs, computed, watch, onMounted, onUnmounted } from '@vue/composition-api'
-import Vue from 'vue'
 import { parsePxStyle, validateSize } from './mixins'
-
-export const numpadStore = Vue.observable({
-    groups: {},
-    groupsArray: () => Object.keys(numpadStore.groups).map(k => numpadStore.groups[k])
-})
 
 export default defineComponent({
     props: {
@@ -155,11 +154,10 @@ export default defineComponent({
             default: false
         }
     },
+    emits: ['input'],
     setup(props, ctx) {
         const localState = reactive({
             numpadIsVisible: false,
-            selfIndex: null,
-            groupIndex: null,
             labelLeftSlot: !!ctx.slots.labelLeft,
             labelRightSlot: !!ctx.slots.labelRight,
             localValue: props.value
@@ -206,32 +204,11 @@ export default defineComponent({
         }
 
         onMounted(() => {
-            // Register numpad in store
-            if (!numpadStore.groups[props.group]) {
-                numpadStore.groups[props.group] = []
-            }
-            localState.groupIndex = Object.keys(numpadStore.groups).indexOf(props.group)
-            // save item index in local state
-            localState.selfIndex = numpadStore.groups[props.group].length
-            localState.selfId = `${props.group}_${numpadStore.groups[props.group].length}`
-
-            // push item to global state
-            numpadStore.groups[props.group].push({
-                id: localState.selfId,
-                input: ctx.refs.input,
-                focus: focus
-            })
-
             // outer click listener
             document.addEventListener('click', determineOuterClick)
         })
 
-        // destroy
         onUnmounted(() => {
-            // Unregister numpad from store
-            numpadStore.groups[props.group] = numpadStore.groups[props.group].filter(
-                item => item.id !== localState.selfId
-            )
             document.removeEventListener('click', determineOuterClick)
         })
 
@@ -315,12 +292,14 @@ export default defineComponent({
         }
 
         function blurOthers() {
-            // get all groups as arrays
-            const groups = numpadStore.groupsArray()
+            // get groups in view
+            const groups = getNumpadGroups()
+            // convert object model to array
+            const groupsArray = Object.keys(groups).map(k => groups[k])
             // get all items except self
-            const allItems = [].concat(...groups).filter(i => i.id !== localState.selfId)
+            const allItems = [].concat(...groupsArray).filter(i => i.input !== ctx.refs.input)
             // remove focus from all the other items
-            allItems.forEach(i => i.focus(false))
+            allItems.forEach(i => i.input.blur())
         }
 
         function focus(visibility) {
@@ -349,31 +328,54 @@ export default defineComponent({
             }
         }
 
+        // Get numpads as groups in view
+        function getNumpadGroups() {
+            const inputsInView = document.querySelectorAll('.numpad-input')
+            const groups = {}
+
+            inputsInView.forEach(elem => {
+                const groupName = elem.getAttribute('data-group')
+                if (!groups[groupName]) {
+                    groups[groupName] = []
+                }
+
+                groups[groupName].push({
+                    id: `${groupName}_${groups[groupName].length}`,
+                    index: groups[groupName].length,
+                    input: elem.querySelector('input')
+                })
+            })
+            return groups
+        }
+
         function jumpNextSibling() {
-            // destruct props
-            const { selfIndex } = localState
-            const { [props.group]: numpadGroup } = numpadStore.groups
+            // get current group from the groups in view
+            const { [props.group]: group } = getNumpadGroups()
+            // find input element in this component and destruct selfIndex
+            const { index: selfIndex } = group.find(i => i.input === ctx.refs.input)
 
-            // check if the component is last in the group
-            const isLast = selfIndex === numpadGroup.length - 1
-
+            const isLast = selfIndex === group.length - 1
             if (isLast) {
-                // jump next group if last
+                // jump next group if this is the last one
                 jumpNextGroup()
                 return
             }
+
             // not last item, jump next in same group
-            numpadGroup[selfIndex + 1].input.focus()
+            group[selfIndex + 1].input.focus()
         }
 
         function jumpNextGroup() {
-            // destruct
-            const { groupIndex } = localState
-            // map groups as array
-            const groups = numpadStore.groupsArray()
-            // if component group is last, go to 0, otherwise next group
-            const nextIndex = groupIndex === groups.length - 1 ? 0 : groupIndex + 1
-            groups[nextIndex][0].input.focus()
+            // get groups in view
+            const groups = getNumpadGroups()
+            // convert object model to array
+            const groupsArray = Object.keys(groups).map(k => groups[k])
+            // get group index of this component
+            const groupIndex = Object.keys(groups).indexOf(props.group)
+            // get next group index
+            const nextIndex = groupIndex === groupsArray.length - 1 ? 0 : groupIndex + 1
+
+            groupsArray[nextIndex][0].input.focus()
         }
 
         function checkOverlap() {
@@ -406,8 +408,7 @@ export default defineComponent({
             jumpNextSibling,
             jumpNextGroup
         }
-    },
-    numpadStore
+    }
 })
 </script>
 <style lang="scss" scoped>
