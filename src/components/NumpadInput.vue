@@ -96,7 +96,10 @@ import { defineComponent, reactive, toRefs, computed, watch, onMounted, onUnmoun
 import Vue from 'vue'
 import { parsePxStyle, validateSize } from './mixins'
 
-export const numpadStore = Vue.observable({ groups: {} })
+export const numpadStore = Vue.observable({
+    groups: {},
+    groupsArray: () => Object.keys(numpadStore.groups).map(k => numpadStore.groups[k])
+})
 
 export default defineComponent({
     props: {
@@ -203,6 +206,7 @@ export default defineComponent({
         }
 
         onMounted(() => {
+            // Register numpad in store
             if (!numpadStore.groups[props.group]) {
                 numpadStore.groups[props.group] = []
             }
@@ -210,11 +214,12 @@ export default defineComponent({
             // save item index in local state
             localState.selfIndex = numpadStore.groups[props.group].length
             localState.selfId = `${props.group}_${numpadStore.groups[props.group].length}`
+
             // push item to global state
             numpadStore.groups[props.group].push({
                 id: localState.selfId,
                 input: ctx.refs.input,
-                blur: () => focus(false)
+                focus: focus
             })
 
             // outer click listener
@@ -223,6 +228,10 @@ export default defineComponent({
 
         // destroy
         onUnmounted(() => {
+            // Unregister numpad from store
+            numpadStore.groups[props.group] = numpadStore.groups[props.group].filter(
+                item => item.id !== localState.selfId
+            )
             document.removeEventListener('click', determineOuterClick)
         })
 
@@ -306,13 +315,15 @@ export default defineComponent({
         }
 
         function blurOthers() {
-            const groupArray = Object.keys(numpadStore.groups).map(k => numpadStore.groups[k])
-            const allItems = [].concat(...groupArray).filter(i => i.id !== localState.selfId)
-            allItems.forEach(i => i.blur())
+            // get all groups as arrays
+            const groups = numpadStore.groupsArray()
+            // get all items except self
+            const allItems = [].concat(...groups).filter(i => i.id !== localState.selfId)
+            // remove focus from all the other items
+            allItems.forEach(i => i.focus(false))
         }
 
         function focus(visibility) {
-            // blurAll()
             // set visibility
             localState.numpadIsVisible = visibility
 
@@ -359,7 +370,7 @@ export default defineComponent({
             // destruct
             const { groupIndex } = localState
             // map groups as array
-            const groups = Object.keys(numpadStore.groups).map(k => numpadStore.groups[k])
+            const groups = numpadStore.groupsArray()
             // if component group is last, go to 0, otherwise next group
             const nextIndex = groupIndex === groups.length - 1 ? 0 : groupIndex + 1
             groups[nextIndex][0].input.focus()
@@ -395,7 +406,8 @@ export default defineComponent({
             jumpNextSibling,
             jumpNextGroup
         }
-    }
+    },
+    numpadStore
 })
 </script>
 <style lang="scss" scoped>
