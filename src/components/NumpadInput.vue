@@ -190,45 +190,6 @@ export default defineComponent({
         // default zero value
         const defaultValue = props.decimals === 0 ? '0' : `0.${'0'.repeat(props.decimals)}`
 
-        // to check outer click
-        const determineOuterClick = e => {
-            // if number input & keys row, do nothing
-            if (
-                e.target.className.includes('numpad') ||
-                e.target.className.includes('number-input') ||
-                e.target.className.includes('row--number')
-            ) {
-                return
-            }
-            focus(false)
-        }
-
-        onMounted(() => {
-            // outer click listener
-            document.addEventListener('click', determineOuterClick)
-        })
-
-        onUnmounted(() => {
-            document.removeEventListener('click', determineOuterClick)
-        })
-
-        // Watch props.value
-        watch(
-            () => props.value,
-            val => {
-                localState.localValue = val
-            }
-        )
-
-        // function to emit data if not lazy
-        function emit(val) {
-            const parsed = typeof localState.localValue === 'number' ? parseFloat(val) : val
-
-            if (!props.lazy) {
-                ctx.emit('input', parsed)
-            }
-        }
-
         function addVal(val) {
             // before adding a new value, check if next value will pass over the max number
             if (
@@ -328,26 +289,6 @@ export default defineComponent({
             }
         }
 
-        // Get numpads as groups in view
-        function getNumpadGroups() {
-            const inputsInView = document.querySelectorAll('.numpad-input')
-            const groups = {}
-
-            inputsInView.forEach(elem => {
-                const groupName = elem.getAttribute('data-group')
-                if (!groups[groupName]) {
-                    groups[groupName] = []
-                }
-
-                groups[groupName].push({
-                    id: `${groupName}_${groups[groupName].length}`,
-                    index: groups[groupName].length,
-                    input: elem.querySelector('input')
-                })
-            })
-            return groups
-        }
-
         function jumpNextSibling() {
             // get current group from the groups in view
             const { [props.group]: group } = getNumpadGroups()
@@ -378,6 +319,15 @@ export default defineComponent({
             groupsArray[nextIndex][0].input.focus()
         }
 
+        // function to emit data if not lazy
+        function emit(val) {
+            const parsed = typeof localState.localValue === 'number' ? parseFloat(val) : val
+
+            if (!props.lazy) {
+                ctx.emit('input', parsed)
+            }
+        }
+
         function checkOverlap() {
             ctx.root.$nextTick(() => {
                 if (!ctx.refs.input || !ctx.refs.numpad) {
@@ -398,6 +348,57 @@ export default defineComponent({
                 }
             })
         }
+
+        // Get numpads as groups in view
+        function getNumpadGroups() {
+            const inputsInView = document.querySelectorAll('.numpad-input')
+            const groups = {}
+
+            inputsInView.forEach(elem => {
+                const groupName = elem.getAttribute('data-group')
+                if (!groups[groupName]) {
+                    groups[groupName] = []
+                }
+
+                groups[groupName].push({
+                    id: `${groupName}_${groups[groupName].length}`,
+                    index: groups[groupName].length,
+                    input: elem.querySelector('input')
+                })
+            })
+            return groups
+        }
+
+        // to check outer click
+        const determineOuterClick = e => {
+            // if number input & keys row, do nothing
+            if (
+                e.target.className.includes('numpad') ||
+                e.target.className.includes('number-input') ||
+                e.target.className.includes('row--number')
+            ) {
+                return
+            }
+            focus(false)
+        }
+
+        onMounted(() => {
+            // outer click listener
+            document.addEventListener('click', determineOuterClick)
+        })
+
+        onUnmounted(() => {
+            // unregister
+            document.removeEventListener('click', determineOuterClick)
+        })
+
+        // Watch props.value
+        watch(
+            () => props.value,
+            val => {
+                localState.localValue = val
+            }
+        )
 
         return {
             ...toRefs(localState),
