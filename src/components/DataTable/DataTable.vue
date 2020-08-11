@@ -26,7 +26,7 @@
                         :key="f.__colID"
                         :class="getTHClass(f)"
                         :style="{ width: f.width }"
-                        @click="f.sortable ? sortTable(f) : null"
+                        v-on="f.sortable ? { click: () => sortTable(f) } : {}"
                     >
                         <!-- default -->
                         <span :data-tooltip="getTooltip(f)" :data-position="f.tooltip">
