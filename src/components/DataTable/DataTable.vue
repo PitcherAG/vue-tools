@@ -274,7 +274,7 @@ export default defineComponent({
     },
     setup(props, { slots, emit }) {
         // Check slots if they exist
-        const slotChecks = {
+        const slotChecks = computed(() => ({
             hasRowSlot: !!slots.row,
             hasHeadingRowSlot: !!slots['heading-row'],
             hasAppendTbodySlot: !!slots['append-tbody'],
@@ -282,7 +282,7 @@ export default defineComponent({
             hasBodySlot: !!slots.body,
             hasTFootSlot: !!slots['t-foot'],
             hasNoDataSlot: !!slots['no-data-template']
-        }
+        }))
 
         // Local state
         const state = reactive({
