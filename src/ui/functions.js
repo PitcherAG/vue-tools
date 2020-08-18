@@ -1,10 +1,18 @@
 import { useServerJSONStore } from './instance'
 
+/*
+ * Sets navigation/category
+ */
 window.setMainNav = function(mainNavID) {
     const store = useServerJSONStore()
     store.setMainNav(mainNavID)
 }
 
+/*
+ * Called by native as a callback to loadPresentationsFromDB event
+ * An array of presentation file objects are returned
+ * These file objects should parsed
+ */
 window.loadPresentations = function(presentationsObject) {
     if (typeof presentationsObject === 'string') {
         presentationsObject = JSON.parse(presentationsObject)
@@ -12,11 +20,19 @@ window.loadPresentations = function(presentationsObject) {
     window.presentationsObject = presentationsObject
 }
 
+/*
+ * Used by native
+ */
 window.getMainNavID = function() {
     const store = useServerJSONStore()
     return store.getMainNavID()
 }
 
+/*
+ * Called by native
+ * Tells UI which files are valid to show UI at that moment
+ * E.g when there are pre-selected contents for a call, and user started that call, native gives files Ids of pre-selected contents
+ */
 window.filterJSON = function() {}
 
 /*
@@ -41,6 +57,9 @@ window.setColors = (uiColorBack, uiColorBar) => {
     }
 }
 
+/*
+ * Called by native, used when either a call is started / stopped or another contact is added to the call
+ */
 window.setCurrentContact = (newContact, newAccount) => {
     const store = useServerJSONStore()
     store.setCurrentContact(newContact, newAccount)
