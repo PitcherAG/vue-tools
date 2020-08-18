@@ -20,6 +20,8 @@ export * from './detailing.js'
 export * from './event.js'
 export * from './files.js'
 export * from './params.js'
+export * from './ui/instance.js'
+export * from './ui/functions.js'
 export * from './platform.js'
 
 export * from './utils'
