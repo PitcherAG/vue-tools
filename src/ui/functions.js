@@ -88,3 +88,7 @@ window.enableCrm = enabled => {
     store.crmStatusChanged(enabled)
 }
 
+window.getAllowedIDs = () => {
+    const store = useServerJSONStore()
+    return store.getAllowedIDs()
+}

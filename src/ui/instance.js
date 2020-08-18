@@ -31,7 +31,8 @@ class InstanceStore {
         currentContact: null,
         filterIsOn: false,
         lastLocation: null,
-        loggedIn: false
+        loggedIn: false,
+        allowedFileIds: null
     })
 
     inACall = computed(() => this.state.currentContact != null)
@@ -97,6 +98,10 @@ class InstanceStore {
 
     crmStatusChanged(loggedIn) {
         this.state.loggedIn = loggedIn
+    }
+
+    getAllowedIDs() {
+        return this.state.allowedFileIdss
     }
 
     parseCustomPdf(file) {
