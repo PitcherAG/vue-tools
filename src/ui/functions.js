@@ -64,3 +64,27 @@ window.setCurrentContact = (newContact, newAccount) => {
     const store = useServerJSONStore()
     store.setCurrentContact(newContact, newAccount)
 }
+
+/*
+ * Called by native, informs UI with the last know coordinates
+ */
+window.locationUpdated = (lastLongitude, lastLatitude) => {
+    if (typeof lastLongitude !== 'undefined' && typeof lastLatitude !== 'undefined') {
+        const store = useServerJSONStore()
+        store.lastLocation = {
+            lon: lastLongitude,
+            lat: lastLatitude
+        }
+    }
+}
+
+window.updateCRM = () => {
+    const store = useServerJSONStore()
+    store.crmStatusChanged(true)
+}
+
+window.enableCrm = enabled => {
+    const store = useServerJSONStore()
+    store.crmStatusChanged(enabled)
+}
+

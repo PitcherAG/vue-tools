@@ -29,7 +29,9 @@ class InstanceStore {
         currentCategory: null,
         currentAccount: null,
         currentContact: null,
-        filterIsOn: false
+        filterIsOn: false,
+        lastLocation: null,
+        loggedIn: false
     })
 
     inACall = computed(() => this.state.currentContact != null)
@@ -91,6 +93,10 @@ class InstanceStore {
         } else {
             fireEvent('uiReady')
         }
+    }
+
+    crmStatusChanged(loggedIn) {
+        this.state.loggedIn = loggedIn
     }
 
     parseCustomPdf(file) {
