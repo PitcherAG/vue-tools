@@ -32,7 +32,9 @@ class InstanceStore {
         filterIsOn: false,
         lastLocation: null,
         loggedIn: false,
-        allowedFileIds: null
+        allowedFileIds: null,
+        filteredAllowedFileIds: null,
+        isFilterActive: false
     })
 
     inACall = computed(() => this.state.currentContact != null)
@@ -101,7 +103,7 @@ class InstanceStore {
     }
 
     getAllowedIDs() {
-        return this.state.allowedFileIdss
+        return this.state.allowedFileIds
     }
 
     parseCustomPdf(file) {
@@ -195,4 +197,9 @@ window.getMainNavID = function() {
     return store.getMainNavID()
 }
 
-window.filterJSON = function() {}
+window.filterJSON = function(allowedIDsV) {
+    const store = useServerJSONStore()
+    allowedIDsV = allowedIDsV && Array.isArray(allowedIDsV) ? allowedIDsV : JSON.parse(allowedIDsV);
+    store.allowedFileIds = allowedIDsV || [];
+    store.filteredAllowedFileIds = store.isFilterActive ? allowedIDsV : null;
+}

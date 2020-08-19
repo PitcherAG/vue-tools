@@ -33,7 +33,6 @@ window.getMainNavID = function() {
  * Tells UI which files are valid to show UI at that moment
  * E.g when there are pre-selected contents for a call, and user started that call, native gives files Ids of pre-selected contents
  */
-window.filterJSON = function() {}
 
 /*
  * Gets current category's logo if it has a custom logo uploaded
