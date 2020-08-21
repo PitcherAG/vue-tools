@@ -797,7 +797,7 @@ Fomantic Modal component
 | slot | description |
 | :--- | :--- |
 | `header` | Slot to overwrite the content of ```.ui.modal > .header```
-| `content` | Slot to overwrite the content of ```.ui.modal > .content```
+| `default` | Slot to overwrite the content of ```.ui.modal > .content``` NOTE: No need to use slot for the default slot. Including your content inside <Modal>Content here</Modal> will work.
 | `actions` | Slot to overwrite the content of ```.ui.modal > .actions```
 | `custom` | Slot to overwrite the content of ```.ui.modal```
 
