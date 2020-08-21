@@ -26,7 +26,7 @@
                         :key="f.__colID"
                         :class="getTHClass(f)"
                         :style="{ width: f.width }"
-                        @click="f.sortable ? sortTable(f) : null"
+                        v-on="f.sortable ? { click: () => sortTable(f) } : {}"
                     >
                         <!-- default -->
                         <span :data-tooltip="getTooltip(f)" :data-position="f.tooltip">
@@ -273,17 +273,6 @@ export default defineComponent({
         }
     },
     setup(props, { slots, emit }) {
-        // Check slots if they exist
-        const slotChecks = {
-            hasRowSlot: !!slots.row,
-            hasHeadingRowSlot: !!slots['heading-row'],
-            hasAppendTbodySlot: !!slots['append-tbody'],
-            hasPrependTbodySlot: !!slots['prepend-tbody'],
-            hasBodySlot: !!slots.body,
-            hasTFootSlot: !!slots['t-foot'],
-            hasNoDataSlot: !!slots['no-data-template']
-        }
-
         // Local state
         const state = reactive({
             sort: {
@@ -299,7 +288,15 @@ export default defineComponent({
                 endIndex: 0,
                 pages: []
             },
-            shouldGroup: false
+            shouldGroup: false,
+            // Check slots if they exist
+            hasRowSlot: !!slots.row,
+            hasHeadingRowSlot: !!slots['heading-row'],
+            hasAppendTbodySlot: !!slots['append-tbody'],
+            hasPrependTbodySlot: !!slots['prepend-tbody'],
+            hasBodySlot: !!slots.body,
+            hasTFootSlot: !!slots['t-foot'],
+            hasNoDataSlot: !!slots['no-data-template']
         })
 
         // Table classes
@@ -532,7 +529,6 @@ export default defineComponent({
         )
         return {
             ...toRefs(state),
-            ...slotChecks,
             tableData,
             filteredFields,
             tableAttr,
