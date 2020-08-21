@@ -36,7 +36,6 @@ export default {
     },
 
     setup(props, attrs) {
-        console.log('setup cal')
         const placeholder = ref()
 
         const initCalendar = () => {
@@ -46,7 +45,6 @@ export default {
                     today: props.today,
                     action: props.action,
                     onChange: () => {
-                        console.log('change', attrs)
                         attrs.emit('input', attrs.refs.input.value)
                     },
                     touchReadonly: true,

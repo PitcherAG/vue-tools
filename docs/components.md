@@ -393,7 +393,7 @@ Fomantic Dropdown component
 #### Available events
 | event | description |
 | :--- | :--- |
-| `@onSelected` | event that is triggered when user selects an item from dropdown. Returns selected item as an object. Does not work properly
+| `@onSelected` | event that is triggered when user selects an item from dropdown. Returns selected item as an object.
 | `@input` | default v-model input event, returns the selected items value
 
 #### Definitions
