@@ -804,6 +804,8 @@ Fomantic Modal component
 #### Available events
 | event | description |
 | :--- | :--- |
+| `@onApprove` | fired when clicked on approve button
+| `@onDeny` | fired when clicked on deny button
 | `@onClosed` | fired before modal is closed
 | `@onHidden` | fired when modal is closed
 | `@onShow` | fired when modal will be visible
