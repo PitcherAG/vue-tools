@@ -520,6 +520,8 @@ Custom Card component for files
 | prop | type | required | default | description |
 | :--- | :--- | :--- | :--- | :--- |
 | `body` | `String` | no | '' | file name
+| `favorite-icon` | `String` | no | 'star' | icon to toggle file as favorite
+| `hide-favorite` | `Boolean` | no | `false` | hides favorite icon
 | `img-url` | `String` | no | - | file image url to show in card
 | `date` | `String` | no | - | file publish date
 | `keywords` | `String` | no | '' | file keywords
@@ -538,6 +540,7 @@ Custom Card component for files
 | :--- | :--- | :--- |
 | `items` | slot to replace file options menu items. As long is this is a dropdown menu, you must to follow dropdown menu items structure. Check usage example to see how it's used.
 | `new` | slot to replace file new badge
+| `keywords` | slot to replace file keywords container, at the bottom of the file card. Here keywords can be show in a different style, only some keywords can be shown etc.
 
 #### Available events
 | event | description |
