@@ -1,5 +1,5 @@
 <template>
-    <sui-form-field v-if="field.updateable" :error="error" :required="field.required && field.type !== 'boolean'">
+    <sui-form-field v-if="field.updateable" :error="error" :required="field.required">
         <label>{{ label || field.label }}</label>
         <input
             v-if="
