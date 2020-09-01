@@ -537,6 +537,7 @@ Custom Card component for files
 | slot | description | props
 | :--- | :--- | :--- |
 | `items` | slot to replace file options menu items. As long is this is a dropdown menu, you must to follow dropdown menu items structure. Check usage example to see how it's used.
+| `keywords` | slot to replace file keywords container, at the bottom of the file card. Here keywords can be show in a different style, only some keywords can be shown etc.
 
 #### Available events
 | event | description |
