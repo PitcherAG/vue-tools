@@ -520,13 +520,13 @@ Custom Card component for files
 | prop | type | required | default | description |
 | :--- | :--- | :--- | :--- | :--- |
 | `body` | `String` | no | '' | file name
-| `favorite-icon` | `String` | no | 'star' | icon to toggle file as favorite
-| `hide-favorite` | `Boolean` | no | `false` | hides favorite icon
 | `img-url` | `String` | no | - | file image url to show in card
 | `date` | `String` | no | - | file publish date
 | `keywords` | `String` | no | '' | file keywords
 | `is-favorite` | `Boolean` | no | - | control behaviour of favorite icon
 | `is-new` | `Boolean` | no | - | control behaviour of new label, shows/hides new label
+| `favorite-icon` | `String` | no | 'star' | icon to toggle file as favorite
+| `hide-favorite` | `Boolean` | no | `false` | hides favorite icon
 | `show-file-options` | `Boolean` | no | `true` | shows/hides file options button
 | `new-text` | `String` | no | 'New' | text inside `New` label, can be used for translation
 | `download-text` | `String` | no | 'Download' | text inside file options dropdown, can be used for translation
