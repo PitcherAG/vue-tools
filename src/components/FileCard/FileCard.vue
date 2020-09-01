@@ -11,8 +11,8 @@
                 @click="emit('onClickImage')"
             />
             <!-- Favorite -->
-            <div class="file-card__stacked button left" @click="emit('onClickFavorite')">
-                <i class="star icon large" :class="{ outline: !isFavorite ? 'outline' : '' }" />
+            <div v-if="!hideFavorite" class="file-card__stacked button left" @click="emit('onClickFavorite')">
+                <i class="icon large" :class="[{ outline: !isFavorite ? 'outline' : '' }, favoriteIcon]" />
             </div>
             <!-- New -->
             <div v-if="isNew" class="file-card__stacked right">
@@ -53,7 +53,10 @@
         <!-- File name -->
         <div class="file-card__file-name">{{ body }}</div>
         <!-- Keywords -->
-        <div v-if="keywords.length > 0" class="mt-1">
+        <div v-if="hasKeywordsSlot" class="mt-1">
+            <slot name="keywords" />
+        </div>
+        <div v-else-if="keywords.length > 0" class="mt-1">
             <span class="ui text small file-card__keywords">
                 {{ keywords }}
             </span>
@@ -73,6 +76,14 @@ export default defineComponent({
         body: {
             type: String,
             default: ''
+        },
+        favoriteIcon: {
+            type: String,
+            default: 'star'
+        },
+        hideFavorite: {
+            type: Boolean,
+            default: false
         },
         imgUrl: String,
         date: String,
@@ -124,13 +135,14 @@ export default defineComponent({
         const state = reactive({
             optionsExpanded: false,
             hasItemsSlot: !!slots.items,
-            hasNewSlot: !!slots.new
+            hasNewSlot: !!slots.new,
+            hasKeywordsSlot: !!slots.keywords
         })
 
         const styles = computed(() => ({
             containerH: `${parseInt(props.height)}px`,
             contentH: `${Math.ceil(parseInt(props.height) * 0.71)}px`,
-            imgUrl: `url(${props.imgUrl})`
+            imgUrl: `url("${props.imgUrl}")`
         }))
 
         return { ...toRefs(state), styles, emit }
