@@ -16,7 +16,10 @@
             </div>
             <!-- New -->
             <div v-if="isNew" class="file-card__stacked right">
-                <div class="ui red mini label">{{ newText }}</div>
+                <template v-if="hasNewSlot">
+                    <slot name="new" />
+                </template>
+                <div v-else class="ui red mini label">{{ newText }}</div>
             </div>
 
             <!-- Actions -->
@@ -120,7 +123,8 @@ export default defineComponent({
     setup(props, { slots, emit }) {
         const state = reactive({
             optionsExpanded: false,
-            hasItemsSlot: !!slots.items
+            hasItemsSlot: !!slots.items,
+            hasNewSlot: !!slots.new
         })
 
         const styles = computed(() => ({
