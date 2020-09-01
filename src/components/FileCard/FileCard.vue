@@ -50,7 +50,10 @@
         <!-- File name -->
         <div class="file-card__file-name">{{ body }}</div>
         <!-- Keywords -->
-        <div v-if="keywords.length > 0" class="mt-1">
+        <div v-if="hasKeywordsSlot" class="mt-1">
+            <slot name="keywords" />
+        </div>
+        <div v-else-if="keywords.length > 0" class="mt-1">
             <span class="ui text small file-card__keywords">
                 {{ keywords }}
             </span>
@@ -120,7 +123,8 @@ export default defineComponent({
     setup(props, { slots, emit }) {
         const state = reactive({
             optionsExpanded: false,
-            hasItemsSlot: !!slots.items
+            hasItemsSlot: !!slots.items,
+            hasKeywordsSlot: !!slots.keywords
         })
 
         const styles = computed(() => ({
