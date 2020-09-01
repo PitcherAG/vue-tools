@@ -17,7 +17,7 @@
             <!-- New -->
             <div v-if="isNew" class="file-card__stacked right">
                 <template v-if="hasNewSlot">
-                    <slot name="new" />
+                    <slot name="new" :newText="newText" />
                 </template>
                 <div v-else class="ui red mini label">{{ newText }}</div>
             </div>
