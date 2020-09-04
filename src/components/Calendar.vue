@@ -10,6 +10,7 @@
 import { onMounted, ref, computed, watch } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 import { formatDate } from '../i18n/date.js'
+
 export default {
     props: {
         value: {
@@ -57,12 +58,32 @@ export default {
             type: Boolean,
             default: false
         },
-        customValueFormatter: Function,
+        valueFormatter: {
+            type: Function,
+            required: false,
+            // must be function instead of array function to be able to reach component instance
+            default: function(date) {
+                // if date time
+                if (this.type.includes('time')) {
+                    return date.toISOString()
+                }
+
+                // if date format
+                const yyyy = date.getFullYear().toString()
+                const mm = (date.getMonth() + 1).toString()
+                const dd = date.getDate().toString()
+                return `${yyyy}-${mm[1] ? mm : '0' + mm[0]}-${dd[1] ? dd : '0' + dd[0]}`
+            }
+        },
         disableInputFormatting: {
             type: Boolean,
             default: false
         },
-        customInputFormatter: Function,
+        inputFormatter: {
+            type: Function,
+            required: false,
+            default: date => formatDate(date)
+        },
         setting: Object,
         action: {
             type: String,
@@ -164,30 +185,14 @@ export default {
                 onChange: date => {
                     let result = date
 
-                    // if there is a custom formatter
-                    if (props.customValueFormatter) {
-                        result = props.customValueFormatter(result)
-                        emit('input', result)
-                        return
-                    }
-
                     // if formatting disabled, emit raw value
                     if (props.disableValueFormatting) {
                         emit('input', result)
                         return
                     }
 
-                    // if this is datetime or time, emit value as ISO Format
-                    if (props.type.includes('time')) {
-                        emit('input', result.toISOString())
-                        return
-                    }
-
                     // format
-                    const yyyy = date.getFullYear().toString()
-                    const mm = (date.getMonth() + 1).toString()
-                    const dd = date.getDate().toString()
-                    result = `${yyyy}-${mm[1] ? mm : '0' + mm[0]}-${dd[1] ? dd : '0' + dd[0]}`
+                    result = props.valueFormatter(result)
                     emit('input', result)
                 },
                 formatter: {
@@ -196,7 +201,7 @@ export default {
                         if (!internalDate) return ''
                         if (props.disableInputFormatting) return date
 
-                        return props.customInputFormatter ? props.customInputFormatter(date) : formatDate(date)
+                        return props.inputFormatter(date)
                     }
                 },
                 onBeforeChange: () => emit('onBeforeChange'),
@@ -244,9 +249,9 @@ export default {
             () => props.action,
             () => props.settings,
             () => props.disableValueFormatting,
-            () => props.customValueFormatter,
+            () => props.valueFormatter,
             () => props.disableInputFormatting,
-            () => props.customInputFormatter
+            () => props.inputFormatter
         ]
 
         watch(
