@@ -1,10 +1,12 @@
 <template>
-  <button type="button" :class="getClasses" :style="getStyles">{{ label }}</button>
+    <div>
+        <button type="button" :class="getClasses" :style="getStyles">{{ label }}</button>
+    </div>
 </template>
 
 <script>
-import { defineComponent, computed } from '@vue/composition-api'
-import './button.css';
+import { computed } from '@vue/composition-api'
+import './button.css'
 
 export default {
     name: 'my-button',
@@ -12,16 +14,16 @@ export default {
     props: {
         label: {
             type: String,
-            required: true,
+            required: true
         },
         primary: {
             type: Boolean,
-            default: false,
+            default: false
         },
         size: {
             type: String,
             default: 'medium',
-            validator: function (value) {
+            validator: function(value) {
                 return ['small', 'medium', 'large'].indexOf(value) !== -1
             }
         },
@@ -30,7 +32,7 @@ export default {
         }
     },
 
-  setup(props) {
+    setup(props) {
         const getStyles = computed(() => {
             let style = {}
 
