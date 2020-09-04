@@ -37,7 +37,7 @@ export default defineComponent({
                 // eventClass: 'red',
                 // eventDates: [{
                 //     date: new Date('2020-08-12T11:20:00.000'),
-                //     message:'hehehee',
+                //     message:'test event',
                 // }],
                 minDate: '2020-08-07T11:20:00.000'
             }
