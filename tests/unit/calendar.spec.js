@@ -1,15 +1,11 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import CompositionApi from '@vue/composition-api'
 import Calendar from '@/components/Calendar'
-import { TranslationPlugin, formatDate } from '@/'
+import { TranslationPlugin } from '@/'
 
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
 localVue.use(TranslationPlugin)
-
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms))
-}
 
 const dateValue = '2002-01-15T12:00:00.000+0000'
 const minDate = '2002-01-17T12:00:00.000+0000'
