@@ -14,6 +14,7 @@ import { formatDate } from '../i18n/date.js'
 export default {
     props: {
         value: {
+            type: [String, Date],
             required: true
         },
         type: {
