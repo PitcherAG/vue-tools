@@ -225,7 +225,9 @@ export default {
         }
 
         onMounted(() => {
-            initCalendar()
+            setTimeout(() => {
+                initCalendar()
+            })
         })
 
         // props watch list for re-initializing calendar
