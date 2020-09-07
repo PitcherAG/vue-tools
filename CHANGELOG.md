@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.4.4
+
+### Breaking changes
+- Calendar.vue prop change `setting` => `settings`
+
+### Changed / Fixed
+- Calendar.vue
+  - no required booleans in formfield
+  - most of fomantic settings ported to native props
+  - minDate is not overriding currentValue anymore
+  - updating calendar props are observable now, changes applied to the component
+  - unit tests & docs updated
+
+
 ## 1.4.3
 
 ### Changed / Fixed
