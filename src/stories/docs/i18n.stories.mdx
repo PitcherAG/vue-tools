@@ -1,0 +1,297 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Internationalization and translations" />
+
+# Internationalization and translations
+
+### Configuration
+Create the file `gettext.config.js` in the root directory of your project and define languages and translations.
+```javascript
+module.exports = {
+    languages: {
+        'ar': 'Arabic',
+        'az': 'Azerbaijani',
+        'be': 'Belarusian',
+        'bg': 'Bulgarian',
+        'cs': 'Czech',
+        'da': 'Danish',
+        'de': 'German',
+        'el': 'Greek',
+        'en': 'English',
+        'es': 'Spanish',
+        'et': 'Estonian',
+        'fi': 'Finnish',
+        'fr': 'French',
+        'hi': 'Hindi',
+        'hr': 'Croatian',
+        'hu': 'Hungarian',
+        'id': 'Indonesian',
+        'it': 'Italian',
+        'ja': 'Japanese',
+        'ka': 'Georgian',
+        'kk': 'Kazakh',
+        'ko': 'Korean',
+        'ky': 'Kyrgyz',
+        'lt': 'Lithuanian',
+        'lv': 'Latvian',
+        'mk': 'FYRO Macedonian',
+        'ms': 'Malay',
+        'nl': 'Dutch',
+        'no': 'Norwegian',
+        'pl': 'Polish',
+        'pt': 'Portuguese',
+        'ro': 'Romanian',
+        'ru': 'Russian',
+        'sk': 'Slovak',
+        'sl': 'Slovenian',
+        'sq': 'Albanian',
+        'sr': 'Serbian',
+        'sw': 'Swahili',
+        'th': 'Thai',
+        'tr': 'Turkish',
+        'uk': 'Ukrainian',
+        'uz': 'Uzbek',
+        'vi': 'Vietnamese',
+        'zh-CN': 'Chinese (Simplified)',
+        'zh-TW': 'Chinese (Traditional)',
+    },
+    translations: [
+        {category: 'app', type: 'source'},
+        {category: 'app', type: 'package', package: '@pitcher/vue-sdk'},
+    ],
+}
+
+```
+
+#### Properties
+
+*Property* | *Description*
+--- | ---
+languages | Languages you want to translate your project to 
+translations | Array of translations
+output.po (optional, default: `locale`) | Output directory for `.po` files
+output.json (optional, default: `public/translations`) | Output directory for `.json` files 
+
+#### Required Translation Properties
+
+*Property* | *Value* | *Description*
+--- | --- | ---
+category | string | The category is used as filename `{category}.pot` and `{category}.json` 
+type | source, package | Parse messages from your source code or add messages provided by a package
+
+#### Optional Source Translation Properties
+
+*Property* | *Value* | *Default* | *Description*
+--- | --- | --- | ---
+patterns | array | `['src/**/*.js', 'src/**/*.vue', 'src/**/*.html']` | [Glob](https://www.npmjs.com/package/glob) patterns to match files
+
+#### Optional Package Translation Properties
+
+*Property* | *Value* | *Default* | *Description*
+--- | --- | --- | ---
+packageCategory | string | `undefined` | Define if the category named is different in your project and package
+
+### Scripts
+
+#### Extract Messages
+Run `npm run config-gettext-extract` to extract messages from your source code.
+
+#### Translate Messages
+Add the `google.json` from our [vue-project-template](https://github.com/PitcherAG/vue-project-template/) to the root of your project and run `npm run config-gettext-translate` to translate the messages to the configured languages.
+
+#### Compile Messages
+Run `npm run config-gettext-compile` to compile your translations from `.po` to `.json`.
+
+
+### Installation
+ 
+#### Environmental Variables
+Add the following lines to you `vue.config.json` to access the configured languages in your vue project.
+
+```javascript
+const languages = require('./gettext.config').languages
+...
+process.env.VUE_APP_LANGUAGES = JSON.stringify(languages)
+```
+
+#### Translation Plugin
+If you use translations put this in your main.js
+
+```javascript
+import { TranslationPlugin } from '@pitcher/vue-sdk'
+
+Vue.use(TranslationPlugin, { availableLanguages: JSON.parse(process.env.VUE_APP_LANGUAGES) })
+```
+
+In your App.vue call `await setLanguage('en')` to load the file `translations/en/app.json` that is in the public folder.
+If you don't need translation but just the number and date formatting: await `setLanguage('en', {load: false})`
+
+```javascript
+import { loadParams, loadConfig, useParamsStore, setLanguage } from '@pitcher/vue-sdk'
+
+export default {
+    setup() {
+        console.log('App setup')
+        const loaded = ref(false)
+
+        onMounted(async () => {
+            await loadParams()
+            await loadConfig()
+            const params = useParamsStore()
+            const i18n = useI18nStore()
+            await i18n.setLanguage(params.locale.value, {load: false}) // false does not load any translation files but supports dates and number formatting
+            window.console.info('data loading finished')
+            loaded.value = true
+        })
+        return { loaded }
+    }
+}
+```
+
+
+### Date
+
+```javascript
+import { formatDate } from '@pitcher/vue-sdk'
+const a = new Date()
+formatDate(a, true) // local format date with year (false for day and month only)
+```
+
+### Numbers
+
+#### Decimals
+format a value with minimum and maximum fraction digits:
+
+```javascript
+import { formatDecimal } from '@pitcher/vue-sdk'
+formatDecimal(123.456 , 2, 0) // 123.46
+formatDecimal(100 , 2, 1) // 100.0
+formatDecimal(100 , 2, 0) // 100
+```  
+
+#### Percent
+format a percent value with minimum and maximum fraction digits:
+     
+ ```javascript
+ import { formatPercent } from '@pitcher/vue-sdk'
+ formatPercent(123.456 , 2, 0) // 123.46 %
+ formatPercent(100 , 2, 1) // 100.0 %
+ formatPercent(100 , 2, 0) // 100 %
+ ```  
+
+#### Currency
+format a number value into a localized currency:
+     
+ ```javascript
+ import { formatCurrency } from '@pitcher/vue-sdk'
+ formatCurrency(123.456 , "EUR") // € 123.46 
+ formatCurrency(100000, "CHF") // sFr. 10'0000.00
+
+ ```  
+
+
+### Translations
+
+
+#### Workflow
+
+1. mark strings for translation
+2. collect strings with `npm run config-gettext-extract`
+3. edit .po files
+4. transform .po file to json with `npm run config-gettext-compile`
+
+
+#### Installation
+
+in your main.js
+
+```javascript
+import { TranslationPlugin } from '@pitcher/vue-sdk'
+
+Vue.use(TranslationPlugin)
+```
+
+In your App.vue call `await setLanguage('en_US', true)` to load the file `translations/en_US.json` that is in the public folder
+
+```javascript
+import { loadParams, loadConfig, useParamsStore, setLanguage } from '@pitcher/vue-sdk'
+
+export default {
+    setup() {
+        console.log('App setup')
+        const loaded = ref(false)
+
+        onMounted(async () => {
+            await loadParams()
+            await loadConfig()
+            const params = useParamsStore()
+            const i18n = useI18nStore()
+            await i18n.setLanguage(params.locale.value, true)
+            window.console.info('data loading finished')
+            loaded.value = true
+        })
+        return { loaded }
+    }
+}
+
+```
+
+#### Marking strings for translation
+
+There are 3 new global functions available `$gettext` and the short version of it `$t` for single and `$ngettext` fur plural translations
+
+```html
+<div>{{ $gettext('some text to be translated') }}</div>
+```
+
+or 
+
+```html
+<div>{{ $t('some text to be translated') }}</div>
+```
+
+or 
+
+```html
+<div>{{ $t('Good morning {username}.', {'username':user.username}) }}</div>
+```
+
+
+And for plurals:
+
+```html
+<div>{{ $ngettext('i have { num } tickets for {user}', num, {num, user}) }}</div>
+```
+In javascript:
+```javascript
+ const b = ref($gettext('translate this'))
+```
+or
+```javascript
+ const b = ref($t('translate this'))
+```
+
+
+#### String collection and translation
+
+After all strings have been marked like this we will need to collect all this marked strings.
+
+```
+npm run config-gettext-extract
+```
+
+This will collect all `$t` `$gettext` and `$ngettext` strings marked as such and write
+them into the `locale` folder into `.po` files. Po files can be edited with a tool such as PoEdit.
+
+> :warning: **By default all strings will be auto translated with google translate. But all strings will be marked "fuzzy".**
+This means you should check them and remove the "fuzzy" label or in PoEdit remove the "needs work".
+
+After the translations have been done another run of `npm run config-gettext-compile` will transform the .po file
+into json files in the `public/translations` folder.
+
+#### Adding more languages
+
+If you want to add more language to the process edit the Makefile and add further language codes to
+the LOCALES variable
+
+
