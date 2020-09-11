@@ -106,7 +106,7 @@ export default {
         },
         size: {
             type: String,
-            validator: val => validateSize(val, 'Dropdown.vue')
+            validator: val => validateSize(val, 'Calendar.vue')
         }
     },
     emits: ['input', 'onBeforeChange', 'onShow', 'onVisible', 'onHide', 'onHidden', 'onSelect'],
