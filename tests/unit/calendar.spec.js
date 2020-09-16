@@ -1,44 +1,61 @@
-import CompositionApi from '@vue/composition-api'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import Calendar from '../../src/components/Calendar'
-import { TranslationPlugin } from '../../src'
+import CompositionApi from '@vue/composition-api'
+import Calendar from '@/components/Calendar'
+import { TranslationPlugin } from '@/'
+
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
 localVue.use(TranslationPlugin)
+
+const dateValue = '2002-01-15T12:00:00.000+0000'
+const minDate = '2002-01-17T12:00:00.000+0000'
+
 describe('Calendar.vue', () => {
     const wrapper = shallowMount(Calendar, {
         localVue,
         propsData: {
-            value: '2002-01-15',
+            value: '',
             type: 'date'
         }
     })
 
     // Helper function
-    async function updateValue(value) {
+    async function updateValue(key, value) {
         wrapper.setProps({
-            value
+            [key]: value
         })
         await wrapper.vm.$nextTick()
     }
 
-    // Tests
-    it('calendar test', async () => {
-        expect(wrapper.find('input').element.value).toBe('2002-01-15')
-        await updateValue('2020-01-15')
-        expect(wrapper.find('input').element.value).toBe('2020-01-15')
-
-        expect(wrapper.text()).toBe(
-            'January 2020SMTWTFS2930311234567891011121314151617181920212223242526272829303112345678Today'
-        )
-        wrapper.find('input').trigger('click')
-        await wrapper.vm.$nextTick()
-        wrapper.find('.ui.popup.calendar')
-        expect(wrapper.find('td.active + td.link').text()).toBe('16')
-        wrapper.find('td.active + td.link').trigger('click')
-        /*await wrapper.vm.$nextTick()
-        await wrapper.vm.$nextTick()
-        expect(wrapper.find('input').element.value).toBe('2020-01-16')
-        expect(wrapper.emitted().input).toStrictEqual([[false], [true]])*/
+    it('DataTable mounts properly', async () => {
+        expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.value)
+        expect(wrapper.find('input').element.placeholder).toBe(wrapper.vm.$props.defaultText)
+        expect(wrapper.find('td.today').exists()).toBe(true)
     })
+
+    it('Setting value externally & input formatting works', async () => {
+        await updateValue('value', dateValue)
+
+        expect(wrapper.vm.$props.value).toBe(dateValue)
+        expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.inputFormatter(dateValue))
+        expect(wrapper.find('td.active').text()).toBe('15')
+    })
+
+    it('Setting minDate after the currentDate is not changing input value', async () => {
+        await updateValue('minDate', minDate)
+
+        expect(wrapper.vm.$props.value).toBe(dateValue)
+        expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.inputFormatter(dateValue))
+
+        // revert mindate
+        await updateValue('minDate', undefined)
+    })
+
+    it('Calendar menu is showing & emitting', async () => {
+        wrapper.find('input').trigger('click')
+        expect(wrapper.emitted().onShow).toBeTruthy()
+    })
+
+    // Fomantic Calendar does not work when simulating click
+    // When simulating a calendar date click, it does not fire the click event
 })
