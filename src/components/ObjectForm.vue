@@ -384,9 +384,8 @@ export default {
                     }
                 }
                 for (const field of state.fields) {
-                    state.obj[field.name] = ref(null)
-                    if (props.obj) {
-                        state.obj[field.name].value = props.obj[field.name]
+                    if (props.value) {
+                        state.obj = props.value
                     }
                 }
             }
@@ -440,12 +439,7 @@ export default {
                 const data = await contextQuery(q, { id: props.id })
                 name.value = data.Name
                 state.loadedObj = data[0]
-                for (const field of state.fields) {
-                    if (field.nameField) {
-                        name.value = data[0][field.name]
-                    }
-                    state.obj[field.name].value = data[0][field.name]
-                }
+                state.obj = data[0]
             }
         )
 
