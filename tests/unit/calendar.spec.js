@@ -30,7 +30,6 @@ describe('Calendar.vue', () => {
     it('DataTable mounts properly', async () => {
         expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.value)
         expect(wrapper.find('input').element.placeholder).toBe(wrapper.vm.$props.defaultText)
-        expect(wrapper.find('td.today').exists()).toBe(true)
     })
 
     it('Setting value externally & input formatting works', async () => {
@@ -54,6 +53,7 @@ describe('Calendar.vue', () => {
     it('Calendar menu is showing & emitting', async () => {
         wrapper.find('input').trigger('click')
         expect(wrapper.emitted().onShow).toBeTruthy()
+        expect(wrapper.find('.today').exists()).toBe(true)
     })
 
     // Fomantic Calendar does not work when simulating click
