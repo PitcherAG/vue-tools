@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.4.4
+
+### Breaking changes
+- Calendar.vue prop change `setting` => `settings`
+
+### Changed / Fixed
+- Calendar.vue
+  - no required booleans in formfield
+  - most of fomantic settings ported to native props
+  - minDate is not overriding currentValue anymore
+  - updating calendar props are observable now, changes applied to the component
+  - unit tests & docs updated
+
+
+## 1.4.3
+
+### Changed / Fixed
+- ObjectFormField.vue
+  - no required booleans in formfield
+- FileCard.vue
+  - Card image url fix for iOS
+  - Additional prop: hideFavorite, to be able to hide/show favorite icon
+  - Additional prop: favoriteIcon, for custom favorite icon
+  - Additional slot: keywords, to replace content of keywords container
+  - Additional slot: new, to replace content of new label
+
 ## 1.4.2
 
 ### Fixed
