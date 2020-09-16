@@ -76,6 +76,7 @@
             v-bind="field.settings"
             @input="v => emitInput(v)"
         />
+        <small v-if="field.inlineHelpText" class="helper">{{ field.inlineHelpText }}</small>
     </sui-form-field>
     <!-- not updateable -->
     <sui-form-field v-else :style="{ minHeight: !value ? '60px' : undefined }">
