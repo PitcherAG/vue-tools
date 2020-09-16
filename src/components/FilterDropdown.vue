@@ -480,6 +480,7 @@ export default {
         .item {
             font-size: 1rem !important;
             white-space: pre-wrap;
+            overflow-x: hidden;
 
             label:hover {
                 cursor: pointer;
