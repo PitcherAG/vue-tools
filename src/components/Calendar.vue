@@ -106,7 +106,7 @@ export default {
         },
         size: {
             type: String,
-            validator: val => validateSize(val, 'Dropdown.vue')
+            validator: val => validateSize(val, 'Calendar.vue')
         }
     },
     emits: ['input', 'onBeforeChange', 'onShow', 'onVisible', 'onHide', 'onHidden', 'onSelect'],
@@ -128,11 +128,28 @@ export default {
             }
         }))
 
+        const parseDate = (dateString) => {
+            if (!dateString) return undefined
+
+            if (typeof dateString === 'Date') {
+                return dateString
+            }
+
+            const regex = /\+\d{4}/g
+            let date = dateString
+
+            if (date.match(regex)) {
+                date = date.replace(regex, '')
+            }
+
+            return new Date(date)
+        }
+
         const initCalendar = () => {
             const settings = {
                 type: props.type,
-                minDate: new Date(formatDate(props.minDate)),
-                maxDate: new Date(formatDate(props.maxDate)),
+                minDate: parseDate(props.minDate),
+                maxDate: parseDate(props.maxDate),
                 initialDate: props.value,
                 startMode: props.startMode,
                 today: props.showToday,
@@ -225,7 +242,9 @@ export default {
         }
 
         onMounted(() => {
-            initCalendar()
+            setTimeout(() => {
+                initCalendar()
+            })
         })
 
         // props watch list for re-initializing calendar

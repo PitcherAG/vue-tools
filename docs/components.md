@@ -883,7 +883,7 @@ Fomantic Modal component
 #### Available props
 | prop | type | required | default | description |
 | :--- | :--- | :--- | :--- | :--- |
-| `v-model` | `Boolean` | yes | - | true/false to show modal
+| `v-model` | `any` | yes | - | data to show modal, undefined/null hides, anydata inside shows the modal
 | `title` | `String` | no | undefined | Modal header title
 | `title-icon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
 | `approve-text` | `String` | no | undefined | Text for Approve button
