@@ -8,22 +8,32 @@
 <script src="https://ui.pitcher.com/libs/semantic/2.8.3/semantic.min.js"></script>
 <style>
   #docs-root .sbdocs-preview {
-  overflow: visible;
-}
+    overflow: visible;
+  }
 
-#docs-root .sbdocs-preview > div:first-child > div:first-child {
-  overflow: visible;
-}
+  #docs-root .sbdocs-preview > div:first-child > div:first-child {
+    overflow: visible;
+  }
 
-#docs-root .sbdocs-preview > div:first-child > div:first-child > div:first-child {
-  transform: none;
-}
+  #docs-root .sbdocs-preview > div:first-child > div:first-child > div:first-child {
+    transform: none;
+  }
 
-.sbdocs-preview, /* for the preview wrapper */
-.sbdocs-preview > div > div { /* for another wrapper within the preview div */
-  overflow: visible;
-}
-.sbdocs-preview > div { /* for another wrapper within the preview div */
-  overflow: visible;
-}
+  .sbdocs-preview, /* for the preview wrapper */
+  .sbdocs-preview > div > div { /* for another wrapper within the preview div */
+    overflow: visible;
+  }
+  .sbdocs-preview > div { /* for another wrapper within the preview div */
+    overflow: visible;
+  }
+
+  body {
+    background-color: transparent;
+  }
+
+  #root {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
 </style>

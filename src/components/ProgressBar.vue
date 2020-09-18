@@ -64,7 +64,9 @@ export default {
         },
         settings: {
             type: Object,
-            default: () => {}
+            default: () => {
+                return {}
+            }
         },
         attached: {
             type: String,
@@ -158,6 +160,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .ui.progress.pitcher-progress {
+    width: 100%;
     &:first-child {
         margin-bottom: 0;
     }
