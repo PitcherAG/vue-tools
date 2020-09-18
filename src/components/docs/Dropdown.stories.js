@@ -1,4 +1,4 @@
-import Dropdown from './Dropdown.vue'
+import Dropdown from '../Dropdown'
 import { options } from './data.dropdown'
 
 
@@ -12,12 +12,16 @@ export default {
                 type: 'select',
                 options: ['primary', 'inverted']
             }
-        }
+        },
+        value: { control: { disable: true } },
+        itemText: { control: { disable: true } },
+        itemValue: { control: { disable: true } },
+        action: { control: { disable: true } }
     },
     args: {
-      items: options
+        items: options
     }
-};
+}
 
 const Template = (args, { argTypes }) => ({
     props: Object.keys(argTypes),
@@ -27,7 +31,7 @@ const Template = (args, { argTypes }) => ({
 
 export const Primary = Template.bind({})
 Primary.args = {
-  value: {}
+    value: {}
 }
 
 export const Small = Template.bind({})
@@ -45,7 +49,12 @@ Compact.args = {
     compact: true
 }
 
+export const Multiselect = Template.bind({})
+Multiselect.args = {
+    multiple: true
+}
+
 export const Inverted = Template.bind({})
 Inverted.args = {
-    color: "inverted"
+    color: 'inverted'
 }
