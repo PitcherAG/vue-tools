@@ -70,11 +70,11 @@
             <!-- Default actions -->
             <div v-else class="a-container mb-4">
                 <a href="#" @click="selectAll">
-                    <span class="ui text" :class="{ [color]: !!color }">Select all</span>
+                    <span class="ui text" :class="{ [color]: !!color }">{{ $gettext('Select all') }}</span>
                 </a>
                 <span class="ui large grey text mx-2">|</span>
                 <a href="#" @click="reset">
-                    <span class="ui text" :class="{ [color]: !!color }">Reset</span>
+                    <span class="ui text" :class="{ [color]: !!color }">{{ $gettext('Reset') }}</span>
                 </a>
             </div>
 
@@ -173,7 +173,9 @@ export default {
         },
         noDataText: {
             type: String,
-            default: 'No results'
+            default: () => {
+                $gettext('No results')
+            }
         },
         width: {
             type: [String, Number]
