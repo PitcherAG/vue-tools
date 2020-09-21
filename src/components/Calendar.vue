@@ -33,7 +33,9 @@ export default {
         },
         defaultText: {
             type: String,
-            default: 'Date/Time'
+            default: () => {
+                $gettext('Date/Time')
+            }
         },
         showAmPm: {
             type: Boolean,
