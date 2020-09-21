@@ -11,7 +11,7 @@
     "scripts": {
         "build": "rimraf ./dist && babel src -d dist",
         "config-gettext-extract": "node src/gettext/extract-cli.js",
-        "config-gettext-translate": "GOOGLE_APPLICATION_CREDENTIALS=google.json npx config-gettext-translate node src/gettext/translate-cli.js",
+        "config-gettext-translate": "GOOGLE_APPLICATION_CREDENTIALS=google.json node src/gettext/translate-cli.js",
         "demo": "vue-cli-service serve --port 5000 --public http://localhost:5000/demo --open",
         "lint": "vue-cli-service lint",
         "npm link": "npm link",
