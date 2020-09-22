@@ -220,3 +220,23 @@ msgstr "Pilih semua"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "Jadual tidak mempunyai data untuk ditunjukkan"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Muat turun"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Baru"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Cari"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Berkongsi"

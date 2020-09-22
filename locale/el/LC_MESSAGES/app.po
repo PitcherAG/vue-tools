@@ -220,3 +220,23 @@ msgstr "Επιλογή όλων"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "Ο πίνακας δεν έχει δεδομένα για εμφάνιση"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Κατεβάστε"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Νέος"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Μερίδιο"

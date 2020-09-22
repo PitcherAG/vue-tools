@@ -220,3 +220,23 @@ msgstr "Მონიშნე ყველა"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "ცხრილს არა აქვს მონაცემები აჩვენოს"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "გადმოწერა"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "ახალი"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "ძებნა"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "გაზიარება"

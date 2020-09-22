@@ -220,3 +220,23 @@ msgstr "Selectează tot"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "Tabelul nu are date de afișat"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Descarca"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Nou"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Căutare"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Acțiune"
