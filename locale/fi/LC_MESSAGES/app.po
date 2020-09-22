@@ -220,3 +220,23 @@ msgstr "Valitse kaikki"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "Taulukossa ei ole näytettäviä tietoja"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "ladata"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Uusi"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Hae"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Jaa"

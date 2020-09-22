@@ -218,3 +218,23 @@ msgstr "すべて選択"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "表に表示するデータがありません"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "ダウンロード"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "新着"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "探す"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "共有"

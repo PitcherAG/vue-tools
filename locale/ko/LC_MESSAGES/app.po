@@ -218,3 +218,23 @@ msgstr "모두 선택"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "표에 표시 할 데이터가 없습니다."
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "다운로드"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "새로운"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "검색"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "공유"

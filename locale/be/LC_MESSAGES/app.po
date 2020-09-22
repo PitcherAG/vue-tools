@@ -220,3 +220,23 @@ msgstr "Абраць усё"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "У табліцы няма дадзеных для паказу"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Спампаваць"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Новы"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Пошук"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Падзяліцеся"
