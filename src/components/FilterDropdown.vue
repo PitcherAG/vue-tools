@@ -81,7 +81,7 @@
             <!-- Search container -->
             <div v-if="!hideSearch" class="s-container mb-4">
                 <div class="ui fluid icon small input">
-                    <input v-model="searchKey" type="text" placeholder="Search" />
+                    <input v-model="searchKey" type="text" :placeholder="$gettext('Search')" />
                     <i v-if="searchKey" class="times thin icon link" @click="searchKey = ''" />
                 </div>
                 <!-- No data text -->

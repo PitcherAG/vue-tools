@@ -8,11 +8,6 @@ msgstr ""
 
 #: src/components/Calendar.vue
 #, fuzzy
-msgid "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
-msgstr "'S', 'M', 'T', 'W', 'T', 'F', 'S'"
-
-#: src/components/Calendar.vue
-#, fuzzy
 msgid "AM"
 msgstr "AM"
 
@@ -198,3 +193,33 @@ msgstr "Heute"
 #, fuzzy
 msgid "You can not add an object of this type."
 msgstr "Sie können kein Objekt dieses Typs hinzufügen."
+
+#: src/components/ProgressBar.vue
+#, fuzzy
+msgid "completed"
+msgstr "abgeschlossen"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "No results"
+msgstr "Keine Ergebnisse"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S."
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Select all"
+msgstr "Wählen Sie Alle"
+
+#: src/components/DataTable/DataTable.vue
+#, fuzzy
+msgid "Table has not any data to show"
+msgstr "Die Tabelle enthält keine anzuzeigenden Daten"
