@@ -221,3 +221,23 @@ msgstr "Выбрать все"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "В таблице нет данных для отображения"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Скачать"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Новый"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Поиск"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "доля"

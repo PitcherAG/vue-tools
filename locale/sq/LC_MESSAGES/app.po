@@ -220,3 +220,23 @@ msgstr "Selektoj të gjitha"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "Tabela nuk ka asnjë të dhënë për të treguar"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Shkarko"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "I ri"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Kërko"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Ndani"

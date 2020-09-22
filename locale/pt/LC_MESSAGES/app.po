@@ -220,3 +220,23 @@ msgstr "Selecionar tudo"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "A tabela não tem dados para mostrar"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Baixar"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Novo"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Procurar"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Compartilhar"

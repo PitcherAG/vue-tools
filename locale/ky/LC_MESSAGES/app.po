@@ -220,3 +220,23 @@ msgstr "Баарын тандаңыз"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "Таблицада көрсөтө турган маалыматтар жок"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Жүктөө"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Жаңы"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Издөө"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Бөлүшүү"

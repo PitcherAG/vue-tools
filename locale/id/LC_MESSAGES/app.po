@@ -222,3 +222,23 @@ msgstr "Pilih Semua"
 #, fuzzy
 msgid "Table has not any data to show"
 msgstr "Tabel tidak memiliki data untuk ditampilkan"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Unduh"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Baru"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Cari"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Bagikan"
