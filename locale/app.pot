@@ -46,6 +46,10 @@ msgstr ""
 msgid "December"
 msgstr ""
 
+#: src/components/FileCard/FileCard.vue
+msgid "Download"
+msgstr ""
+
 #: src/components/Calendar.vue
 msgid "Feb"
 msgstr ""
@@ -90,6 +94,10 @@ msgstr ""
 msgid "May"
 msgstr ""
 
+#: src/components/FileCard/FileCard.vue
+msgid "New"
+msgstr ""
+
 #: src/components/FilterDropdown.vue
 msgid "No results"
 msgstr ""
@@ -130,6 +138,10 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+#: src/components/FilterDropdown.vue
+msgid "Search"
+msgstr ""
+
 #: src/components/Dropdown.vue
 #: src/components/ObjectFormField.vue
 msgid "Select"
@@ -149,6 +161,10 @@ msgstr ""
 
 #: src/components/Calendar.vue
 msgid "September"
+msgstr ""
+
+#: src/components/FileCard/FileCard.vue
+msgid "Share"
 msgstr ""
 
 #: src/components/DataTable/DataTable.vue
