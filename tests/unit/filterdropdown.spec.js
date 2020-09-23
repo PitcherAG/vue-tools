@@ -1,9 +1,11 @@
 import CompositionApi from '@vue/composition-api'
 import { mount, createLocalVue } from '@vue/test-utils'
 import FilterDropdown from '@/components/FilterDropdown'
+import { TranslationPlugin } from '@/'
 
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
+localVue.use(TranslationPlugin)
 
 describe('FilterDropdown.vue', () => {
     const items = [
