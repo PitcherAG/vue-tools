@@ -1,9 +1,11 @@
 import CompositionApi from '@vue/composition-api'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ProgressBar from '@/components/ProgressBar'
+import { TranslationPlugin } from '@/'
 
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
+localVue.use(TranslationPlugin)
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms))
