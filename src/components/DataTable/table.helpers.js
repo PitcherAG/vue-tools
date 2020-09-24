@@ -1,12 +1,16 @@
 import orderBy from 'lodash/orderBy'
+import { renderContext } from '../../utils'
 
 export function mapper(key, obj) {
     if (!key) {
         return null
     }
-
+    // map template
+    if (key.includes('{{')) {
+        return renderContext(key, obj)
+    }
     // map dotted objects
-    if (key.includes('.')) {
+    else if (key.includes('.')) {
         return key.split('.').reduce((o, i) => o[i], obj)
     }
     // map simple key
