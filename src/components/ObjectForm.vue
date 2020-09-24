@@ -31,6 +31,7 @@
                 :value-label="toLabel(state.obj, field.name)"
                 :field="field"
                 :show-error="state.showErrors"
+                :hide-help-text="hideHelpText"
                 @input="emitUpdate"
                 @fieldChange="v => $emit('fieldChange', v)"
             />
@@ -49,6 +50,7 @@
                                 :value-label="toLabel(state.obj, comp.value)"
                                 :field="comp.field"
                                 :show-error="state.showErrors"
+                                :hide-help-text="hideHelpText"
                                 :label="item.label"
                                 @input="emitUpdate"
                             />
@@ -94,6 +96,10 @@ export default {
         customSettings: {
             type: Object,
             default: () => {}
+        },
+        hideHelpText: {
+            type: Boolean,
+            default: false
         },
         hasSave: {
             type: Boolean
