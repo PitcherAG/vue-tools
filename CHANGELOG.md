@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.4.7
+
+- data table support {{}} syntax for fields
+- object form support help text and disabling of them
+- currency format support different formats
+- calendar translation fixes
+- translation fixes
+
+## 1.4.6
+
+- include i18n files 
+
 ## 1.4.5
 
 ### Changed / Fixed
