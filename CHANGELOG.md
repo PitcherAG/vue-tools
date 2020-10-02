@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased]
+### Changed
+- import {createStore} from `../store` in i18n
+
 ## 1.4.7
 
 - data table support {{}} syntax for fields
