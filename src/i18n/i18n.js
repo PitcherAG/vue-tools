@@ -2,7 +2,7 @@ import Component from './component'
 import Directive from './directive'
 import { getTranslationIndex } from './plurals'
 import { renderSimpleContext } from '../utils'
-import { createStore } from '..'
+import { createStore } from '../store'
 
 if (!window.fetch) {
     import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch')
