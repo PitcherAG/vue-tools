@@ -24,13 +24,13 @@ Be sure you have something like this in your public/index.html header:
 <script src="http://localhost:8098"></script>
 ```
 
-- open safari
-- connect safari debugger to webview
+- open Safari
+- connect Safari debugger to webview
 
 
 This will no open the version you `build` and the `devtools` should be able to pick up your components tree.
 
-Warning: You still need to refresh (command R from Safari debugger) to reload new versions
+> Warning: You still need to refresh (command+R from Safari debugger) to reload new versions
 
 To find the local DB for debug run this:
 
@@ -38,4 +38,4 @@ To find the local DB for debug run this:
 find ~/Library/Developer/CoreSimulator/Devices -name pitcher.sql
 ```
 
-Open this file with a SQLLite editor.
+Open this file with a SQLite editor.
