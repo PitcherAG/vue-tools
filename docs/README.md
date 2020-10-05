@@ -1,6 +1,6 @@
-# Pitcher VUE.JS SDK
+# Pitcher Vue.js SDK
 
-This is the pitcher vue sdk. The goal is to provide a frameworks to speed up vue development and 
+This is the Pitcher Vue.js DK. The goal is to provide a framework to speed up Vue development and 
 to provide reusable code building blocks and best practices.
 
 Please open a pull request if you want to change something
