@@ -3,7 +3,7 @@
 
 ### search
 
-Searches thru your data array with specified options. The search function uses fuse.js so you could use fuse options to define your search settings.
+Searches through your data array with specified options. The search function uses [Fuse.js](https://fusejs.io/) so you could use fuse options to define your search settings.
 
 
 ```javascript
@@ -56,7 +56,7 @@ const results = search(data, searchFor, searchFields, options)
 }]
 */
 
-// If you want to get default search result of fuse.js
+// If you want to get the default search result of fuse.js
 const results = search(data, searchFor, searchFields, options, true)
 ```
 
@@ -104,7 +104,7 @@ console.log(result) // Say: Hello and then World
 
 ### contextExec
 
-#### ATTENTION: these function are considered unsafe. Be sure that you know what you are doing and that the input is validated.
+#### ATTENTION: these functions are considered unsafe. Be sure that you know what you are doing and that the input is validated.
 
 executes a question template in a give context and returns a Boolean
 
