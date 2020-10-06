@@ -1,6 +1,5 @@
 import FileCard from '../FileCard/FileCard'
 
-
 export default {
     title: 'Components/FileCard',
     component: FileCard,
