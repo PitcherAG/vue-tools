@@ -2,7 +2,7 @@
 ## Deployment
 
 1. Get the file id from admin (example: 720440)
-2. open package.json and add to scripts:
+2. Open package.json and add to scripts:
 ```json
  "deploy": "npm run build; cd dist; kudu push -f HERECOMESMYFILEID;echo 'deployed'",
 ```

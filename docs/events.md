@@ -1,8 +1,8 @@
 
 ## Ti.App.fireEvent
 
-fireEvent replaces Ti.App.fireEvent in an asynchronous way. You will not need to provide any call backs anymore as this will 
-be handled internally and unique call backs will be generated. This also eliminates bugs where 2 events fire for the same callback
+fireEvent replaces Ti.App.fireEvent in an asynchronous way. You will not need to provide any callbacks anymore as this will 
+be handled internally and unique callbacks will be generated. This also eliminates bugs where 2 events fire for the same callback
 function.
 
 Example:

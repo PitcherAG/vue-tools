@@ -4,7 +4,7 @@ State
 In Components
 ---
 
-If you need state in a component we advise to use the following
+If you need state in a component it is advisable to use the following
 
 ```javascript
     import { reactive } from '@vue/composition-api'
@@ -17,8 +17,8 @@ If you need state in a component we advise to use the following
 Cross Component State
 ---
 
-If you need access to data from multiple components we advise to 
-use the sdk store.
+If you need access to data from multiple components it is advisable to 
+use the SDK store.
 
 Example:
 ```javascript
@@ -44,7 +44,7 @@ Class Store
 ---
 
 We now support class based stores. Getters will be automatically converted
-to a vue computed.
+to a Vue computed.
 
 If a function starts with `on_` it will be converted to a watcher.
 
