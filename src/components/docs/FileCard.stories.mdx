@@ -23,57 +23,45 @@ import FileCard from '../FileCard/FileCard'
 
 Description and useful things to know for the component go here...
 
-<Story
-    name="standard"
-    args={{ body: 'Standard' }}
->
-    {Standard.bind({})}
-</Story>
+<!-- Preview withToolbar adds the toolbar section which includes the Show code button -->
+<Preview withToolbar>
+    <Story 
+        name="standard"
+        args={{ body: 'Standard' }}
+        parameters={{
+            docs: { 
+                source: { 
+                    code: 'Some custom code here...'
+                }    
+            }
+        }}
+    >
+        {Template.bind({})}
+    </Story>
+</Preview>
 
 
 ### Sizes
 
 Some variations of the component might go here...
 
-<Story
-    name="sizes"
-    args={{ body: 'Sizes' }}
->
-    {Sizes.bind({})}
+<Story name="sizes" args={{ body: 'Sizes' }}>
+    {Template.bind({})}
 </Story>
-
-### Playground
-
-Experiment with this story with the Controls addon in the Canvas tab.
-
-<Canvas>
-    <Story
-        name="controls"
-        args={{ fileOptionsItems: [] }}
-        >
-        {Controls.bind({})}
-    </Story>
-</Canvas>
 
 ### Arguments table
 
 <ArgsTable of={FileCard} />
 
-<!-- Stories named exports here -->
-export const Standard = (args, { argTypes }) => ({
+<!-- Named exports of stories here -->
+export const Template = (args, { argTypes }) => ({
     props: Object.keys(argTypes),
     components: { FileCard },
     template: '<FileCard v-bind="$props" />'
 })
 
-export const Sizes = (args, { argTypes }) => ({
-    props: Object.keys(argTypes),
-    components: { FileCard },
-    template: '<FileCard v-bind="$props" />'
-})
+### Code examples
 
-export const Controls = (args, { argTypes }) => ({
-    props: Object.keys(argTypes),
-    components: { FileCard },
-    template: '<FileCard v-bind="$props" />'
-})
+```html
+<FileCard v-bind="$props" />
+```
