@@ -19,11 +19,11 @@ query('select * from tbl_event_v1').then(e => window.console.log(e))
 ### ContextQuery
 
 Context query uses template syntax and enriches the query function dramatically. 
-As prerequisite it needs `loadConfig()` and `loadParams()` run before calling it the first time.
+As a prerequisite it needs both `loadConfig()` and `loadParams()` to be executed before calling it the first time.
 
 As a result contextQuery has knowledge about the current environment and provides you with:
 
-- It knows the names of all the table names. `{{ sfdcObjectName }}` will be replaced withe the tablename
+- It knows the names of all the table names. `{{ sfdcObjectName }}` will be replaced with the tablename
 - It provides the following objects:
     - `account`
     - `user`
@@ -32,12 +32,10 @@ As a result contextQuery has knowledge about the current environment and provide
   example: `{{ account.Id }}`
 - It provides you with today: `TODAY`
 - You can provide extra context via parameters
-- you can execute javascript and function from the context
+- you can execute JavaScript and function from the context
 
 
 ```javascript
-
-
   contextQuery("SELECT * from {{ Account }} \
                 WHERE Id='{{ account.id }} AND \    
                 ModifiedDate < TODAY AND Name='{{ Name }}'", { Name:'ABCDEF1234' })
@@ -47,12 +45,10 @@ As a result contextQuery has knowledge about the current environment and provide
 
   contextQuery("SELECT AccountId__c='{{ account.id }}{% if account.isVIP %} AND \  
                 IsVIP=TRUE{% endif %}", {ids:[1,2,3] })
-  
-
 ```
 
-You can either reference API names of salesforce objects or normal names.
-It's a good idea to call `loadConfig()` and `lodParams()` in your `App.vue onMounted()` function first before using contextQuery
+You can either reference API names of Salesforce objects or normal names.
+It's a good idea to call `loadConfig()` and `loadParams()` in your `App.vue onMounted()` function first before using contextQuery
 
 
 ### sfdcSchema

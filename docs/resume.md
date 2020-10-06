@@ -21,14 +21,12 @@ Usage Example
 ---
 
 ```javascript
-
 function getId() {
     const store = useParamsStore()
     return 'myApp_' + store.state.account.Id
 }
 
 export function save() {
-
     const store = useMyStore()
     const data = {myData:store.state.myData }
     console.info('save', data)
