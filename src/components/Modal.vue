@@ -50,7 +50,6 @@ import { parsePxStyle, validateSize } from './mixins'
 export default defineComponent({
     props: {
         value: {
-            type: Boolean,
             required: true
         },
         title: String,

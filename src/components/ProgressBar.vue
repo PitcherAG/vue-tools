@@ -16,7 +16,7 @@
                 <slot name="label" :percent="percent" :value="value" :total="total" />
             </template>
             <!-- default label -->
-            <template v-else>{{ percent }}% completed</template>
+            <template v-else>{{ percent }}% {{ $gettext('completed') }}</template>
         </div>
     </div>
 </template>
@@ -64,9 +64,7 @@ export default {
         },
         settings: {
             type: Object,
-            default: () => {
-                return {}
-            }
+            default: () => {}
         },
         attached: {
             type: String,
@@ -160,7 +158,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .ui.progress.pitcher-progress {
-    width: 100%;
     &:first-child {
         margin-bottom: 0;
     }
