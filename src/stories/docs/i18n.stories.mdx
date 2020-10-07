@@ -2,10 +2,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Documentation/Internationalization and translations" />
 
+# i18n Internationalization
 
-## i18n Internationalization
-
-### Configuration
+## Configuration
 Create the file `gettext.config.js` in the root directory of your project and define languages and translations.
 ```javascript
 module.exports = {
@@ -64,7 +63,7 @@ module.exports = {
 
 ```
 
-#### Properties
+## Properties
 
 *Property* | *Description*
 --- | ---
@@ -73,40 +72,40 @@ translations | Array of translations
 output.po (optional, default: `locale`) | Output directory for `.po` files
 output.json (optional, default: `public/translations`) | Output directory for `.json` files 
 
-#### Required Translation Properties
+### Required Translation Properties
 
 *Property* | *Value* | *Description*
 --- | --- | ---
 category | string | The category is used as filename `{category}.pot` and `{category}.json` 
 type | source, package | Parse messages from your source code or add messages provided by a package
 
-#### Optional Source Translation Properties
+### Optional Source Translation Properties
 
 *Property* | *Value* | *Default* | *Description*
 --- | --- | --- | ---
 patterns | array | `['src/**/*.js', 'src/**/*.vue', 'src/**/*.html']` | [Glob](https://www.npmjs.com/package/glob) patterns to match files
 
-#### Optional Package Translation Properties
+### Optional Package Translation Properties
 
 *Property* | *Value* | *Default* | *Description*
 --- | --- | --- | ---
 packageCategory | string | `undefined` | Define if the category named is different in your project and package
 
-### Scripts
+## Scripts
 
-#### Extract Messages
+### Extract Messages
 Run `npm run config-gettext-extract` to extract messages from your source code.
 
-#### Translate Messages
+### Translate Messages
 Add the `google.json` from our [vue-project-template](https://github.com/PitcherAG/vue-project-template/) to the root of your project and run `npm run config-gettext-translate` to translate the messages to the configured languages.
 
-#### Compile Messages
+### Compile Messages
 Run `npm run config-gettext-compile` to compile your translations from `.po` to `.json`.
 
 
-### Installation
+## Installation
  
-#### Environmental Variables
+### Environmental Variables
 Add the following lines to you `vue.config.json` to access the configured languages in your vue project.
 
 ```javascript
@@ -115,7 +114,7 @@ const languages = require('./gettext.config').languages
 process.env.VUE_APP_LANGUAGES = JSON.stringify(languages)
 ```
 
-#### Translation Plugin
+### Translation Plugin
 If you use translations put this in your main.js
 
 ```javascript
@@ -150,7 +149,7 @@ export default {
 ```
 
 
-### Date
+## Date
 
 ```javascript
 import { formatDate } from '@pitcher/vue-sdk'
@@ -158,9 +157,9 @@ const a = new Date()
 formatDate(a, true) // local format date with year (false for day and month only)
 ```
 
-### Numbers
+## Numbers
 
-#### Decimals
+### Decimals
 format a value with minimum and maximum fraction digits:
 
 ```javascript
@@ -170,7 +169,7 @@ formatDecimal(100 , 2, 1) // 100.0
 formatDecimal(100 , 2, 0) // 100
 ```  
 
-#### Percent
+### Percent
 format a percent value with minimum and maximum fraction digits:
      
  ```javascript
@@ -180,7 +179,7 @@ format a percent value with minimum and maximum fraction digits:
  formatPercent(100 , 2, 0) // 100 %
  ```  
 
-#### Currency
+### Currency
 format a number value into a localized currency:
      
  ```javascript
@@ -191,10 +190,10 @@ format a number value into a localized currency:
  ```  
 
 
-### Translations
+## Translations
 
 
-#### Workflow
+### Workflow
 
 1. Mark strings for translation
 2. Collect strings with `npm run config-gettext-extract`
@@ -202,7 +201,7 @@ format a number value into a localized currency:
 4. Transform `.po` files to `json` with `npm run config-gettext-compile`
 
 
-#### Installation
+### Installation
 
 in your `main.js`
 
@@ -237,7 +236,7 @@ export default {
 
 ```
 
-#### Marking strings for translation
+### Marking strings for translation
 
 There are 3 new global functions available `$gettext` and the short version of it `$t` for single and `$ngettext` fur plural translations
 
@@ -269,7 +268,7 @@ or
 ```
 
 
-#### String collection and translation
+### String collection and translation
 
 After all strings have been marked like this we will need to collect all this marked strings.
 
@@ -280,13 +279,13 @@ npm run config-gettext-extract
 This will collect all `$t` `$gettext` and `$ngettext` strings marked as such and write
 them into the `locale` folder into `.po` files. `.po` files can be edited with a tool such as [PoEdit](https://poedit.net/).
 
-> :warning: **By default all strings will be auto translated with google translate. But all strings will be marked "fuzzy".**
+> WARNING: **By default all strings will be auto translated with google translate. But all strings will be marked "fuzzy".**  
 This means you should check them and remove the "fuzzy" label or in PoEdit remove the "needs work".
 
 After the translations have been done another run of `npm run config-gettext-compile` will transform the `.po` file
 into json files in the `public/translations` folder.
 
-#### Adding more languages
+### Adding more languages
 
 If you want to add more language to the process edit the Makefile and add further language codes to
 the `LOCALES` variable

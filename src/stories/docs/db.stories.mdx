@@ -2,9 +2,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Documentation/DB Queries" />
 
-## DB Queries
+# DB Queries
 
-### Query
+## Query
 Queries the local database, handles error handling and will convert results into objects.
 
 Example:
@@ -15,7 +15,7 @@ query('select * from tbl_event_v1').then(e => window.console.log(e))
 ```
 
 
-### contextQuery
+## contextQuery
 
 `contextQuery` uses a template syntax and enriches the query function dramatically. 
 As a prerequisite it needs both `loadConfig()` and `loadParams()` to be executed before calling it the first time.
@@ -50,14 +50,14 @@ You can either reference API names of Salesforce objects or normal names.
 It's a good idea to call `loadConfig()` and `loadParams()` in your `App.vue onMounted()` function first before using `contextQuery`
 
 
-### sfdcSchema
+## sfdcSchema
 
 > Needs docs
 
-### sfdcLayout
+## sfdcLayout
 
 > Needs docs
 
-### sfdcField
+## sfdcField
 
 > Needs docs
