@@ -6,7 +6,6 @@ import FileCard from '@/components/FileCard/FileCard'
 <!-- https://storybook.js.org/docs/react/writing-stories/args -->
 export const args = {
     body: 'very long name of the file',
-    category: 'presentation',
     imgUrl: 'https://btocpitcher.s3.amazonaws.com/thumbs/249549_1509373331.png',
     keywords: '',
     date: new Date().toDateString(),
@@ -89,8 +88,7 @@ export const Template = (args, { argTypes }) => {
 />
 
 # FileCard
-
-## Custom Card component for files
+Custom Card component for files
 
 <Story 
     name="standard"
