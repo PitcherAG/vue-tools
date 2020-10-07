@@ -5,7 +5,8 @@ import ProgressBar from '@/components/ProgressBar'
 <!-- Story args -->
 <!-- https://storybook.js.org/docs/react/writing-stories/args -->
 export const args = {
-    value: 50
+    value: 50,
+    settings: {}
 }
 
 <!-- https://storybook.js.org/docs/react/api/argtypes -->
@@ -63,11 +64,10 @@ export const argTypes = {
 
 <!-- Named exports of stories here -->
 export const Template = (args, { argTypes }) => {
-    console.log(Object.keys(argTypes));
     return {
         props: Object.keys(argTypes),
         components: { ProgressBar },
-        template: '<ProgressBar v-bind="$props" />'
+        template: '<div style="width: 500px; margin-bottom: 30px;"><ProgressBar v-bind="$props" /></div>'
     }
 } 
 

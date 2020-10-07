@@ -7,7 +7,9 @@ const currencyDict = {
     'U.S. Dollar': 'USD'
 }
 
-export function formatCurrency(value, currency) {
+const currencyDisplayTypes = ['symbol', 'name', 'code']
+
+export function formatCurrency(value, currency, currencyDisplay = 'symbol') {
     const store = useI18nStore()
     if (!currency) {
         const params = useParamsStore()
@@ -25,7 +27,10 @@ export function formatCurrency(value, currency) {
     if (minus) {
         value *= -1
     }
-    let result = new Intl.NumberFormat(locale, { style: 'currency', currency }).format(value)
+    if (currencyDisplayTypes.indexOf(currencyDisplay) === -1) {
+        throw `Provided currency display type is invalid. Possible values are: ${currencyDisplayTypes.join(', ')}`
+    }
+    let result = new Intl.NumberFormat(locale, { style: 'currency', currency, currencyDisplay }).format(value)
     if (minus) {
         // IE11 bullshit
         result = '-' + result

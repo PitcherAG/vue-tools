@@ -73,7 +73,9 @@ export default {
         },
         defaultText: {
             type: String,
-            default: 'Select'
+            default: () => {
+                $gettext('Select')
+            }
         },
         action: {
             type: String,
