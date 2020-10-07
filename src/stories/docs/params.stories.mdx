@@ -2,10 +2,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Documentation/Initialization" />
 
-# Initialization (getParameters & loadServerJSON)
 
 ## getParameters
-To get parameters from Impact, you **MUST** to use ```loadParams()``` in the start point of your application. When you use ```loadParams()``` function, the SDK injects ```window.getParameters``` function for Impact to be able to call the function and inject ```params```. 
+To get parameters from Impact, you **MUST** use ```loadParams()``` in the entry point of your application. When you use ```loadParams()``` function, the SDK injects ```window.getParameters``` function for Impact to be able to call the function and inject ```params```. 
 
 After calling ```loadParams()```, we can use the ```useParamsStore()``` function anywhere in the application. The best part with the ```useParamsStore()``` is that it is **reactive**, which means that if you mutate anything inside the store, it will be updated anywhere else.
 
@@ -54,7 +53,7 @@ export default {
  
 
 ## serverJSON
-To get serverJSON from Pitcher Connect, you **MUST** to use ```loadServerJSON()``` in the start point of your application. When you use ```loadServerJSON()``` function, the SDK injects ```window.setMainNav```,  ```window.gotJSON```,  ```window.loadPresentations```  and  ```window.showUI``` functions for Connect to be able to work.
+To get serverJSON from Pitcher Connect, you **MUST** use ```loadServerJSON()``` in the entry point of your application. When you use ```loadServerJSON()``` function, the SDK injects ```window.setMainNav```,  ```window.gotJSON```,  ```window.loadPresentations```  and  ```window.showUI``` functions for Connect to be able to work.
 
 After calling ```loadServerJSON()```, we can use ```useServerJSONStore()``` function anywhere in the application. As it is a store, the data inside is reactive.
  
