@@ -2,11 +2,11 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Documentation/Save & Resume" />
 
-# Save & Resume of state
+Save & Resume of state
+==
 
+SaveLocal
 ---
-
-## SaveLocal
 
 To save something locally in the db:
 
@@ -25,14 +25,12 @@ Usage Example
 ---
 
 ```javascript
-
 function getId() {
     const store = useParamsStore()
     return 'myApp_' + store.state.account.Id
 }
 
 export function save() {
-
     const store = useMyStore()
     const data = {myData:store.state.myData }
     console.info('save', data)
