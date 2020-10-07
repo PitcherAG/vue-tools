@@ -2,19 +2,50 @@ import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
 
 import FileCard from '../FileCard/FileCard'
 
+<!-- Story args -->
+<!-- https://storybook.js.org/docs/react/writing-stories/args -->
+export const args = {
+    body: 'very long name of the file',
+    category: 'presentation',
+    imgUrl: 'https://btocpitcher.s3.amazonaws.com/thumbs/249549_1509373331.png',
+    keywords: '',
+    date: new Date().toDateString(),
+    isNew: true,
+    isFavorite: false
+}
+
+<!-- Story parameters -->
+<!-- https://storybook.js.org/docs/react/writing-stories/parameters -->
+export const parameters = {
+    docs: { 
+        source: { 
+            code: 'Some custom code here...'
+        }    
+    }
+}
+
+<!-- https://storybook.js.org/docs/react/api/argtypes -->
+export const argTypes = {
+    body: {
+        type: { name: 'string', required: true },
+        description: 'This is a custom description for the body, you can use `markdown` here'
+    }
+}
+
+<!-- Named exports of stories here -->
+export const Template = (args, { argTypes }) => ({
+    props: Object.keys(argTypes),
+    components: { FileCard },
+    template: '<FileCard v-bind="$props" />'
+})
+
+
+<!-- Define story settings here -->
 <Meta 
     title="Components/FileCard"
     component={FileCard}
-    argTypes={{}}
-    args={{
-        body: 'very long name of the file',
-        category: 'presentation',
-        imgUrl: 'https://btocpitcher.s3.amazonaws.com/thumbs/249549_1509373331.png',
-        keywords: '',
-        date: new Date().toDateString(),
-        isNew: true,
-        isFavorite: false                
-    }}
+    argTypes={argTypes}
+    args={args}
 />
 
 # FileCard
@@ -28,13 +59,7 @@ Description and useful things to know for the component go here...
     <Story 
         name="standard"
         args={{ body: 'Standard' }}
-        parameters={{
-            docs: { 
-                source: { 
-                    code: 'Some custom code here...'
-                }    
-            }
-        }}
+        parameters={parameters}
     >
         {Template.bind({})}
     </Story>
@@ -51,17 +76,12 @@ Some variations of the component might go here...
 
 ### Arguments table
 
-<ArgsTable of={FileCard} />
-
-<!-- Named exports of stories here -->
-export const Template = (args, { argTypes }) => ({
-    props: Object.keys(argTypes),
-    components: { FileCard },
-    template: '<FileCard v-bind="$props" />'
-})
+<!-- https://storybook.js.org/docs/react/writing-docs/doc-blocks#customizing -->
+<ArgsTable story="standard" />
 
 ### Code examples
 
+<!-- Check if we can use include here -->
 ```html
 <FileCard v-bind="$props" />
 ```
