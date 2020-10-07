@@ -217,7 +217,11 @@ export default defineComponent({
         },
         searchOptions: {
             type: Object,
-            default: () => ({ threshold: 0.15, distance: 1000, useExtendedSearch: true })
+            default: () => ({
+                threshold: 0.15,
+                distance: 1000,
+                useExtendedSearch: true
+            })
         },
         trClass: {
             type: [String, Function],
@@ -232,7 +236,9 @@ export default defineComponent({
         },
         noDataText: {
             type: String,
-            default: 'Table has not any data to show'
+            default: () => {
+                $gettext('Table has not any data to show')
+            }
         },
         noHeader: {
             type: Boolean,

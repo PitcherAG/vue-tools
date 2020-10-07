@@ -1,5 +1,5 @@
 <template>
-    <tr v-bind="trAttr">
+    <tr v-bind="trAttr" @click="emit('click')">
         <!-- If row slot exist, override with a slot -->
         <template v-if="hasRowSlot">
             <slot name="row" />
