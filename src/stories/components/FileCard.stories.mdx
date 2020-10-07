@@ -5,7 +5,7 @@ import FileCard from '@/components/FileCard/FileCard'
 <!-- Story args -->
 <!-- https://storybook.js.org/docs/react/writing-stories/args -->
 export const args = {
-    body: 'very long name of the file',
+    body: 'A very long name might be here',
     imgUrl: 'https://btocpitcher.s3.amazonaws.com/thumbs/249549_1509373331.png',
     keywords: '',
     date: new Date().toDateString(),
@@ -90,16 +90,13 @@ export const Template = (args, { argTypes }) => {
 # FileCard
 Custom Card component for files
 
-<Story 
-    name="standard"
-    args={{ body: 'Standard' }}
->
+<Story name="Default">
     {Template.bind({})}
 </Story>
 
 ### Available props and slots
 <!-- https://storybook.js.org/docs/react/writing-docs/doc-blocks#customizing -->
-<ArgsTable story="standard" />
+<ArgsTable story="Default" />
 
 ### Available events
 | event | description |
