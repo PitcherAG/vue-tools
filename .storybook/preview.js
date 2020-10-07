@@ -11,7 +11,31 @@ export const parameters = {
   },
   options: {
     storySort: {
-      order: ['Welcome', 'Documentation', 'How Tos', 'Components'],
+      order: [
+        'Welcome',
+        'How Tos',
+        [
+          'How to debug',
+          'How to start a new project',
+          'How to deploy',
+          'How to change these docs'
+        ],
+        'Documentation',
+        [
+          'SDK Installation',
+          'Initialization',
+          'Events and Ti.App',
+          'State',
+          'DB Queries',
+          'Save & Resume',
+          'Config',
+          'Files',
+          'Internationalization and translations',
+          'Utils',
+          'Mixins'
+        ],
+        'Components'
+      ],
     }
   }
 }
