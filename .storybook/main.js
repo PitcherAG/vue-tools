@@ -16,9 +16,7 @@ module.exports = {
       include: path.resolve(__dirname, '../'),
     });
 
-    config.resolve.alias = {
-      "@": path.resolve(__dirname, "..", "src")
-    }
+    config.resolve.alias['@'] = path.resolve(__dirname, "..", "src")
   
     return config;
   }
