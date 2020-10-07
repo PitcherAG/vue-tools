@@ -18,7 +18,7 @@
     "npm publish": "npm publish",
     "test:unit": "cross-env NODE_ICU_DATA=node_modules/full-icu vue-cli-service test:unit",
     "yarn link": "yarn link",
-    "storybook": "start-storybook -s ./assets -p 6006",
+    "storybook": "start-storybook -s ./src/stories/assets -p 6006",
     "build-storybook": "build-storybook"
   },
   "main": "src",
