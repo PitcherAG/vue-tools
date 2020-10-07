@@ -102,11 +102,16 @@ export const argTypes = {
 
 <!-- Named exports of stories here -->
 export const Template = (args, { argTypes }) => {
-    console.log(args);
     return {
         props: {
             value: {
                 default: '2020-08-21T11:00:00.000'
+            },
+            disabled: {
+                default: false
+            },
+            loading: {
+                default: false
             }
         },
         components: { Calendar },
@@ -129,6 +134,90 @@ Fomantic Calendar
     {Template.bind({})}
 </Story>
 
+## Disabled
+<Story name="Disabled" args={{ disabled: true }}>
+    {Template.bind({})}
+</Story>
+
+## Loading
+<Story name="Loading" args={{ loading: true }}>
+    {Template.bind({})}
+</Story>
+
 ### Available props and slots
 <!-- https://storybook.js.org/docs/react/writing-docs/doc-blocks#customizing -->
 <ArgsTable story="Default" />
+
+### Available events
+| event | description |
+| :--- | :--- |
+| `@input` | default v-model input event
+| `@onBeforeChange` | fired before the input is changed
+| `@onShow` | fired before calendar popup is shown
+| `@onVisible` | fired when calendar popup is visible
+| `@onHide` | fired before calendar popup is hidden
+| `@onHidden` | fired when calendar popup is hidden
+| `@onSelect` | fired when user clicks on a date/time from popup
+
+### Definitions
+```javascript
+// default value formatter before emitted to parent
+valueFormatter: function(date) {
+    // if date includes time, returns formats value as ISO
+    if (this.type.includes('time')) {
+        return date.toISOString()
+    }
+
+    // otherwise formats as date time
+    const yyyy = date.getFullYear().toString()
+    const mm = (date.getMonth() + 1).toString()
+    const dd = date.getDate().toString()
+    return `${yyyy}-${mm[1] ? mm : '0' + mm[0]}-${dd[1] ? dd : '0' + dd[0]}`
+}
+
+// default input formatter before value changed in input
+// Uses SDK's internal date formatter
+inputFormatter: date => formatDate(date)
+```
+
+### Usage
+```javascript
+import { Calendar } from '@pitcher/vue-sdk'
+
+// must be reactive
+const selectedDate = '2020-08-01T11:00:00.000'
+
+// specific eventDates
+const eventDates = [
+    {
+        date: new Date(), // today
+        message: 'National Day',
+        class: 'red'
+    },
+    ...
+    ...
+]
+// disabledDates
+const disabledDates = [
+    {
+        date: new Date(), // today
+        message: 'Not selectable',
+    },
+    ...
+    ...
+]
+```
+
+```html
+<!-- Simple usage -->
+<Calendar v-model="selectedDate" />
+
+<!-- Using fluid, fixed input width, smaller input size -->
+<Calendar v-model="selectedDate" fluid size="small" max-width="300px" />
+ 
+<!-- Using with event dates -->
+<Calendar v-model="selectedDate" :event-dates="eventDates" />
+
+<!-- Using with disabled dates -->
+<Calendar v-model="selectedDate" :disabled-dates="disabledDates" />
+```
