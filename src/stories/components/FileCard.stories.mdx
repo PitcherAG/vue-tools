@@ -1,6 +1,6 @@
 import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
 
-import FileCard from '../../components/FileCard/FileCard'
+import FileCard from '@/components/FileCard/FileCard'
 
 <!-- Story args -->
 <!-- https://storybook.js.org/docs/react/writing-stories/args -->
@@ -11,7 +11,8 @@ export const args = {
     keywords: '',
     date: new Date().toDateString(),
     isNew: true,
-    isFavorite: false
+    isFavorite: false,
+    fileOptionsItems: []
 }
 
 <!-- Story parameters -->
