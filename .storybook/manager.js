@@ -11,5 +11,5 @@ addons.setConfig({
     brandTitle: 'PITCHER',
     brandUrl: 'http://www.pitcher.com'
   }),
-  showRoots: false,
+  showRoots: true,
 });

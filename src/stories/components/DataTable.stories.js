@@ -1,4 +1,4 @@
-import DataTable from '../DataTable/DataTable.vue'
+import DataTable from '../../components/DataTable/DataTable.vue'
 import { data, fields } from './data.table'
 
 export default {

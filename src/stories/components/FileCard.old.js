@@ -1,4 +1,4 @@
-import FileCard from '../FileCard/FileCard'
+import FileCard from '../../components/FileCard/FileCard'
 
 export default {
     title: 'Components/FileCard',
