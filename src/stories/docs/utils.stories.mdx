@@ -2,9 +2,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Documentation/Utils" />
 
-## Utils
+# Utils
 
-### search
+## search
 
 Searches through your data array with specified options. The search function uses [Fuse.js](https://fusejs.io/) so you could use fuse options to define your search settings.
 
@@ -64,9 +64,10 @@ const results = search(data, searchFor, searchFields, options, true)
 ```
 
 
-### link
+## link
 
-opens an other interactive via a 'pitcher link', Example:
+Opens an other interactive via a 'pitcher link'  
+Example:
 
 `pitcher://keyword/?myParam=5&otherParam={{ a.count}}`
 
@@ -89,7 +90,7 @@ This would open a file with fileID: `12345`
 ```
 
 
-### renderContext
+## renderContext
 
 renders a template in a given context
 
@@ -105,9 +106,9 @@ console.log(result) // Say: Hello and then World
 
 
 
-### contextExec
+## contextExec
 
-#### ATTENTION: these functions are considered unsafe. Be sure that you know what you are doing and that the input is validated.
+> WARNING: **the following functions are considered unsafe. Be sure that you know what you are doing and that the input is validated.**
 
 executes a question template in a give context and returns a Boolean
 

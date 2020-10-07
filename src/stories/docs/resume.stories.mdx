@@ -2,11 +2,9 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Documentation/Save & Resume" />
 
-Save & Resume of state
-==
+# Save & Resume of state
 
-SaveLocal
----
+## SaveLocal
 
 To save something locally in the db:
 
@@ -21,8 +19,7 @@ To load the same data when the app resumes:
 const data = await loadLocal('myId')
 ```
 
-Usage Example
----
+## Usage Example
 
 ```javascript
 function getId() {
@@ -44,7 +41,7 @@ export async function resume(){
 }
 ```
 
-In your App.vue:
+In your `App.vue`:
 
 ```javascript
 setup() {

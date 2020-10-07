@@ -2,13 +2,14 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Documentation/Initialization" />
 
+# Initialization
 
 ## getParameters
 To get parameters from Impact, you **MUST** use ```loadParams()``` in the entry point of your application. When you use ```loadParams()``` function, the SDK injects ```window.getParameters``` function for Impact to be able to call the function and inject ```params```. 
 
 After calling ```loadParams()```, we can use the ```useParamsStore()``` function anywhere in the application. The best part with the ```useParamsStore()``` is that it is **reactive**, which means that if you mutate anything inside the store, it will be updated anywhere else.
 
-#### Example - usage with useParamsStore()
+### Example - usage with useParamsStore()
  
 *App.vue*
  ```javascript
@@ -29,7 +30,7 @@ export default {
     }
 ```
  
-#### Example - usage with useParams()
+### Example - usage with useParams()
 If you only need to use params, and you don't need the store, you can use ```useParams()``` to get ```params``` only.
  
 *App.vue*
@@ -57,7 +58,7 @@ To get serverJSON from Pitcher Connect, you **MUST** use ```loadServerJSON()``` 
 
 After calling ```loadServerJSON()```, we can use ```useServerJSONStore()``` function anywhere in the application. As it is a store, the data inside is reactive.
  
-#### Example - usage with useServerJSONStore()
+### Example - usage with useServerJSONStore()
  
 *App.vue*
  ```javascript
@@ -79,7 +80,7 @@ export default {
     }
 ```
  
-#### Example - usage with useServerJSON()
+### Example - usage with useServerJSON()
 If you only need to use the data inside ```serverJSON```, and you don't need the store, you can use ```useServerJSON()``` to get ```serverJSON``` only.
  
 *App.vue*
