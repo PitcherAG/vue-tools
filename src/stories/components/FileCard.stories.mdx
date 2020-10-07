@@ -15,31 +15,70 @@ export const args = {
     fileOptionsItems: []
 }
 
-<!-- Story parameters -->
-<!-- https://storybook.js.org/docs/react/writing-stories/parameters -->
-export const parameters = {
-    docs: { 
-        source: { 
-            code: 'Some custom code here...'
-        }    
-    }
-}
-
 <!-- https://storybook.js.org/docs/react/api/argtypes -->
 export const argTypes = {
     body: {
-        type: { name: 'string', required: true },
-        description: 'This is a custom description for the body, you can use `markdown` here'
+        description: 'file name'
+    },
+    imgUrl: {
+        description: 'file image url to show in card'
+    },	
+    date: {
+        description: 'file publish date'
+    },
+    'keywords': {
+        description: 'file keywords'
+    },
+    isFavorite: {
+        description: 'control behavior of favorite icon'
+    },	
+    isNew: {
+        description: 'control behavior of new label, shows/hides new label'
+    },	
+    favoriteIcon: {
+        description: 'icon to toggle file as favorite'
+    },	
+    hideFavorite: {
+        description: 'hides favorite icon'
+    },	
+    showFileOptions: {
+        description: 'shows-hides file options button'
+    },	
+    newText: {
+        description: 'text inside `New` label, can be used for translation'
+    },	
+    downloadText: {
+        description: 'text inside file options dropdown, can be used for translation'
+    },	
+    shareText: {
+        description: 'text inside file options dropdown, can be used for translation'
+    },	
+    height: {
+        description: 'height of the card, content height is calculated percentually thru this'
+    },
+    fileOptionsItems: {
+        description: 'object array for file options items, to see default definition of this array check the definitions'
+    },
+    /* Slots */
+    items: {
+        description: 'slot to replace file options menu items. As long is this is a dropdown menu, you must to follow dropdown menu items structure. Check usage example to see how it\'s used.'
+    },
+    new: {
+        description: 'slot to replace file new badge'
+    },
+    keywords: {
+        description: 'slot to replace file keywords container, at the bottom of the file card. Here keywords can be show in a different style, only some keywords can be shown etc.'
     }
 }
 
 <!-- Named exports of stories here -->
-export const Template = (args, { argTypes }) => ({
-    props: Object.keys(argTypes),
-    components: { FileCard },
-    template: '<FileCard v-bind="$props" />'
-})
-
+export const Template = (args, { argTypes }) => {
+    return {
+        props: Object.keys(argTypes),
+        components: { FileCard },
+        template: '<FileCard v-bind="$props" />'
+    }
+} 
 
 <!-- Define story settings here -->
 <Meta 
@@ -53,32 +92,12 @@ export const Template = (args, { argTypes }) => ({
 
 ## Custom Card component for files
 
-Description and useful things to know for the component go here...
-
-<!-- Preview withToolbar adds the toolbar section which includes the Show code button -->
-<Preview withToolbar>
-    <Story 
-        name="standard"
-        args={{ body: 'Standard' }}
-        parameters={parameters}
-    >
-        {Template.bind({})}
-    </Story>
-</Preview>
-
-
-### Sizes
-
-Some variations of the component might go here...
-
-<Story name="sizes" args={{ body: 'Sizes' }}>
+<Story 
+    name="standard"
+    args={{ body: 'Standard' }}
+>
     {Template.bind({})}
 </Story>
-
-### Arguments table
-
-<!-- https://storybook.js.org/docs/react/writing-docs/doc-blocks#customizing -->
-<ArgsTable story="standard" />
 
 ### Code examples
 
@@ -86,3 +105,8 @@ Some variations of the component might go here...
 ```html
 <FileCard v-bind="$props" />
 ```
+
+### Arguments table
+
+<!-- https://storybook.js.org/docs/react/writing-docs/doc-blocks#customizing -->
+<ArgsTable story="standard" />
