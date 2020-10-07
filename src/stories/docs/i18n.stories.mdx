@@ -2,7 +2,8 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="Documentation/Internationalization and translations" />
 
-# Internationalization and translations
+
+## i18n Internationalization
 
 ### Configuration
 Create the file `gettext.config.js` in the root directory of your project and define languages and translations.
@@ -124,7 +125,7 @@ Vue.use(TranslationPlugin, { availableLanguages: JSON.parse(process.env.VUE_APP_
 ```
 
 In your App.vue call `await setLanguage('en')` to load the file `translations/en/app.json` that is in the public folder.
-If you don't need translation but just the number and date formatting: await `setLanguage('en', {load: false})`
+If you don't need translations but just the number and date formatting: `await setLanguage('en', {load: false})`
 
 ```javascript
 import { loadParams, loadConfig, useParamsStore, setLanguage } from '@pitcher/vue-sdk'
@@ -195,15 +196,15 @@ format a number value into a localized currency:
 
 #### Workflow
 
-1. mark strings for translation
-2. collect strings with `npm run config-gettext-extract`
-3. edit .po files
-4. transform .po file to json with `npm run config-gettext-compile`
+1. Mark strings for translation
+2. Collect strings with `npm run config-gettext-extract`
+3. Edit `.po` files
+4. Transform `.po` files to `json` with `npm run config-gettext-compile`
 
 
 #### Installation
 
-in your main.js
+in your `main.js`
 
 ```javascript
 import { TranslationPlugin } from '@pitcher/vue-sdk'
@@ -211,7 +212,7 @@ import { TranslationPlugin } from '@pitcher/vue-sdk'
 Vue.use(TranslationPlugin)
 ```
 
-In your App.vue call `await setLanguage('en_US', true)` to load the file `translations/en_US.json` that is in the public folder
+In your `App.vue` call `await setLanguage('en_US', true)` to load the file `translations/en_US.json` that is in the public folder
 
 ```javascript
 import { loadParams, loadConfig, useParamsStore, setLanguage } from '@pitcher/vue-sdk'
@@ -243,15 +244,11 @@ There are 3 new global functions available `$gettext` and the short version of i
 ```html
 <div>{{ $gettext('some text to be translated') }}</div>
 ```
-
 or 
-
 ```html
 <div>{{ $t('some text to be translated') }}</div>
 ```
-
 or 
-
 ```html
 <div>{{ $t('Good morning {username}.', {'username':user.username}) }}</div>
 ```
@@ -281,17 +278,15 @@ npm run config-gettext-extract
 ```
 
 This will collect all `$t` `$gettext` and `$ngettext` strings marked as such and write
-them into the `locale` folder into `.po` files. Po files can be edited with a tool such as PoEdit.
+them into the `locale` folder into `.po` files. `.po` files can be edited with a tool such as [PoEdit](https://poedit.net/).
 
 > :warning: **By default all strings will be auto translated with google translate. But all strings will be marked "fuzzy".**
 This means you should check them and remove the "fuzzy" label or in PoEdit remove the "needs work".
 
-After the translations have been done another run of `npm run config-gettext-compile` will transform the .po file
+After the translations have been done another run of `npm run config-gettext-compile` will transform the `.po` file
 into json files in the `public/translations` folder.
 
 #### Adding more languages
 
 If you want to add more language to the process edit the Makefile and add further language codes to
-the LOCALES variable
-
-
+the `LOCALES` variable
