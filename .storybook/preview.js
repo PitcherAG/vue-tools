@@ -9,6 +9,11 @@ export const parameters = {
   docs: {
     theme: themes.dark,
   },
+  options: {
+    storySort: {
+      order: ['Welcome', 'Documentation', 'How Tos', 'Components'],
+    }
+  }
 }
 
 Vue.use(VueCompositionApi)

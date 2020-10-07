@@ -1,4 +1,4 @@
-import NumpadInput from '../NumpadInput'
+import NumpadInput from '../../components/NumpadInput'
 
 
 export default {

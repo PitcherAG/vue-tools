@@ -1,4 +1,4 @@
-import FilterDropdown from '../FilterDropdown'
+import FilterDropdown from '../../components/FilterDropdown'
 import { options } from './data.dropdown'
 
 
