@@ -1,16 +1,10 @@
 import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
 
-export const Template = (args) => '<div></div>'
-
 <!-- Define story settings here -->
 <Meta title="Components/ObjectForm" />
 
 # ObjectForm
 Displays a salesforce object as a form, uses layouts if available otherwise uses schemas. Layouts are supported by android at the moment only.
-
-<Story name="Default">
-    {Template.bind({})}
-</Story>
 
 ### Properties:
 - objectType(require: true, type: String)
