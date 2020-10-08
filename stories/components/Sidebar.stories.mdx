@@ -2,7 +2,13 @@ import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
 
 import SidebarExample from './examples/SidebarExample'
 
-<!-- Named exports of stories here -->
+export const Template = (args) => '<div></div>'
+
+<!-- 
+    Visual example of Sidebar breaks the Storybook UI 
+    because it wraps the site's root with additional divs
+-->
+<!--
 export const Template = (args, { argTypes }) => {
     return {
         props: Object.keys(argTypes),
@@ -10,6 +16,7 @@ export const Template = (args, { argTypes }) => {
         template: `<SidebarExample v-bind="$props" />`
     }
 }
+-->
 
 <!-- Define story settings here -->
 <Meta title="Components/Sidebar" />
