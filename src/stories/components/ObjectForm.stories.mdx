@@ -1,34 +1,9 @@
 import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
 
-export const DummyComponent = {
-    template: '<div></div>'
-}
-
-<!-- Story args -->
-<!-- https://storybook.js.org/docs/react/writing-stories/args -->
-export const args = {
-}
-
-<!-- https://storybook.js.org/docs/react/api/argtypes -->
-export const argTypes = {
-}
-
-<!-- Named exports of stories here -->
-export const Template = (args, { argTypes }) => {
-    return {
-        props: Object.keys(argTypes),
-        components: { DummyComponent },
-        template: ''
-    }
-} 
+export const Template = (args) => '<div></div>'
 
 <!-- Define story settings here -->
-<Meta 
-    title="Components/ObjectForm"
-    component={DummyComponent}
-    argTypes={argTypes}
-    args={args}
-/>
+<Meta title="Components/ObjectForm" />
 
 # ObjectForm
 Displays a salesforce object as a form, uses layouts if available otherwise uses schemas. Layouts are supported by android at the moment only.
