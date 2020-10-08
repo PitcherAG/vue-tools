@@ -1,0 +1,205 @@
+import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
+
+import FilterDropdown from '@/components/FilterDropdown'
+import { options } from './data/filter-dropdown.data'
+
+<!-- Story args -->
+<!-- https://storybook.js.org/docs/react/writing-stories/args -->
+export const args = {
+    value: [],
+    items: options,
+    noDataText: '',
+    title: 'Cities'
+}
+
+<!-- https://storybook.js.org/docs/react/api/argtypes -->
+export const argTypes = {
+    value: {
+        description: '`v-model` model to track of selected values'
+    },
+    title: {
+        description: 'title text that will be shown inside button by default when there is not any value selected'
+    },
+    items: {
+        description: 'object array for filter items.'
+    },
+    itemText: {
+        description: 'which property to map as text in your items declaration'
+    },
+    itemValue: {
+        description: 'which property to map as value in your items declaration'
+    },
+    returnType: {
+        description: 'which property of item object will be saved inside model. Saves `item.value` by default. You can use `object` if you want to store whole item object inside v-model'
+    },
+    icon: {
+        description: 'default icon for the button'
+    },
+    fluid: {
+        description: 'makes the component width fluid `100%` by adding fluid class to the container'
+    },
+    compact: {
+        description: 'makes the component compact thru adding compact class to the container. Width of dropdown increases/decreases when you select/unselect filters from the dropdown'
+    },
+    basic: {
+        description: 'adds basic class to the button (fomantic basic button styling)'
+    },
+    disabled: {
+        description: 'disables the component thru adding disabled class to the container'
+    },
+    inverted: {
+        description: 'adds inverted class to the button and some elements inside to invert colors'
+    },
+    hideSearch: {
+        description: 'hide/show search bar inside menu'
+    },
+    truncateText: {
+        description: 'text truncation when the container has multiple selections and no space left inside button.'
+    },
+    noDataText: {
+        description: 'text to show when there are no items or search results'
+    },
+    width: {
+        description: 'fixed width for dropdown button'
+    },
+    menuMinWidth: {
+        description: 'fixed width for filter menu 300px defualt'
+    },
+    scrollHeight: {
+        description: 'scroll height for menu, 250px by default'
+    },
+    color: {
+        description: 'sets the color of button and some elements inside. (check available colors at Fomantic)'
+    },
+    size: {
+        description: 'mini | tiny | small | medium | large | big | huge | massive'
+    },
+    /* Slots */
+    header: {
+        description: 'slot to replace `.h-container` | `{ closeMenu }`'
+    },
+    actions: {
+        description: 'actions slot to replace `.a-container` | `{ selectAll, reset }`'
+    },
+    'prepend-list': {
+        description: 'slot to prepend content before `.sub-menu`'
+    },
+    'append-list': {
+        description: 'slot to append content before `.sub-menu`'
+    }
+}
+
+<!-- Named exports of stories here -->
+export const Template = (args, { argTypes }) => {
+    // console.log(argTypes);
+    return {
+        props: Object.keys(argTypes),
+        components: { FilterDropdown },
+        template: '<FilterDropdown v-bind="$props" />'
+    }
+} 
+
+<!-- Define story settings here -->
+<Meta 
+    title="Components/FilterDropdown"
+    component={FilterDropdown}
+    argTypes={argTypes}
+    args={args}
+/>
+
+# FilterDropdown
+Fomantic FilterDropdown component
+
+<Story name="Default">
+    {Template.bind({})}
+</Story>
+
+## Disabled
+<Story name="Disabled" args={{ disabled: true }}>
+    {Template.bind({})}
+</Story>
+
+### Available props and slots
+<!-- https://storybook.js.org/docs/react/writing-docs/doc-blocks#customizing -->
+<ArgsTable story="Default" />
+
+### Available events
+| event | description |
+| :--- | :--- |
+| `@input` | default v-model input event
+
+
+### Definitions
+```javascript
+ // object array for items, here you define how your data will be presented in the FilterDropdown and what value they will have on selection. You can also simply use a String array.
+items: Item[] | String[]
+
+// a single item definition inside items array
+item: {
+    // The name of your filter item. This will be shown as the name in the menu. Also you can rename text to anything else. Let's say if you change text -> to name and set item-text="name" in your FilterDropdown properties, FilterDropdown will show name property as the text.
+    text: String,
+    // The value of your filter item that will be saved when you select. Same option as text applies to this property as well, combine with item-value property in FilterDropdown.
+    value: String,
+    // Type of the FilterDropdown item, default is 'item'
+    type: 'item | header | divider',
+    // Description for the item
+    description: String,
+    // to disable FilterDropdown item. NOTE: If you will change this later on the fly, you need to declare disable: false initially
+    disabled: Boolean
+}
+```
+
+### Usage
+```javascript
+import { FilterDropdown } from '@pitcher/vue-sdk'
+
+// data that will be presented in dropdown
+const items = [
+{
+    text: 'Cantons',
+    type: 'header'
+},
+{
+    text: 'Zürich',
+    value: 'zurich',
+    description: '10'
+},
+{
+    text: 'Bern',
+    value: 'bern',
+    disabled: true
+},
+{
+    type: 'divider'
+},
+{
+    text: 'Aargau',
+    value: 'aargau',
+},
+...
+...
+]
+
+// must be reactive
+const selectedFilter = ''
+```
+
+```html
+<!-- Simple usage -->
+<FilterDropdown title="Cities" v-model="selectedFilter" :items="items" />
+
+<!-- Using basic, fluid, fixed menu width, higher scroll-height, smaller -->
+<FilterDropdown title="Cities" v-model="selectedFilter" :items="items" basic fluid size="small" menu-width="500px" scroll-height="600px" />
+ 
+<!-- Using different return-type than default, different text property to map -->
+<FilterDropdown title="Cities" v-model="selectedFilter" :items="items" return-type="object" item-text="name" />
+ 
+<!-- Usage with slot -->
+<FilterDropdown title="Cities" v-model="selectedFilter" :items="items">
+    <template #actions="{ selectAll, reset }">
+        <button class="ui button" @click="selectAll">Select all</button>
+        <button class="ui button" @click="reset">Reset</button>
+    </template>
+</FilterDropdown>
+
+```
