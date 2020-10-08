@@ -11,8 +11,17 @@ export const args = {
 
 <!-- https://storybook.js.org/docs/react/api/argtypes -->
 export const argTypes = {
+    'v-model': {
+        description: 'input value',
+        type: { required: true },
+        table: {
+            type: { summary: 'string | number' }
+        }
+    },    
     value: {
-        description: '`v-model` input value'
+        table: { 
+            disable: true
+        },
     },
     lazy: {
         description: 'set v-model value on blur event. This is useful if you do calculations based on your v-model value after updating it'
