@@ -1,0 +1,385 @@
+import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
+
+import DataTable from '@/components/DataTable/DataTable'
+import { data, fields } from './data/datatable.data'
+
+<!-- Story args -->
+<!-- https://storybook.js.org/docs/react/writing-stories/args -->
+export const args = {
+    data: data,
+    fields: fields,
+    perPage: 5,
+    searchOptions: { threshold: 0.15, distance: 1000, useExtendedSearch: true },
+    noDataText: ''
+}
+
+<!-- https://storybook.js.org/docs/react/api/argtypes -->
+export const argTypes = {
+    data: {
+        description: 'object array to present data in table'
+    },
+    fields: {
+        description: 'object array for field options. Inside fields you define your table headings and the options for the column'
+    },
+    searchFor: {
+        description: 'search key for searching the table. This prop can be bound to an input outside of DataTable'
+    },
+    searchFields: {
+        description: 'string array to specify which object properties you want to search inside your data array'
+    },
+    groupBy: {
+        description: 'prop to group line items thru a property i.e. `item.brand` field would be the property to group line items thru.'
+    },
+    searchOptions: {
+        description: '`{ threshold: 0.15, useExtendedSearch: true, distance: 1000 }` | fuse.js search options, default threshold is 0.3 which shows matching results. If you need exact search results set this to 0. For details: https://fusejs.io/api/options.html'
+    },
+    trClass: {
+        description: 'prop to add class to `tr` of a line item. Can be string or function that sends line item as a parameter i.e. `:tr-class="item => item.valid && \'red\' "`'
+    },
+    width: {
+        description: 'table width'
+    },
+    maxWidth: {
+        description: 'table max-width'
+    },
+    noDataText: {
+        description: 'Table has not any data to show | text to show when your table has not any data to show'
+    },
+    noHeader: {
+        description: 'hide table header, by default table header is visible'
+    },
+    fixedHeader: {
+        description: 'make the table header fixed and table body scrollable'
+    },
+    initialPage: {
+        description: 'initial page for pagination'
+    },
+    perPage: {
+        description: 'how many line items per page to show in the table'
+    },
+    totalVisible: {
+        description: 'how many page numbers to show in your pagination'
+    },
+    paginationSize: {
+        description: 'tiny | small | medium | large | big | huge | massive'
+    },
+    alignPagination: {
+        description: 'right | left | center'
+    },
+    noPagination: {
+        description: 'to disable pagination in the table'
+    },
+    /* Slots */
+    'heading-row': {
+        description: 'Slot to overwrite the content of `thead > tr` | `{ filteredFields, sortData, sortTable, getClass(field) }`'
+    },
+    default: {
+        description: ''
+    },
+    'prepend-tbody': {
+        description: 'Slot to prepend `<tr>` in to the `tbody` | `{ mapper }`'
+    },
+    body: {
+        description: 'Slot to overwrite the content of `tbody` | `{ tableData, filteredFields, sortData, pagination }`'
+    },
+    row: {
+        description: 'Slot to overwrite the content of `tbody > tr` | `{ rowData, raw, sortData, filteredFields, mapper, pagination }`'
+    },
+    'append-tbody': {
+        description: 'Slot to append `<tr>` in to the `tbody` | `{ mapper }`'
+    },
+    't-foot': {
+        description: 'Slot to overwrite the content of `tfoot` | `{ tableData, sortData, pagination, paginate(n) }`'
+    },
+    'no-data-template': {
+        description: 'Slot to overwrite the content that shows when table has not any data | `{ noDataText }`'
+    }
+}
+
+<!-- Named exports of stories here -->
+export const Template = (args, { argTypes }) => {
+    // console.log(argTypes);
+    return {
+        props: Object.keys(argTypes),
+        components: { DataTable },
+        template: '<DataTable v-bind="$props" />'
+    }
+} 
+
+<!-- Define story settings here -->
+<Meta 
+    title="Components/DataTable"
+    component={DataTable}
+    argTypes={argTypes}
+    args={args}
+/>
+
+# DataTable
+Fomantic DataTable with pagination
+
+<Story name="Default">
+    {Template.bind({})}
+</Story>
+
+### Available props and slots
+<!-- https://storybook.js.org/docs/react/writing-docs/doc-blocks#customizing -->
+<ArgsTable story="Default" />
+
+## Available slots
+| slot | description | props
+| :--- | :--- | :--- | 
+| `FIELDTITLE__slot` | Dynamic slot to overwrite content of targeted field `thead > tr > th` | `{ field }`
+
+### Definitions
+```javascript
+ // object array for fields, here you define how your data will be presented in the table
+fields: Field[]
+
+// a single field definition inside fields array
+field: {
+    // column heading
+    title: String,
+    // which object property this heading is presenting inside the data object you send.
+    // supports deep object mapping like obj.nested.child
+    dataField: String,
+    // when you need to use a custom slot, you can define a slotName here to access in your template
+    // when using slotName property, dataField is not required. But if you still need to map the property
+    // of the object, you can still use dataField combined with slotName
+    slotName: String
+    // icon name to prepend to column title. use only icon name i.e. cog, times etc.
+    icon: String,
+    // class name to inject <th> element i.e. right aligned, collapsing etc.
+    thClass: String,
+    // class name to inject <td> element in each row
+    tdClass: String,
+    // to makes column sortable thru clicking the <th> element
+    sortable: Boolean,
+    // what type sorting logic should use when sorting the data
+    // default: string
+    sortType: 'string | number | date'
+    // enable tooltip for <th> element
+    tooltip: 'top left | top center | top right | bottom left | bottom center | bottom right | right center | left center',
+    // Custom text for tooltip. Uses title as text if not defined
+    tooltipText: String,
+    // property in your data that you don't want to show in your table i.e. ID etc.
+    hide: Boolean,
+    // sets width style to the <th> element, accepts only string
+    width: String
+    // function to handle the value before it is shown in the table
+    transform: Function(value, rootObject, fieldObject)
+}
+
+// array of fields that are filtered. Does not include fields with hide: true and slotName
+filteredFields: Field[]
+
+// function to map dotted fields from an object
+// ex: mapper('object.nested.field.title', object_that_includes_target_property)
+mapper: Function(key, obj)
+
+// data array that is currently shown in the table, according to pagination
+tableData: Object[]
+
+// single data object that belongs to the row when you are using in template #row.
+// it does not include properties you hide in your field definition
+rowData: Object
+
+// single field object that belongs to the row when you are using a dynamic defined with slotName.
+rowField: Object
+
+// single data object that that belongs to the row whenyou are using in template #row.
+// it includes all properties of the object either you hide or not in your field definition 
+raw: Object
+
+// if any column is sorted currently, this object includes the details
+sortData: { by: String, order: String }
+
+// contains current pagination data inside
+pagination: {
+    currentPage: Number,
+    totalPages: Number,
+    startPage: Number,
+    endPage: Number,
+    startIndex: Number,
+    endIndex: Number,
+    pages: Array
+}
+// function to control pagination, number is the page number you want to paginate to
+paginate: Function(number)
+// function to sort the table. Takes in a field object and checks dataField property for sorting
+sortTable: Function(field)
+// this function injects related classes to the <th> element, if it is sortable, sorted etc.
+// field is a single field object
+getClass: Function(field)
+```
+
+### Usage
+```javascript
+import { DataTable } from '@pitcher/vue-sdk'
+
+// data that will be presented in table
+const data = [{
+    id: '65c5e68ec',
+    username: 'pitcher user',
+    age: 30,
+    createdDate: 'Saturday, September 22, 2018 6:14 AM'
+},
+...
+...
+]
+
+// field definitions must to be defined for each object property you have in your data
+const fields = [
+{
+    title: 'Id',
+    dataField: 'id',
+    hide: true  // makes this field invisible in table
+},
+{
+    // Required
+    title: 'Username',          // name that will be shown in <th>
+    // Required (unless you use slotName: property)
+    dataField: 'username',      // property name inside data object
+    // these are optional
+    icon: 'user',               // icon to prepend in column header
+    width: '100px',             // column width
+    thClass: 'left aligned',    // class that will be injected to <th>
+    tdClass: 'collapsing',      // class that will be injected to <tr>
+    sortable: true,             // make column sortable
+    tooltip: 'top left'         // add tooltip to <th>
+},
+{
+    title: 'Age',
+    dataField: 'age',
+    sortable: true,
+    sortType: 'number'
+    // transform the value before showing
+    transform: (val, obj, field) => `${val} years old` 
+},
+{
+    title: 'Created date',
+    dataField: 'createdDate',
+    sortable: true,
+    sortType: 'date'
+},
+{
+    title: 'Actions'
+    // access in template with <template #actions>
+    slotName: 'actions'
+}]
+
+// must be reactive
+const searchFor = ''
+// if not defined, by default it searches thru all object properties
+const searchFields = ['name', 'age']
+// NOTE: You can also search nested object properties like ['user.name', 'user.age'] etc.
+```
+
+```html
+// Simple usage
+<DataTable :data="data" :fields="fields" :search-for="searchFor" />
+ 
+// Using fomantic classes & fixed header etc.
+<DataTable class="celled striped" :data="data" :fields="fields" :per-page="50" fixed-header />
+ 
+// Usage with slots, contains all slot examples
+<DataTable :data="data" :fields="fields">
+    <!-- Inject template to any TH slot. No need to define anything special just add a template #FIELDTITLE__slot -->
+    <template #Id__slot="{ field }">
+        <button class="ui button basic right aligned">
+            <i class="icon edit" />
+            Id
+        </button>
+    </template>
+
+    <!-- Inject template to heading-row  -->
+    <template #heading-row="{ filteredFields, sortData, sortTable, getClass }">
+        <th v-for="(f, fKey) in filteredFields" :key="fKey" @click="sortTable(f.dataField)" :class="getClass(f)">
+            <i v-if="f.icon" class="icon" :class="f.icon" />
+            {{ f.title }}
+        </th>
+    </template>
+
+    <!-- Prepend to tbody before data line items -->
+    <template #prepend-tbody="{ mapper }">
+        <tr>
+            <td colspan="2">Prepend Test</td>
+            <td>Test</td>
+            <td colspan="3" />
+            <td>test</td>
+        </tr>
+    </template>
+
+    <!-- Inject template to body -->
+    <template #body="{ tableData, filteredFields, mapper, pagination, sortData }">
+        <tr v-for="(row, rKey) in tableData" :key="rKey">
+            <td v-for="col in row" :key="c.title">
+                {{ col }}
+            </td>
+        </tr>
+        <tr v-for="row in tableData" :key="row.__rowID">
+            <template v-for="(f, fKey) in filteredFields">
+                <td v-if="!f.hide" :key="fKey" :class="f.tdClass">
+                    <!-- if this field is not a slot -->
+                    <template v-if="!f.slotName">
+                        <!-- Transform function, return mapped object, root object & field object -->
+                        {{
+                            f.transform
+                                ? f.transform(mapper(f.dataField, row), row, f)
+                                : mapper(f.dataField, row)
+                        }}
+                    </template>
+                </td>
+            </template>
+        </tr>
+    </template>
+
+    <!-- Append to tbody after data line items -->
+    <template #append-tbody="{ mapper }">
+        <tr>
+            <td colspan="2">Append test</td>
+            <td colspan="4">test</td>
+        </tr>
+    </template>
+
+    <!-- Inject template to each row  -->
+    <template #row="{ rowData, raw, sortData, pagination }">
+        <td v-for="(columnData, cKey) in rowData" :key="cKey">
+            {{ columnData }}
+        </td>
+        <td>
+            actions
+        </td>
+    </template>
+
+    <!-- Inject template to the slot you have dynamically defined in fields -> slotName -->
+    <template #actions="{ value, rowData, rowField, sortData }">
+        <button class="ui button basic right aligned" @click="doSomething(rowData)">
+            <i class="icon edit" />
+            Edit
+        </button>
+    </template>
+
+    <!-- Inject template inside tfoot element -->
+    <template #t-foot="{ pagination, paginate, tableData, sortData }">
+        <tr>
+            <th><Pagination :pagination="pagination" :paginate="paginate" /></th>
+            <th colspan="6">
+                <div class="ui right floated small primary labeled icon button">
+                    <i class="user icon" /> Add User
+                </div>
+                <div class="ui small  button">
+                    Approve
+                </div>
+                <div class="ui small  disabled button">
+                    Approve All
+                </div>
+            </th>
+        </tr>
+    </template>
+
+    <!-- Inject template  -->
+    <template #no-data-template>
+        <span class="ui text large grey center">Here comes my custom no data text and style</span>
+    </template>
+</DataTable>
+```
