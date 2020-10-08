@@ -8,8 +8,17 @@ export const args = {}
 
 <!-- https://storybook.js.org/docs/react/api/argtypes -->
 export const argTypes = {
+        'v-model': {
+            description: 'date value',
+            type: { required: true },
+            table: {
+                type: { summary: 'string | date' }
+            }
+        },
         value: {
-            description: 'date value'
+            table: { 
+                disable: true
+            },
         },
         type: {
             description: 'type of calendar'

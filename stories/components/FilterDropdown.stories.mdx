@@ -14,8 +14,17 @@ export const args = {
 
 <!-- https://storybook.js.org/docs/react/api/argtypes -->
 export const argTypes = {
+    'v-model': {
+        description: 'model to track selected value(s)',
+        type: { required: true },
+        table: {
+            type: { summary: 'string' }
+        }
+    },    
     value: {
-        description: '`v-model` model to track of selected values'
+        table: { 
+            disable: true
+        },
     },
     title: {
         description: 'title text that will be shown inside button by default when there is not any value selected'

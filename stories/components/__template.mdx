@@ -28,6 +28,21 @@ export const parameters = {
 <!-- https://storybook.js.org/docs/react/api/argtypes -->
 export const argTypes = {
     body: {
+        /* Add v-model description to the argsTable */
+        'v-model': {
+            description: 'v-model description here',
+            type: { required: true },
+            table: {
+                // defaultValue: { summary: false },
+                type: { summary: 'boolean' }
+            }
+        },
+        /* Disable an arg from appearing in the argsTable */
+        value: {
+            table: { 
+                disable: true
+            },
+        },        
         type: { name: 'string', required: true },
         description: 'This is a custom description for the body, you can use `markdown` here'
     }

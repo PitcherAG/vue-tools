@@ -10,8 +10,17 @@ export const args = {
 
 <!-- https://storybook.js.org/docs/react/api/argtypes -->
 export const argTypes = {
+    'v-model': {
+        description: 'model to track checkbox status',
+        type: { required: true },
+        table: {
+            type: { summary: 'boolean' }
+        }
+    },
     value: {
-        description: '`v-model` model to track checkbox status',
+        table: { 
+            disable: true
+        },
     },
     label: {
         description: 'checkbox label text'
