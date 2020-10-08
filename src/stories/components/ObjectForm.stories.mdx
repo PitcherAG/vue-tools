@@ -1,0 +1,52 @@
+import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
+
+export const DummyComponent = {
+    template: '<div></div>'
+}
+
+<!-- Story args -->
+<!-- https://storybook.js.org/docs/react/writing-stories/args -->
+export const args = {
+}
+
+<!-- https://storybook.js.org/docs/react/api/argtypes -->
+export const argTypes = {
+}
+
+<!-- Named exports of stories here -->
+export const Template = (args, { argTypes }) => {
+    return {
+        props: Object.keys(argTypes),
+        components: { DummyComponent },
+        template: ''
+    }
+} 
+
+<!-- Define story settings here -->
+<Meta 
+    title="Components/ObjectForm"
+    component={DummyComponent}
+    argTypes={argTypes}
+    args={args}
+/>
+
+# ObjectForm
+Displays a salesforce object as a form, uses layouts if available otherwise uses schemas. Layouts are supported by android at the moment only.
+
+<Story name="Default">
+    {Template.bind({})}
+</Story>
+
+### Properties:
+- objectType(require: true, type: String)
+- fields(type: Array, strings, which fields to display in the form, default displays all fields from schema)
+- excludeFields(type: Array, strings, which fields to exclude),
+- hasSave(type: Boolean, if save button is displayed or not)
+- id(type: String, id of existing object for form fill up)
+- recordType (type: String, record type to use for form)
+- obj(type: Object, object to use for form)
+- onSave(type: Function, callback on form save)
+
+### Methods:
+- save
+- clear

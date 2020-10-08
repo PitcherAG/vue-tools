@@ -1,0 +1,38 @@
+import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
+
+export const DummyComponent = {
+    template: '<div></div>'
+}
+
+<!-- Story args -->
+<!-- https://storybook.js.org/docs/react/writing-stories/args -->
+export const args = {
+}
+
+<!-- https://storybook.js.org/docs/react/api/argtypes -->
+export const argTypes = {
+}
+
+<!-- Named exports of stories here -->
+export const Template = (args, { argTypes }) => {
+    return {
+        props: Object.keys(argTypes),
+        components: { DummyComponent },
+        template: ''
+    }
+} 
+
+<!-- Define story settings here -->
+<Meta 
+    title="Components/ObjectFormField"
+    component={DummyComponent}
+    argTypes={argTypes}
+    args={args}
+/>
+
+# ObjectFormField
+Displays a form field inside ObjectForm
+
+<Story name="Default">
+    {Template.bind({})}
+</Story>
