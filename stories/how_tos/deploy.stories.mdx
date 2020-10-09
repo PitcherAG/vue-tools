@@ -1,0 +1,23 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="How Tos/How to deploy" />
+
+# How to deploy
+
+1. Get the file id from admin (example: 720440)
+2. Open `package.json` and add to scripts:
+```json
+ "deploy": "npm run build; cd dist; kudu push -f HERECOMESMYFILEID;echo 'deployed'",
+```
+
+replace HERECOMESMYFILEID with your file id
+
+3. run: ```sudo pip install kudu```
+4. Place a kudu yml config file in your homedirectory `~/.kudu.yml` (Patrick or Josh can provide one)
+
+From now on if you run:
+
+```npm run deploy```
+
+A new version will be uploaded and distributed.
+You can add other entries in package.json if you need to upload to different instances.
