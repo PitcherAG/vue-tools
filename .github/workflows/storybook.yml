@@ -14,12 +14,12 @@ jobs:
       - name: npm run build-storybook
         run: npm run build-storybook
       - name: commit & push ./docs folder
-            uses: github-actions-x/commit@v2.7
-            with:
-              github-token: ${{ secrets.REPO_ACCESS }}
-              push-branch: 'feature-docs-storybook-new-kouts'
-              commit-message: 'publish docs'
-              force-add: 'true'
-              files: docs/
-              name: sdk-docs
-              email: sdk-docs@pitcher.com 
+          uses: github-actions-x/commit@v2.7
+          with:
+            github-token: ${{ secrets.REPO_ACCESS }}
+            push-branch: 'feature-docs-storybook-new-kouts'
+            commit-message: 'publish docs'
+            force-add: 'true'
+            files: docs/
+            name: sdk-docs
+            email: sdk-docs@pitcher.com 
