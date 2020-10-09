@@ -1,0 +1,242 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: hu\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "Április"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "április"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "Augusztus"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "augusztus"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "Dátum"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Dátum idő"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "December"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "december"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "Február"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "február"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "január"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "január"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "Július"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "július"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "Június"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "június"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Tenger"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "március"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Lehet"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "November"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "november"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Most"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "Október"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "október"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "DÉLUTÁN"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "Mentés"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "választ"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "Válassza a Felvétel típusát"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "szeptember"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "szeptember"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "Ennek az objektumnak nincs külső ID mezője a config.json fájlban."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"Ennek az objektumnak nincs külső ID mezője a config.json fájlban. Kérjük, "
+"adjon meg egyet, vagy szinkronizálja először a szerkesztés előtt."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "Ez az objektum nem szerkeszthető. Először szinkronizálnia kell."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Ma"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "Nem adhat hozzá ilyen típusú objektumot."
+
+#: src/components/ProgressBar.vue
+#, fuzzy
+msgid "completed"
+msgstr "elkészült"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "No results"
+msgstr "Nincs eredmény"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Reset"
+msgstr "Visszaállítás"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Select all"
+msgstr "Mindet kiválaszt"
+
+#: src/components/DataTable/DataTable.vue
+#, fuzzy
+msgid "Table has not any data to show"
+msgstr "A táblázatnak nincsenek megjelenítendő adatai"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Letöltés"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Új"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Keresés"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Ossza meg"

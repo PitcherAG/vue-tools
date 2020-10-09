@@ -1,0 +1,242 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: ar\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "صباحا"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "أبريل"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "أبريل"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "أغسطس"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "أغسطس"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "تاريخ"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "التاريخ / الوقت"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "ديسمبر"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "ديسمبر"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "فبراير"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "شهر فبراير"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "يناير"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "كانون الثاني"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "يوليو"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "يوليو"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "يونيو"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "يونيو"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "البحر"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "مارس"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "مايو"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "نوفمبر"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "شهر نوفمبر"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "الآن"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "أكتوبر"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "اكتوبر"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "مساء"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "حفظ"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "تحديد"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "حدد نوع السجل"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "سبتمبر"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "سبتمبر"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "لا يحتوي هذا الكائن على حقل معرف خارجي في config.json."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"لا يحتوي هذا الكائن على حقل معرف خارجي في config.json. يرجى تقديم واحد أو "
+"مزامنة أولاً قبل التحرير."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "هذا الكائن غير قابل للتحرير. تحتاج إلى المزامنة أولاً."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "اليوم"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "لا يمكنك إضافة كائن من هذا النوع."
+
+#: src/components/ProgressBar.vue
+#, fuzzy
+msgid "completed"
+msgstr "منجز"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "No results"
+msgstr "لا نتائج"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S ، M ، T ، W ، T ، F ، S."
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Select all"
+msgstr "اختر الكل"
+
+#: src/components/DataTable/DataTable.vue
+#, fuzzy
+msgid "Table has not any data to show"
+msgstr "الجدول ليس لديه أي بيانات لإظهارها"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "تحميل"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "جديد"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "بحث"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "شارك"

@@ -1,0 +1,11 @@
+*.mo
+*.po~
+.DS_Store
+.env
+.idea
+.vscode
+coverage
+google.json
+node_modules
+package-lock.json
+pitcher-vue-sdk.iml

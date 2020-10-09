@@ -1,0 +1,62 @@
+Save & Resume of state
+==
+
+SaveLocal
+---
+
+To save something locally in the db:
+
+```javascript
+const data = {hello:'world'}
+saveLocal('myId', data)
+```
+
+To load the same data when the app resumes:
+
+```javascript
+const data = await loadLocal('myId')
+```
+
+Usage Example
+---
+
+```javascript
+function getId() {
+    const store = useParamsStore()
+    return 'myApp_' + store.state.account.Id
+}
+
+export function save() {
+    const store = useMyStore()
+    const data = {myData:store.state.myData }
+    console.info('save', data)
+    saveLocal(getId(), data)
+}
+
+export async function resume(){
+    const data = await loadLocal(getId())
+    const store = useMyStore()
+    store.state.myData = data.myData
+}
+```
+
+In your App.vue:
+
+```javascript
+setup() {
+        console.log('App setup')
+        const loaded = ref(false)
+        onMounted(async () => {
+            console.log('on App mounted')
+            await loadSomeData()
+            try {
+                await resume()
+            }catch(e){
+                console.info('no resume found')
+            }
+            watchEffect(save)
+            window.console.info('data loading finished')
+            loaded.value = true
+        })
+}
+```

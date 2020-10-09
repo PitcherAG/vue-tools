@@ -1,0 +1,74 @@
+import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
+
+<!-- import SidebarExample from './examples/SidebarExample' -->
+
+export const Template = (args) => '<div></div>'
+
+<!-- 
+    Visual example of Sidebar breaks the Storybook UI 
+    because it wraps the site's root with additional divs
+-->
+<!--
+export const Template = (args, { argTypes }) => {
+    return {
+        props: Object.keys(argTypes),
+        components: { SidebarExample },
+        template: `<SidebarExample v-bind="$props" />`
+    }
+}
+-->
+
+<!-- Define story settings here -->
+<Meta title="Components/Sidebar" />
+
+# Sidebar
+Fomantic Sidebar component
+
+<!--
+<Story name="Default">
+    {Template.bind({})}
+</Story>
+-->
+
+### Usage
+
+```javascript
+import { Sidebar } from '@pitcher/vue-sdk'
+```
+```html
+<Sidebar>
+      <div class="item">
+           <h2 class="header">{{ data.Name }}</h2>
+       </div>
+       <div class="item">
+        {{ data.description }}
+       </div>
+</Sidebar>
+```
+
+```javascript
+setup(){
+     const sidebar = Sidebar.useSidebarStore()
+     const data = sidebar.state.data
+     return { data }
+}
+```
+
+and somewhere else:
+
+```javascript
+import { Sidebar } from '@pitcher/vue-sdk'
+
+setup() {
+    const showSidebar = (product) => {
+        const sidebar = Sidebar.useSidebarStore()
+        sidebar.state.data = product
+        sidebar.show()
+    }
+    return { showSidebar }
+}
+```
+
+```html
+<button v-on:click="showSidebar(myProduct)">Show sidebar</button>
+```

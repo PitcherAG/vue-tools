@@ -1,0 +1,242 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: th\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "เมษายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "เมษายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "สิงหาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "สิงหาคม"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "วันที่"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "วันเวลา"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "ธันวาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "ธันวาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "กุมภาพันธ์"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "กุมภาพันธ์"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "ม.ค."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "มกราคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "กรกฎาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "กรกฎาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "มิถุนายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "มิถุนายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "ทะเล"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "มีนาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "อาจ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "พฤศจิกายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "พฤศจิกายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "ตอนนี้"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "ตุลาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "ตุลาคม"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "บันทึก"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "เลือก"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "เลือกประเภทบันทึก"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "กันยายน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "กันยายน"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "วัตถุนี้ไม่มีฟิลด์ ID ภายนอกใน config.json"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"วัตถุนี้ไม่มีฟิลด์ ID ภายนอกใน config.json "
+"โปรดระบุหนึ่งรายการหรือซิงค์ก่อนที่จะแก้ไข"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "วัตถุนี้ไม่สามารถแก้ไขได้ คุณต้องซิงค์ก่อน"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "ในวันนี้"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "คุณไม่สามารถเพิ่มวัตถุประเภทนี้"
+
+#: src/components/ProgressBar.vue
+#, fuzzy
+msgid "completed"
+msgstr "เสร็จสมบูรณ์"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "No results"
+msgstr "ไม่มีผลลัพธ์"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Reset"
+msgstr "รีเซ็ต"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Select all"
+msgstr "เลือกทั้งหมด"
+
+#: src/components/DataTable/DataTable.vue
+#, fuzzy
+msgid "Table has not any data to show"
+msgstr "ตารางไม่มีข้อมูลที่จะแสดง"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "ดาวน์โหลด"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "ใหม่"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "ค้นหา"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "แบ่งปัน"

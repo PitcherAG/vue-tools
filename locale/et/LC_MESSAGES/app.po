@@ -1,0 +1,242 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: et\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "OLEN"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "Apr"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "Aprillil"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "Aug"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "august"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "Kuupäev"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Kuupäev Kellaaeg"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "Dets"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "Detsembril"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "Veebr"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "Veebruaril"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "Jaan"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "Jaanuaril"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "Juuli"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "Juuli"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "Juuni"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "Juuni"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Meri"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "Märtsil"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Mai"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "Nov"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "Novembril"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Nüüd"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "Okt"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "Oktoobril"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "Salvesta"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "Valige"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "Valige Salvestuse tüüp"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "Sept"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "Septembril"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "Sellel objektil pole konfiguratsioonis.json välist ID-välja."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"Sellel objektil pole konfiguratsioonis.json välist ID-välja. Enne "
+"redigeerimist esitage see üks või sünkroonige."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "Seda objekti ei saa redigeerida. Esmalt peate sünkroonima."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Täna"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "Seda tüüpi objekti ei saa lisada."
+
+#: src/components/ProgressBar.vue
+#, fuzzy
+msgid "completed"
+msgstr "valmis"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "No results"
+msgstr "Tulemused puuduvad"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Reset"
+msgstr "Lähtesta"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Select all"
+msgstr "Vali kõik"
+
+#: src/components/DataTable/DataTable.vue
+#, fuzzy
+msgid "Table has not any data to show"
+msgstr "Tabelis pole andmeid, mida näidata"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Lae alla"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Uus"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Otsing"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Jaga"

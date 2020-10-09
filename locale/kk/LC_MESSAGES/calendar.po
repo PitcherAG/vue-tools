@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: kk\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "Сәуір"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "Сәуір"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "Там"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "Тамыз"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Күні / уақыты"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "Желтоқсан"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "Желтоқсан"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "Ақпан"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "Ақпан"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "Қаңтар"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "Қаңтар"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "Шілде"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "Шілде"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "Маусым"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "Маусым"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Теңіз"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "Наурыз"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Мамыр"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "Қараша"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "Қараша"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Енді"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "Қазан"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "Қазан"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "Премьер"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "Қыркүйек"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "Қыркүйек"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Бүгін"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S"

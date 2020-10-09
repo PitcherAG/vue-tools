@@ -1,0 +1,242 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: az\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "Apr"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "Aprel"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "Avqust"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "Avqust"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "Tarix"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Tarix vaxt"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "Dekabr"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "Dekabr"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "Fevral"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "Fevral"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "Yanvar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "yanvar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "İyul"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "İyul"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "İyun"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "İyun"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Dəniz"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "mart"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Bilər"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "Noyabr"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "Noyabr"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "İndi"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "Oktyabr"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "oktyabr"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "Yadda saxla"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "Seçin"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "Qeyd növü seçin"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "Sentyabr"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "Sentyabr"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "Bu obyektin config.json-da xarici ID sahəsi yoxdur."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"Bu obyektin config.json-da xarici ID sahəsi yoxdur. Zəhmət olmasa redaktə "
+"etməzdən əvvəl əvvəlcə birini verin və ya sinxronlaşdırın"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "Bu obyekt düzəliş olunmur. Əvvəlcə sinxronizasiya etməlisiniz."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Bu gün"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "Bu tip bir obyekt əlavə edə bilməzsiniz."
+
+#: src/components/ProgressBar.vue
+#, fuzzy
+msgid "completed"
+msgstr "tamamlandı"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "No results"
+msgstr "Nəticə yoxdur"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Reset"
+msgstr "Sıfırla"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Select all"
+msgstr "Hamısını seç"
+
+#: src/components/DataTable/DataTable.vue
+#, fuzzy
+msgid "Table has not any data to show"
+msgstr "Cədvəldə göstəriləcək heç bir məlumat yoxdur"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Yükləyin"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Yeni"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Axtarış"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Paylaş"

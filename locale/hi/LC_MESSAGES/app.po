@@ -1,0 +1,242 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: hi\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "अप्रैल"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "अप्रैल"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "अगस्त"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "अगस्त"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "तारीख"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "दिनांक और समय"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "दिसम्बर"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "दिसंबर"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "फ़रवरी"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "फरवरी"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "जनवरी"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "जनवरी"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "जुलाई"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "जुलाई"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "जून"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "जून"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "समुद्र"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "मार्च"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "मई"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "नवम्बर"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "नवंबर"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "अभी"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "अक्टूबर"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "अक्टूबर"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "सहेजें"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "चुनते हैं"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "रिकॉर्ड प्रकार का चयन करें"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "सितम्बर"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "सितंबर"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "इस ऑब्जेक्ट को config.json में बाहरी आईडी फ़ील्ड नहीं है।"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"इस ऑब्जेक्ट को config.json में बाहरी आईडी फ़ील्ड नहीं है। कृपया संपादन से "
+"पहले एक या सिंक प्रदान करें।"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "यह ऑब्जेक्ट संपादन योग्य नहीं है। आपको पहले सिंक करने की आवश्यकता है।"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "आज"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "आप इस प्रकार का ऑब्जेक्ट नहीं जोड़ सकते हैं।"
+
+#: src/components/ProgressBar.vue
+#, fuzzy
+msgid "completed"
+msgstr "पूरा कर लिया है"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "No results"
+msgstr "कोई परिणाम नहीं"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Reset"
+msgstr "रीसेट"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, टी, डब्ल्यू, टी, एफ, एस"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Select all"
+msgstr "सभी का चयन करे"
+
+#: src/components/DataTable/DataTable.vue
+#, fuzzy
+msgid "Table has not any data to show"
+msgstr "तालिका में दिखाने के लिए कोई डेटा नहीं है"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "डाउनलोड"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "नया"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "खोज"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "शेयर"
