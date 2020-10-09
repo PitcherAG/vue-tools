@@ -11,8 +11,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
-      - name: clear
-        run: npm install
       - name: npm install
         run: npm install
       - name: npm run build-storybook
