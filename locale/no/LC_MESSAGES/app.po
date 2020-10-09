@@ -1,0 +1,242 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: no\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "ER"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "april"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "april"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "august"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "august"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "Dato"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Dato tid"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "desember"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "desember"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "februar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "februar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "jan"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "januar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "juli"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "juli"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "juni"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "juni"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Hav"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "mars"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Kan"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "november"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "november"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Nå"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "oktober"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "oktober"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "Lagre"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "Å velge"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "Velg Record Type"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "september"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "september"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "Dette objektet har ikke et eksternt ID-felt i config.json."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"Dette objektet har ikke et eksternt ID-felt i config.json. Oppgi en eller "
+"synkroniser først før du redigerer."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "Dette objektet er ikke redigerbart. Du må synkronisere først."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "I dag"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "Du kan ikke legge til et objekt av denne typen."
+
+#: src/components/ProgressBar.vue
+#, fuzzy
+msgid "completed"
+msgstr "fullført"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "No results"
+msgstr "Ingen resultater"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Reset"
+msgstr "Nullstille"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Select all"
+msgstr "Velg alle"
+
+#: src/components/DataTable/DataTable.vue
+#, fuzzy
+msgid "Table has not any data to show"
+msgstr "Tabellen har ingen data å vise"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "nedlasting"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Ny"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Søk"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Dele"

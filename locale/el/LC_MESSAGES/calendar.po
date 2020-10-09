@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: el\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "ΕΙΜΑΙ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "Απρ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "Απρίλιος"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "Αυγ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "Αύγουστος"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Ημερομηνία ώρα"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "Δεκ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "Δεκέμβριος"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "Φεβ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "Φεβρουάριος"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "Ιαν"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "Ιανουάριος"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "Ιουλ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "Ιούλιος"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "Ιουν"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "Ιούνιος"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Θάλασσα"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "Μάρτιος"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Ενδέχεται"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "Νοε"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "Νοέμβριος"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Τώρα"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "Οκτ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "Οκτώβριος"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "ΜΕΤΑ ΜΕΣΗΜΒΡΙΑΣ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "Σεπ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "Σεπτέμβριος"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Σήμερα"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S"

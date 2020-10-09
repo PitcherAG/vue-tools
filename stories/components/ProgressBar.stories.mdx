@@ -1,0 +1,132 @@
+import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
+
+import ProgressBar from '@/components/ProgressBar'
+
+<!-- Story args -->
+<!-- https://storybook.js.org/docs/react/writing-stories/args -->
+export const args = {
+    value: 50,
+    settings: {}
+}
+
+<!-- https://storybook.js.org/docs/react/api/argtypes -->
+export const argTypes = {
+    value: {
+        description: 'model to track the value of the progressbar'
+    },
+    total: {
+        description: 'total number to completion of progress'
+    },
+    showProgress: {
+        description: 'shows progress percentage on progress bar'
+    },
+    progressCenter: {
+        description: 'centers the progress percentage on progress bar'
+    },
+    showLabel: {
+        description: 'shows label under progress bar. Has a slot option if needed the customize label'
+    },
+    indicating: {
+        description: 'Fomantic indicating option, adds indicating class to the container'
+    },
+    autoSuccess: {
+        description: 'Fomantic autoSuccess setting. Makes the bar green when completed'
+    },
+    loading: {
+        description: 'sets the progress bar to loading state thru adding loading class to the container'
+    },
+    disabled: {
+        description: 'disables progress bar thru adding disabled class to the container'
+    },
+    animate: {
+        description: 'disable/enable progress bar animation'
+    },
+    color: {
+        description: 'Color of the progress bar. Details: https://fomantic-ui.com/modules/progress.html#color'
+    },
+    size: {
+        description: 'mini | tiny | small | medium | large | big | huge | massive'
+    },
+    maxWidth: {
+        description: 'max-width css property for input element'
+    },
+    settings: {
+        description: 'Fomantic progress bar settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/progress.html#/settings'
+    },
+    attached: {
+        description: 'Fomantic attached option. Accepts only top or bottom, however this does not work properly in some cases. You might need to customize thru css to get a better look.'
+    },
+    /* Slots */
+    label: {
+        description: 'Label slot to replace the content of `.label`. Has `{percent, value, total}` props.'
+    } 
+}
+
+<!-- Named exports of stories here -->
+export const Template = (args, { argTypes }) => {
+    return {
+        props: Object.keys(argTypes),
+        components: { ProgressBar },
+        template: '<div style="width: 500px; margin-bottom: 30px;"><ProgressBar v-bind="$props" /></div>'
+    }
+} 
+
+<!-- Define story settings here -->
+<Meta 
+    title="Components/ProgressBar"
+    component={ProgressBar}
+    argTypes={argTypes}
+    args={args}
+/>
+
+# ProgressBar
+Fomantic Progress Bar component
+
+<Story name="Default">
+    {Template.bind({})}
+</Story>
+
+### Available props and slots
+<!-- https://storybook.js.org/docs/react/writing-docs/doc-blocks#customizing -->
+<ArgsTable story="Default" />
+
+### Available events
+| event | description |
+| :--- | :--- |
+| `@onChange` | fired when something is changed in progress bar
+| `@onSuccess` | fired when the progress is completed
+| `@onActive` | fired when progress bar is active
+| `@onError` | fired on error
+| `@onWarning` | fired on warning
+
+### Available functions that you can call on the component
+| function name | description |
+| :--- | :--- |
+| `setProgressState(state, text, keepState = false)` | helper to call `$().progress('set STATE')` function. Example: `COMPONENT.setProgressState('warning', 'something is wrong', false)`
+| `exec(command, argument)` | helper to call any option on progress bar. Example: `COMPONENT.exec('get percent')`
+
+### Usage
+```javascript
+import { ProgressBar } from '@pitcher/vue-sdk'
+
+// must be reactive
+const value = 0
+```
+
+```html
+<!-- Simple usage -->
+<ProgressBar :value="value" />
+
+<!-- Changing total, showing label, setting color -->
+<ProgressBar :value="value" :total="100" color="blue" show-label />
+
+<!-- Hiding progress text, setting size -->
+<ProgressBar :value="value" :show-progress="false" size="tiny" />
+ 
+<!-- Using fomantic classes & custom label slot -->
+<ProgressBar :value="value" :total="200">
+    <template #label="{ percent, value, total }">
+        percent: {{ percent }} value: {{ value }} total: {{ total }}
+    </template>
+</ProgressBar>
+```

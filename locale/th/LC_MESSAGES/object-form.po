@@ -1,0 +1,56 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: th\n"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "วันที่"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "วันเวลา"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "บันทึก"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "เลือก"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "เลือกประเภทบันทึก"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "วัตถุนี้ไม่มีฟิลด์ ID ภายนอกใน config.json"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"วัตถุนี้ไม่มีฟิลด์ ID ภายนอกใน config.json "
+"โปรดระบุหนึ่งรายการหรือซิงค์ก่อนที่จะแก้ไข"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "วัตถุนี้ไม่สามารถแก้ไขได้ คุณต้องซิงค์ก่อน"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "คุณไม่สามารถเพิ่มวัตถุประเภทนี้"

@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: lt\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "ESU"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "Balandžio mėn"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "Balandis"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "Rugpjūtis"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "Rugpjūtis"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Data / laikas"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "Gruodis"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "Gruodį"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "Vasaris"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "Vasario mėn"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "Sausio mėn"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "Sausio mėn"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "Liepa"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "Liepa"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "Birželio mėn"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "Birželio mėn"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Jūra"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "Kovas"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Gegužė"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "Lapkritis"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "Lapkritį"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Dabar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "Spalio mėn"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "Spalio mėn"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "Rugsėjo mėn"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "Rugsėjo mėn"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Šiandien"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S"

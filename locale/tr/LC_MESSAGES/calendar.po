@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: tr\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "Nisan"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "Nisan"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "Ağustos"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "Ağustos"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Tarih / Saat"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "Aralık"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "Aralık"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "Şubat"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "Şubat"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "Ocak"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "Ocak"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "Temmuz"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "Temmuz"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "Haziran"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "Haziran"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Deniz"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "Mart"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Mayıs"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "Kasım"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "Kasım"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "şimdi"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "Ekim"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "Ekim"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "Eylül"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "Eylül"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Bugün"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S"
