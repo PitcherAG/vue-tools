@@ -11,9 +11,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: npm install
         run: npm install
-      - name: npm run build-storybook -o ./docs
-        run: npm run build-storybook -o ./docs
-      - name: Commit docs folder
+      - name: npm run build-storybook
+        run: npm run build-storybook
+      - name: git add ./docs && git commit -m docs builded
         run: |
           git config --local user.email "docs@pitcher.com"
           git config --local user.name "Storybook Committer"
