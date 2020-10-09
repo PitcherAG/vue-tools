@@ -1,9 +1,12 @@
 import CompositionApi from '@vue/composition-api'
 import { mount, createLocalVue } from '@vue/test-utils'
 import FileCard from '@/components/FileCard/FileCard'
+import { TranslationPlugin } from '@/'
 
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
+localVue.use(TranslationPlugin)
+
 
 describe('FileCard.vue', () => {
     const item = {

@@ -6,7 +6,7 @@
 
 ## Installing Root Certificate (macOS)
 
-We need to add the root certificate to any laptops, desktops, tablets, and phones that will be accessing your HTTPS sites. This can be a bit of a pain, but the good news is that we only have to do it once. Once our root certificate is on each device, it will be good until it expires.
+We need to add the root certificate to any laptops, desktops, tablets, and phones that will be accessing our HTTPS sites. This can be a bit of a pain, but the good news is that we only have to do it once. Once our root certificate is on each device, it will be good until it expires.
 
 ### Adding the Root Certificate to macOS Keychain
 
@@ -50,14 +50,14 @@ Either attach the application in VisualStudio for the JavaScript console and DOM
 
 ## Installing Root Certificate (Windows)
 
-We need to add the root certificate to any laptops, desktops, tablets, and phones that will be accessing your HTTPS sites. This can be a bit of a pain, but the good news is that we only have to do it once. Once our root certificate is on each device, it will be good until it expires.
+We need to add the root certificate to any laptops, desktops, tablets, and phones that will be accessing our HTTPS sites. This can be a bit of a pain, but the good news is that we only have to do it once. Once our root certificate is on each device, it will be good until it expires.
 
-### Adding the Root Certificate to macOS Keychain
+### Adding the Root Certificate to Windows certificates
 
 1. Open start menu
 1. Open Manage computer certificates
-1. Open Trust Root Certification Authorities > Certificate
-1. Go to Action > All Tasks > Import…
+1. Open Trusted Root Certification Authorities > Certificates
+1. Go to menu: Action > All Tasks > Import…
 1. Select your root certificate file (i.e. myCA.pem)
 ![Root Certificate](assets/Screenshot%202020-04-23%20at%2016.35.14.png)
 1. Click Next
@@ -72,9 +72,9 @@ We need to add the root certificate to any laptops, desktops, tablets, and phone
 
 1. Open start menu
 1. Type Notepad
-1. Right-click Notepad an Run as Administrator
+1. Right-click Notepad and select Run as Administrator
 1. Go to File > Open
-1. Enter File name: `c:\windows\system32\drivers\etc\hosts`
+1. Enter File name: `C:\Windows\system32\drivers\etc\hosts`
 1. Click Open
 1. Add a new line with your IP address: `192.168.1.101	development`
 ![Root Certificate](assets/Screenshot%202020-04-23%20at%2016.46.38.png)

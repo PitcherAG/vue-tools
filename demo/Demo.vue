@@ -4,7 +4,8 @@
         <div class="ui divider" />
         <!-- <ModalEx /> -->
         <!-- <NumpadInputEx /> -->
-        <DataTableEx />
+        <CalendarEx />
+        <!-- <DataTableEx /> -->
         <!-- <DropdownEx /> -->
         <!-- <FilterEx /> -->
         <!-- <FileCardEx /> -->
@@ -13,6 +14,7 @@
 </template>
 
 <script>
+import CalendarEx from './examples/Calendar.example.vue'
 import DataTableEx from './examples/DataTable.example.vue'
 import DropdownEx from './examples/Dropdown.example.vue'
 import FileCardEx from './examples/FileCard.example.vue'
@@ -23,6 +25,7 @@ import ProgressBarEx from './examples/ProgressBar.example.vue'
 
 export default {
     components: {
+        CalendarEx,
         DataTableEx,
         DropdownEx,
         FileCardEx,
