@@ -3,28 +3,23 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="How Tos/How to change these docs" />
 
 # How to change these docs
-
-This documentation is written with [docsify](https://docsify.js.org) and served on GitHub Pages
+This documentation is written with [Storybook](https://storybook.js.org/) and served on GitHub Pages
 
 ## Quick start
 
+
 ### Content
-Documentation is located inside the `docs` folder as Markdown `.md` files with `index.html` being the entry point
-and `README.md` being the home page.  
-
-### Installation
-It is recommended to install `docsify-cli` globally, which helps initializing and previewing the website locally.
-
-```
-npm i docsify-cli -g
-```
+Documentation is located inside the `stories` folder as extended Markdown `.mdx` files which are essentially
+a mixture of plain-old `Markdown` and `JSX`, read more about it [here](https://storybook.js.org/docs/vue/writing-docs/mdx#gatsby-focus-wrapper).
 
 ### Preview
-Run the local server with
+In order to start the local Story book dev server
 ```
-docsify serve docs
+npm run storybook
 ```
-You can then preview the documentation in your browser on http://localhost:3000  
+You can then preview the documentation in your browser on http://localhost:6006 
 
-For more use cases of `docsify-cli`, head over to the [docsify-cli documentation](https://github.com/docsifyjs/docsify-cli).
+For more information about how Storybook is used, head over to the official [documentation](https://storybook.js.org/docs/vue/get-started/introduction).
 
+### Menu order
+You can change the desired menu order of items in the left menu by editing the `.storybook/review.js` file
