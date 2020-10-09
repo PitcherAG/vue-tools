@@ -1,6 +1,6 @@
 {
   "name": "@pitcher/vue-sdk",
-  "version": "1.4.3",
+  "version": "1.4.8-beta.1",
   "description": "VueJS Development Tools for the use in Pitcher Impact",
   "author": "Pitcher AG",
   "bin": {
@@ -11,7 +11,7 @@
   "scripts": {
     "build": "rimraf ./dist && babel src -d dist",
     "config-gettext-extract": "node src/gettext/extract-cli.js",
-    "config-gettext-translate": "node src/gettext/translate-cli.js",
+    "config-gettext-translate": "GOOGLE_APPLICATION_CREDENTIALS=google.json node src/gettext/translate-cli.js",
     "demo": "vue-cli-service serve --port 5000 --public http://localhost:5000/demo --open",
     "lint": "vue-cli-service lint",
     "npm link": "npm link",
@@ -35,12 +35,10 @@
     "@google-cloud/translate": "^6.0.0",
     "@pitcher/easygettext": "^2.12.5",
     "@pitcher/fomantic-ui": "^2.8.5",
-    "@storybook/addon-actions": "^6.0.21",
-    "@storybook/addon-essentials": "^6.0.21",
-    "@storybook/addon-links": "^6.0.21",
-    "@storybook/addons": "^6.0.21",
-    "@storybook/theming": "^6.0.21",
-    "@storybook/vue": "^6.0.21",
+    "@storybook/addon-actions": "^6.0.26",
+    "@storybook/addon-essentials": "^6.0.26",
+    "@storybook/addon-links": "^6.0.26",
+    "@storybook/vue": "^6.0.26",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
     "@vue/cli-plugin-unit-jest": "^4.3.1",
@@ -86,6 +84,7 @@
   },
   "files": [
     "/src",
-    "/locale/**/*.po"
+    "/locale/**/*.po",
+    "/gettext.config.js"
   ]
 }
