@@ -1,5 +1,53 @@
 # Changelog
 
+## [Unreleased]
+### Changed
+- import {createStore} from `../store` in i18n
+
+## 1.4.7
+
+- data table support {{}} syntax for fields
+- object form support help text and disabling of them
+- currency format support different formats
+- calendar translation fixes
+- translation fixes
+
+## 1.4.6
+
+- include i18n files 
+
+## 1.4.5
+
+### Changed / Fixed
+- Calendar.vue
+  - init calendar in setTimeout to put initialisation at the end of event loop.
+  - size validator component name fixed
+  - fix min/max date parsing
+- FilterDropdown.vue
+  - fix text overflow problem
+- Modal.vue
+  - v-model can now be any instead of boolean
+- DataTable.vue
+  - fix table row emit click event to it's parent
+- ObjectForm & ObjectFormField
+  - external id generation, url parsing, and fixes for object form
+  - help text added
+
+
+## 1.4.4
+
+### Breaking changes
+- Calendar.vue prop change `setting` => `settings`
+
+### Changed / Fixed
+- Calendar.vue
+  - no required booleans in formfield
+  - most of fomantic settings ported to native props
+  - minDate is not overriding currentValue anymore
+  - updating calendar props are observable now, changes applied to the component
+  - unit tests & docs updated
+
+
 ## 1.4.3
 
 ### Changed / Fixed
