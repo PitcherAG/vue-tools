@@ -1,9 +1,7 @@
 name: Storybook Build
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ feature-docs-storybook-new-kouts ]
 
 jobs:
   build:
@@ -15,3 +13,9 @@ jobs:
         run: npm install
       - name: npm run build-storybook -o ./docs
         run: npm run build-storybook -o ./docs
+      - name: Commit docs folder
+        run: |
+          git config --local user.email "docs@pitcher.com"
+          git config --local user.name "Storybook Committer"
+          git add ./docs
+          git commit -m "docs builded"
