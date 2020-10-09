@@ -7,8 +7,116 @@
 ## Components
 
 ### Calendar
-
 Fomantic Calendar 
+
+#### Available props
+| prop | type | required | default | description |
+| :--- | :--- | :--- | :--- | :--- |
+| `v-model` | `String \| Date` | yes | - | date value
+| `type` | `datetime \| date \| time \| month \| year` | no | 'datetime' | type of calendar
+| `min-date` | `String \| Date` | no | - | minimum date that can be selected in calendar
+| `max-date` | `String \| Date` | no | - | maximum date that can be selected in calendar
+| `start-mode` | `year \| month \| day \| hour \| minute` | no | 'day' | calendar mode
+| `default-text` | `String` | no | 'Date/Time' | default text when there is not any value selected
+| `show-am-pm` | `Boolean` | no | false | show calendar hours with am/pm format, default is 24H format.
+| `show-today` | `Boolean` | no | true | show/hide today button in calendar popup
+| `show-week-numbers` | `Boolean` | no | false | show/hide week numbers in calendar popup
+| `disabled-days-of-week` | `Number[]` | no | undefined | disable some days of the week from selection (0= Sunday, 1=Monday, ...)
+| `disabled-dates` | `[]` | no | undefined | an array of Date-Objects or Objects with given message to show in a popup when hovering over the appropriate date. ex: `{ date: Date, message: String }`
+| `enabled-dates` | `[]` | no | undefined | an array of Date-Objects to be enabled for selection. All other dates are disabled
+| `event-dates` | `[]` | no | undefined | 	an array of Date-Objects or Objects with given message to show in a popup when hovering over the appropriate date and an individual class for the cell. ex: `{ date: Date, message: string, class: string }`
+| `event-class` | `String` | no | undefined | default class to be added to each cell of an eventDate date element when no specific class is given to the eventDate element
+| `disable-year` | `Boolean` | no | undefined | disable year selection mode
+| `disable-month` | `Boolean` | no | undefined | disable month selection mode
+| `disable-minute` | `Boolean` | no | undefined | disable minute selection mode
+| `disable-value-formatting` | `Boolean` | no | false | calendar component formats selected value when user selects a date/time. To disable this feature you can use this property
+| `value-formatter` | `Function` | no | see definitions | formatter function to format value before it is emitted. See definitions to see how it works
+| `disable-input-formatting` | `Boolean` | no | false | calendar component formats the value that is shown in input. To disable this feature you can use this property
+| `input-formatter` | `Function` | no | see definitions | formatter function to format value before it is shown in input. See definitions to see how it works
+| `fluid` | `Boolean` | no | undefined | makes the component width fluid `100%` by adding fluid class to the input
+| `disabled` | `Boolean` | no | undefined | disables the component thru adding disabled class to the input
+| `loading` | `Boolean` | no | false | sets the calendar to loading state thru adding loading class to the input
+| `error` | `Boolean` | no | undefined | adds error class to the input
+| `size` | `String` | no | medium | mini \| tiny \| small \| medium \| large \| big \| huge \| massive 
+| `min-width` | `Number \| String` | no | undefined | min-width css property for input element
+| `max-width` | `Number \| String` | no | 100% | max-width css property for input element
+| `settings` | `Object` | no | undefined | Fomantic calendar settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/calendar.html#/settings
+| `action` | `String` | no | 'activate' | default action when initializing fomantic calendar element. Default is activate.
+
+#### Available events
+| event | description |
+| :--- | :--- |
+| `@input` | default v-model input event
+| `@onBeforeChange` | fired before the input is changed
+| `@onShow` | fired before calendar popup is shown
+| `@onVisible` | fired when calendar popup is visible
+| `@onHide` | fired before calendar popup is hidden
+| `@onHidden` | fired when calendar popup is hidden
+| `@onSelect` | fired when user clicks on a date/time from popup
+
+#### Definitions
+```javascript
+// default value formatter before emitted to parent
+valueFormatter: function(date) {
+    // if date includes time, returns formats value as ISO
+    if (this.type.includes('time')) {
+        return date.toISOString()
+    }
+
+    // otherwise formats as date time
+    const yyyy = date.getFullYear().toString()
+    const mm = (date.getMonth() + 1).toString()
+    const dd = date.getDate().toString()
+    return `${yyyy}-${mm[1] ? mm : '0' + mm[0]}-${dd[1] ? dd : '0' + dd[0]}`
+}
+
+// default input formatter before value changed in input
+// Uses SDK's internal date formatter
+inputFormatter: date => formatDate(date)
+```
+
+#### Usage
+```javascript
+import { Calendar } from '@pitcher/vue-sdk'
+
+// must be reactive
+const selectedDate = '2020-08-01T11:00:00.000'
+
+// specific eventDates
+const eventDates = [
+    {
+        date: new Date(), // today
+        message: 'National Day',
+        class: 'red'
+    },
+    ...
+    ...
+]
+// disabledDates
+const disabledDates = [
+    {
+        date: new Date(), // today
+        message: 'Not selectable',
+    },
+    ...
+    ...
+]
+```
+
+```html
+<!-- Simple usage -->
+<Calendar v-model="selectedDate" />
+
+<!-- Using fluid, fixed input width, smaller input size -->
+<Calendar v-model="selectedDate" fluid size="small" max-width="300px" />
+ 
+<!-- Using with event dates -->
+<Calendar v-model="selectedDate" :event-dates="eventDates" />
+
+<!-- Using with disabled dates -->
+<Calendar v-model="selectedDate" :disabled-dates="disabledDates" />
+```
+
 
 ### Checkbox
 Displays a fomantic checkbox
@@ -57,6 +165,7 @@ const myBoolean = false
 
 <Checkbox v-model="myBoolean" slider />
 ```
+
 
 ### DataTable
 Fomantic DataTable with pagination
@@ -513,6 +622,7 @@ const selectedItem = ''
 </Dropdown>
 ```
 
+
 ### FileCard
 Custom Card component for files
 
@@ -766,13 +876,14 @@ const selectedFilter = ''
 
 ```
 
+
 ### Modal
 Fomantic Modal component
 
 #### Available props
 | prop | type | required | default | description |
 | :--- | :--- | :--- | :--- | :--- |
-| `v-model` | `Boolean` | yes | - | true/false to show modal
+| `v-model` | `any` | yes | - | data to show modal, undefined/null hides, anydata inside shows the modal
 | `title` | `String` | no | undefined | Modal header title
 | `title-icon` | `String` | no | undefined | FA icon name. Use ONLY icon name i.e. users times etc.
 | `approve-text` | `String` | no | undefined | Text for Approve button
@@ -820,6 +931,56 @@ Fomantic Modal component
 | :--- | :--- |
 | `exec(command)` | helper to call any option on modal. Example: `COMPONENT.exec('can fit')` Details: https://fomantic-ui.com/modules/modal.html#behavior
 
+#### Usage
+```javascript
+import { Modal } from '@pitcher/vue-sdk'
+
+// must be reactive
+const showModal = false
+```
+
+```html
+<!-- Simple usage -->
+<Modal v-model="showModal" title="Register" title-icon="user" approve-text="Submit" deny-text="Cancel">
+    <form class="ui form">
+        <div class="field">
+            <label>First Name</label>
+            <input type="text" name="first-name" placeholder="First Name" />
+        </div>
+        <div class="field">
+            <label>Last Name</label>
+            <input type="text" name="last-name" placeholder="Last Name" />
+        </div>
+    </form>
+</Modal>
+ 
+<!-- Hiding close icon, Scrolling content, overlay & fullscreen, not closable -->
+<Modal v-model="showModal" :closable="false" overlay fullscreen hide-close-icon scrolling-content>
+    <div>My Modal Content</div>
+</Modal>
+
+<!-- Injecting classes to content, approve/deny buttons -->
+<Modal v-model="showModal" content-class="d-flex fd-row pa-0" approve-class="green" denyClass="red">
+    <div>My Modal Content</div>
+</Modal>
+ 
+<!-- Usage with slots -->
+<Modal v-model="showModal">
+    <!-- override actions content -->
+    <template #header>
+        <i class="setting icon" />
+        Settings
+    </template>
+
+    <div>My Modal Content</div>
+
+    <!-- override actions content -->
+    <template #actions>
+        <button class="ui button primary">Submit</button>
+    </template>
+</Modal>
+```
+
 
 ### Numpad Input
 Custom component
@@ -852,7 +1013,6 @@ Custom component
 
 
 #### Usage
-
 ```javascript
 import { NumpadInput } from '@pitcher/vue-sdk'
 ```
@@ -880,7 +1040,6 @@ import { NumpadInput } from '@pitcher/vue-sdk'
 
 
 ### ObjectForm
-
 Displays a salesforce object as a form, uses layouts if available otherwise uses schemas. Layouts are supported by android at the moment only. 
 
 #### Properties:
@@ -894,13 +1053,11 @@ Displays a salesforce object as a form, uses layouts if available otherwise uses
 - onSave(type: Function, callback on form save)
 
 #### Methods:
-
 - save
 - clear
 
 
 ### ObjectFormField
-
 Displays a form field inside ObjectForm
 
 
@@ -973,8 +1130,8 @@ const value = 0
 </ProgressBar>
 ```
 
-### Sidebar
 
+### Sidebar
 Fomantic Sidebar component
 
 ```javascript
@@ -1026,7 +1183,7 @@ Example:
 ```html
 <template>
     <div id="app">
-        <Header></Header>
+        <Header />
         <div>
             <TransitionPage>
                 <router-view v-if="loaded"></router-view>
