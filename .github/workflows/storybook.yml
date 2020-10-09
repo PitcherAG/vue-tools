@@ -13,9 +13,13 @@ jobs:
         run: npm install
       - name: npm run build-storybook
         run: npm run build-storybook
-      - name: git add ./docs && git commit -m docs builded
-        run: |
-          git config --local user.email "docs@pitcher.com"
-          git config --local user.name "Storybook Committer"
-          git add ./docs
-          git commit -m "docs builded"
+      - name: commit & push ./docs folder
+            uses: github-actions-x/commit@v2.7
+            with:
+              github-token: ${{ secrets.REPO_ACCESS }}
+              push-branch: 'feature-docs-storybook-new-kouts'
+              commit-message: 'publish docs'
+              force-add: 'true'
+              files: docs/
+              name: sdk-docs
+              email: sdk-docs@pitcher.com 
