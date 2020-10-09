@@ -9,6 +9,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: clear
+        run: npm install
       - name: npm install
         run: npm install
       - name: npm run build-storybook
@@ -23,3 +25,10 @@ jobs:
           files: docs/
           name: sdk-docs
           email: sdk-docs@pitcher.com
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.6.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS }}
+          BRANCH: feature-docs-storybook-new-kouts
+          FOLDER: docs # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
