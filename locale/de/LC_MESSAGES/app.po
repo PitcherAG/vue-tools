@@ -1,0 +1,245 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: de\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "AM"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "Apr."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "April"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "Aug."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "August"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "Datum"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Terminzeit"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "Dez."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "Dezember"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "Feb."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "Februar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "Jan."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "Januar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "Jul"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "Juli"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "Jun"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "Juni"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Meer"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "März"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Kann"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "Nov."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "November"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Jetzt"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "Okt."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "Oktober"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "PM"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "sparen"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "Wählen"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "Wählen Sie Datensatztyp"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "Sep."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "September"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "Dieses Objekt hat kein externes ID-Feld in der Datei config.json."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"Dieses Objekt hat kein externes ID-Feld in der Datei config.json. Bitte "
+"geben Sie eine an oder synchronisieren Sie sie zuerst, bevor Sie sie "
+"bearbeiten."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr ""
+"Dieses Objekt kann nicht bearbeitet werden. Sie müssen zuerst "
+"synchronisieren."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "Heute"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "Sie können kein Objekt dieses Typs hinzufügen."
+
+#: src/components/ProgressBar.vue
+#, fuzzy
+msgid "completed"
+msgstr "abgeschlossen"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "No results"
+msgstr "Keine Ergebnisse"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S."
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Select all"
+msgstr "Wählen Sie Alle"
+
+#: src/components/DataTable/DataTable.vue
+#, fuzzy
+msgid "Table has not any data to show"
+msgstr "Die Tabelle enthält keine anzuzeigenden Daten"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "Herunterladen"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "Neu"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "Suche"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "Aktie"

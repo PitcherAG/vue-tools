@@ -1,0 +1,31 @@
+import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
+
+<!-- Define story settings here -->
+<Meta title="Components/TransitionPage" />
+
+# TransitionPage
+Gives you transitions between router pages.
+
+### Example
+```html
+<template>
+    <div id="app">
+        <Header />
+        <div>
+            <TransitionPage>
+                <router-view v-if="loaded"></router-view>
+            </TransitionPage>
+        </div>
+    </div>
+</template> 
+
+<script>
+import { TransitionPage } from "@pitcher/vue-sdk";
+
+export default {
+    components: {
+      TransitionPage
+    }
+}
+</script>
+```

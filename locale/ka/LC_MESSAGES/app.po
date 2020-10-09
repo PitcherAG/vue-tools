@@ -1,0 +1,242 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: ka\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "ᲕᲐᲠ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "აპრილი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "აპრილი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "აგვისტო"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "აგვისტო"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date"
+msgstr "თარიღი"
+
+#: src/components/Calendar.vue
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "თარიღი / დრო"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "დეკ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "დეკემბერი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "თებ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "თებერვალი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "იან"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "იანვარი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "იული"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "ივლისი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "ივნ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "ივნისი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Ზღვის"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "მარტი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "მაისი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "ნოემბერი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "ნოემბერი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "ახლა"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "ოქტომბერი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "ოქტომბერი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "პრემიერ"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Save"
+msgstr "Გადარჩენა"
+
+#: src/components/ObjectFormField.vue
+#, fuzzy
+msgid "Select"
+msgstr "შეარჩიეთ"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "Select Record Type"
+msgstr "აირჩიეთ ჩანაწერის ტიპი"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "სექტ"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "სექტემბერი"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object does not have an external ID field in the config.json."
+msgstr "ამ ობიექტს არ აქვს გარე პირადობის ველი კონფიგურაციაში.json."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid ""
+"This Object does not have an external ID field in the config.json. Please "
+"provide one or sync first before editing."
+msgstr ""
+"ამ ობიექტს არ აქვს გარე პირადობის ველი კონფიგურაციაში.json. გთხოვთ, "
+"შეიტანოთ ერთი ან სინქრონიზაცია ადრე შესწორებამდე."
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "This Object is not editable. You need to sync first."
+msgstr "ეს ობიექტი არ არის რედაქტირებადი. ჯერ სინქრონიზაცია უნდა."
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "დღეს"
+
+#: src/components/ObjectForm.vue
+#, fuzzy
+msgid "You can not add an object of this type."
+msgstr "თქვენ არ შეგიძლიათ დაამატოთ ამ ტიპის ობიექტი."
+
+#: src/components/ProgressBar.vue
+#, fuzzy
+msgid "completed"
+msgstr "დასრულდა"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "No results"
+msgstr "შედეგი არ არის"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Reset"
+msgstr "გადატვირთვის"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Select all"
+msgstr "Მონიშნე ყველა"
+
+#: src/components/DataTable/DataTable.vue
+#, fuzzy
+msgid "Table has not any data to show"
+msgstr "ცხრილს არა აქვს მონაცემები აჩვენოს"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Download"
+msgstr "გადმოწერა"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "New"
+msgstr "ახალი"
+
+#: src/components/FilterDropdown.vue
+#, fuzzy
+msgid "Search"
+msgstr "ძებნა"
+
+#: src/components/FileCard/FileCard.vue
+#, fuzzy
+msgid "Share"
+msgstr "გაზიარება"
