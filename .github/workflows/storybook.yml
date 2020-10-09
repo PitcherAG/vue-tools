@@ -9,6 +9,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: clear
+        run: npm install
       - name: npm install
         run: npm install
       - name: npm run build-storybook
@@ -23,3 +27,8 @@ jobs:
           files: docs/
           name: sdk-docs
           email: sdk-docs@pitcher.com
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.REPO_ACCESS }}
+          publish_dir: ./demo
