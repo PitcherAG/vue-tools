@@ -1,0 +1,152 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: easygettext\n"
+"Project-Id-Version: \n"
+"Language: da\n"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "AM"
+msgstr "ER"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Apr"
+msgstr "april"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "April"
+msgstr "April"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Aug"
+msgstr "august"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "August"
+msgstr "august"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Date/Time"
+msgstr "Dato tid"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Dec"
+msgstr "december"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "December"
+msgstr "december"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Feb"
+msgstr "februar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "February"
+msgstr "februar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jan"
+msgstr "jan"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "January"
+msgstr "januar"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jul"
+msgstr "juli"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "July"
+msgstr "juli"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Jun"
+msgstr "juni"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "June"
+msgstr "juni"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Mar"
+msgstr "Hav"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "March"
+msgstr "marts"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "May"
+msgstr "Kan"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Nov"
+msgstr "november"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "November"
+msgstr "november"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Now"
+msgstr "Nu"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Oct"
+msgstr "oktober"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "October"
+msgstr "oktober"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "PM"
+msgstr "OM EFTERMIDDAGEN"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Sep"
+msgstr "september"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "September"
+msgstr "september"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "Today"
+msgstr "I dag"
+
+#: src/components/Calendar.vue
+#, fuzzy
+msgid "S,M,T,W,T,F,S"
+msgstr "S, M, T, W, T, F, S"
