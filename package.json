@@ -19,7 +19,7 @@
     "test:unit": "cross-env NODE_ICU_DATA=node_modules/full-icu vue-cli-service test:unit",
     "yarn link": "yarn link",
     "storybook": "start-storybook -s ./stories/assets -p 6006",
-    "build-storybook": "build-storybook -o docs -s ./stories/assets"
+    "build-storybook": "build-storybook -o docs-build -s ./stories/assets"
   },
   "main": "src",
   "dependencies": {
