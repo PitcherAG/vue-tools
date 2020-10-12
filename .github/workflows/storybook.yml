@@ -1,7 +1,7 @@
 name: Build and Deploy Storybook
 on: 
   push:
-    branches: [ master ]
+    branches: [ feature-docs-storybook-new-kouts ]
 jobs:
   build-and-deploy-storybook:
     runs-on: ubuntu-latest
