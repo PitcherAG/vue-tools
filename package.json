@@ -19,7 +19,8 @@
     "test:unit": "cross-env NODE_ICU_DATA=node_modules/full-icu vue-cli-service test:unit",
     "yarn link": "yarn link",
     "storybook": "start-storybook -s ./stories/assets -p 6006",
-    "build-storybook": "build-storybook"
+    "build:storybook": "build-storybook -o storybook-build -s ./stories/assets",
+    "deploy:storybook": "npm run build:storybook && storybook-to-ghpages -e=storybook-build && rimraf storybook-build"
   },
   "main": "src",
   "dependencies": {
@@ -38,6 +39,7 @@
     "@storybook/addon-actions": "^6.0.26",
     "@storybook/addon-essentials": "^6.0.26",
     "@storybook/addon-links": "^6.0.26",
+    "@storybook/storybook-deployer": "^2.8.7",
     "@storybook/vue": "^6.0.26",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
