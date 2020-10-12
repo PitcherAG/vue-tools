@@ -23,3 +23,11 @@ For more information about how Storybook is used, head over to the official [doc
 
 ### Menu order
 You can change the desired menu order of items in the left menu by editing the `.storybook/review.js` file
+
+### Deploy Docs
+Basically just run `npm run deploy:storybook` to deploy docs to github pages.
+Deploy script will do:
+- build files to `storybook-build` folder
+- push the content of `storybook-build` folder to `gh-pages` branch
+- delete `storybook-build` folder from the project
+- github in it's turn will deploy the `gh-pages` live
