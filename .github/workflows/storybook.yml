@@ -10,11 +10,11 @@ jobs:
         uses: actions/checkout@v2.3.1 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
         with:
           persist-credentials: false
-      - name: Set email
-        run: git config --global user.email "developer-one@pitcher.com"
-      - name: Set username
-        run: git config --global user.name "Pitcher Developer One"
-      - name: Install and Build 🔧
+      # - name: Set email
+      #   run: git config --global user.email "developer-one@pitcher.com"
+      # - name: Set username
+      #   run: git config --global user.name "Pitcher Developer One"
+      # - name: Install and Build 🔧
         run: |
           npm install
           npm run build-storybook
