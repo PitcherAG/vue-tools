@@ -9,8 +9,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
       - name: npm install
         run: npm install
       - name: npm run build-storybook
