@@ -33,7 +33,7 @@ async function query(query, db = null) {
             console.log('cache hit')
             return resolve(cache[query].result)
         }
-
+        const start = new Date()
         fireEvent('dbFunction', {
             db: db ? db : defaultDatabase,
             iosMode: true,
@@ -41,6 +41,10 @@ async function query(query, db = null) {
             query: query
         })
             .then(e => {
+                const time = new Date() - start
+                if (time > 1000) {
+                    console.warn('slow query (' + (time / 1000).toFixed(2) + 's): ' + query)
+                }
                 const result = []
                 if (e.error) {
                     console.error(query)
