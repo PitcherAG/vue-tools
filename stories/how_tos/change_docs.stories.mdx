@@ -3,17 +3,16 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="How Tos/How to change these docs" />
 
 # How to change these docs
-This documentation is written with [Storybook](https://storybook.js.org/) and served on GitHub Pages
+This documentation is written with [Storybook](https://storybook.js.org/) and served online using [GitHub Pages](https://pages.github.com/) from the `gh-pages` branch of the project.
 
 ## Quick start
 
-
 ### Content
-Documentation is located inside the `stories` folder as extended Markdown `.mdx` files which are essentially
+Documentation files are located inside the `stories` folder as extended Markdown `.mdx` files which are essentially
 a mixture of plain-old `Markdown` and `JSX`, read more about it [here](https://storybook.js.org/docs/vue/writing-docs/mdx#gatsby-focus-wrapper).
 
 ### Preview
-In order to start the local Story book dev server
+In order to start the local Storybook dev server
 ```
 npm run storybook
 ```
@@ -21,13 +20,18 @@ You can then preview the documentation in your browser on http://localhost:6006
 
 For more information about how Storybook is used, head over to the official [documentation](https://storybook.js.org/docs/vue/get-started/introduction).
 
-### Menu order
+### Customize menu items order
 You can change the desired menu order of items in the left menu by editing the `.storybook/review.js` file
 
 ### Deploy Docs
-Basically just run `npm run deploy:storybook` to deploy docs to github pages.
-Deploy script will do:
-- build files to `storybook-build` folder
-- push the content of `storybook-build` folder to `gh-pages` branch
-- delete `storybook-build` folder from the project
-- github in it's turn will deploy the `gh-pages` live
+In order to deploy the docs to GitHub Pages
+```
+npm run deploy:storybook
+```
+What the build script does under the hood is:
+- Build files to `storybook-build` folder
+- Push the contents of `storybook-build` folder to the `gh-pages` branch
+- Delete `storybook-build` folder from the project
+
+> Note: Storybook is served from the `gh-pages` branch of the project.  
+> Once the deployment script is run it might take some time for the changes to appear live.
