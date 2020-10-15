@@ -1,9 +1,13 @@
 import { fireEvent } from '../event'
 
 let cache = {}
-const cacheEnabled = false
-const cacheTimeout = 500
-const defaultDatabase = 'pitcher'
+
+const dbSettings = {
+    cacheEnabled: false,
+    cacheTimeout: 500,
+    defaultDatabase: 'pitcher',
+    longQueryWarning: false
+}
 
 function cacheQuery(query, result) {
     cache[query] = {
@@ -18,31 +22,31 @@ function clearCache() {
 
 function hasCached(query) {
     return (
-        cacheEnabled &&
+        dbSettings.cacheEnabled &&
         !query.toLowerCase().includes('delete') &&
         !query.toLowerCase().includes('insert') &&
         Object.prototype.hasOwnProperty.call(cache, query) &&
-        cache[query].time + cacheTimeout > Date.now()
+        cache[query].time + dbSettings.cacheTimeout > Date.now()
     )
 }
 
-async function query(query, db = null) {
+async function query(query, db = null, removeNull = false) {
     console.log(query)
     return new Promise((resolve, reject) => {
-        if (hasCached(query) && cacheEnabled) {
+        if (hasCached(query) && dbSettings.cacheEnabled) {
             console.log('cache hit')
             return resolve(cache[query].result)
         }
         const start = new Date()
         fireEvent('dbFunction', {
-            db: db ? db : defaultDatabase,
+            db: db ? db : dbSettings.defaultDatabase,
             iosMode: true,
             pType: 'query',
             query: query
         })
             .then(e => {
                 const time = new Date() - start
-                if (time > 1000) {
+                if (time > 1000 && dbSettings.longQueryWarning) {
                     console.warn('slow query (' + (time / 1000).toFixed(2) + 's): ' + query)
                 }
                 const result = []
@@ -68,7 +72,9 @@ async function query(query, db = null) {
                             const o = JSON.parse(res[j])
                             for (const n in o) {
                                 if (Object.prototype.hasOwnProperty.call(o, n) && n !== 'attributes') {
-                                    obj[n] = o[n]
+                                    if (!(removeNull && o[n] === null)) {
+                                        obj[n] = o[n]
+                                    }
                                 }
                             }
                         } else {
@@ -81,7 +87,7 @@ async function query(query, db = null) {
                     }
                     result.push(obj)
                 }
-                if (cacheEnabled) {
+                if (dbSettings.cacheEnabled) {
                     cacheQuery(query, result)
                 }
                 resolve(result)
@@ -90,4 +96,4 @@ async function query(query, db = null) {
     })
 }
 
-export { cacheEnabled, cacheTimeout, clearCache, defaultDatabase, query }
+export { clearCache, dbSettings, query }

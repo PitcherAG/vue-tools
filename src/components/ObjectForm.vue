@@ -506,7 +506,7 @@ export default {
         }
 
         const emitUpdate = () => {
-            console.log('update', state.obj)
+            //console.log('update', state.obj)
             attrs.emit('input', state.obj)
         }
 
