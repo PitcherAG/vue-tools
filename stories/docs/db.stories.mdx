@@ -5,7 +5,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 # DB Queries
 
 ## Query
-Queries the local database, handles error handling and will convert results into objects.
+Queries the local database, handles error handling and converts results into JavaScript objects.
 
 Example:
 ```javascript
@@ -17,7 +17,7 @@ query('select * from tbl_event_v1').then(e => window.console.log(e))
 
 ## contextQuery
 
-`contextQuery` uses a template syntax and enriches the query function dramatically. 
+`contextQuery` uses a mustache template syntax and enriches the query function dramatically. 
 As a prerequisite it needs both `loadConfig()` and `loadParams()` to be executed before calling it the first time.
 
 As a result `contextQuery` has knowledge about the current environment and provides you with:
