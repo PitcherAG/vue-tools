@@ -22,6 +22,15 @@ export async function loadSchema(objectName) {
     }
 }
 
+export async function getRecordTypeId(objectName, recordTypeName) {
+    const schema = await loadSchema(objectName)
+    for (const typ of schema.recordTypeInfos) {
+        if (typ.name === recordTypeName) {
+            return typ.recordTypeId
+        }
+    }
+}
+
 export async function getField(objectName, field_name) {
     const schema = await loadSchema(objectName)
     for (const field of schema.fields) {
