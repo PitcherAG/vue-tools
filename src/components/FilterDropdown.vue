@@ -197,13 +197,9 @@ export default {
             type: String,
             validator: val => validateSize(val, 'Dropdown.vue')
         },
-        paginateItems: {
-            type: Boolean,
-            default: true
-        },
-        itemsStart: {
-            type: [Number, String],
-            default: 2
+        itemsPerPage: {
+            type: Number,
+            default: null
         }
     },
     emits: ['input'],
@@ -223,7 +219,7 @@ export default {
             hasActionsSlot: !!slots.actions,
             hasPrependListSlot: !!slots['prepend-list'],
             hasAppendListSlot: !!slots['append-list'],
-            itemsVisible: props.itemsStart
+            itemsVisible: props.itemsPerPage
         })
 
         const containerAttr = computed(() => {
@@ -275,8 +271,6 @@ export default {
         }))
 
         const parsedItems = computed(() => {
-            // console.log(state);
-
             if (!props.items) {
                 return []
             }
@@ -305,8 +299,6 @@ export default {
         const listItems = computed(() => {
             let temp = parsedItems.value
 
-            // console.log(temp)
-
             if (state.searchKey) {
                 temp = search(temp, state.searchKey, ['value', 'text'])
             }
@@ -316,7 +308,7 @@ export default {
                 state.shouldSort = false
             }
 
-            if (props.paginateItems) {
+            if (props.itemsPerPage) {
                 temp = temp.slice(0, state.itemsVisible)
             }
 
@@ -434,7 +426,7 @@ export default {
         }
 
         function loadMore() {
-            const toSet = state.itemsVisible + props.itemsStart
+            const toSet = state.itemsVisible + props.itemsPerPage
             state.itemsVisible = toSet > parsedItems.value.length ? parsedItems.value.length : toSet
             root.$nextTick(() => {
                 uiGridEl.value.scrollTop = uiGridEl.value.scrollHeight
@@ -442,7 +434,7 @@ export default {
         }
 
         const showLoadMore = computed(() => {
-            if (props.paginateItems && parsedItems.value.length !== state.itemsVisible) {
+            if (props.itemsPerPage && parsedItems.value.length !== state.itemsVisible) {
                 return true
             }
             return false
