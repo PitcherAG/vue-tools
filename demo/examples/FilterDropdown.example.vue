@@ -38,7 +38,7 @@
             </template>
         </div>
 
-        <h4>Perf example</h4>
+        <h4>Performance example with {{ perfList.length }} items - pagination enabled</h4>
         <div class="ui grid">
             <div class="four wide column">
                 <FilterDropdown
@@ -46,13 +46,12 @@
                     color="blue"
                     basic
                     fluid
-                    title="Perf"
+                    title="Names"
+                    :items-per-page="20"
                     :items="perfList"
                     @input="inputTest"
                 />
-            </div>
-            <div class="four wide column">
-                {{ selectedPerfItems }} - {{ selectedPerfItems.length }}
+                <!-- {{ selectedPerfItems }} - {{ selectedPerfItems.length }} -->
             </div>
         </div>
     </div>
