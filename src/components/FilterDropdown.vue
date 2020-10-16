@@ -120,8 +120,8 @@
                     <!-- not an item, put as plain text -->
                     <template v-else>{{ item.text }}</template>
                 </div>
-                <div v-if="showLoadMore" class="header text-center">
-                    <a href="#" class="d-block" @click="loadMore">Load more</a>
+                <div v-if="showLoadMore" class="a-container load-more mt-2 mb-2">
+                    <a href="#" class="d-block" @click="loadMore">{{ $gettext('Load more') }}</a>
                 </div>
             </div>
 
@@ -533,7 +533,7 @@ export default {
         }
     }
 
-    .text-center {
+    .load-more {
         text-align: center;
     }
 }
