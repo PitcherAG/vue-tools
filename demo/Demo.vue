@@ -1,19 +1,16 @@
 <template>
     <div class="pt-4 fill-height">
-        <h2>Demo Page</h2>
+        <h2 class="mb-1">Demo Page</h2>
+        <select v-model="selectedPage">
+            <option v-for="page in pages" :key="page.value" :value="page.value">{{ page.text }}</option>
+        </select>
         <div class="ui divider" />
-        <!-- <ModalEx /> -->
-        <!-- <NumpadInputEx /> -->
-        <!-- <CalendarEx /> -->
-        <!-- <DataTableEx /> -->
-        <!-- <DropdownEx /> -->
-        <FilterEx />
-        <!-- <FileCardEx /> -->
-        <!-- <ProgressBarEx /> -->
+        <component :is="selectedPage" />
     </div>
 </template>
 
 <script>
+import { ref } from '@vue/composition-api'
 import CalendarEx from './examples/Calendar.example.vue'
 import DataTableEx from './examples/DataTable.example.vue'
 import DropdownEx from './examples/Dropdown.example.vue'
@@ -34,7 +31,47 @@ export default {
         NumpadInputEx,
         ProgressBarEx
     },
-    setup() {}
+    setup() {
+        const pages = ref([
+            {
+                text: 'Modal',
+                value: 'ModalEx'
+            },
+            {
+                text: 'Numpad input',
+                value: 'NumpadInputEx'
+            },
+            {
+                text: 'Calendar',
+                value: 'CalendarEx'
+            },
+            {
+                text: 'Datatable',
+                value: 'DataTableEx'
+            },
+            {
+                text: 'Dropdown',
+                value: 'DropdownEx'
+            },
+            {
+                text: 'Filter Dropdown',
+                value: 'FilterEx'
+            },
+            {
+                text: 'File Card',
+                value: 'FileCardEx'
+            },
+            {
+                text: 'Progress Bar',
+                value: 'ProgressBarEx'
+            }
+        ])
+        const selectedPage = ref('ModalEx')
+        return {
+            pages,
+            selectedPage
+        }
+    }
 }
 </script>
 
