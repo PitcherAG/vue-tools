@@ -37,11 +37,29 @@
                 />
             </template>
         </div>
+
+        <h4>Perf example</h4>
+        <div class="ui grid">
+            <div class="four wide column">
+                <FilterDropdown
+                    v-model="selectedPerfItems"
+                    color="blue"
+                    basic
+                    fluid
+                    title="Perf"
+                    :items="perfList"
+                />
+            </div>
+            <div class="four wide column">
+                {{ selectedPerfItems }} - {{ selectedPerfItems.length }}
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import FilterDropdown from '@/components/FilterDropdown'
+import perfList from './dummy.fiterDropdown';
 import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
@@ -51,6 +69,8 @@ export default {
     props: {},
     setup() {
         const state = reactive({
+            selectedPerfItems: [],
+            perfList,
             recordTypeSaved: [],
             recordTypes: [
                 {
