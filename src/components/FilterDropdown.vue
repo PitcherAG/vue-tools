@@ -428,6 +428,7 @@ export default {
         function loadMore() {
             const toSet = state.itemsVisible + props.itemsPerPage
             state.itemsVisible = toSet > parsedItems.value.length ? parsedItems.value.length : toSet
+            // Scroll the list items container to the bottom when items are added
             root.$nextTick(() => {
                 uiGridEl.value.scrollTop = uiGridEl.value.scrollHeight
             })
