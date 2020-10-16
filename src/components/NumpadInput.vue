@@ -324,9 +324,7 @@ export default defineComponent({
             const parsed = typeof localState.localValue === 'number' ? parseFloat(val) : val
 
             if (!props.lazy) {
-                setTimeout(() => {
-                    ctx.emit('input', parsed)
-                }, 10)
+                ctx.emit('input', parsed)
             }
         }
 
