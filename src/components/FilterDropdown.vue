@@ -120,8 +120,8 @@
                     <!-- not an item, put as plain text -->
                     <template v-else>{{ item.text }}</template>
                 </div>
-                <div v-if="showLoadMore" class="header" style="text-align: center;">
-                    <a href="#" @click="loadMore">Load more</a>
+                <div v-if="showLoadMore" class="header text-center">
+                    <a href="#" class="d-block" @click="loadMore">Load more</a>
                 </div>
             </div>
 
@@ -531,6 +531,10 @@ export default {
                 cursor: pointer;
             }
         }
+    }
+
+    .text-center {
+        text-align: center;
     }
 }
 </style>
