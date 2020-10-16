@@ -121,7 +121,7 @@
                     <template v-else>{{ item.text }}</template>
                 </div>
                 <div v-if="showLoadMore" class="a-container load-more mt-2 mb-2">
-                    <a href="#" class="d-block" @click="loadMore">{{ $gettext('Load more') }}</a>
+                    <a href="#" class="d-block" @click.prevent="loadMore">{{ $gettext('Load more') }}</a>
                 </div>
             </div>
 
