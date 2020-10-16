@@ -2,7 +2,7 @@
 
 ## [UNRELEASED]
 
-## 1.4.8
+## 1.4.9
 ### Changed
 - import { createStore } from `../store` in i18n
 - documentation is migrated from docsify to storybook
