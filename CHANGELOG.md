@@ -1,8 +1,14 @@
 # Changelog
 
-## [Unreleased]
+## [UNRELEASED]
+
+## 1.4.8
 ### Changed
-- import {createStore} from `../store` in i18n
+- import { createStore } from `../store` in i18n
+- documentation is migrated from docsify to storybook
+- slow query warning added in `query.js`
+- improvements in `contextQuery`
+- added `getRecordTypeId` function in `sfdcSchema.js`
 
 ## 1.4.7
 
