@@ -3,7 +3,8 @@ import { useConfigStore } from '../config'
 import { useParamsStore } from '../params'
 import { renderContext } from '../utils'
 
-export async function contextQuery(query, context, db = null) {
+export async function contextQuery(query, context, db = null, removeNull = false) {
+    removeNull = true
     if (!query) {
         throw Error('no query provided')
     }
@@ -31,7 +32,7 @@ export async function contextQuery(query, context, db = null) {
     }
     const q = renderContext(query, tableDict)
     try {
-        const result = await oQuery(q, db)
+        const result = await oQuery(q, db, removeNull)
         return result
     } catch (e) {
         console.error(q, tableDict)
