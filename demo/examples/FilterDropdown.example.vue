@@ -48,6 +48,7 @@
                     fluid
                     title="Perf"
                     :items="perfList"
+                    @input="inputTest"
                 />
             </div>
             <div class="four wide column">
@@ -59,7 +60,7 @@
 
 <script>
 import FilterDropdown from '@/components/FilterDropdown'
-import perfList from './dummy.fiterDropdown';
+import perfList from './dummy.fiterDropdown'
 import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
@@ -68,6 +69,9 @@ export default {
     },
     props: {},
     setup() {
+        const inputTest = () => {
+            // console.log('hello')
+        }
         const state = reactive({
             selectedPerfItems: [],
             perfList,
@@ -384,7 +388,7 @@ export default {
             // console.log(v)
         }
 
-        return { ...toRefs(state), test }
+        return { ...toRefs(state), test, inputTest }
     }
 }
 </script>
