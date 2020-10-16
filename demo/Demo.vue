@@ -32,6 +32,7 @@ export default {
         ProgressBarEx
     },
     setup() {
+        const selectedPage = ref('ModalEx')
         const pages = ref([
             {
                 text: 'Modal',
@@ -66,7 +67,6 @@ export default {
                 value: 'ProgressBarEx'
             }
         ])
-        const selectedPage = ref('ModalEx')
         return {
             pages,
             selectedPage
