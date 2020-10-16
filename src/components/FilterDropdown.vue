@@ -376,9 +376,11 @@ export default {
 
             // select
             if (!isSelected(item)) {
-                return props.returnType === 'object'
-                    ? emit('input', [...props.value, item])
-                    : emit('input', [...props.value, item[props.returnType]])
+                if (props.returnType === 'object') {
+                    return emit('input', props.value.concat([item]))
+                } else {
+                    return emit('input', props.value.concat([item[props.returnType]]))
+                }
             }
 
             // unselect
