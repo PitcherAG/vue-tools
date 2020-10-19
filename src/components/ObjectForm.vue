@@ -119,6 +119,10 @@ export default {
         ignoreExternalIdValidation: {
             type: Boolean,
             default: false
+        },
+        allFieldsReadOnly: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -254,7 +258,7 @@ export default {
                                     if (props.customSettings.includes[f.name]) {
                                         f.settings = props.customSettings[f.name]
                                     }
-                                    if (props.readOnlyFields.includes(f.name)) {
+                                    if (fieldShouldBeReadOnly(f)) {
                                         f.updateable = false
                                     } else if (props.customReferences && props.customReferences[f.name]) {
                                         f.loadExternalReferences(props.customReferences[f.name])
@@ -316,7 +320,7 @@ export default {
                                                         if (props.customSettings[field.name]) {
                                                             field.settings = props.customSettings[field.name]
                                                         }
-                                                        if (props.readOnlyFields.includes(field.name)) {
+                                                        if (fieldShouldBeReadOnly(field)) {
                                                             field.updateable = false
                                                         } else if (
                                                             props.customReferences &&
@@ -361,7 +365,7 @@ export default {
                                     console.warn('removed field')
                                     continue
                                 }
-                                if (props.readOnlyFields.includes(f.name)) {
+                                if (fieldShouldBeReadOnly(f)) {
                                     f.updateable = false
                                 }
                                 if (f.nillable && f.name !== 'Name') {
@@ -506,7 +510,7 @@ export default {
         }
 
         const emitUpdate = () => {
-            //console.log('update', state.obj)
+            // console.log('update', state.obj)
             attrs.emit('input', state.obj)
         }
 
@@ -522,6 +526,10 @@ export default {
                 }
             }
             return ''
+        }
+
+        const fieldShouldBeReadOnly = field => {
+            return props.readOnlyFields.includes(field.name) || props.allFieldsReadOnly
         }
 
         return {
