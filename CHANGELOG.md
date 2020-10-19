@@ -2,6 +2,12 @@
 
 ## [UNRELEASED]
 
+## 1.4.10
+### Changed
+- Added "Load more" feature into FilterDropdown component
+- Updated docs
+- Updated Demo with a demo page selector
+
 ## 1.4.9
 ### Changed
 - import { createStore } from `../store` in i18n
@@ -20,7 +26,7 @@
 
 ## 1.4.6
 
-- include i18n files 
+- include i18n files
 
 ## 1.4.5
 

@@ -98,6 +98,7 @@
             <!-- Items -->
             <div
                 v-if="listItems.length > 0"
+                ref="uiGridEl"
                 class="ui grid fluid vertical menu sub-menu"
                 :style="{ maxHeight: parsePxStyle(scrollHeight) }"
                 @touchstart="isScrolling = false"
@@ -119,6 +120,9 @@
                     <!-- not an item, put as plain text -->
                     <template v-else>{{ item.text }}</template>
                 </div>
+                <div v-if="showLoadMore" class="a-container load-more mt-2 mb-2">
+                    <a href="#" class="d-block" @click.prevent="loadMore">{{ $gettext('Load more') }}</a>
+                </div>
             </div>
 
             <!-- Append list slot -->
@@ -129,7 +133,7 @@
     </div>
 </template>
 <script>
-import { computed, reactive, toRefs, onMounted, watch } from '@vue/composition-api'
+import { computed, reactive, toRefs, onMounted, watch, ref } from '@vue/composition-api'
 import Checkbox from './Checkbox'
 import { parsePxStyle, validateSize } from './mixins'
 import { search } from '../utils'
@@ -192,10 +196,16 @@ export default {
         size: {
             type: String,
             validator: val => validateSize(val, 'Dropdown.vue')
+        },
+        itemsPerPage: {
+            type: Number,
+            default: null
         }
     },
     emits: ['input'],
     setup(props, { refs, emit, root, slots }) {
+        const uiGridEl = ref(null)
+
         // local state
         const state = reactive({
             searchKey: '',
@@ -208,7 +218,8 @@ export default {
             hasHeaderSlot: !!slots.header,
             hasActionsSlot: !!slots.actions,
             hasPrependListSlot: !!slots['prepend-list'],
-            hasAppendListSlot: !!slots['append-list']
+            hasAppendListSlot: !!slots['append-list'],
+            itemsVisible: props.itemsPerPage
         })
 
         const containerAttr = computed(() => {
@@ -297,6 +308,10 @@ export default {
                 state.shouldSort = false
             }
 
+            if (props.itemsPerPage) {
+                temp = temp.slice(0, state.itemsVisible)
+            }
+
             return temp
         })
 
@@ -376,9 +391,11 @@ export default {
 
             // select
             if (!isSelected(item)) {
-                return props.returnType === 'object'
-                    ? emit('input', [...props.value, item])
-                    : emit('input', [...props.value, item[props.returnType]])
+                if (props.returnType === 'object') {
+                    return emit('input', props.value.concat([item]))
+                } else {
+                    return emit('input', props.value.concat([item[props.returnType]]))
+                }
             }
 
             // unselect
@@ -408,6 +425,22 @@ export default {
             emit('input', [])
         }
 
+        function loadMore() {
+            const toSet = state.itemsVisible + props.itemsPerPage
+            state.itemsVisible = toSet > parsedItems.value.length ? parsedItems.value.length : toSet
+            // Scroll the list items container to the bottom when items are added
+            root.$nextTick(() => {
+                uiGridEl.value.scrollTop = uiGridEl.value.scrollHeight
+            })
+        }
+
+        const showLoadMore = computed(() => {
+            if (props.itemsPerPage && parsedItems.value.length !== state.itemsVisible) {
+                return true
+            }
+            return false
+        })
+
         onMounted(() => {
             // save initial button width
             if (!props.compact && !props.width) {
@@ -420,6 +453,7 @@ export default {
         })
 
         return {
+            uiGridEl,
             ...toRefs(state),
             containerAttr,
             menuAttr,
@@ -429,6 +463,8 @@ export default {
             closeMenu,
             selectAll,
             reset,
+            loadMore,
+            showLoadMore,
             isSelected,
             refresh,
             parsePxStyle
@@ -488,6 +524,10 @@ export default {
                 cursor: pointer;
             }
         }
+    }
+
+    .load-more {
+        text-align: center;
     }
 }
 </style>
