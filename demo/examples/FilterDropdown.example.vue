@@ -37,11 +37,29 @@
                 />
             </template>
         </div>
+
+        <h4>Performance example with {{ perfList.length }} items - pagination enabled</h4>
+        <div class="ui grid">
+            <div class="four wide column">
+                <FilterDropdown
+                    v-model="selectedPerfItems"
+                    color="blue"
+                    basic
+                    fluid
+                    title="Names"
+                    :items-per-page="20"
+                    :items="perfList"
+                    @input="inputTest"
+                />
+                <!-- {{ selectedPerfItems }} - {{ selectedPerfItems.length }} -->
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import FilterDropdown from '@/components/FilterDropdown'
+import perfList from './dummy.fiterDropdown'
 import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
@@ -50,7 +68,12 @@ export default {
     },
     props: {},
     setup() {
+        const inputTest = () => {
+            // console.log('hello')
+        }
         const state = reactive({
+            selectedPerfItems: [],
+            perfList,
             recordTypeSaved: [],
             recordTypes: [
                 {
@@ -364,7 +387,7 @@ export default {
             // console.log(v)
         }
 
-        return { ...toRefs(state), test }
+        return { ...toRefs(state), test, inputTest }
     }
 }
 </script>
