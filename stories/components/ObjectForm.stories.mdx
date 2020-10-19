@@ -7,14 +7,20 @@ import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
 Displays a salesforce object as a form, uses layouts if available otherwise uses schemas. Layouts are supported by android at the moment only.
 
 ### Properties:
-- objectType(require: true, type: String)
-- fields(type: Array, strings, which fields to display in the form, default displays all fields from schema)
-- excludeFields(type: Array, strings, which fields to exclude),
-- hasSave(type: Boolean, if save button is displayed or not)
-- id(type: String, id of existing object for form fill up)
+- objectType (require: true, type: String)
+- fields (type: Array, strings, which fields to display in the form, default displays all fields from schema)
+- excludeFields (type: Array, strings, which fields to exclude)
+- readOnlyFields (type: Array, strings, which fields to set as read-only)
+- customReferences (type: Object)
+- customSettings (type: Object)
+- hideHelpText (type: Boolean)
+- hasSave (type: Boolean, if save button is displayed or not)
+- id (type: String, id of existing object for form fill up)
 - recordType (type: String, record type to use for form)
-- obj(type: Object, object to use for form)
-- onSave(type: Function, callback on form save)
+- value (type: Object)
+- onSave (type: Function, callback on form save)
+- ignoreExternalIdValidation (type: Boolean)
+- allFieldsReadOnly (type: Boolean, set all fields read-only regardless of whether they are included in readOnlyFields Array)
 
 ### Methods:
 - save
