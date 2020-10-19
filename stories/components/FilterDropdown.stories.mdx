@@ -1,7 +1,7 @@
 import { Meta, Story, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
 
 import FilterDropdown from '@/components/FilterDropdown'
-import { options } from './data/filter-dropdown.data'
+import { options, names } from './data/filter-dropdown.data'
 
 <!-- Story args -->
 <!-- https://storybook.js.org/docs/react/writing-stories/args -->
@@ -83,6 +83,9 @@ export const argTypes = {
     size: {
         description: 'mini | tiny | small | medium | large | big | huge | massive'
     },
+    itemsPerPage: {
+        description: 'enables the "Load more" pagination feature and sets number of items of each page'
+    },
     /* Slots */
     header: {
         description: 'slot to replace `.h-container` | `{ closeMenu }`'
@@ -124,6 +127,11 @@ Fomantic FilterDropdown component
 
 ## Disabled
 <Story name="Disabled" args={{ disabled: true }}>
+    {Template.bind({})}
+</Story>
+
+## Load more
+<Story name="Load more" args={{ title: 'Names', items: names, itemsPerPage: 10 }}>
     {Template.bind({})}
 </Story>
 
