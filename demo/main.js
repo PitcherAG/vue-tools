@@ -3,6 +3,7 @@ import VueCompositionApi from '@vue/composition-api'
 import { TranslationPlugin } from '@'
 import App from './App.vue'
 
+Vue.config.performance = true
 Vue.config.productionTip = false
 
 Vue.use(VueCompositionApi)
