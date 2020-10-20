@@ -2,6 +2,11 @@
 
 ## [UNRELEASED]
 
+## 1.4.11
+### Changed
+- Added capability to make all fields read-only in ObjectForm
+- Updated docs
+
 ## 1.4.10
 ### Changed
 - Added "Load more" feature into FilterDropdown component
