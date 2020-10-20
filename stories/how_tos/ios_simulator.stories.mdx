@@ -1,0 +1,39 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="How Tos/Development Pitcher Impact on iOS" />
+
+# Development Pitcher Impact on iOS
+
+## Setup iOS simulator
+
+1. Download the latest build of Pitcher Impact app, extract it somewhere on your hard drive
+> We' re going to create a dummy project just to be able to start-up the simulator.
+2. Open Xcode and select → Create new Xcode project → iOS platform → App.  
+Fill out a product name for the project, click Next
+3. Choose a location on your hard drive to save the project, click Create
+> Be careful to uncheck the option `create Git repository on Mac`
+4. Click the play button entitled "Build and then run the current scheme", at the top left
+> This will open the iOS simulator
+5. Choose your preferred iOS device e.g iPad Air (4th Generation), by right clicking the Simulator icon on the dock and navigating through the "Device" menu
+6. We can now close Xcode and delete the created project as we won't be needing it anymore
+7. For convenience you can keep the iOS simulator icon in the dock by right clicking its icon and selecting options → Keep in Dock
+8. Drag and drop the Pitcher app from the location you've extracted it to the simulator's desktop
+
+> You now have the Pitcher app installed inside the iOS simulator
+
+## Pitcher Impact start-up
+1. Open the Pitcher app inside the simulator.  
+Make sure the orientation of the simulator is on landscape
+2. Inside Pitcher app select Login with password → Login with SSO → use email
+> You'll be redirected to your Microsoft 365 login screen, use your Microsoft account to authenticate
+3. Once you are logged in, select your preferred instance then on the questions asked answer:
+- Download Newest first
+- Allow while using app
+- Allow 
+- Skip instructions
+- Allow access to calendar
+> In order to start debugging we must first launch an "Interactive" for the Safari debugger to be able to attach to.
+5. Start watching the project's files for changes by running `npm run "ios watch link"` in the terminal
+6. To enable the debugging console open Safari and select Preferences → Advanced → Show develop on bar for developing/debugging
+7. Go to Develop menu and select the application you want to attach the debugger to  
+e.g assuming you want to debug the "order taking" interactive go to: Develop → Simulator - iPad Air (4th Generation) iOS 14.0 → order taking
