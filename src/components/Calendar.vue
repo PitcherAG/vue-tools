@@ -111,7 +111,7 @@ export default {
     },
     emits: ['input', 'onBeforeChange', 'onShow', 'onVisible', 'onHide', 'onHidden', 'onSelect'],
 
-    setup(props, { emit, refs }) {
+    setup(props, { emit, refs, root }) {
         const placeholder = ref()
 
         const inputAttr = computed(() => ({
@@ -128,7 +128,7 @@ export default {
             }
         }))
 
-        const parseDate = (dateString) => {
+        const parseDate = dateString => {
             if (!dateString) return undefined
 
             if (typeof dateString === 'Date') {
@@ -242,7 +242,7 @@ export default {
         }
 
         onMounted(() => {
-            setTimeout(() => {
+            root.$nextTick(() => {
                 initCalendar()
             })
         })
