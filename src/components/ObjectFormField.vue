@@ -94,10 +94,18 @@
             <template v-else-if="field.type === 'date' || field.type === 'datetime'">
                 {{ formatDate(value) }}
             </template>
-            <!-- default -->
-            <template v-else>
-                {{ valueLabel || value ? value : '-' }}
+            <!-- value label -->
+            <template v-else-if="valueLabel">
+                {{ valueLabel }}
             </template>
+            <!-- value -->
+            <template v-else-if="value">
+                {{ value }}
+            </template>
+            <!-- default -->
+            <span v-else class="ui grey text">
+                -
+            </span>
         </div>
     </sui-form-field>
 </template>
