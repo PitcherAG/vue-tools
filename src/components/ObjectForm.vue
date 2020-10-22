@@ -37,24 +37,29 @@
             />
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
-        <sui-form v-if="!state.needsRecordType && !validationError && state.layout && state.ready">
+        <sui-form v-if="!state.needsRecordType && !validationError && state.layout && state.ready" class="object-form">
             <fragment v-for="(section, sectionKey) in state.layout.visibleEditLayoutSections" :key="sectionKey">
-                <h4 class="ui header">{{ section.heading }}</h4>
-                <div v-for="(row, rowKey) in section.layoutRows" :key="rowKey" class="two fields">
-                    <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
-                        <template v-for="(comp, compKey) in item.layoutComponents">
-                            <ObjectFormField
-                                v-if="!comp.exclude"
-                                :key="compKey"
-                                v-model="state.obj[comp.value]"
-                                :value-label="toLabel(state.obj, comp.value)"
-                                :field="comp.field"
-                                :show-error="state.showErrors"
-                                :hide-help-text="hideHelpText"
-                                :label="item.label"
-                                @input="emitUpdate"
-                            />
-                        </template>
+                <h3 class="ui header">{{ section.heading }}</h3>
+                <div class="ui grid fields">
+                    <fragment v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
+                        <!-- Layout rows are ignored and fields are plotted one after another -->
+                        <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
+                            <template v-for="(comp, compKey) in item.layoutComponents">
+                                <ObjectFormField
+                                    v-if="!comp.exclude"
+                                    :key="compKey"
+                                    v-model="state.obj[comp.value]"
+                                    :value-label="toLabel(state.obj, comp.value)"
+                                    :field="comp.field"
+                                    :show-error="state.showErrors"
+                                    :hide-help-text="hideHelpText"
+                                    :label="item.label"
+                                    @input="emitUpdate"
+                                    :data-debug-name="comp.details.name"
+                                    :class="fieldsClass"
+                                />
+                            </template>
+                        </fragment>
                     </fragment>
                 </div>
             </fragment>
@@ -123,6 +128,10 @@ export default {
         allFieldsReadOnly: {
             type: Boolean,
             default: false
+        },
+        fieldsClass: {
+            type: String,
+            default: 'eight wide column'
         }
     },
 
@@ -548,24 +557,36 @@ export default {
 }
 </script>
 
-<style>
-.ui.form .field > label {
-    color: #7d7d7d;
-}
+<style lang="scss" scoped>
+.ui.form.object-form ::v-deep {
 
-.ui.form .fields {
-    margin: 0 -0.5em 0.5em;
-}
+    .field > label {
+        color: rgba(0,0,0,.7);
+    }
 
-.ui.form .field {
-    margin-bottom: 1.3em !important;
-}
+    .ui.grid.fields {
+        margin: -0.5em 0em 0em -0.5em;
+        padding-bottom: 0;
+    }
 
-.ui.form .ui.header {
-    margin-top: 1.5em;
-}
+    .field {
+        padding-top: 0;
+    }
 
-.ui.form .ui.header:first-child {
-    margin-top: 0.5em;
+    .field .ui.checkbox.toggle {
+        margin-top: 0.2em !important;
+        margin-bottom: -0.5em;
+    }
+
+    h3.ui.header {
+        margin-bottom: 0;
+        margin-top: 0.5em;
+        padding-bottom: 0.8em;
+    }
+
+    .ui.header:first-child {
+        margin-top: 0.5em;
+    }    
+
 }
 </style>
