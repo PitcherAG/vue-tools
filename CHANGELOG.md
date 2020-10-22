@@ -1,6 +1,8 @@
 # Changelog
 
 ## [UNRELEASED]
+### Added
+- config-gettext-upload
 
 ## 1.4.11
 ### Changed

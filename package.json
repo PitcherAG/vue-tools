@@ -1,12 +1,13 @@
 {
   "name": "@pitcher/vue-sdk",
-  "version": "1.4.10-beta.2",
+  "version": "1.4.10-beta.3",
   "description": "VueJS Development Tools for the use in Pitcher Impact",
   "author": "Pitcher AG",
   "bin": {
     "config-gettext-compile": "src/gettext/compile-cli.js",
     "config-gettext-extract": "src/gettext/extract-cli.js",
-    "config-gettext-translate": "src/gettext/translate-cli.js"
+    "config-gettext-translate": "src/gettext/translate-cli.js",
+    "config-gettext-upload": "src/gettext/upload-cli.js"
   },
   "scripts": {
     "build": "rimraf ./dist && babel src -d dist",
@@ -47,6 +48,7 @@
     "@vue/composition-api": "^0.6.6",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/test-utils": "1.0.0-beta.31",
+    "aws-sdk": "^2.776.0",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "chalk": "^4.1.0",
@@ -86,6 +88,7 @@
   },
   "files": [
     "/src",
+    "/locale/*.pot",
     "/locale/**/*.po",
     "/gettext.config.js"
   ]
