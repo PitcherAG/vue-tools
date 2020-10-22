@@ -79,9 +79,9 @@
         <small v-if="!hideHelpText && field.inlineHelpText" class="helper">{{ field.inlineHelpText }}</small>
     </sui-form-field>
     <!-- not updateable -->
-    <sui-form-field v-else :style="{ minHeight: !value ? '60px' : undefined }">
+    <sui-form-field v-else :style="{ minHeight: !value ? '1em' : undefined }">
         <label>{{ label || field.label }}</label>
-        <div class="pt-2" style="font-size:1.175em">
+        <div>
             <!-- bool -->
             <template v-if="field.type === 'boolean'">
                 {{ value ? 'yes' : 'no' }}
@@ -96,7 +96,7 @@
             </template>
             <!-- default -->
             <template v-else>
-                {{ valueLabel || value }}
+                {{ valueLabel || value ? value : '-' }}
             </template>
         </div>
     </sui-form-field>
