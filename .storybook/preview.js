@@ -18,7 +18,8 @@ export const parameters = {
           'How to debug',
           'How to start a new project',
           'How to deploy',
-          'How to change these docs'
+          'How to change these docs',
+          'Development Pitcher Impact on iOS'
         ],
         'Documentation',
         [
