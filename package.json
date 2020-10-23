@@ -42,7 +42,7 @@
     "@storybook/storybook-deployer": "^2.8.7",
     "@storybook/vue": "^6.0.26",
     "@vue/cli-plugin-babel": "~4.3.0",
-    "@vue/cli-plugin-eslint": "~4.3.0",
+    "@vue/cli-plugin-eslint": "~4.5.7",
     "@vue/cli-plugin-unit-jest": "^4.3.1",
     "@vue/cli-service": "^4.4.1",
     "@vue/composition-api": "^0.6.6",
