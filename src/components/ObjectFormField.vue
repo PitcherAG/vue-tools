@@ -107,7 +107,7 @@
                 <span v-else class="ui grey text">
                     -
                 </span>
-            </template>            
+            </template>
         </div>
     </sui-form-field>
 </template>
