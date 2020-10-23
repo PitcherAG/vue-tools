@@ -1,5 +1,5 @@
 const chalk = require('chalk')
-const extract = require('@pitcher/easygettext/src/extract')
+const extract = require('easygettext/src/extract')
 const fs = require('fs')
 const path = require('path')
 const util = require('util')
