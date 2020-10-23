@@ -83,31 +83,31 @@
         <label>{{ label || field.label }}</label>
         <div>
             <template v-if="value">
-                <!-- Bool -->
-                <template v-if="field.type === 'boolean'">
-                    {{ value ? 'yes' : 'no' }}
-                </template>
-                <!-- Currency -->
-                <template v-else-if="field.type === 'currency'">
-                    {{ formatCurrency(value) }}
-                </template>
-                <!-- Date -->
-                <template v-else-if="field.type === 'date' || field.type === 'datetime'">
-                    {{ formatDate(value) }}
-                </template>
-                <!-- Default -->
-                <template v-else>
-                    {{ value }}
-                </template>
-            </template>
-            <template v-else>
                 <template v-if="valueLabel">
                     {{ valueLabel }}
                 </template>
-                <span v-else class="ui grey text">
-                    -
-                </span>
+                <template v-else>
+                    <!-- Bool -->
+                    <template v-if="field.type === 'boolean'">
+                        {{ value ? 'yes' : 'no' }}
+                    </template>
+                    <!-- Currency -->
+                    <template v-else-if="field.type === 'currency'">
+                        {{ formatCurrency(value) }}
+                    </template>
+                    <!-- Date -->
+                    <template v-else-if="field.type === 'date' || field.type === 'datetime'">
+                        {{ formatDate(value) }}
+                    </template>
+                    <!-- Default -->
+                    <template v-else>
+                        {{ value }}
+                    </template>
+                </template>
             </template>
+            <span v-else class="ui grey text">
+                -
+            </span>
         </div>
     </sui-form-field>
 </template>
