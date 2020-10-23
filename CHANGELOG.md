@@ -2,22 +2,16 @@
 
 ## [UNRELEASED]
 
-## 1.4.12
-### Changed
-- ObjectForm fields now use Fomantic grid classes for fields layout (customizable as a prop)
-- Changed ObjectForm CSS to have a compact look
-- Added dash when no value exists in ObjectFormField
-
-## 1.4.11
-### Changed
-- Added capability to make all fields read-only in ObjectForm
-- Updated docs
-
-## 1.4.10
 ### Changed
 - Added "Load more" feature into FilterDropdown component
 - Updated docs
 - Updated Demo with a demo page selector
+- Added capability to make all fields read-only in ObjectForm
+- Updated docs
+- ObjectForm fields now use Fomantic grid classes for fields layout (customizable as a prop)
+- Changed ObjectForm CSS to have a compact look
+- Added dash when no value exists in ObjectFormField
+
 
 ## 1.4.9
 ### Changed
