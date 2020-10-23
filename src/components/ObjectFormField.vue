@@ -82,30 +82,32 @@
     <sui-form-field v-else :style="{ minHeight: !value ? '1em' : undefined }">
         <label>{{ label || field.label }}</label>
         <div>
-            <!-- bool -->
-            <template v-if="field.type === 'boolean'">
-                {{ value ? 'yes' : 'no' }}
+            <template v-if="value">
+                <!-- Bool -->
+                <template v-if="field.type === 'boolean'">
+                    {{ value ? 'yes' : 'no' }}
+                </template>
+                <!-- Currency -->
+                <template v-else-if="field.type === 'currency'">
+                    {{ formatCurrency(value) }}
+                </template>
+                <!-- Date -->
+                <template v-else-if="field.type === 'date' || field.type === 'datetime'">
+                    {{ formatDate(value) }}
+                </template>
+                <!-- Default -->
+                <template v-else>
+                    {{ value }}
+                </template>
             </template>
-            <!-- currency -->
-            <template v-else-if="field.type === 'currency'">
-                {{ formatCurrency(value) }}
-            </template>
-            <!-- date -->
-            <template v-else-if="field.type === 'date' || field.type === 'datetime'">
-                {{ formatDate(value) }}
-            </template>
-            <!-- value label -->
-            <template v-else-if="valueLabel">
-                {{ valueLabel }}
-            </template>
-            <!-- value -->
-            <template v-else-if="value">
-                {{ value }}
-            </template>
-            <!-- default -->
-            <span v-else class="ui grey text">
-                -
-            </span>
+            <template v-else>
+                <template v-if="valueLabel">
+                    {{ valueLabel }}
+                </template>
+                <span v-else class="ui grey text">
+                    -
+                </span>
+            </template>            
         </div>
     </sui-form-field>
 </template>
