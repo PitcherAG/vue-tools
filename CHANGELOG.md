@@ -2,6 +2,7 @@
 
 ## [UNRELEASED]
 
+## 1.4.10
 ### Changed
 - Added "Load more" feature into FilterDropdown component
 - Updated docs
