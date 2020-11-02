@@ -25,7 +25,7 @@ function getPath(obj, path, ignoreRoot = false) {
     }
 }
 
-function joinPath () {
+function joinPath() {
     const args = [].slice.call(arguments)
     let base = args[0]
     for (let i = 1; i < args.length; i++) {
