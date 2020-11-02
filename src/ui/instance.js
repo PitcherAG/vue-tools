@@ -31,7 +31,7 @@ function showUI() {
     Usually when UI is restored, last selected category needs to be selected.
     Value is saved to localstorage, and retrieved with this method
 */
-function getLastCategory() {
+export function getLastCategory() {
     const store = useServerJSONStore()
     const lastCategoryId =
         typeof localStorage !== 'undefined' ? localStorage.getItem(`${store.state.appID}.mainNavItem`) : null
@@ -45,7 +45,7 @@ function getLastCategory() {
 /*
     For some UIs, a default category can be set, to be selected when first initialized or restored
 */
-function getInitialCategory() {
+export function getInitialCategory() {
     const store = useServerJSONStore()
     if (store.state.categories) {
         return (

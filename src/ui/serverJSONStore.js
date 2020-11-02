@@ -1,7 +1,7 @@
 import { fireEvent } from '../event'
 import { waitForWindowProp, joinPath } from '../utils'
 import { createStore } from '../store'
-import { reactive } from '@vue/composition-api'
+import { reactive, computed } from '@vue/composition-api'
 import Vue from 'vue'
 import UI_CONSTANTS from '../constants/ui'
 
@@ -11,6 +11,8 @@ class ServerJSONStore {
     oneTimeLoadPresentations = false
     state = reactive({
         files: [],
+        uiFiles: computed(() => this.state.files.filter(file => file.shouldShowInUI)),
+        filteredUIFiles: computed(() => this.state.uiFiles.filter(file => file.shouldShowInUI)),
         slides: [],
         config: null,
         groups: null,
@@ -30,7 +32,8 @@ class ServerJSONStore {
         locale: null,
         userfullname: null,
         ajaxtoken: null,
-        isCustomerUI: false
+        isCustomerUI: false,
+        batteryLevel: 0
     })
 
     /*
@@ -44,8 +47,8 @@ class ServerJSONStore {
             }
             fireEvent('setCategory', { category: JSON.stringify(category) })
             this.state.category = category
-            if (this.firstLoad) {
-                this.firstLoad = false
+            if (!this.loaded) {
+                this.loaded = true
                 fireEvent('uiReady')
             }
         }
@@ -159,6 +162,29 @@ class ServerJSONStore {
             Object.assign(original, file)
         }
     }
+
+    /*
+        Favorite file Ids are retrieved separately, so files needs to be marked as favorite after that
+        isFavorite property is added as an observable
+    */
+    markFavorites(fileIdMapping) {
+        this.state.files.forEach(file => {
+            if (typeof file.isFavorite === 'undefined') {
+                Vue.set(file, 'isFavorite', fileIdMapping[file.ID] || false)
+            } else {
+                file.isFavorite = fileIdMapping[file.ID] || false
+            }
+        })
+        return this.state.files
+    }
+
+    /*
+        Impact tells UIs which files should be shown in UI at a moment
+        This filter might be due to now downloaded content(ios), or when call with pre selected is started (all platforms)
+    */
+    setAllowedIds(fileIds) {
+        this.state.allowedIDs = fileIds || []
+    }
 }
 
 export const useServerJSONStore = () => {
@@ -216,4 +242,13 @@ window.loadPresentations = function(presentationsObject) {
         store.parsePresentations(window.presentationsObject)
     }
     window.presentationsObject = presentationsObject
+}
+
+window.filterJSON = function(allowedIDsV) {
+    const store = useServerJSONStore()
+    if (allowedIDsV) {
+        store.setAllowedIds(JSON.parse(allowedIDsV))
+    } else {
+        store.setAllowedIds([])
+    }
 }
