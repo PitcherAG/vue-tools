@@ -30,6 +30,9 @@ export * from './ui/serverJSONStore.js'
 // Instance
 export * from './ui/instance.js'
 
+// UI Actions
+export * from './ui/actions/index.js'
+
 // Vue Components
 export * from './components/export.js'
 
