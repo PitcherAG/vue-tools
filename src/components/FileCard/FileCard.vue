@@ -26,9 +26,14 @@
             <div v-if="showFileOptions" class="file-card__stacked right bottom">
                 <div class="actions">
                     <Dropdown v-model="optionsExpanded">
-                        <button class="ui button basic icon option-button">
-                            <i class="ellipsis horizontal icon fitted" />
-                        </button>
+                        <template v-if="hasButtonSlot">
+                            <slot name="button" />
+                        </template>
+                        <template v-else>
+                            <button class="ui button basic icon option-button">
+                                <i class="ellipsis horizontal icon fitted" />
+                            </button>
+                        </template>
                         <div class="menu">
                             <!-- items slots -->
                             <template v-if="hasItemsSlot">
@@ -50,17 +55,27 @@
                 {{ date }}
             </div>
         </div>
-        <!-- File name -->
-        <div class="file-card__file-name">{{ body }}</div>
-        <!-- Keywords -->
-        <div v-if="hasKeywordsSlot" class="mt-1">
-            <slot name="keywords" />
-        </div>
-        <div v-else-if="keywords.length > 0" class="mt-1">
-            <span class="ui text small file-card__keywords">
-                {{ keywords }}
-            </span>
-        </div>
+        <template v-if="hasBodyAndKeywordSlot">
+            <slot name="bodyAndKeyword" />
+        </template>
+        <template v-else>
+            <!-- File name -->
+            <template v-if="hasBodySlot">
+                <slot name="body" />
+            </template>
+            <template v-else>
+                <div class="file-card__file-name">{{ body }}</div>
+            </template>
+            <!-- Keywords -->
+            <div v-if="hasKeywordsSlot" class="mt-1">
+                <slot name="keywords" />
+            </div>
+            <div v-else-if="keywords.length > 0" class="mt-1">
+                <span class="ui text small file-card__keywords">
+                    {{ keywords }}
+                </span>
+            </div>
+        </template>
     </div>
 </template>
 
@@ -141,8 +156,11 @@ export default defineComponent({
         const state = reactive({
             optionsExpanded: false,
             hasItemsSlot: !!slots.items,
+            hasButtonSlot: !!slots.button,
             hasNewSlot: !!slots.new,
-            hasKeywordsSlot: !!slots.keywords
+            hasKeywordsSlot: !!slots.keywords,
+            hasBodySlot: !!slots.body,
+            hasBodyAndKeywordSlot: !!slots.bodyAndKeyword
         })
 
         const styles = computed(() => ({
