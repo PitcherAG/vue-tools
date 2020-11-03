@@ -54,3 +54,13 @@ export async function labelToValue(objectName, fieldName, label) {
         }
     }
 }
+
+export async function getObjectNameField(objectName) {
+    const schema = await loadSchema(objectName)
+    for (const field of schema.fields) {
+        if (field.nameField) {
+            return field.name
+        }
+    }
+    throw new Error('No name field found')
+}
