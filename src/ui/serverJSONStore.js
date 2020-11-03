@@ -1,4 +1,5 @@
 import { fireEvent } from '../event'
+import { getFavorites } from './actions/favorite'
 import { waitForWindowProp, joinPath } from '../utils'
 import { createStore } from '../store'
 import { reactive, computed } from '@vue/composition-api'
@@ -18,6 +19,12 @@ class ServerJSONStore {
         groups: null,
         appID: null,
         categories: [],
+        parentCategories: computed(() =>
+            this.state.categories.filter(category => category.parentCategory == UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+        ),
+        subCategories: computed(() =>
+            this.state.categories.filter(category => category.parentCategory != UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+        ),
         supportEmail: null,
         deviceName: null,
         metadata: null,
@@ -215,6 +222,7 @@ export async function loadServerJSON(timeout = 5) {
         serverJSON.files = store.extendFiles(serverJSON.files)
         Object.assign(store.state, window.serverJSON)
         store.state.documentPath = window.documentPath
+        await getFavorites()
     }
     if (presentationsObject) {
         store.parsePresentations(presentationsObject)

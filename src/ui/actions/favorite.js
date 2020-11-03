@@ -17,7 +17,6 @@ export async function getFavorites() {
     const map = {}
     if (favoriteFileIds && favoriteFileIds.length) {
         favoriteFileIds.forEach(Id => (map[Id] = true))
-        return store.markFavorites(map)
     }
-    return []
+    return store.markFavorites(map)
 }
