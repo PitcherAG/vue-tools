@@ -32,7 +32,7 @@ export default {
         ProgressBarEx
     },
     setup() {
-        const selectedPage = ref('ModalEx')
+        const selectedPage = ref('NumpadInputEx')
         const pages = ref([
             {
                 text: 'Modal',
