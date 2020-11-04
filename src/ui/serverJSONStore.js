@@ -13,7 +13,6 @@ class ServerJSONStore {
     state = reactive({
         files: [],
         uiFiles: computed(() => this.state.files.filter(file => file.shouldShowInUI)),
-        filteredUIFiles: computed(() => this.state.uiFiles.filter(file => file.shouldShowInUI)),
         slides: [],
         config: null,
         groups: null,
@@ -259,4 +258,9 @@ window.filterJSON = function(allowedIDsV) {
     } else {
         store.setAllowedIds([])
     }
+}
+
+window.getAllowedIDs = function() {
+    const store = useServerJSONStore()
+    return store.state.allowedIDs
 }
