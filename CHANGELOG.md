@@ -1,6 +1,10 @@
 # Changelog
 
 ## [UNRELEASED]
+### Changed
+- no account problem in formatCurrency fixed
+- getObjectNameField function added to sfdcSchema
+- NumpadInput componenent updated to accept keyboard input
 
 ## 1.4.10
 ### Changed
