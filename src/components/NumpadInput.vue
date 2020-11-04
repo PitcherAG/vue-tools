@@ -336,7 +336,7 @@ export default defineComponent({
             } else if (keyCode === 9) {
                 // tab
                 jumpNextSibling()
-            } else if (keyCode > 47 && keyCode < 58 && /\d/.test(event.key)) {
+            } else if (/\d/.test(event.key)) {
                 // numbers
                 addVal(parseInt(event.key))
             }
