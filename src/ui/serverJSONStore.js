@@ -39,7 +39,8 @@ class ServerJSONStore {
         userfullname: null,
         ajaxtoken: null,
         isCustomerUI: false,
-        batteryLevel: 0
+        batteryLevel: 0,
+        statusBadge: ''
     })
 
     /*
@@ -109,9 +110,9 @@ class ServerJSONStore {
         this.state.customs = []
         this.state.presentations = []
         files.forEach(file => this.parseSinglePresentation(file))
-        if (this.askPresentationOneTime) {
+        if (this.oneTimeLoadPresentations) {
             fireEvent('loadPresentationsFromDB', {})
-            this.askPresentationOneTime = false
+            this.oneTimeLoadPresentations = false
         }
     }
 
@@ -263,4 +264,12 @@ window.filterJSON = function(allowedIDsV) {
 window.getAllowedIDs = function() {
     const store = useServerJSONStore()
     return store.state.allowedIDs
+}
+
+window.sentPitcherEvent = function() {}
+
+window.updateStatusBadge = function(value) {
+    const store = useServerJSONStore()
+    value = parseInt(value)
+    store.state.statusBadge = value || ''
 }
