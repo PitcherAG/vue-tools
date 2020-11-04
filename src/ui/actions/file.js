@@ -183,3 +183,13 @@ export function sendDocuments() {
 export function launchFileWithKeyword(keyword) {
     fireEvent('launchFileWithKeyword', { keyword: keyword })
 }
+
+export function createSlideSet() {
+    const store = useServerJSONStore()
+    store.oneTimeLoadPresentations = true
+    editFile()
+}
+
+export function loadPresentationsFromDB() {
+    fireEvent('loadPresentationsFromDB', {})
+}
