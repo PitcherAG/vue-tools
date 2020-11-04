@@ -21,6 +21,7 @@
                 @focus="focus(true)"
                 @blur="focus(false)"
                 @keypress.prevent
+                @keydown.prevent="handleKeydown"
                 @touchstart.stop
             />
             <i v-if="rightIcon" class="icon" :class="rightIcon" />
@@ -148,6 +149,10 @@ export default defineComponent({
         },
         max: {
             type: Number
+        },
+        disableKeyboard: {
+            type: Boolean,
+            default: false
         },
         noAnimation: {
             type: Boolean,
@@ -319,6 +324,25 @@ export default defineComponent({
             groupsArray[nextIndex][0].input.focus()
         }
 
+        function handleKeydown(event) {
+            event.preventDefault()
+            const keyCode = event.keyCode ? event.keyCode : event.which
+
+            if (props.disableKeyboard) {
+                return
+            } else if (keyCode === 8) {
+                // backspace
+                backspace()
+            } else if (keyCode === 9) {
+                // tab
+                jumpNextSibling()
+            } else if (keyCode > 47 && keyCode < 58 && /\d/.test(event.key)) {
+                // numbers
+                addVal(parseInt(event.key))
+            }
+            return
+        }
+
         // function to emit data if not lazy
         function emit(val) {
             const parsed = typeof localState.localValue === 'number' ? parseFloat(val) : val
@@ -410,7 +434,8 @@ export default defineComponent({
             focus,
             emit,
             jumpNextSibling,
-            jumpNextGroup
+            jumpNextGroup,
+            handleKeydown
         }
     }
 })
