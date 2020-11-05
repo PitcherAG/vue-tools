@@ -248,6 +248,10 @@ export default {
             state.isSearching = refs.search && !!refs.search.value
         }
 
+        const clear = () => {
+            $(refs.dropdown).dropdown('clear')
+        }
+
         onMounted(() => {
             initDropdown()
         })
@@ -267,7 +271,8 @@ export default {
             clearBtnAttr,
             initDropdown,
             onSearch,
-            handleItemClick
+            handleItemClick,
+            clear
         }
     }
 }
