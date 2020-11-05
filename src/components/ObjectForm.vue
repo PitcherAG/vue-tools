@@ -46,7 +46,7 @@
                         <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
                             <template v-for="(comp, compKey) in item.layoutComponents">
                                 <ObjectFormField
-                                    v-if="!comp.exclude"
+                                    v-if="!comp.exclude && ((id && state.loadedObj) || !id)"
                                     :key="compKey"
                                     v-model="state.obj[comp.value]"
                                     :value-label="toLabel(state.obj, comp.value)"
@@ -459,8 +459,26 @@ export default {
                 name.value = data.Name
                 state.loadedObj = data[0]
                 state.obj = data[0]
+              for(const a in state.obj){
+                state.obj[a] =labelToValue(a, state.obj[a])
+              }
             }
         )
+
+      const labelToValue = function (fieldName, label) {
+        const schema = state.schema
+        for (const field of schema.fields) {
+          if (field.name === fieldName.trim()) {
+            for (const pick of field.picklistValues) {
+              if (pick.label === label) {
+                return pick.value
+              }
+            }
+          }
+        }
+        return label
+      }
+
 
         const validate = () => {
             let valid = true
@@ -551,7 +569,8 @@ export default {
             validationErrorTitle,
             validationErrorDescription,
             name,
-            emitUpdate
+            emitUpdate,
+            labelToValue
         }
     }
 }

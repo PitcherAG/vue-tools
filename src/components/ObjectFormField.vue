@@ -44,7 +44,7 @@
             v-if="field.type === 'date' || field.type === 'datetime'"
             :default-text="field.type === 'date' ? $gettext('Date') : $gettext('Date/Time')"
             :type="field.type"
-            :value="value"
+            :value="value || ''"
             v-bind="field.settings"
             @input="emitInput($event)"
         />

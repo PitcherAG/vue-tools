@@ -253,7 +253,6 @@ export default {
         })
 
         onUpdated(() => {
-          console.log('update')
           initDropdown()
         })
 
