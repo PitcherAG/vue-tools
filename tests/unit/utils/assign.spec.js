@@ -7,7 +7,7 @@ const data = {
     four: 'd'
 }
 
-describe('assign util', () => {
+describe('assign utility method', () => {
     it('assigns values only if they exist in the target object', () => {
         const obj = {
             one: 'test',
