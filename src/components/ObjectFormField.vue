@@ -32,7 +32,7 @@
         <Dropdown
             v-if="field.type === 'reference'"
             :default-text="$gettext('Select')"
-            :items="field.references"
+            :items="field.references.value"
             :multiple="field.type === 'multipicklist'"
             :value="value"
             add-class="selection"
