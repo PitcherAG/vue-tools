@@ -40,7 +40,8 @@ class ServerJSONStore {
         ajaxtoken: null,
         isCustomerUI: false,
         batteryLevel: 0,
-        statusBadge: ''
+        statusBadge: '',
+        syncEvents: []
     })
 
     /*
