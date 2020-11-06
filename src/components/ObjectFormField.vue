@@ -27,6 +27,7 @@
             :value="value"
             add-class="selection"
             v-bind="field.settings"
+            :searchable="picklist.length > 20"
             @input="emitInput($event)"
         />
         <Dropdown
@@ -37,6 +38,7 @@
             :value="value"
             add-class="selection"
             v-bind="field.settings"
+            :searchable="field.references.value.length > 20"
             @input="emitInput($event)"
         />
 

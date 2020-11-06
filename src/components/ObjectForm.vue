@@ -301,7 +301,7 @@ export default {
             const schema = await loadSchema(props.objectType)
             state.schema = schema
         }
-
+        const fieldDict = {}
         const loadLayoutInternal = async () => {
             let layout
             try {
@@ -320,7 +320,7 @@ export default {
                     const includeFields = props.fields
                     const excludeFields = [...props.excludeFields]
                     const result = []
-                    const fieldDict = {}
+
                     const fields = []
                     for (const section of layout.editLayoutSections) {
                         let fieldCount = 0
@@ -330,14 +330,14 @@ export default {
                                     if (item.layoutComponents) {
                                         for (const comp of item.layoutComponents) {
                                             if (includeFields.length) {
-                                                if (!includeFields.contains(comp.value)) {
+                                                if (!includeFields.includes(comp.value)) {
                                                     comp.exclude = true
                                                 } else {
                                                     comp.exclude = false
                                                     fieldCount++
                                                 }
                                             } else if (excludeFields.length) {
-                                                if (!excludeFields.contains(comp.value)) {
+                                                if (!excludeFields.includes(comp.value)) {
                                                     comp.exclude = false
                                                     fieldCount++
                                                 } else {
@@ -349,7 +349,7 @@ export default {
                                                 if (fieldDict[comp.details.name]) {
                                                     field = fieldDict[comp.details.name]
                                                 } else {
-                                                    field = new Field(comp.details, null, false)
+                                                    field = new Field(comp.details, null, true)
                                                     fieldDict[comp.details.name] = field
                                                     fields.push(field)
                                                     if (props.customSettings && props.customSettings[field.name]) {
@@ -363,8 +363,6 @@ export default {
                                                         props.customReferences[field.name]
                                                     ) {
                                                         field.loadExternalReferences(props.customReferences[field.name])
-                                                    } else {
-                                                        field.load_refs()
                                                     }
                                                 }
                                                 comp.field = field
