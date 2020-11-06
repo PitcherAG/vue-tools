@@ -30,7 +30,7 @@ function hasCached(query) {
     )
 }
 
-async function query(query, db = null, removeNull = false) {
+async function query(query, db = null, removeNull = false, source = 'modal') {
     console.log(query)
     return new Promise((resolve, reject) => {
         if (hasCached(query) && dbSettings.cacheEnabled) {
@@ -42,7 +42,8 @@ async function query(query, db = null, removeNull = false) {
             db: db ? db : dbSettings.defaultDatabase,
             iosMode: true,
             pType: 'query',
-            query: query
+            query: query,
+            source: source
         })
             .then(e => {
                 const time = new Date() - start
