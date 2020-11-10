@@ -39,7 +39,7 @@
         </sui-form>
         <sui-form v-if="!state.needsRecordType && !validationError && state.layout" class="object-form">
             <fragment v-for="(section, sectionKey) in state.layout.visibleEditLayoutSections" :key="sectionKey">
-                <h3 class="ui header">{{ section.heading }}</h3>
+                <h3 v-if="section.useHeading" class="ui header">{{ section.heading }}</h3>
                 <div class="ui grid fields">
                     <fragment v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
                         <!-- Layout rows are ignored and fields are plotted one after another -->
@@ -151,7 +151,7 @@ export default {
         const state = reactive({
             ready: false,
             fields: computed(() => {
-                if (!state.schema) {
+                if (!state.schema || !state.ready) {
                     return []
                 }
                 const fields = []
@@ -186,17 +186,21 @@ export default {
                             }
                         }
                         let field
-                        try {
-                            field = new Field(f, this)
-                        } catch (e) {
-                            console.warn(e)
-                            excludeFields.push(field.name)
-                            console.warn('removed field')
-                            continue
+                        if (fieldDict[f.name]) {
+                            field = fieldDict[f.name]
+                        } else {
+                            try {
+                                field = new Field(f, this)
+                                fieldDict[field.name] = field
+                            } catch (e) {
+                                console.warn(e)
+                                excludeFields.push(field.name)
+                                console.warn('removed field')
+                                continue
+                            }
+                            setFieldSettings(field)
                         }
-                        if (fieldShouldBeReadOnly(f)) {
-                            field.updateable = false
-                        }
+
                         if (field.nillable && field.name !== 'Name') {
                             fields.push(field)
                         } else {
@@ -276,7 +280,9 @@ export default {
                                     Id: ref.value,
                                     Name: ref.text
                                 }
-                                result.ignoreFields.push(field.relationshipName)
+                                if (!result.ignoreFields.includes(field.relationshipName)) {
+                                    result.ignoreFields.push(field.relationshipName)
+                                }
                                 found = true
                                 break
                             }
@@ -301,7 +307,9 @@ export default {
             const schema = await loadSchema(props.objectType)
             state.schema = schema
         }
+
         const fieldDict = {}
+
         const loadLayoutInternal = async () => {
             let layout
             try {
@@ -320,7 +328,6 @@ export default {
                     const includeFields = props.fields
                     const excludeFields = [...props.excludeFields]
                     const result = []
-
                     const fields = []
                     for (const section of layout.editLayoutSections) {
                         let fieldCount = 0
@@ -348,22 +355,12 @@ export default {
                                                 let field
                                                 if (fieldDict[comp.details.name]) {
                                                     field = fieldDict[comp.details.name]
+                                                    fields.push(field)
                                                 } else {
                                                     field = new Field(comp.details, null, true)
                                                     fieldDict[comp.details.name] = field
                                                     fields.push(field)
-                                                    if (props.customSettings && props.customSettings[field.name]) {
-                                                        field.settings = props.customSettings[field.name]
-                                                    }
-                                                    field.updateable = true
-                                                    if (fieldShouldBeReadOnly(field)) {
-                                                        field.updateable = false
-                                                    } else if (
-                                                        props.customReferences &&
-                                                        props.customReferences[field.name]
-                                                    ) {
-                                                        field.loadExternalReferences(props.customReferences[field.name])
-                                                    }
+                                                    setFieldSettings(field)
                                                 }
                                                 comp.field = field
                                             }
@@ -382,6 +379,18 @@ export default {
                 })
             }
             state.layout = layout
+        }
+
+        function setFieldSettings(field) {
+            if (props.customSettings && props.customSettings[field.name]) {
+                field.settings = props.customSettings[field.name]
+            }
+            field.updateable = true
+            if (fieldShouldBeReadOnly(field)) {
+                field.updateable = false
+            } else if (props.customReferences && props.customReferences[field.name]) {
+                field.loadExternalReferences(props.customReferences[field.name])
+            }
         }
 
         const loadObject = async () => {
