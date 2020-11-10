@@ -547,8 +547,8 @@ export default {
         })
 
         /*onUpdated(() => {
-      load()
-    })*/
+  load()
+})*/
 
         return {
             toLabel,
