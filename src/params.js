@@ -24,12 +24,9 @@ class ParamStore {
     })
 
     get locale() {
-        if (this.state.salesForceUser) {
-            return this.state.salesForceUser.LanguageLocaleKey.split('_').join('-')
-        } else if (this.state.user) {
-            return this.state.user.LanguageLocaleKey.split('_').join('-')
-        }
-        return null
+        const user = this.state.salesForceUser ? this.state.salesForceUser : this.state.user
+        const localeLangugage = user.LocaleSidKey ? user.LocaleSidKey : user.LanguageLocaleKey
+        return localeLangugage ? localeLangugage.split('_').join('-') : null
     }
 
     get language() {
