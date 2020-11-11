@@ -25,7 +25,8 @@ class ParamStore {
 
     get locale() {
         const user = this.state.salesForceUser ? this.state.salesForceUser : this.state.user
-        const localeLangugage = user.LocaleSidKey ? user.LocaleSidKey : user.LanguageLocaleKey
+        let localeLangugage = null
+        if (user) localeLangugage = user.LocaleSidKey ? user.LocaleSidKey : user.LanguageLocaleKey
         return localeLangugage ? localeLangugage.split('_').join('-') : null
     }
 
