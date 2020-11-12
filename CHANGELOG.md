@@ -1,10 +1,14 @@
 # Changelog
 
 ## [UNRELEASED]
+
+## 1.4.11
 ### Changed
 - no account problem in formatCurrency fixed
 - getObjectNameField function added to sfdcSchema
+- updated tests for assign & clone
 - NumpadInput componenent updated to accept keyboard input
+- Change in formatting functions (currency, date, decimals and percent) - use account local language
 
 ## 1.4.10
 ### Changed
