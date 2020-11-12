@@ -1,5 +1,4 @@
 import { useParamsStore } from '../params'
-import { useI18nStore } from './i18n'
 import { PLATFORM } from '../platform'
 
 const currencyDict = {
@@ -10,7 +9,7 @@ const currencyDict = {
 const currencyDisplayTypes = ['symbol', 'name', 'code']
 
 export function formatCurrency(value, currency, currencyDisplay = 'symbol') {
-    const store = useI18nStore()
+    const params = useParamsStore()
     if (!currency) {
         const params = useParamsStore()
         if (params.state.account) {
@@ -20,11 +19,6 @@ export function formatCurrency(value, currency, currencyDisplay = 'symbol') {
     if (currency.length > 3) {
         currency = currencyDict[currency]
     }
-    let locale = store.state.locale
-    if (!locale) {
-        throw 'locale not defined'
-    }
-    locale = locale.split('_').join('-')
     const minus = value < 0
     if (minus) {
         value *= -1
@@ -32,7 +26,8 @@ export function formatCurrency(value, currency, currencyDisplay = 'symbol') {
     if (currencyDisplayTypes.indexOf(currencyDisplay) === -1) {
         throw `Provided currency display type is invalid. Possible values are: ${currencyDisplayTypes.join(', ')}`
     }
-    let result = new Intl.NumberFormat(locale, { style: 'currency', currency, currencyDisplay }).format(value)
+    if (!params.locale) throw 'locale not defined'
+    let result = new Intl.NumberFormat(params.locale, { style: 'currency', currency, currencyDisplay }).format(value)
     if (minus) {
         // IE11 bullshit
         result = '-' + result
@@ -44,22 +39,13 @@ export function formatCurrency(value, currency, currencyDisplay = 'symbol') {
 }
 
 export function formatDecimal(value, maximumFractionDigits = 1, minimumFractionDigits = 0) {
-    const store = useI18nStore()
-    let locale = store.state.locale
-    console.log(locale)
-    if (!locale) {
-        throw 'locale not defined'
-    }
-    locale = locale.split('_').join('-')
-    return new Intl.NumberFormat(locale, { maximumFractionDigits, minimumFractionDigits }).format(value)
+    const params = useParamsStore()
+    if (!params.locale) throw 'locale not defined'
+    return new Intl.NumberFormat(params.locale, { maximumFractionDigits, minimumFractionDigits }).format(value)
 }
 
 export function formatPercent(value, maximumFractionDigits = 1, minimumFractionDigits = 0) {
-    const store = useI18nStore()
-    let locale = store.state.locale
-    if (!locale) {
-        throw 'locale not defined'
-    }
-    locale = locale.split('_').join('-')
-    return new Intl.NumberFormat(locale, { maximumFractionDigits, minimumFractionDigits }).format(value)
+    const params = useParamsStore()
+    if (!params.locale) throw 'locale not defined'
+    return new Intl.NumberFormat(params.locale, { maximumFractionDigits, minimumFractionDigits }).format(value)
 }
