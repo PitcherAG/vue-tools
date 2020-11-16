@@ -184,7 +184,7 @@ export default defineComponent({
 
         // execute command with jquery on fomantic
         function exec(comm) {
-            return $(refs.modal).progress(comm)
+            return $(refs.modal).modal(comm)
         }
 
         return { ...toRefs(state), modalAttr, contentAttr, exec, emit }
