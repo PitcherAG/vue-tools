@@ -1,3 +1,4 @@
+import { ref } from '@vue/composition-api'
 import { useConfigStore } from '../config'
 import { query } from './query'
 import { execBool } from '../utils/contextExec'
