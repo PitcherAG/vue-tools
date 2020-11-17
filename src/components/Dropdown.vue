@@ -53,11 +53,14 @@
             <!-- menu items -->
             <div class="menu">
                 <div
-                    v-for="item in listItems"
-                    :key="item.value"
+                    v-for="(item, index) in listItems"
+                    :key="index"
                     :data-value="item.value"
                     :data-text="item.text"
-                    :class="[item.type, { disabled: item.disabled, 'active filtered': value.includes(item.value) }]"
+                    :class="[
+                        item.type,
+                        { disabled: item.disabled, 'active filtered': value && value.includes(item.value) }
+                    ]"
                     @click="item.type === 'item' ? handleItemClick(item) : undefined"
                 >
                     <img v-if="item.image" :src="item.image" class="image" />
