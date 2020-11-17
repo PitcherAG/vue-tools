@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="state.ready">
         <div v-if="validationError" class="ui red negative segment transition visible">
             <div class="ui red header">
                 <i class="disabled warning sign icon" />
@@ -37,16 +37,16 @@
             />
             <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
         </sui-form>
-        <sui-form v-if="!state.needsRecordType && !validationError && state.layout && state.ready" class="object-form">
+        <sui-form v-if="!state.needsRecordType && !validationError && state.layout" class="object-form">
             <fragment v-for="(section, sectionKey) in state.layout.visibleEditLayoutSections" :key="sectionKey">
-                <h3 class="ui header">{{ section.heading }}</h3>
+                <h3 v-if="section.useHeading" class="ui header">{{ section.heading }}</h3>
                 <div class="ui grid fields">
                     <fragment v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
                         <!-- Layout rows are ignored and fields are plotted one after another -->
                         <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
                             <template v-for="(comp, compKey) in item.layoutComponents">
                                 <ObjectFormField
-                                    v-if="!comp.exclude"
+                                    v-if="!comp.exclude && ((id && state.loadedObj) || !id)"
                                     :key="compKey"
                                     v-model="state.obj[comp.value]"
                                     :value-label="toLabel(state.obj, comp.value)"
@@ -54,9 +54,9 @@
                                     :show-error="state.showErrors"
                                     :hide-help-text="hideHelpText"
                                     :label="item.label"
-                                    @input="emitUpdate"
                                     :data-debug-name="comp.details.name"
                                     :class="fieldsClass"
+                                    @input="emitUpdate"
                                 />
                             </template>
                         </fragment>
@@ -140,6 +140,7 @@ export default {
             'attributes',
             'Id',
             'CreatedById',
+            'CreatedBy',
             'CreatedDate',
             'Division',
             'IsDeleted',
@@ -150,7 +151,80 @@ export default {
         ]
         const state = reactive({
             ready: false,
-            fields: [],
+            fields: computed(() => {
+                if (!state.schema || !state.ready) {
+                    return []
+                }
+                const fields = []
+                let req_fields = []
+
+                const includeFields = props.fields
+                const excludeFields = [...props.excludeFields]
+                if (state.layout) {
+                    if (!state.recordTypeId) {
+                        return []
+                    }
+                    // handle if no field list is provided but we have a layout
+                    console.log('layout fields')
+                    return state.layout.fields
+                } else {
+                    // handle if no field list is provided and we dont have a layout
+                    console.log('schema fields')
+                    for (const f of state.schema.fields) {
+                        if (f.calculated || !f.updateable) {
+                            continue
+                        }
+                        if (excludes.includes(f.name)) {
+                            continue
+                        }
+                        if (includeFields.length) {
+                            if (!includeFields.includes(f.name)) {
+                                continue
+                            }
+                        } else if (excludeFields.length) {
+                            if (excludeFields.includes(f.name)) {
+                                continue
+                            }
+                        }
+                        let field
+                        if (fieldDict[f.name]) {
+                            field = fieldDict[f.name]
+                        } else {
+                            try {
+                                field = new Field(f, this)
+                                fieldDict[field.name] = field
+                            } catch (e) {
+                                console.warn(e)
+                                excludeFields.push(field.name)
+                                console.warn('removed field')
+                                continue
+                            }
+                            setFieldSettings(field)
+                        }
+
+                        if (field.nillable && field.name !== 'Name') {
+                            fields.push(field)
+                        } else {
+                            req_fields.push(field)
+                        }
+                    }
+                    for (const field of state.schema.fields) {
+                        if (field.externalId) {
+                            state.externalIdFields.push(field.name)
+                        }
+                    }
+                    req_fields = req_fields.concat(fields)
+                    req_fields = req_fields.filter(obj => {
+                        for (const excludeField of excludeFields) {
+                            if (obj.name === excludeField.trim()) {
+                                return false
+                            }
+                        }
+                        return true
+                    })
+                    return req_fields
+                }
+            }),
             id: props.id,
             obj: {},
             recordTypes: computed(() => {
@@ -164,13 +238,13 @@ export default {
                 if (state.loadedObj) {
                     return state.loadedObj.recordTypeId
                 }
-                if (state.recordType) {
+                if (state.recordType && state.recordTypes) {
                     for (const t of state.recordTypes) {
                         if (t.name === state.recordType) {
                             return t.recordTypeId
                         }
                     }
-                } else if (state.recordTypes.length === 1) {
+                } else if (state.recordTypes && state.recordTypes.length === 1) {
                     return state.recordTypes[0].recordTypeId
                 }
             }),
@@ -191,7 +265,7 @@ export default {
                 }
                 return valid
             }),
-            showErrors: true,
+            showErrors: false,
             result: computed(() => {
                 const result = {
                     ignoreFields: []
@@ -201,13 +275,15 @@ export default {
                     result[field.name] = state.obj[field.name]
                     if (field.relationshipName && state.obj[field.name]) {
                         let found = false
-                        for (const ref of field.references) {
+                        for (const ref of field.references.value) {
                             if (ref.value === state.obj[field.name]) {
                                 result[field.relationshipName] = {
                                     Id: ref.value,
                                     Name: ref.text
                                 }
-                                result.ignoreFields.push(field.relationshipName)
+                                if (!result.ignoreFields.includes(field.relationshipName)) {
+                                    result.ignoreFields.push(field.relationshipName)
+                                }
                                 found = true
                                 break
                             }
@@ -225,191 +301,130 @@ export default {
             })
         })
 
-        const name = ref()
-
-        const initSchema = async () => {
+        const loadSchemaInternal = async () => {
             if (!props.objectType) {
                 return
             }
             const schema = await loadSchema(props.objectType)
             state.schema = schema
         }
-        onMounted(async () => {
-            initSchema()
-        })
 
-        watch(() => [props.objectType], initSchema)
+        const fieldDict = {}
 
-        watch(
-            () => [props.objectType, state.recordTypeId, state.schema],
-            async () => {
-                if (!props.objectType) {
-                    return
+        const loadLayoutInternal = async () => {
+            let layout
+            try {
+                layout = await loadLayout(props.objectType, state.recordTypeId)
+            } catch (e) {
+                console.error(e)
+                console.warn(
+                    'layout support for this env not found. Cache table needs not only schema but layout describes as well'
+                )
+            }
+            if (layout) {
+                for (const section of layout.editLayoutSections) {
+                    section.fieldCount = 0
                 }
-                if (!state.schema) {
-                    return
-                }
-                if (!state.recordTypeId) {
-                    return
-                }
-                const fields = []
-                let req_fields = []
-
-                const includeFields = props.fields
-                const excludeFields = [...props.excludeFields]
-                if (includeFields.length) {
-                    // handle if field list is provided
-                    for (const field_name of includeFields) {
-                        if (field_name.trim()) {
-                            for (const field of state.schema.fields) {
-                                if (field.name === field_name.trim()) {
-                                    const f = new Field(field, props.objectType, false)
-                                    if (props.customSettings && props.customSettings.includes[f.name]) {
-                                        f.settings = props.customSettings[f.name]
-                                    }
-                                    if (fieldShouldBeReadOnly(f)) {
-                                        f.updateable = false
-                                    } else if (props.customReferences && props.customReferences[f.name]) {
-                                        f.loadExternalReferences(props.customReferences[f.name])
-                                    } else {
-                                        f.load_refs()
-                                    }
-                                    if (f.calculated || !f.updateable) {
-                                        continue
-                                    }
-                                    req_fields.push(f)
-                                }
-                            }
-                        }
-                    }
-                    state.fields = req_fields
-                    state.ready = true
-                } else {
-                    if (!state.recordTypeId) {
-                        return
-                    }
-                    // handle if no field list is provided but we have a layout
-                    let layout
-                    try {
-                        layout = await loadLayout(props.objectType, state.recordTypeId)
-                    } catch (e) {
-                        console.warn(
-                            'layout support for this env not found. Cache table needs not only schema but layout describes as well'
-                        )
-                    }
-
-                    if (layout) {
-                        layout.visibleEditLayoutSections = computed(() => {
-                            const result = []
-                            for (const section of layout.editLayoutSections) {
-                                if (section.fieldCount > 0) {
-                                    result.push(section)
-                                }
-                            }
-                            return result
-                        })
-                        const data = []
-                        const filed = []
-                        const fieldDict = {}
-                        for (const section of layout.editLayoutSections) {
-                            let fieldCount = 0
+                layout.visibleEditLayoutSections = computed(() => {
+                    const includeFields = props.fields
+                    const excludeFields = [...props.excludeFields]
+                    const result = []
+                    const fields = []
+                    for (const section of layout.editLayoutSections) {
+                        let fieldCount = 0
+                        for (const row of section.layoutRows) {
                             for (const row of section.layoutRows) {
-                                for (const row of section.layoutRows) {
-                                    for (const item of row.layoutItems) {
-                                        if (item.layoutComponents) {
-                                            for (const comp of item.layoutComponents) {
-                                                if (excludeFields.indexOf(comp.value) === -1) {
-                                                    let field
-                                                    if (fieldDict[comp.details.name]) {
-                                                        field = fieldDict[comp.details.name]
-                                                    } else {
-                                                        field = new Field(comp.details, null, false)
-                                                        fieldDict[comp.details.name] = field
-                                                        fields.push(field)
-                                                        if (props.customSettings[field.name]) {
-                                                            field.settings = props.customSettings[field.name]
-                                                        }
-                                                        if (fieldShouldBeReadOnly(field)) {
-                                                            field.updateable = false
-                                                        } else if (
-                                                            props.customReferences &&
-                                                            props.customReferences[field.name]
-                                                        ) {
-                                                            field.loadExternalReferences(
-                                                                props.customReferences[field.name]
-                                                            )
-                                                        } else {
-                                                            field.load_refs()
-                                                        }
-                                                    }
-                                                    comp.field = field
+                                for (const item of row.layoutItems) {
+                                    if (item.layoutComponents) {
+                                        for (const comp of item.layoutComponents) {
+                                            if (includeFields.length) {
+                                                if (!includeFields.includes(comp.value)) {
+                                                    comp.exclude = true
+                                                } else {
+                                                    comp.exclude = false
+                                                    fieldCount++
+                                                }
+                                            } else if (excludeFields.length) {
+                                                if (!excludeFields.includes(comp.value)) {
                                                     comp.exclude = false
                                                     fieldCount++
                                                 } else {
                                                     comp.exclude = true
                                                 }
                                             }
+                                            if (!comp.exclude) {
+                                                let field
+                                                if (fieldDict[comp.details.name]) {
+                                                    field = fieldDict[comp.details.name]
+                                                    fields.push(field)
+                                                } else {
+                                                    field = new Field(comp.details, null, true)
+                                                    fieldDict[comp.details.name] = field
+                                                    fields.push(field)
+                                                    setFieldSettings(field)
+                                                }
+                                                comp.field = field
+                                            }
                                         }
                                     }
                                 }
                             }
-                            section.fieldCount = fieldCount
                         }
-                        state.layout = layout
-                        state.fields = fields
-                        state.ready = true
-                    } else {
-                        // handle if no field list is provided and we dont have a layout
-                        for (const field of state.schema.fields) {
-                            if (field.calculated || !field.updateable) {
-                                continue
-                            }
-                            if (excludes.indexOf(field.name) === -1) {
-                                let f
-                                try {
-                                    f = new Field(field, this)
-                                } catch (e) {
-                                    console.warn(e)
-                                    excludeFields.push(field.name)
-                                    console.warn('removed field')
-                                    continue
-                                }
-                                if (fieldShouldBeReadOnly(f)) {
-                                    f.updateable = false
-                                }
-                                if (f.nillable && f.name !== 'Name') {
-                                    fields.push(f)
-                                } else {
-                                    req_fields.push(f)
-                                }
-                            }
+                        section.fieldCount = fieldCount
+                        if (section.fieldCount > 0) {
+                            result.push(section)
                         }
-                        for (const field of state.schema.fields) {
-                            if (field.externalId) {
-                                state.externalIdFields.push(field.name)
-                            }
-                        }
-                        req_fields = req_fields.concat(fields)
-                        req_fields = req_fields.filter(obj => {
-                            for (const excludeField of excludeFields) {
-                                if (obj.name === excludeField.trim()) {
-                                    return false
-                                }
-                            }
-                            return true
-                        })
-                        state.fields = req_fields
-                        state.ready = true
                     }
-                }
-                for (const field of state.fields) {
-                    if (props.value) {
-                        state.obj = props.value
-                    }
-                }
+                    layout.fields = fields
+                    return result
+                })
             }
-        )
+            state.layout = layout
+        }
 
+        function setFieldSettings(field) {
+            if (props.customSettings && props.customSettings[field.name]) {
+                field.settings = props.customSettings[field.name]
+            }
+            field.updateable = true
+            if (fieldShouldBeReadOnly(field)) {
+                field.updateable = false
+            } else if (props.customReferences && props.customReferences[field.name]) {
+                field.loadExternalReferences(props.customReferences[field.name])
+            }
+        }
+
+        const loadObject = async () => {
+            if (!props.id && !props.value) {
+                state.obj = {}
+            }
+            state.id = props.id
+            if (!props.id) {
+                return
+            }
+            if (validationError.value) {
+                return
+            }
+            const q = 'select * from {{' + props.objectType + "}} where Id='{{ id }}'"
+            const data = await contextQuery(q, { id: props.id })
+
+            name.value = data.Name
+            state.loadedObj = data[0]
+            state.obj = data[0]
+            for (const a in state.obj) {
+                state.obj[a] = labelToValue(a, state.obj[a])
+            }
+        }
+
+        const load = async () => {
+            state.ready = false
+            await loadSchemaInternal()
+            await loadLayoutInternal()
+            await loadObject()
+            state.ready = true
+        }
+
+        const name = ref()
         const validationError = computed(() => {
             const configStore = useConfigStore()
             const table = configStore.getCacheDict[props.objectType]
@@ -431,36 +446,23 @@ export default {
             }
             return false
         })
+
         const validationErrorTitle = ref('')
         const validationErrorDescription = ref('')
-        watch(
-            () => [props.id, state.fields],
-            async () => {
-                state.showErrors = false
-                if (state.fields.length === 0) {
-                    return
-                }
-                if (!props.id && !props.value) {
-                    for (const field of state.fields) {
-                        if (state.obj[field.name] !== '') {
-                            state.obj[field.name] = null
+
+        const labelToValue = function(fieldName, label) {
+            const schema = state.schema
+            for (const field of schema.fields) {
+                if (field.name === fieldName.trim()) {
+                    for (const pick of field.picklistValues) {
+                        if (pick.label === label) {
+                            return pick.value
                         }
                     }
                 }
-                state.id = props.id
-                if (!props.id) {
-                    return
-                }
-                if (validationError.value) {
-                    return
-                }
-                const q = 'select * from {{' + props.objectType + "}} where Id='{{ id }}'"
-                const data = await contextQuery(q, { id: props.id })
-                name.value = data.Name
-                state.loadedObj = data[0]
-                state.obj = data[0]
             }
-        )
+            return label
+        }
 
         const validate = () => {
             let valid = true
@@ -502,6 +504,9 @@ export default {
             }
             obj.LastModifiedDate = new Date().toISOString()
             obj.ignoreFields.push('LastModifiedDate')
+            obj.ignoreFields.push('CreatedBy')
+            obj.ignoreFields.push('CreatedById')
+            obj.ignoreFields.push('Owner')
             obj.objectType = props.objectType
             if (props.id) {
                 obj.Id = props.id
@@ -541,6 +546,14 @@ export default {
             return props.readOnlyFields.includes(field.name) || props.allFieldsReadOnly
         }
 
+        onMounted(() => {
+            load()
+        })
+
+        /*onUpdated(() => {
+load()
+})*/
+
         return {
             toLabel,
             state,
@@ -551,7 +564,8 @@ export default {
             validationErrorTitle,
             validationErrorDescription,
             name,
-            emitUpdate
+            emitUpdate,
+            labelToValue
         }
     }
 }
@@ -559,9 +573,8 @@ export default {
 
 <style lang="scss" scoped>
 .ui.form.object-form ::v-deep {
-
     .field > label {
-        color: rgba(0,0,0,.7);
+        color: rgba(0, 0, 0, 0.7);
     }
 
     .ui.grid.fields {
@@ -586,7 +599,6 @@ export default {
 
     .ui.header:first-child {
         margin-top: 0.5em;
-    }    
-
+    }
 }
 </style>

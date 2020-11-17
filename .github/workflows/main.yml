@@ -22,7 +22,7 @@ jobs:
         run: ./.github/scripts/decrypt_secret.sh
         env:
           GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
-      - run: echo ::set-env name=GOOGLE_APPLICATION_CREDENTIALS::$HOME/secrets/google.json
+      - run: echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/secrets/google.json" >> $GITHUB_ENV
         shell: bash
       - name: unittest
         run: npm run test:unit
