@@ -28,7 +28,13 @@
             <i v-if="!selection" :class="`${icon} icon mr-2`" />
 
             <!-- clear button -->
-            <i v-if="clearBtnAttr.render" :class="clearBtnAttr.class" :style="clearBtnAttr.style" />
+            <i
+                v-if="clearBtnAttr.render"
+                ref="clearButton"
+                :class="clearBtnAttr.class"
+                :style="clearBtnAttr.style"
+                @click="clear"
+            />
 
             <!-- menu items -->
             <div class="menu">
