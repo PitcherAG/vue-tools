@@ -196,6 +196,8 @@ export default {
             })
         })
 
+        const filteredItems = computed(() => listItems.value.filter(i => i.type === 'item'))
+
         // fomantic dropdown initialization
         const initDropdown = () => {
             const settings = $.extend(
@@ -286,6 +288,7 @@ export default {
             ...toRefs(state),
             dropdownAttr,
             listItems,
+            filteredItems,
             clearBtnAttr,
             initDropdown,
             onSearch,
