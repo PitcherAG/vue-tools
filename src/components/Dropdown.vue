@@ -248,6 +248,28 @@ export default {
             state.isSearching = refs.search && !!refs.search.value
         }
 
+        const removeItem = (event, value) => {
+            event.preventDefault()
+            event.stopPropagation()
+
+            let valueArray = props.value.split(',')
+            valueArray = valueArray.filter(v => v !== value)
+
+            console.log('str', valueArray.join(','))
+            console.log('arr', valueArray)
+
+            emit('input', valueArray.join(','))
+            emit('onSelected', valueArray)
+        }
+
+        // function to clear
+        const clear = event => {
+            event.preventDefault()
+            event.stopPropagation()
+            emit('input', '')
+            emit('onSelected', [])
+        }
+
         onMounted(() => {
             initDropdown()
         })
@@ -267,6 +289,8 @@ export default {
             clearBtnAttr,
             initDropdown,
             onSearch,
+            removeItem,
+            clear,
             handleItemClick
         }
     }
