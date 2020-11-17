@@ -140,6 +140,7 @@ export default {
             'attributes',
             'Id',
             'CreatedById',
+            'CreatedBy',
             'CreatedDate',
             'Division',
             'IsDeleted',
@@ -503,6 +504,9 @@ export default {
             }
             obj.LastModifiedDate = new Date().toISOString()
             obj.ignoreFields.push('LastModifiedDate')
+            obj.ignoreFields.push('CreatedBy')
+            obj.ignoreFields.push('CreatedById')
+            obj.ignoreFields.push('Owner')
             obj.objectType = props.objectType
             if (props.id) {
                 obj.Id = props.id
@@ -547,7 +551,7 @@ export default {
         })
 
         /*onUpdated(() => {
-  load()
+load()
 })*/
 
         return {
