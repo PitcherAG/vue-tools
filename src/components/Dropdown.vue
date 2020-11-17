@@ -50,7 +50,7 @@
     </div>
 </template>
 <script>
-import {computed, reactive, toRefs, onMounted, onUpdated} from '@vue/composition-api'
+import { computed, reactive, toRefs, onMounted } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 
 export default {
@@ -250,10 +250,6 @@ export default {
 
         onMounted(() => {
             initDropdown()
-        })
-
-        onUpdated(() => {
-          initDropdown()
         })
 
         // handle item click, without preventing default event
