@@ -27,16 +27,18 @@
             :value="value"
             add-class="selection"
             v-bind="field.settings"
+            :searchable="picklist.length > 20"
             @input="emitInput($event)"
         />
         <Dropdown
             v-if="field.type === 'reference'"
             :default-text="$gettext('Select')"
-            :items="field.references"
+            :items="field.references.value"
             :multiple="field.type === 'multipicklist'"
             :value="value"
             add-class="selection"
             v-bind="field.settings"
+            :searchable="field.references.value.length > 20"
             @input="emitInput($event)"
         />
 
@@ -44,7 +46,7 @@
             v-if="field.type === 'date' || field.type === 'datetime'"
             :default-text="field.type === 'date' ? $gettext('Date') : $gettext('Date/Time')"
             :type="field.type"
-            :value="value"
+            :value="value || ''"
             v-bind="field.settings"
             @input="emitInput($event)"
         />
