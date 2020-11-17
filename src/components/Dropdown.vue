@@ -13,6 +13,20 @@
                 :class="[`${icon} icon`, { 'mr-2 ml-1': hasCustomIcon }]"
             />
 
+            <!-- labels -->
+            <template v-if="multiple">
+                <a
+                    v-show="value.includes(item.value)"
+                    v-for="item in filteredItems"
+                    :key="item.value"
+                    class="ui label"
+                    :data-value="item.value"
+                >
+                    {{ item.text }}
+                    <i class="delete icon" @click="removeItem($event, item.value)" />
+                </a>
+            </template>
+
             <!-- search input -->
             <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
 
