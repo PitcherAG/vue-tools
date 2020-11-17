@@ -130,6 +130,7 @@ export default {
             validator: val => validateSize(val, 'Dropdown.vue')
         }
     },
+    emits: ['input', 'onSelected'],
 
     setup(props, { refs, emit, slots }) {
         // validate
