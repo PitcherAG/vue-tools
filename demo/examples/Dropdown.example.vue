@@ -8,17 +8,20 @@
             v-model="recordTypeSaved"
             :items="recordTypes"
             clearable
-            multiple
             searchable
+            multiple
             icon="filter"
-            @input="test"
+            @input="onInput"
         />
+        <br />
+        <br />
+        <button class="ui button small" @click="setValue">update</button>
         <br />
         <br />
         <br />
 
         <!-- slot example -->
-        <Dropdown class="ui dropdown left pointing icon button" v-model="slotModel" @input="test">
+        <Dropdown v-model="slotModel" class="ui dropdown left pointing icon button">
             <i class="settings icon" />
             <div class="menu">
                 <div class="ui left search icon input">
@@ -49,7 +52,7 @@
         <br />
 
         <!-- Advanced slot example -->
-        <Dropdown class="fluid multiple search selection" v-model="slotModel2" @input="test">
+        <Dropdown v-model="slotModel2" class="fluid multiple search selection">
             <input type="hidden" name="country" />
             <i class="dropdown icon" />
             <div v-if="!slotModel2 || slotModel2.length < 1" class="default">Select Country</div>
@@ -100,7 +103,7 @@ export default {
     props: {},
     setup() {
         const state = reactive({
-            recordTypeSaved: '',
+            recordTypeSaved: 'bern',
             recordTypes: [
                 {
                     text: 'Cantons',
@@ -145,11 +148,16 @@ export default {
             slotModel2: []
         })
 
-        function test(v) {
-            console.log(v)
+        function setValue() {
+            console.warn('before', state.recordTypeSaved)
+            state.recordTypeSaved = 'zurich'
+            console.warn('after', state.recordTypeSaved)
+        }
+        function onInput(v) {
+            console.warn('input:', v)
         }
 
-        return { ...toRefs(state), test }
+        return { ...toRefs(state), setValue, onInput }
     }
 }
 </script>
