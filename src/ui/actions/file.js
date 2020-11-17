@@ -193,3 +193,7 @@ export function createSlideSet() {
 export function loadPresentationsFromDB() {
     fireEvent('loadPresentationsFromDB', {})
 }
+
+window.finishedCreatingPresentation = function() {
+    loadPresentationsFromDB()
+}

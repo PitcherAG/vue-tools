@@ -232,6 +232,23 @@ export async function loadServerJSON(timeout = 5) {
     return store
 }
 
+export function getExtraFieldValue(property, defaultValue) {
+    const store = useServerJSONStore()
+    let value = defaultValue
+    try {
+        if (typeof store.state.config.extraField === 'string') {
+            store.state.config.extraField = JSON.parse(store.state.config.extraField)
+        }
+        if (typeof store.state.config.extraField[property] !== 'undefined') {
+            value = store.state.config.extraField[property]
+            if (typeof value === 'string' && (value.startsWith('{') || value.startsWith('['))) {
+                value = JSON.parse(value)
+            }
+        }
+    } catch (e) {}
+    return value
+}
+
 window.gotJSON = function(serverJSONV, documentPathV) {
     try {
         window.documentPath = documentPathV
