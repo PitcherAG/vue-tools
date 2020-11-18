@@ -8,6 +8,7 @@
 - Dropdown fixes, multiple/clearable selection dropdown works properly
 - `exec` function support for dropdown to be able to access dropdown commands outside
 - Added missing `ref` reference in `sfdcField.js`
+- Error handling in `sfdcLayout.js` & `sfdcField.js`
 
 ## 1.4.11
 ### Changed
