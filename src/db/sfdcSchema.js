@@ -45,7 +45,7 @@ export async function getField(objectName, field_name) {
 export async function labelToValue(objectName, fieldName, label) {
     const schema = await loadSchema(objectName)
     for (const field of schema.fields) {
-        if (field.name === fieldName.trim()) {
+        if (field.name === fieldName.trim() && field.picklistValues) {
             for (const pick of field.picklistValues) {
                 if (pick.label === label) {
                     return pick.value
