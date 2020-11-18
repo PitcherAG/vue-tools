@@ -32,7 +32,7 @@ export class Field {
 
     load_refs() {
         const store = useConfigStore()
-        if (this.referenceTo.length) {
+        if (this.referenceTo && this.referenceTo.length) {
             const sourceTable = store.getCacheDict[this.parentObjectType]
             for (const reference of this.referenceTo) {
                 const targetTable = store.getCacheDict[reference]
