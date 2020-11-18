@@ -296,10 +296,6 @@ export default {
             emit('onSelected', [])
         }
 
-        onMounted(() => {
-            initDropdown()
-        })
-
         // handle item click, without preventing default event
         function handleItemClick(item) {
             if (props.searchable && props.value === item.value) {
@@ -307,6 +303,18 @@ export default {
                 state.isSearching = false
             }
         }
+
+        // Gives ability to execute commands on dropdown from parent
+        function exec(comm, arg) {
+            if (!arg) {
+                return $(refs.dropdown).dropdown(comm)
+            }
+            return $(refs.dropdown).dropdown(comm, arg)
+        }
+
+        onMounted(() => {
+            initDropdown()
+        })
 
         return {
             ...toRefs(state),
@@ -318,7 +326,8 @@ export default {
             onSearch,
             removeItem,
             clear,
-            handleItemClick
+            handleItemClick,
+            exec
         }
     }
 }
