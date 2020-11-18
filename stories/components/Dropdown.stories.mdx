@@ -140,6 +140,13 @@ Fomantic Dropdown component
 | `@onSelected` | event that is triggered when user selects an item from dropdown. Returns selected item as an object.
 | `@input` | default v-model input event, returns the selected items value
 
+### Available functions that you can call on the component
+| function name | description |
+| :--- | :--- |
+| `clear()` | function to clear current value of dropdown
+| `exec(command, argument)` | helper to call any option on dropdown. Example: `COMPONENT.exec('get value')`
+
+
 ### Definitions
 ```javascript
  // object array for items, here you define how your data will be presented in the dropdown and what value they will have on selection. You can also simply use a String array.

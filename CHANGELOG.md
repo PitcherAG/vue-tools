@@ -2,6 +2,14 @@
 
 ## [UNRELEASED]
 
+## 1.4.12
+- Fixes a bug that Modal component had on `exec` function
+- ObjectForm fixes
+- Dropdown fixes, multiple/clearable selection dropdown works properly
+- `exec` function support for dropdown to be able to access dropdown commands outside
+- Added missing `ref` reference in `sfdcField.js`
+- Error handling in `sfdcLayout.js` & `sfdcField.js`
+
 ## 1.4.11
 ### Changed
 - no account problem in formatCurrency fixed
