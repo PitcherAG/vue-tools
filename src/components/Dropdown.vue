@@ -13,6 +13,20 @@
                 :class="[`${icon} icon`, { 'mr-2 ml-1': hasCustomIcon }]"
             />
 
+            <!-- labels -->
+            <template v-if="multiple">
+                <a
+                    v-show="value.includes(item.value)"
+                    v-for="item in filteredItems"
+                    :key="item.value"
+                    class="ui label"
+                    :data-value="item.value"
+                >
+                    {{ item.text }}
+                    <i class="delete icon" @click="removeItem($event, item.value)" />
+                </a>
+            </template>
+
             <!-- search input -->
             <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
 
@@ -28,7 +42,13 @@
             <i v-if="!selection" :class="`${icon} icon mr-2`" />
 
             <!-- clear button -->
-            <i v-if="clearBtnAttr.render" :class="clearBtnAttr.class" :style="clearBtnAttr.style" />
+            <i
+                v-if="clearBtnAttr.render"
+                ref="clearButton"
+                :class="clearBtnAttr.class"
+                :style="clearBtnAttr.style"
+                @click="clear"
+            />
 
             <!-- menu items -->
             <div class="menu">
@@ -37,7 +57,10 @@
                     :key="index"
                     :data-value="item.value"
                     :data-text="item.text"
-                    :class="[item.type, { disabled: item.disabled }]"
+                    :class="[
+                        item.type,
+                        { disabled: item.disabled, 'active filtered': value && value.includes(item.value) }
+                    ]"
                     @click="item.type === 'item' ? handleItemClick(item) : undefined"
                 >
                     <img v-if="item.image" :src="item.image" class="image" />
@@ -110,6 +133,7 @@ export default {
             validator: val => validateSize(val, 'Dropdown.vue')
         }
     },
+    emits: ['input', 'onSelected'],
 
     setup(props, { refs, emit, slots }) {
         // validate
@@ -196,6 +220,8 @@ export default {
             })
         })
 
+        const filteredItems = computed(() => listItems.value.filter(i => i.type === 'item'))
+
         // fomantic dropdown initialization
         const initDropdown = () => {
             const settings = $.extend(
@@ -248,13 +274,27 @@ export default {
             state.isSearching = refs.search && !!refs.search.value
         }
 
-        const clear = () => {
-            $(refs.dropdown).dropdown('clear')
+        const removeItem = (event, value) => {
+            event.preventDefault()
+            event.stopPropagation()
+
+            let valueArray = props.value.split(',')
+            valueArray = valueArray.filter(v => v !== value)
+
+            console.log('str', valueArray.join(','))
+            console.log('arr', valueArray)
+
+            emit('input', valueArray.join(','))
+            emit('onSelected', valueArray)
         }
 
-        onMounted(() => {
-            initDropdown()
-        })
+        // function to clear
+        const clear = event => {
+            event.preventDefault()
+            event.stopPropagation()
+            emit('input', '')
+            emit('onSelected', [])
+        }
 
         // handle item click, without preventing default event
         function handleItemClick(item) {
@@ -264,15 +304,30 @@ export default {
             }
         }
 
+        // Gives ability to execute commands on dropdown from parent
+        function exec(comm, arg) {
+            if (!arg) {
+                return $(refs.dropdown).dropdown(comm)
+            }
+            return $(refs.dropdown).dropdown(comm, arg)
+        }
+
+        onMounted(() => {
+            initDropdown()
+        })
+
         return {
             ...toRefs(state),
             dropdownAttr,
             listItems,
+            filteredItems,
             clearBtnAttr,
             initDropdown,
             onSearch,
+            removeItem,
+            clear,
             handleItemClick,
-            clear
+            exec
         }
     }
 }
