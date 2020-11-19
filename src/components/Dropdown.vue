@@ -28,7 +28,7 @@
             </template>
 
             <!-- search input -->
-            <input v-if="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
+            <input v-show="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
 
             <!-- selected text -->
             <div v-show="value" class="text" />
