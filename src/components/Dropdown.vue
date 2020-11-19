@@ -1,5 +1,5 @@
 <template>
-    <div ref="dropdown" class="ui dropdown pitcher-dropdown" v-bind="dropdownAttr">
+    <div ref="dropdown" class="ui dropdown pitcher-dropdown" v-bind="dropdownAttr" @click="toggleDropdown">
         <template v-if="hasDefaultSlot">
             <slot />
         </template>
@@ -26,15 +26,16 @@
                     <i class="delete icon" @click="removeItem($event, item.value)" />
                 </a>
             </template>
-
-            <!-- search input -->
-            <input v-show="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
-
             <!-- selected text -->
+
             <div v-show="value" class="text" />
 
+            <!-- search input -->
+
+            <input v-show="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
+
             <!-- placeholder -->
-            <div v-show="!value && !isSearching" class="default" :style="{ left: hasCustomIcon ? '32px' : '' }">
+            <div v-show="!value" class="default text" :style="{ left: hasCustomIcon ? '32px' : '' }">
                 {{ defaultText }}
             </div>
 
@@ -220,6 +221,15 @@ export default {
             })
         })
 
+        function toggleDropdown() {
+            if (!props.searchable && !state.isOpen) {
+                state.isOpen = true
+                $(refs.dropdown).dropdown('toggle')
+            } else {
+                state.isOpen = false
+            }
+        }
+
         const filteredItems = computed(() => listItems.value.filter(i => i.type === 'item'))
 
         // fomantic dropdown initialization
@@ -318,6 +328,7 @@ export default {
 
         return {
             ...toRefs(state),
+            toggleDropdown,
             dropdownAttr,
             listItems,
             filteredItems,
@@ -335,6 +346,11 @@ export default {
 
 <style lang="scss" scoped>
 .ui.dropdown.pitcher-dropdown {
+    .hidden {
+        position: absolute;
+        left: -2000px;
+        top: -2000px;
+    }
     // default text color
     .default {
         color: rgba(191, 191, 191, 0.87) !important;
