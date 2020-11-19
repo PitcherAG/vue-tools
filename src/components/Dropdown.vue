@@ -26,16 +26,15 @@
                     <i class="delete icon" @click="removeItem($event, item.value)" />
                 </a>
             </template>
-            <!-- selected text -->
-
-            <div v-show="value" class="text" />
 
             <!-- search input -->
-
             <input v-show="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
 
+            <!-- selected text -->
+            <div v-show="value" class="text" />
+
             <!-- placeholder -->
-            <div v-show="!value" class="default text" :style="{ left: hasCustomIcon ? '32px' : '' }">
+            <div v-show="!value && !isSearching" class="default" :style="{ left: hasCustomIcon ? '32px' : '' }">
                 {{ defaultText }}
             </div>
 
@@ -346,11 +345,6 @@ export default {
 
 <style lang="scss" scoped>
 .ui.dropdown.pitcher-dropdown {
-    .hidden {
-        position: absolute;
-        left: -2000px;
-        top: -2000px;
-    }
     // default text color
     .default {
         color: rgba(191, 191, 191, 0.87) !important;
