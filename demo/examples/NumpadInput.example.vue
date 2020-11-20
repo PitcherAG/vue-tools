@@ -8,9 +8,9 @@
             class="mr-4 mb-1"
             :class="{ 'mt-5': inputs[i - 1] && inputs[i - 1].group !== inp.group }"
         >
-                <span class="mr-4">Group: {{ inp.group }}</span>
-                <NumpadInput v-model="inp.val" :group="inp.group" />
-            </div>
+            <span class="mr-4">Group: {{ inp.group }}</span>
+            <NumpadInput v-model="inp.val" :group="inp.group" />
+        </div>
         <br />
         <button @click="add">add</button>
         <button @click="remove">remove</button>

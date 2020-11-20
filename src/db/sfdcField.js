@@ -22,13 +22,13 @@ export class Field {
 
     valid(value) {
         if ((this.type === 'boolean' && value === true) || value === false) {
-                return true
-            }
-        if (!value && this.required) {
-                return false
-            }
             return true
         }
+        if (!value && this.required) {
+            return false
+        }
+        return true
+    }
 
     load_refs() {
         const store = useConfigStore()
