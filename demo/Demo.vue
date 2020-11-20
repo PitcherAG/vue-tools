@@ -32,7 +32,7 @@ export default {
         ProgressBarEx
     },
     setup() {
-        const selectedPage = ref('ModalEx')
+        const selectedPage = ref('DropdownEx')
         const pages = ref([
             {
                 text: 'Modal',

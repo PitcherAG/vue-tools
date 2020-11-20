@@ -249,6 +249,10 @@ export function getExtraFieldValue(property, defaultValue) {
     return value
 }
 
+window.setMainNav = function(lastViewedCategory) {
+    window.lastViewedCategory = lastViewedCategory
+}
+
 window.gotJSON = function(serverJSONV, documentPathV) {
     try {
         window.documentPath = documentPathV
