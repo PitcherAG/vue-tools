@@ -32,7 +32,7 @@ describe('Dropdown.vue', () => {
 
     it('Dropdown mounts properly', async () => {
         expect(wrapper.find('.default').text()).toBe(wrapper.vm.$props.defaultText)
-        expect(wrapper.find('.text').text()).toBe('')
+        expect(wrapper.find('.custom-text').text()).toBe('')
         expect(wrapper.find('.menu .header').exists()).toBe(false)
         expect(wrapper.find('.menu .divider').exists()).toBe(false)
         expect(wrapper.vm.$props.selection).toBe(true)
