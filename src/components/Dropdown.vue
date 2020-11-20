@@ -1,5 +1,5 @@
 <template>
-    <div ref="dropdown" class="ui dropdown pitcher-dropdown" v-bind="dropdownAttr">
+    <div ref="dropdown" class="ui dropdown pitcher-dropdown" v-bind="dropdownAttr" @click="toggleDropdown">
         <template v-if="hasDefaultSlot">
             <slot />
         </template>
@@ -31,7 +31,7 @@
             <input
                 v-show="searchable"
                 ref="search"
-                :class="{ search: searchable }"
+                class="search"
                 autocomplete="off"
                 tabindex="0"
                 @input="onSearch"
@@ -296,9 +296,6 @@ export default {
             let valueArray = props.value.split(',')
             valueArray = valueArray.filter(v => v !== value)
 
-            console.log('str', valueArray.join(','))
-            console.log('arr', valueArray)
-
             emit('input', valueArray.join(','))
             emit('onSelected', valueArray)
         }
@@ -312,9 +309,15 @@ export default {
         }
 
         function handleSearchBlur() {
-            console.log('BLUR')
             refs.search.value = ''
             state.isSearching = false
+        }
+
+        function toggleDropdown(event) {
+            // if not searchable & clicked target is the container, not item
+            if (!props.searchable && event.target.className.includes('pitcher-dropdown')) {
+                $(refs.dropdown).dropdown('toggle')
+            }
         }
 
         // Gives ability to execute commands on dropdown from parent
@@ -341,6 +344,7 @@ export default {
             removeItem,
             clear,
             handleSearchBlur,
+            toggleDropdown,
             exec
         }
     }
