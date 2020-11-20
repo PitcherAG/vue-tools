@@ -13,8 +13,8 @@ export function formatCurrency(value, currency, currencyDisplay = 'symbol') {
     if (!currency) {
         const params = useParamsStore()
         if (params.state.account) {
-        currency = params.state.account.CurrencyIsoCode
-    }
+            currency = params.state.account.CurrencyIsoCode
+        }
     }
     if (currency.length > 3) {
         currency = currencyDict[currency]
