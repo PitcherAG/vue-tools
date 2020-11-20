@@ -10,7 +10,7 @@
             <!-- icon / if selection -->
             <i
                 v-show="(selection && !isSearching) || (selection && multiple)"
-                :class="[`${icon} icon`, { 'mr-2 ml-1': hasCustomIcon }]"
+                :class="[`${icon} icon`, { 'mr-2': hasCustomIcon, 'ml-1 mt-2': multiple }]"
             />
 
             <!-- labels -->
@@ -28,10 +28,20 @@
             </template>
 
             <!-- search input -->
-            <input v-show="searchable" ref="search" class="search" autocomplete="off" tabindex="0" @input="onSearch" />
+            <input
+                v-show="searchable"
+                ref="search"
+                :class="{ search: searchable }"
+                autocomplete="off"
+                tabindex="0"
+                @input="onSearch"
+                @blur="handleSearchBlur"
+            />
 
             <!-- selected text -->
-            <div v-show="value" class="text" />
+            <div v-show="value && !multiple && !isSearching" class="custom-text">
+                {{ selectedItemText }}
+            </div>
 
             <!-- placeholder -->
             <div v-show="!value && !isSearching" class="default" :style="{ left: hasCustomIcon ? '32px' : '' }">
@@ -61,7 +71,6 @@
                         item.type,
                         { disabled: item.disabled, 'active filtered': value && value.includes(item.value) }
                     ]"
-                    @click="item.type === 'item' ? handleItemClick(item) : undefined"
                 >
                     <img v-if="item.image" :src="item.image" class="image" />
                     <i v-if="item.icon" :class="`${item.icon} icon`" />
@@ -96,9 +105,7 @@ export default {
         },
         defaultText: {
             type: String,
-            default: () => {
-                $gettext('Select')
-            }
+            default: () => $gettext('Select')
         },
         action: {
             type: String,
@@ -169,6 +176,14 @@ export default {
                 maxWidth: parsePxStyle(props.maxWidth)
             }
         }))
+
+        const selectedItemText = computed(() => {
+            if (!props.multiple) {
+                const found = listItems.value.find(i => i.value === props.value)
+                return found ? found.text : ''
+            }
+            return ''
+        })
 
         const clearBtnAttr = computed(() => {
             const attr = {
@@ -296,12 +311,10 @@ export default {
             emit('onSelected', [])
         }
 
-        // handle item click, without preventing default event
-        function handleItemClick(item) {
-            if (props.searchable && props.value === item.value) {
-                refs.search.value = ''
-                state.isSearching = false
-            }
+        function handleSearchBlur() {
+            console.log('BLUR')
+            refs.search.value = ''
+            state.isSearching = false
         }
 
         // Gives ability to execute commands on dropdown from parent
@@ -321,12 +334,13 @@ export default {
             dropdownAttr,
             listItems,
             filteredItems,
+            selectedItemText,
             clearBtnAttr,
             initDropdown,
             onSearch,
             removeItem,
             clear,
-            handleItemClick,
+            handleSearchBlur,
             exec
         }
     }
@@ -347,6 +361,10 @@ export default {
             position: absolute;
             left: 8px;
         }
+    }
+
+    .custom-text {
+        display: inline-block;
     }
 
     // image in list
