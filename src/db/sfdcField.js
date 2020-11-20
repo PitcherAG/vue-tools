@@ -1,35 +1,38 @@
+import { ref } from '@vue/composition-api'
 import { useConfigStore } from '../config'
 import { query } from './query'
 import { execBool } from '../utils/contextExec'
 import { PLATFORM } from '../platform'
 
 export class Field {
+    references = ref([])
+    referencesTo = []
     constructor(obj, objectType, load = true) {
-        this.referenceTo = []
-        this.references = []
         Object.assign(this, obj)
-        const self = this
+
         this.parentObjectType = objectType
 
         this.required = !obj.nillable || obj.nameField
-        this.valid = function(value) {
-            if ((self.type === 'boolean' && value === true) || value === false) {
-                return true
-            }
-            if (!value && self.required) {
-                return false
-            }
-            return true
-        }
+
         this.errors = []
         if (load) {
             this.load_refs()
         }
     }
 
+    valid(value) {
+        if ((this.type === 'boolean' && value === true) || value === false) {
+                return true
+            }
+        if (!value && this.required) {
+                return false
+            }
+            return true
+        }
+
     load_refs() {
         const store = useConfigStore()
-        if (this.referenceTo.length) {
+        if (this.referenceTo && this.referenceTo.length) {
             const sourceTable = store.getCacheDict[this.parentObjectType]
             for (const reference of this.referenceTo) {
                 const targetTable = store.getCacheDict[reference]
@@ -83,7 +86,7 @@ export class Field {
             }
             result.push({ value: obj.Id, text: obj[nameField] })
         }
-        this.references = this.references.concat(result)
+        this.references.value = this.references.value.concat(result)
     }
 
     loadExternalReferences(data, nameField = 'Name') {
@@ -91,6 +94,6 @@ export class Field {
         for (const obj of data) {
             result.push({ value: obj.Id, text: obj[nameField] })
         }
-        this.references = result
+        this.references.value = result
     }
 }

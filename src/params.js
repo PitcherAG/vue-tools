@@ -24,12 +24,15 @@ class ParamStore {
     })
 
     get locale() {
-        if (this.state.salesForceUser) {
-            return this.state.salesForceUser.LanguageLocaleKey.split('_').join('-')
-        } else if (this.state.user) {
-            return this.state.user.LanguageLocaleKey.split('_').join('-')
-        }
-        return null
+        const user = this.state.salesForceUser ? this.state.salesForceUser : this.state.user
+        let localeLangugage = null
+        if (user) localeLangugage = user.LocaleSidKey ? user.LocaleSidKey : user.LanguageLocaleKey
+        return localeLangugage
+            ? localeLangugage
+                  .split('_')
+                  .slice(0, 2)
+                  .join('-')
+            : null
     }
 
     get language() {
@@ -104,78 +107,3 @@ export function useParams() {
     return useParamsStore().state
 }
 
-/** For Pitcher Connect
- |--------------------------------------------------
- |    serverJSON
- |--------------------------------------------------
- **/
-
-// These must to be attached on window
-window.setMainNav = function(lastViewedCategory) {
-    window.lastViewedCategory = lastViewedCategory
-}
-
-window.gotJSON = function(serverJSONV, documentPathV) {
-    try {
-        window.documentPath = documentPathV
-        window.serverJSON = JSON.parse(serverJSONV)
-        window.serverJSON.files.reverse()
-        window.appID = window.serverJSON.appID
-    } catch (e) {
-        fireEvent('Error', e)
-    }
-}
-
-window.loadPresentations = function() {}
-window.showUI = function() {}
-
-// serverJSON store
-class StoreServer {
-    id = 'serverJSON'
-    state = {
-        files: [],
-        categories: [],
-        config: null,
-        groups: [],
-        appID: '',
-        deviceName: null,
-        messages: [],
-        metadata: null,
-        slides: [],
-        supportEmail: null,
-        md5: null,
-        systemLang: null,
-        locale: null,
-        userfullname: null,
-        ajaxtoken: null,
-        isCustomerUI: false
-    }
-}
-
-export const useServerJSONStore = () => {
-    return createStore(new StoreServer())
-}
-
-// serverJSON initializer
-export async function loadServerJSON(timeout = 5) {
-    const store = useServerJSONStore()
-
-    // for testing
-    if (process.env.VUE_APP_SERVERJSON) {
-        // for testing
-        const preServerJSON = JSON.parse(process.env.VUE_APP_SERVERJSON)
-        Object.assign(store.state, preServerJSON)
-        return store.state
-    }
-
-    const serverJSON = await waitForWindowProp('serverJSON', timeout)
-    if (serverJSON) {
-        store.state.documentPath = window.documentPath
-        Object.assign(store.state, window.serverJSON)
-    }
-    return store.state
-}
-
-export function useServerJSON() {
-    return useServerJSONStore().state
-}

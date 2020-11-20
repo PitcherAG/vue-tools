@@ -2,13 +2,15 @@
     <div>
         <h3>Numpad Input</h3>
         <div class="ui divider" />
-        <template v-for="inp in inputs">
-            <div :key="inp.id">
+        <div
+            v-for="(inp, i) in inputs"
+            :key="inp.id"
+            class="mr-4 mb-1"
+            :class="{ 'mt-5': inputs[i - 1] && inputs[i - 1].group !== inp.group }"
+        >
                 <span class="mr-4">Group: {{ inp.group }}</span>
                 <NumpadInput v-model="inp.val" :group="inp.group" />
-                <br />
             </div>
-        </template>
         <br />
         <button @click="add">add</button>
         <button @click="remove">remove</button>
@@ -53,15 +55,13 @@ export default {
         const add = () => {
             state.inputs.push({
                 id: state.inputs.length,
-                group: 'test',
+                group: 'test3',
                 val: ''
             })
-            console.log(NumpadInput.numpadStore.groups)
         }
 
         const remove = () => {
             state.inputs = state.inputs.filter(i => i.id !== state.inputs.length - 1)
-            console.log(NumpadInput.numpadStore.groups)
         }
 
         return { ...toRefs(state), add, remove }
