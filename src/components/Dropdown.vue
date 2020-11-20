@@ -39,7 +39,7 @@
             />
 
             <!-- selected text -->
-            <div v-show="value && !multiple && !isSearching" style="display: inline-block;">
+            <div v-show="value && !multiple && !isSearching" class="custom-text">
                 {{ selectedItemText }}
             </div>
 
@@ -180,7 +180,7 @@ export default {
         const selectedItemText = computed(() => {
             if (!props.multiple) {
                 const found = listItems.value.find(i => i.value === props.value)
-                return found ? found.text : undefined
+                return found ? found.text : ''
             }
             return ''
         })
@@ -361,6 +361,10 @@ export default {
             position: absolute;
             left: 8px;
         }
+    }
+
+    .custom-text {
+        display: inline-block;
     }
 
     // image in list
