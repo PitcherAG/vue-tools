@@ -125,6 +125,10 @@ export default defineComponent({
             type: String,
             default: 'no-group'
         },
+        resetBefore: {
+            type: Boolean,
+            default: true
+        },
         fluid: Boolean,
         disabled: Boolean,
         transparent: Boolean,
@@ -165,7 +169,8 @@ export default defineComponent({
             numpadIsVisible: false,
             labelLeftSlot: !!ctx.slots.labelLeft,
             labelRightSlot: !!ctx.slots.labelRight,
-            localValue: props.value
+            localValue: props.value,
+            shouldReset: false
         })
 
         const inputAttrs = computed(() => {
@@ -205,6 +210,13 @@ export default defineComponent({
                 return
             }
 
+            // if current value is higher than 0, reset value to 0 before first input
+            if (localState.shouldReset) {
+                emit(defaultValue)
+                localState.localValue = defaultValue
+                localState.shouldReset = false
+            }
+
             // parse current value as Integer
             const parsed = parseInt(localState.localValue.toString().replace(/\D/g, ''))
             // concatenate incoming value as string with parsed value
@@ -216,9 +228,15 @@ export default defineComponent({
         }
 
         function incDec(action) {
-            if (localState.localValue === '') {
+            if (!localState.localValue) {
                 emit(defaultValue)
             }
+
+            // should not reset if only increase/decrease will be clicked
+            if (localState.shouldReset) {
+                localState.shouldReset = false
+            }
+
             // parse the number with decimals
             let parsedNumber = parseFloat(localState.localValue).toFixed(props.decimals)
 
@@ -275,10 +293,16 @@ export default defineComponent({
             if (visibility) {
                 blurOthers()
                 checkOverlap()
+
                 // visible, if value empty set default
                 if (!localState.localValue) {
                     emit(defaultValue)
                 }
+
+                if (props.resetBefore && parseFloat(localState.localValue) > 0) {
+                    localState.shouldReset = true
+                }
+
                 if (props.noAnimation) {
                     return
                 }
