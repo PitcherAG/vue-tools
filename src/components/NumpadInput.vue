@@ -276,7 +276,7 @@ export default defineComponent({
                 blurOthers()
                 checkOverlap()
                 // visible, if value empty set default
-                if (localState.localValue === '') {
+                if (!localState.localValue) {
                     emit(defaultValue)
                 }
                 if (props.noAnimation) {
