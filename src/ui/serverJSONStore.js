@@ -118,6 +118,15 @@ class ServerJSONStore {
     }
 
     /*
+        When it's all documents
+    */
+    parseCustomPdf(file) {
+        file.ID = file.slideOrder.split(',')[0].split('|')[0]
+        file.isCustomPdf = true
+        return file
+    }
+
+    /*
         Single presentation object parse
     */
     parseSinglePresentation(file) {
