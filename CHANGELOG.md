@@ -3,6 +3,11 @@
 ## [UNRELEASED]
 
 ## 1.4.12
+### Breaking changes
+- NumpadInput.vue has a new prop called `resetBefore` which is by default `true`. If numpad has a value higher than 0 initially, first numpad click will reset the value to 0 first.
+
+### Changed
+- NumpadInput can now be used with undefined/null in `v-model`
 - Fixes a bug that Modal component had on `exec` function
 - ObjectForm fixes
 - Dropdown fixes, multiple/clearable selection dropdown works properly
