@@ -155,17 +155,30 @@ class ServerJSONStore {
         return false
     }
 
+    createAppendCustomFile(original, file) {
+        const customFile = {}
+        Object.assign(customFile, original)
+        Object.assign(customFile, file)
+        customFile.body = file.presentationName
+        this.state.customs.push(customFile)
+    }
+
     /*
         Custom decks are retrived with presentation objects, this adds them to custom list
     */
     addFileAsCustom(file) {
-        const original = this.state.files.find(f => f.ID == file.ID)
+        let original = this.state.files.find(f => f.ID == file.ID)
         if (original) {
-            const customFile = {}
-            Object.assign(customFile, original)
-            Object.assign(customFile, file)
-            customFile.body = file.presentationName
-            this.state.customs.push(customFile)
+            this.createAppendCustomFile(original, file)
+        } else {
+            const originalSlide = this.state.slides.find(f => f.vSubfolder == file.vSubFolder)
+            if (originalSlide) {
+                original = this.state.files.find(f => f.ID == originalSlide.ID)
+                if (original) {
+                    file.ID = original.ID
+                    this.createAppendCustomFile(original, file)
+                }
+            }
         }
     }
 
@@ -223,17 +236,18 @@ export async function loadServerJSON(timeout = 5) {
 
     const serverJSON = await waitForWindowProp('serverJSON', timeout)
 
-    ///Event to get presentation list, which contains slides from admin & custom presentations
-    fireEvent('loadPresentationsFromDB', {})
-
-    const presentationsObject = await waitForWindowProp('presentationsObject', timeout)
-
     if (serverJSON) {
         serverJSON.files = store.extendFiles(serverJSON.files)
         Object.assign(store.state, window.serverJSON)
         store.state.documentPath = window.documentPath
         await getFavorites()
     }
+
+    ///Event to get presentation list, which contains slides from admin & custom presentations
+    fireEvent('loadPresentationsFromDB', {})
+
+    const presentationsObject = await waitForWindowProp('presentationsObject', timeout)
+
     if (presentationsObject) {
         store.parsePresentations(presentationsObject)
     }
@@ -276,11 +290,11 @@ window.loadPresentations = function(presentationsObject) {
     if (typeof presentationsObject === 'string') {
         presentationsObject = JSON.parse(presentationsObject)
     }
+    window.presentationsObject = presentationsObject
     if (window.presentationsObject) {
         const store = useServerJSONStore()
         store.parsePresentations(window.presentationsObject)
     }
-    window.presentationsObject = presentationsObject
 }
 
 window.filterJSON = function(allowedIDsV) {
