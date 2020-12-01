@@ -195,6 +195,26 @@ export function loadPresentationsFromDB() {
     fireEvent('loadPresentationsFromDB', {})
 }
 
+export function loadPresentationWithPage(fileId, page) {
+    fireEvent('launchContentWithID', { fileID: fileId, subID: page })
+}
+
+export function loadPdfWithPage(file, page, searchText) {
+    fireEvent('loadPDF', {
+        file: file.vUrl,
+        titleV: addSlashes(file.body),
+        viewMode: 1,
+        lockViewMode: null,
+        references: null,
+        articles: null,
+        subFolder: null,
+        annotationEnabled: true,
+        jumpToPage: page,
+        pdfID: file.ID,
+        searchString: searchText
+    })
+}
+
 window.finishedCreatingPresentation = function() {
     loadPresentationsFromDB()
 }
