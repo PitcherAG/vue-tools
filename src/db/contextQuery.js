@@ -4,7 +4,6 @@ import { useParamsStore } from '../params'
 import { renderContext } from '../utils'
 
 export async function contextQuery(query, context, db = null, removeNull = false) {
-    removeNull = true
     if (!query) {
         throw Error('no query provided')
     }
