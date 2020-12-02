@@ -3,7 +3,7 @@
 ## [UNRELEASED]
 
 ## [1.4.13]
-- Added validations store, usage with `useValidation()`
+- Added validations store, usage with `loadValidations(validationsJsonFile)` and `useValidations()`
 - fix remove null hardcode in `contextQuery`
 
 ## 1.4.12
