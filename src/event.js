@@ -24,7 +24,7 @@ function fireEvent(name, params) {
         }
 
         window[callback] = res => {
-            if (res.startsWith('{') || res.startsWith('[')) {
+            if (typeof res === 'string' && (res.startsWith('{') || res.startsWith('['))) {
                 try {
                     resolve(JSON.parse(res))
                 } catch (e) {

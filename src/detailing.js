@@ -8,6 +8,8 @@ function defaultOptions() {
 export const currentContact = null
 export const noContacts = true
 
+/*
+commented out - use detaling store
 export function startStopDetailing(options, target) {
     if (!options) {
         options = defaultOptions()
@@ -26,7 +28,10 @@ export function startStopDetailing(options, target) {
             break
     }
 }
+*/
 
+/*
+commented out - use detaling store
 export function startDetailing(options, target) {
     if (!options) {
         options = defaultOptions()
@@ -45,6 +50,7 @@ export function startDetailing(options, target) {
             break
     }
 }
+*/
 
 function startDetailingAndroid(options) {
     options.noContacts = noContacts

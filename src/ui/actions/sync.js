@@ -1,15 +1,19 @@
 import { fireEvent } from '../../event'
 import { query } from '../../db/query'
-import { useServerJSONStore } from '../serverJSONStore'
+import { useDetailingStore } from '../detailingStore'
+import { useServerJSON } from '../serverJSONStore'
+import { PLATFORM } from '../../platform'
 
 export function showIOSSyncWindow(options) {
     fireEvent('showCachedOrders', options)
 }
 
-export async function getiOSSyncEvents(source = 'homescreen') {
-    const store = useServerJSONStore()
-    const selectQuery = 'SELECT event_name, event_time, lastResponse FROM tbl_reports_v3'
-    const events = await query(selectQuery, store.state.appName, false, source)
+async function getiOSSyncEvents(source = 'homescreen') {
+    const store = useDetailingStore()
+    const appName = useServerJSON().appName
+    const selectQuery =
+        "SELECT event_name, event_time, lastResponse FROM tbl_reports_v3 WHERE event_name LIKE '%event_redirect%'"
+    const events = await query(selectQuery, appName, false, source)
     store.state.syncEvents = events.map(event => {
         return {
             name: event.event_name,
@@ -20,12 +24,28 @@ export async function getiOSSyncEvents(source = 'homescreen') {
     return store.state.syncEvents
 }
 
-export async function getWindowsSyncEvents(source = 'homescreen') {
-    const store = useServerJSONStore()
-    const selectQuery = 'SELECT Name, Time FROM SQLiteEvent'
-    const events = await query(selectQuery, store.state.appName, false, source)
+async function getWindowsSyncEvents(source = 'homescreen') {
+    const store = useDetailingStore()
+    const selectQuery = "SELECT Name, Time FROM SQLiteEvent WHERE Name LIKE '%event_redirect%'"
+    const events = await query(selectQuery, null, false, source)
     store.state.syncEvents = events.map(event => {
         return { name: event.Name, time: event.Time, date: event.Time ? new Date(parseInt(event.Time)) : '' }
     })
     return store.state.syncEvents
+}
+
+export async function getSyncEvents(source = 'homescreen') {
+    switch (PLATFORM) {
+        case 'IOS':
+            getiOSSyncEvents(source)
+            break
+        case 'WINDOWS':
+            getWindowsSyncEvents(source)
+            break
+        case 'ANDROID':
+            ///TODO
+            break
+        default:
+            break
+    }
 }
