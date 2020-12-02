@@ -33,6 +33,7 @@ class ServerJSONStore {
         presentations: [],
         customs: [],
         category: {},
+        initialAllowedIDs: null,
         allowedIDs: [],
         systemLang: null,
         locale: null,
@@ -41,7 +42,7 @@ class ServerJSONStore {
         isCustomerUI: false,
         batteryLevel: 0,
         statusBadge: '',
-        syncEvents: []
+        todoBadge: ''
     })
 
     /*
@@ -84,6 +85,7 @@ class ServerJSONStore {
             file.typeV == 7 ||
             file.typeV == -1 ||
             file.typeV == 0 ||
+            file.category == 'images' ||
             this.isFileExpiredOrNotReady(now, file.startDate, file.endDate)
         ) {
             return false
@@ -213,6 +215,9 @@ class ServerJSONStore {
         This filter might be due to now downloaded content(ios), or when call with pre selected is started (all platforms)
     */
     setAllowedIds(fileIds) {
+        if (fileIds && fileIds.length > 0 && this.state.initialAllowedIDs == null) {
+            this.state.initialAllowedIDs = fileIds
+        }
         this.state.allowedIDs = fileIds || []
     }
 }
@@ -317,4 +322,10 @@ window.updateStatusBadge = function(value) {
     const store = useServerJSONStore()
     value = parseInt(value)
     store.state.statusBadge = value || ''
+}
+
+window.updateTodoBadge = function(value) {
+    const store = useServerJSONStore()
+    value = parseInt(value)
+    store.state.todoBadge = value || ''
 }

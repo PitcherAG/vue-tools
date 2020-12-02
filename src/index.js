@@ -27,6 +27,9 @@ export * from './utils'
 // ServerJSON
 export * from './ui/serverJSONStore.js'
 
+// Detaling
+export * from './ui/detailingStore.js'
+
 // Instance
 export * from './ui/instance.js'
 
