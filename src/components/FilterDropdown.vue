@@ -474,6 +474,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/mixins';
+
 .ui.dropdown.pitcher-filter {
     .ui.buttons {
         width: 100%;
@@ -493,6 +495,11 @@ export default {
                 // white-space: nowrap;
                 // text-overflow: ellipsis;
                 overflow: hidden;
+            }
+
+            @include polyfillIE {
+                border-left-style: solid !important;
+                border-left-width: 1px !important;
             }
         }
 
