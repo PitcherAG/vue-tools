@@ -49,7 +49,7 @@
                                     v-if="!comp.exclude"
                                     :key="compKey"
                                     v-model="state.obj[comp.value]"
-                                    :value-label="toLabel(state.obj, comp.value)"
+                                    :value-label="toLabel(state.obj, comp.value, comp.field)"
                                     :field="comp.field"
                                     :show-error="state.showErrors"
                                     :hide-help-text="hideHelpText"
@@ -338,7 +338,7 @@ export default {
                                                             field.loadExternalReferences(
                                                                 props.customReferences[field.name]
                                                             )
-                                                        } else {
+                                                        } else if (field.referenceTo && field.referenceTo.length) {
                                                             field.load_refs()
                                                         }
                                                     }
@@ -367,7 +367,7 @@ export default {
                             if (excludes.indexOf(field.name) === -1) {
                                 let f
                                 try {
-                                    f = new Field(field, this)
+                                    f = new Field(field, this, false)
                                 } catch (e) {
                                     console.warn(e)
                                     excludeFields.push(field.name)
@@ -523,7 +523,13 @@ export default {
             attrs.emit('input', state.obj)
         }
 
-        const toLabel = (obj, path) => {
+        const toLabel = (obj, path, field = null) => {
+            if (field && field.references.value.length) {
+                for (const ref of field.references.value) {
+                    if (ref.value === obj[path] && ref.text) return ref.text
+                }
+            }
+
             let newPath = path.substr(0, path.length - 1) + 'r'
             if (obj[newPath]) {
                 return obj[newPath].Name
