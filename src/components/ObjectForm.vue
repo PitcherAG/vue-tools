@@ -331,7 +331,8 @@ export default {
                                                         }
                                                         if (fieldShouldBeReadOnly(field)) {
                                                             field.updateable = false
-                                                        } else if (
+                                                        }
+                                                        if (
                                                             props.customReferences &&
                                                             props.customReferences[field.name]
                                                         ) {
