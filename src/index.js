@@ -16,7 +16,6 @@ export * from './i18n/plurals.js'
 
 export * from './app.js'
 export * from './config.js'
-export * from './detailing.js'
 export * from './event.js'
 export * from './files.js'
 export * from './params.js'

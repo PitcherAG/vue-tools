@@ -1,5 +1,4 @@
 import { fireEvent } from '../event'
-import { getFavorites } from './actions/favorite'
 import { waitForWindowProp, joinPath } from '../utils'
 import { createStore } from '../store'
 import { reactive, computed } from '@vue/composition-api'
@@ -32,7 +31,6 @@ class ServerJSONStore {
         documentPath: null,
         presentations: [],
         customs: [],
-        category: {},
         initialAllowedIDs: null,
         allowedIDs: [],
         systemLang: null,
@@ -233,11 +231,24 @@ export function useServerJSON() {
 export async function loadServerJSON(timeout = 5) {
     const store = useServerJSONStore()
 
-    ///This is for Android -- Ti is not injected for s very small period of time
+    // for testing
+    if (process.env.VUE_APP_TI) {
+        window.Ti = JSON.parse(process.env.VUE_APP_TI)
+        window.Ti.App.fireEvent = () => true
+    }
+
+    ///This is for Android -- Ti is not injected for a very small period of time
     await waitForWindowProp('Ti', timeout)
 
     ///Event to get serverJSON - can only be called once, otherwise will not return data
     fireEvent('askJSON')
+
+    // for testing
+    if (process.env.VUE_APP_SERVERJSON) {
+        window.serverJSON = JSON.parse(process.env.VUE_APP_SERVERJSON)
+        Object.assign(store.state, window.serverJSON)
+        window.documentPath = '/'
+    }
 
     const serverJSON = await waitForWindowProp('serverJSON', timeout)
 
@@ -245,7 +256,11 @@ export async function loadServerJSON(timeout = 5) {
         serverJSON.files = store.extendFiles(serverJSON.files)
         Object.assign(store.state, window.serverJSON)
         store.state.documentPath = window.documentPath
-        await getFavorites()
+    }
+
+    // for testing
+    if (process.env.VUE_APP_PRESENTATIONSOBJECT) {
+        window.presentationsObject = JSON.parse(process.env.VUE_APP_PRESENTATIONSOBJECT)
     }
 
     ///Event to get presentation list, which contains slides from admin & custom presentations
@@ -273,7 +288,11 @@ export function getExtraFieldValue(property, defaultValue) {
                 value = JSON.parse(value)
             }
         }
-    } catch (e) {}
+    } catch (e) {
+        if (process.env.LOG) {
+            console.log(e)
+        }
+    }
     return value
 }
 

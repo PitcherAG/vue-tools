@@ -1,5 +1,6 @@
 import { loadServerJSON, useServerJSONStore } from '../ui/serverJSONStore'
 import { fireEvent } from '../event'
+import { getFavorites } from './actions/favorite'
 import UI_CONSTANTS from '../constants/ui'
 
 /*
@@ -7,6 +8,7 @@ import UI_CONSTANTS from '../constants/ui'
 */
 export async function initializeInstance(timeout = 5) {
     await loadServerJSON(timeout)
+    await getFavorites()
     showUI()
 }
 

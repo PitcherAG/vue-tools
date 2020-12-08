@@ -106,4 +106,3 @@ export async function loadParams() {
 export function useParams() {
     return useParamsStore().state
 }
-

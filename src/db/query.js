@@ -31,7 +31,9 @@ function hasCached(query) {
 }
 
 async function query(query, db = null, removeNull = false, source = 'modal') {
-    console.log(query)
+    if (process.env.LOG) {
+        console.log(query)
+    }
     return new Promise((resolve, reject) => {
         if (hasCached(query) && dbSettings.cacheEnabled) {
             console.log('cache hit')
