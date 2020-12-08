@@ -1,5 +1,5 @@
 import { fireEvent } from '../../event'
-import { useServerJSONStore } from '../serverJSONStore'
+import { useServerJSONStore } from '../serverJSON'
 
 const categoryActionMapping = {
     presentation: loadPresentation,

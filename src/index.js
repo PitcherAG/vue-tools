@@ -25,7 +25,7 @@ export * from './validations.js'
 export * from './utils'
 
 // ServerJSON
-export * from './ui/serverJSONStore.js'
+export * from './ui/serverJSON.js'
 
 // Detaling
 export * from './ui/detailingStore.js'

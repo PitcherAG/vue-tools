@@ -7,32 +7,15 @@ import UI_CONSTANTS from '../constants/ui'
 
 class ServerJSONStore {
     id = 'serverJSON'
-    loaded = false
-    oneTimeLoadPresentations = false
     state = reactive({
-        files: [],
-        uiFiles: computed(() => this.state.files.filter(file => file.shouldShowInUI)),
-        slides: [],
         config: null,
         groups: null,
         appID: null,
-        categories: [],
-        parentCategories: computed(() =>
-            this.state.categories.filter(category => category.parentCategory == UI_CONSTANTS.PARENT_CATEGORY_VALUE)
-        ),
-        subCategories: computed(() =>
-            this.state.categories.filter(category => category.parentCategory != UI_CONSTANTS.PARENT_CATEGORY_VALUE)
-        ),
         supportEmail: null,
         deviceName: null,
         metadata: null,
         messages: null,
         appName: null,
-        documentPath: null,
-        presentations: [],
-        customs: [],
-        initialAllowedIDs: null,
-        allowedIDs: [],
         systemLang: null,
         locale: null,
         userfullname: null,
@@ -42,24 +25,21 @@ class ServerJSONStore {
         statusBadge: '',
         todoBadge: ''
     })
+}
 
-    /*
-        This method is called when category is changed
-    */
-    setMainNav(category) {
-        if (category) {
-            window.lastViewedCategory = category
-            if (typeof localStorage !== 'undefined') {
-                localStorage.setItem(`${this.state.appID}.mainNavItem`, category.ID)
-            }
-            fireEvent('setCategory', { category: JSON.stringify(category) })
-            this.state.category = category
-            if (!this.loaded) {
-                this.loaded = true
-                fireEvent('uiReady')
-            }
-        }
-    }
+class FilesStore {
+    id = 'files'
+    oneTimeLoadPresentations = false
+    state = reactive({
+        files: [],
+        uiFiles: computed(() => this.state.files.filter(file => file.shouldShowInUI)),
+        slides: [],
+        documentPath: null,
+        presentations: [],
+        customs: [],
+        initialAllowedIDs: null,
+        allowedIDs: []
+    })
 
     /*
         Checks start datetime & end datetime of the distribution of file
@@ -71,7 +51,7 @@ class ServerJSONStore {
         return startDate > now || endDate < now
     }
 
-    /**
+    /*
         Decides if:
     *       file is a valid content
     *       is not hidden from UI (e.g postcall)
@@ -220,6 +200,63 @@ class ServerJSONStore {
     }
 }
 
+class CategoriesStore {
+    id = 'categories'
+    loaded = false
+    state = reactive({
+        category: {},
+        categories: [],
+        parentCategories: computed(() =>
+            this.state.categories.filter(category => category.parentCategory == UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+        ),
+        subCategories: computed(() =>
+            this.state.categories.filter(category => category.parentCategory != UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+        )
+    })
+
+    /*
+        This method is called when category is changed
+    */
+    setMainNav(category) {
+        if (category) {
+            window.lastViewedCategory = category
+            if (typeof localStorage !== 'undefined') {
+                localStorage.setItem(`${this.state.appID}.mainNavItem`, category.ID)
+            }
+            fireEvent('setCategory', { category: JSON.stringify(category) })
+            this.state.category = category
+            if (!this.loaded) {
+                this.loaded = true
+                fireEvent('uiReady')
+            }
+        }
+    }
+}
+
+function assignUsingSourceKeys(target, source) {
+    Object.keys(target).forEach(key => {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key]
+        }
+    })
+}
+
+export const useFilesStore = () => {
+    return createStore(new FilesStore())
+}
+
+export function useFiles() {
+    return useFilesStore().state
+}
+
+export const useCategoriesStore = () => {
+    return createStore(new CategoriesStore())
+}
+
+export function useCategories() {
+    return useCategoriesStore().state
+}
+
 export const useServerJSONStore = () => {
     return createStore(new ServerJSONStore())
 }
@@ -229,7 +266,9 @@ export function useServerJSON() {
 }
 
 export async function loadServerJSON(timeout = 5) {
-    const store = useServerJSONStore()
+    const serverJSONStore = useServerJSONStore()
+    const filesStore = useFilesStore()
+    const categoriesStore = useCategoriesStore()
 
     // for testing
     if (process.env.VUE_APP_TI) {
@@ -246,16 +285,17 @@ export async function loadServerJSON(timeout = 5) {
     // for testing
     if (process.env.VUE_APP_SERVERJSON) {
         window.serverJSON = JSON.parse(process.env.VUE_APP_SERVERJSON)
-        Object.assign(store.state, window.serverJSON)
         window.documentPath = '/'
     }
 
     const serverJSON = await waitForWindowProp('serverJSON', timeout)
 
     if (serverJSON) {
-        serverJSON.files = store.extendFiles(serverJSON.files)
-        Object.assign(store.state, window.serverJSON)
-        store.state.documentPath = window.documentPath
+        serverJSON.files = filesStore.extendFiles(serverJSON.files)
+        filesStore.state.documentPath = window.documentPath
+        assignUsingSourceKeys(serverJSONStore.state, window.serverJSON)
+        assignUsingSourceKeys(filesStore.state, window.serverJSON)
+        assignUsingSourceKeys(categoriesStore.state, window.serverJSON)
     }
 
     // for testing
@@ -269,10 +309,8 @@ export async function loadServerJSON(timeout = 5) {
     const presentationsObject = await waitForWindowProp('presentationsObject', timeout)
 
     if (presentationsObject) {
-        store.parsePresentations(presentationsObject)
+        filesStore.parsePresentations(presentationsObject)
     }
-
-    return store
 }
 
 export function getExtraFieldValue(property, defaultValue) {
@@ -296,6 +334,10 @@ export function getExtraFieldValue(property, defaultValue) {
     return value
 }
 
+export function exitApp() {
+    fireEvent('exitApp', {})
+}
+
 window.setMainNav = function(lastViewedCategory) {
     window.lastViewedCategory = lastViewedCategory
 }
@@ -316,13 +358,13 @@ window.loadPresentations = function(presentationsObject) {
     }
     window.presentationsObject = presentationsObject
     if (window.presentationsObject) {
-        const store = useServerJSONStore()
+        const store = useFilesStore()
         store.parsePresentations(window.presentationsObject)
     }
 }
 
 window.filterJSON = function(allowedIDsV) {
-    const store = useServerJSONStore()
+    const store = useFilesStore()
     if (allowedIDsV) {
         store.setAllowedIds(JSON.parse(allowedIDsV))
     } else {

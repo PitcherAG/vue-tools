@@ -1,5 +1,5 @@
 import { fireEvent } from '../../event'
-import { useServerJSONStore } from '../serverJSONStore'
+import { useFilesStore } from '../serverJSON'
 
 export function addFavorite(file) {
     file.isFavorite = true
@@ -13,7 +13,7 @@ export function removeFavorite(file) {
 
 export async function getFavorites() {
     const favoriteFileIds = await fireEvent('getFavoriteItems', { source: 'homescreen' })
-    const store = useServerJSONStore()
+    const store = useFilesStore()
     const map = {}
     if (favoriteFileIds && favoriteFileIds.length) {
         favoriteFileIds.forEach(Id => (map[Id] = true))
