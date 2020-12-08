@@ -474,7 +474,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/mixins';
+@import '../style/mixins.scss';
 
 .ui.dropdown.pitcher-filter {
     .ui.buttons {
