@@ -1,4 +1,4 @@
-import { loadServerJSON, useServerJSONStore } from '../ui/serverJSONStore'
+import { loadServerJSON, useCategoriesStore } from '../ui/serverJSON'
 import { fireEvent } from '../event'
 import { getFavorites } from './actions/favorite'
 import UI_CONSTANTS from '../constants/ui'
@@ -16,7 +16,7 @@ export async function initializeInstance(timeout = 5) {
     Tells impact that UI is ready to be shown
 */
 function showUI() {
-    const store = useServerJSONStore()
+    const store = useCategoriesStore()
     if (store.state.categories) {
         const initialCategory = (store.loaded && getLastCategory()) || getInitialCategory()
         if (initialCategory) {
@@ -34,7 +34,7 @@ function showUI() {
     Value is saved to localstorage, and retrieved with this method
 */
 export function getLastCategory() {
-    const store = useServerJSONStore()
+    const store = useCategoriesStore()
     const lastCategoryId =
         typeof localStorage !== 'undefined' ? localStorage.getItem(`${store.state.appID}.mainNavItem`) : null
     if (store.state.categories && lastCategoryId) {
@@ -48,7 +48,7 @@ export function getLastCategory() {
     For some UIs, a default category can be set, to be selected when first initialized or restored
 */
 export function getInitialCategory() {
-    const store = useServerJSONStore()
+    const store = useCategoriesStore()
     if (store.state.categories) {
         return (
             store.state.categories.find(category => category.isDefault) ||
@@ -56,8 +56,4 @@ export function getInitialCategory() {
         )
     }
     return null
-}
-
-export function exitApp() {
-    fireEvent('exitApp', {})
 }

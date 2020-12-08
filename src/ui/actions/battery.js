@@ -1,4 +1,4 @@
-import { useServerJSON } from '../serverJSONStore'
+import { useServerJSON } from '../serverJSON'
 
 window.setBatteryLevel = function(level) {
     const state = useServerJSON()
