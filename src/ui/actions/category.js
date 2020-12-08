@@ -1,7 +1,7 @@
-import { useServerJSONStore } from '../serverJSONStore'
+import { useCategoriesStore } from '../serverJSON'
 
 export function setCategory(category) {
-    const store = useServerJSONStore()
+    const store = useCategoriesStore()
     store.setMainNav(category)
 }
 
