@@ -180,11 +180,6 @@ export function sendDocuments() {
     fireEvent('sendDocs')
 }
 
-// Commenting out, function name colliding with existing one
-// export function launchFileWithKeyword(keyword) {
-//     fireEvent('launchFileWithKeyword', { keyword: keyword })
-// }
-
 export function createSlideSet() {
     const store = useServerJSONStore()
     store.oneTimeLoadPresentations = true

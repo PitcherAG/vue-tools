@@ -36,5 +36,4 @@ function joinPath() {
     return base
 }
 
-export default getPath
-export { removeRoot, joinPath }
+export { getPath, removeRoot, joinPath }
