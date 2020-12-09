@@ -82,7 +82,7 @@ class DetailingStore {
         }
     }
 
-    startStopDetailingIOS(options) {
+    startStopDetailing(options) {
         if (this.state.hasActiveCall) {
             fireEvent('stopDetailing', options || defaultOptions)
         } else {
@@ -98,14 +98,6 @@ class DetailingStore {
                 await fireEvent('getCrmEventsForToday', { target: options || defaultOptions }),
                 new Date()
             )
-        }
-    }
-
-    startStopDetailingAndroid(options) {
-        if (this.state.hasActiveCall) {
-            fireEvent('stopDetailing', options || defaultOptions)
-        } else {
-            fireEvent('startDetailing', options || defaultOptions)
         }
     }
 
@@ -139,16 +131,11 @@ window.setCurrentContact = function(newContact, newAccount) {
 export async function startStopDetailing(options) {
     const store = useDetailingStore()
     switch (PLATFORM) {
-        case 'IOS':
-            store.startStopDetailingIOS(options)
-            break
         case 'WINDOWS':
-            store.startStopDetailingWindows(options)
-            break
-        case 'ANDROID':
-            store.startStopDetailingAndroid(options)
+            await store.startStopDetailingWindows(options)
             break
         default:
+            store.startStopDetailing(options)
             break
     }
 }
