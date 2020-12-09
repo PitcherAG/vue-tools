@@ -1,4 +1,5 @@
-import { loadServerJSON, useCategoriesStore } from '../ui/serverJSON'
+import { loadServerJSON } from './server.json'
+import { useCategoriesStore } from './stores/index'
 import { fireEvent } from '../event'
 import { getFavorites } from './actions/favorite'
 import UI_CONSTANTS from '../constants/ui'

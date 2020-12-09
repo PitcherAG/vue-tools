@@ -24,17 +24,9 @@ export * from './validations.js'
 
 export * from './utils'
 
-// ServerJSON
-export * from './ui/serverJSON.js'
-
-// Detaling
-export * from './ui/detailingStore.js'
-
-// Instance
-export * from './ui/instance.js'
-
-// UI Actions
-export * from './ui/actions/index.js'
+export * from './instance/index.js'
+export * from './instance/stores/index'
+export * from './instance/actions/index.js'
 
 // Vue Components
 export * from './components/export.js'

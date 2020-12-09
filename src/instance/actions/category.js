@@ -1,4 +1,4 @@
-import { useCategoriesStore } from '../serverJSON'
+import { useCategoriesStore } from '../stores/index'
 
 export function setCategory(category) {
     const store = useCategoriesStore()
