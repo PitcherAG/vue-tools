@@ -27,6 +27,6 @@ export async function loadValidations(keyword) {
     return store.state
 }
 
-export function useValidation() {
+export function useValidations() {
     return useValidationsStore().state
 }
