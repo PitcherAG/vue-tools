@@ -81,38 +81,6 @@ class DetailingStore {
             }
         }
     }
-
-    startStopDetailing(options) {
-        if (this.state.hasActiveCall) {
-            fireEvent('stopDetailing', options || defaultOptions)
-        } else {
-            fireEvent('startDetailing', options || defaultOptions)
-        }
-    }
-
-    async startStopDetailingWindows(options) {
-        if (this.state.hasActiveCall) {
-            fireEvent('stopDetailing', options || defaultOptions)
-        } else {
-            this.parseEventData(
-                await fireEvent('getCrmEventsForToday', { target: options || defaultOptions }),
-                new Date()
-            )
-        }
-    }
-
-    startPreCall(options) {
-        if (!this.state.hasActiveCall) {
-            fireEvent('startPreCall', options)
-        }
-    }
-
-    async getCrmEventsByDate(options, timestamp) {
-        this.parseEventData(
-            await fireEvent('getCrmEventsByDate', { target: options || defaultOptions, timestamp: timestamp }),
-            new Date(parseInt(timestamp))
-        )
-    }
 }
 
 export const useDetailingStore = () => {
@@ -130,24 +98,36 @@ window.setCurrentContact = function(newContact, newAccount) {
 
 export async function startStopDetailing(options) {
     const store = useDetailingStore()
-    switch (PLATFORM) {
-        case 'WINDOWS':
-            await store.startStopDetailingWindows(options)
-            break
-        default:
-            store.startStopDetailing(options)
-            break
+    if (store.state.hasActiveCall) {
+        fireEvent('stopDetailing', options || defaultOptions)
+    } else {
+        switch (PLATFORM) {
+            case 'WINDOWS':
+                store.parseEventData(
+                    await fireEvent('getCrmEventsForToday', { target: options || defaultOptions }),
+                    new Date()
+                )
+                break
+            default:
+                fireEvent('startDetailing', options || defaultOptions)
+                break
+        }
     }
 }
 
 export function startPreCall(options) {
     const store = useDetailingStore()
-    store.startPreCall(options)
+    if (!store.state.hasActiveCall) {
+        fireEvent('startPreCall', options)
+    }
 }
 
 export async function getCrmEventsByDate(options, timestamp) {
     const store = useDetailingStore()
-    await store.getCrmEventsByDate(options, timestamp)
+    store.parseEventData(
+        await fireEvent('getCrmEventsByDate', { target: options || defaultOptions, timestamp: timestamp }),
+        new Date(parseInt(timestamp))
+    )
 }
 
 export function startDetailingWithID(Id) {
