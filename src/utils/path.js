@@ -25,5 +25,15 @@ function getPath(obj, path, ignoreRoot = false) {
     }
 }
 
-export default getPath
-export { removeRoot }
+function joinPath() {
+    const args = [].slice.call(arguments)
+    let base = args[0]
+    for (let i = 1; i < args.length; i++) {
+        if (!args[i]) continue
+        const next = args[i].replace(/^(\/|\\)/, '')
+        base = base.replace(/(\/|\\)$/, '') + '/' + next
+    }
+    return base
+}
+
+export { getPath, removeRoot, joinPath }

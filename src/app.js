@@ -6,20 +6,12 @@ export function closeModal() {
     fireEvent('closeOpenModal')
 }
 
-export function resyncData() {
-    fireEvent('resyncData')
-}
-
 export function planCall() {
     fireEvent('planCall')
 }
 
 export function startCall() {
     fireEvent('startCall')
-}
-
-export function startPrecall() {
-    fireEvent('startPrecall')
 }
 
 export function getSFUrl(path) {
