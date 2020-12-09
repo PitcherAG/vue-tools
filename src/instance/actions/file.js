@@ -1,5 +1,5 @@
 import { fireEvent } from '../../event'
-import { useServerJSONStore } from '../serverJSON'
+import { useFilesStore } from '../stores/index'
 
 const categoryActionMapping = {
     presentation: loadPresentation,
@@ -148,7 +148,7 @@ export function openContent(file, parameters) {
 }
 
 export function editFile(file) {
-    const store = useServerJSONStore()
+    const store = useFilesStore()
     store.oneTimeLoadPresentations = true
     if (file) {
         fireEvent('editPresentation', {
@@ -167,7 +167,7 @@ export function editFile(file) {
 }
 
 export function deleteFile(file) {
-    const store = useServerJSONStore()
+    const store = useFilesStore()
     store.oneTimeLoadPresentations = true
     fireEvent('deletePresentation', { dataOfPres: file })
 }
@@ -181,7 +181,7 @@ export function sendDocuments() {
 }
 
 export function createSlideSet() {
-    const store = useServerJSONStore()
+    const store = useFilesStore()
     store.oneTimeLoadPresentations = true
     editFile()
 }

@@ -1,5 +1,5 @@
 import { fireEvent } from '../../event'
-import { useFilesStore } from '../serverJSON'
+import { useFilesStore } from '../stores/index'
 
 export function addFavorite(file) {
     file.isFavorite = true
