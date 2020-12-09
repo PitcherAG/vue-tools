@@ -1,33 +1,20 @@
 import CompositionApi from '@vue/composition-api'
 import { createLocalVue } from '@vue/test-utils'
-import {
-    loadServerJSON,
-    useServerJSONStore,
-    useServerJSON,
-    getExtraFieldValue,
-    useFilesStore,
-    useFiles,
-    useCategoriesStore,
-    useCategories
-} from '@/ui/serverJSON'
+import { loadServerJSON } from '@/instance/server.json'
+import { useSystemStore, getExtraFieldValue, useFilesStore, useCategoriesStore } from '@/instance/stores/index'
 
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
 
-describe('serverjson methods - (you must have env variables)', () => {
+describe('serverjson data - (you must have env variables)', () => {
     it('loadServerJSON', async () => {
         await loadServerJSON()
         expect(window.serverJSON).not.toBeNull()
     })
 
-    it('useServerJSONStore', () => {
-        const store = useServerJSONStore()
+    it('useSystemStore', () => {
+        const store = useSystemStore()
         expect(store.state.appID).not.toBeNull()
-    })
-
-    it('useServerJSON', () => {
-        const state = useServerJSON()
-        expect(state.appID).not.toBeNull()
     })
 
     it('useFilesStore - files', () => {
@@ -48,21 +35,6 @@ describe('serverjson methods - (you must have env variables)', () => {
     it('useCategoriesStore - subCategories', () => {
         const store = useCategoriesStore()
         expect(store.state.subCategories.length).toBeGreaterThan(0)
-    })
-
-    it('useCategories - categories', () => {
-        const state = useCategories()
-        expect(state.categories.length).toBeGreaterThan(0)
-    })
-
-    it('useCategories - subCategories', () => {
-        const state = useCategories()
-        expect(state.subCategories.length).toBeGreaterThan(0)
-    })
-
-    it('useFiles - files', () => {
-        const state = useFiles()
-        expect(state.files.length).toBeGreaterThan(0)
     })
 
     it('getExtraFieldValue - uiResponsive', () => {

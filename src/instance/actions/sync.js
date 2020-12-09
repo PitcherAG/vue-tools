@@ -1,7 +1,7 @@
 import { fireEvent } from '../../event'
 import { query } from '../../db/query'
 import { useDetailingStore } from '../detailingStore'
-import { useServerJSON } from '../serverJSON'
+import { useSystemStore } from '../stores/index'
 import { PLATFORM } from '../../platform'
 
 export function showIOSSyncWindow(options) {
@@ -10,7 +10,7 @@ export function showIOSSyncWindow(options) {
 
 async function getiOSSyncEvents(source = 'homescreen') {
     const store = useDetailingStore()
-    const appName = useServerJSON().appName
+    const appName = useSystemStore().state.appName
     const selectQuery =
         "SELECT event_name, event_time, lastResponse FROM tbl_reports_v3 WHERE event_name LIKE '%event_redirect%'"
     const events = await query(selectQuery, appName, false, source)
@@ -18,7 +18,8 @@ async function getiOSSyncEvents(source = 'homescreen') {
         return {
             name: event.event_name,
             time: event.event_time,
-            date: event.event_time ? new Date(parseInt(event.event_time)) : ''
+            date: event.event_time ? new Date(parseInt(event.event_time)) : '',
+            response: event.lastResponse
         }
     })
     return store.state.syncEvents
@@ -26,10 +27,15 @@ async function getiOSSyncEvents(source = 'homescreen') {
 
 async function getWindowsSyncEvents(source = 'homescreen') {
     const store = useDetailingStore()
-    const selectQuery = "SELECT Name, Time FROM SQLiteEvent WHERE Name LIKE '%event_redirect%'"
+    const selectQuery = "SELECT Name, Time, Status FROM SQLiteEvent WHERE Name LIKE '%event_redirect%'"
     const events = await query(selectQuery, null, false, source)
     store.state.syncEvents = events.map(event => {
-        return { name: event.Name, time: event.Time, date: event.Time ? new Date(parseInt(event.Time)) : '' }
+        return {
+            name: event.Name,
+            time: event.Time,
+            date: event.Time ? new Date(parseInt(event.Time)) : '',
+            response: event.Status
+        }
     })
     return store.state.syncEvents
 }

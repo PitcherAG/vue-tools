@@ -1,7 +1,7 @@
-import { PLATFORM } from '../platform'
-import { fireEvent } from '../event'
-import { createStore } from '../store'
-import { eventHub } from '../utils'
+import { PLATFORM } from '../../platform'
+import { fireEvent } from '../../event'
+import { createStore } from '../../store'
+import { eventHub } from '../../utils'
 import { reactive, computed } from '@vue/composition-api'
 
 const defaultOptions = { xPos: 50, yPos: 30, widthV: 160, heightV: 50 }

@@ -1,4 +1,4 @@
-export function assign(source, target) {
+function assign(source, target) {
     if (process.env.LOG) {
         console.warn('deprecated')
     }
@@ -8,3 +8,13 @@ export function assign(source, target) {
         }
     }
 }
+
+function assignUsingSourceKeys(target, source) {
+    Object.keys(target).forEach(key => {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key]
+        }
+    })
+}
+
+export { assign, assignUsingSourceKeys }
