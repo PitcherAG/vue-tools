@@ -22,8 +22,8 @@ describe('path utility methods', () => {
     })
 
     it('get function value from object path', () => {
-        const function_value = getPath(obj, 'a.b.d')
-        expect(obj.a.b.d()).toEqual(function_value)
+        const function_value = getPath(obj, 'a.d')
+        expect(obj.a.d()).toEqual(function_value)
     })
 
     it('join home path', () => {
