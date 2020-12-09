@@ -1,7 +1,6 @@
 import { fireEvent } from '../../event'
 import { query } from '../../db/query'
-import { useDetailingStore } from '../detailingStore'
-import { useSystemStore } from '../stores/index'
+import { useDetailingStore, useSystemStore } from '../stores'
 import { PLATFORM } from '../../platform'
 
 export function showIOSSyncWindow(options) {
