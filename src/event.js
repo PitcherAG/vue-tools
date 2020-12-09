@@ -16,7 +16,7 @@ function fireEvent(name, params) {
         params.callBack = callback
         params.errorFunc = errorCallback
         params.emptyFunction = errorCallback
-        params.source = source
+        params.source = params.source || source
 
         function destroyEvent() {
             delete window[callback]
@@ -24,7 +24,7 @@ function fireEvent(name, params) {
         }
 
         window[callback] = res => {
-            if (res.startsWith('{') || res.startsWith('[')) {
+            if (typeof res === 'string' && (res.startsWith('{') || res.startsWith('['))) {
                 try {
                     resolve(JSON.parse(res))
                 } catch (e) {
