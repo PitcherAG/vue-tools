@@ -15,51 +15,51 @@ const params = useParamsStore()
 params.state.user = { LocaleSidKey: 'en-US' }
 
 describe('Calendar.vue', () => {
-    const wrapper = shallowMount(Calendar, {
-        localVue,
-        propsData: {
-            value: '',
-            type: 'date'
-        }
-    })
-
-    // Helper function
-    async function updateValue(key, value) {
-        wrapper.setProps({
-            [key]: value
-        })
-        await wrapper.vm.$nextTick()
+  const wrapper = shallowMount(Calendar, {
+    localVue,
+    propsData: {
+      value: '',
+      type: 'date'
     }
+  })
 
-    it('DataTable mounts properly', async () => {
-        expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.value)
-        expect(wrapper.find('input').element.placeholder).toBe(wrapper.vm.$props.defaultText)
+  // Helper function
+  async function updateValue(key, value) {
+    wrapper.setProps({
+      [key]: value
     })
+    await wrapper.vm.$nextTick()
+  }
 
-    it('Setting value externally & input formatting works', async () => {
-        await updateValue('value', dateValue)
+  it('DataTable mounts properly', async () => {
+    expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.value)
+    expect(wrapper.find('input').element.placeholder).toBe(wrapper.vm.$props.defaultText)
+  })
 
-        expect(wrapper.vm.$props.value).toBe(dateValue)
-        expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.inputFormatter(dateValue))
-        expect(wrapper.find('td.active').text()).toBe('15')
-    })
+  it('Setting value externally & input formatting works', async () => {
+    await updateValue('value', dateValue)
 
-    it('Setting minDate after the currentDate is not changing input value', async () => {
-        await updateValue('minDate', minDate)
+    expect(wrapper.vm.$props.value).toBe(dateValue)
+    expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.inputFormatter(dateValue))
+    expect(wrapper.find('td.active').text()).toBe('15')
+  })
 
-        expect(wrapper.vm.$props.value).toBe(dateValue)
-        expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.inputFormatter(dateValue))
+  it('Setting minDate after the currentDate is not changing input value', async () => {
+    await updateValue('minDate', minDate)
 
-        // revert mindate
-        await updateValue('minDate', undefined)
-    })
+    expect(wrapper.vm.$props.value).toBe(dateValue)
+    expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.inputFormatter(dateValue))
 
-    it('Calendar menu is showing & emitting', async () => {
-        wrapper.find('input').trigger('click')
-        expect(wrapper.emitted().onShow).toBeTruthy()
-        expect(wrapper.find('.today').exists()).toBe(true)
-    })
+    // revert mindate
+    await updateValue('minDate', undefined)
+  })
 
-    // Fomantic Calendar does not work when simulating click
-    // When simulating a calendar date click, it does not fire the click event
+  it('Calendar menu is showing & emitting', async () => {
+    wrapper.find('input').trigger('click')
+    expect(wrapper.emitted().onShow).toBeTruthy()
+    expect(wrapper.find('.today').exists()).toBe(true)
+  })
+
+  // Fomantic Calendar does not work when simulating click
+  // When simulating a calendar date click, it does not fire the click event
 })
