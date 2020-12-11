@@ -1,12 +1,12 @@
 <template>
-    <div class="pt-4 fill-height">
-        <h3>Data Table</h3>
-        <div class="ui divider" />
-        <div class="ui input">
-            <input type="text" v-model="options.searchFor" />
-        </div>
-        <DataTable class="celled" :data="data" :fields="fields" v-bind="options">
-            <!-- <template #prepend-tbody="{ mapper }">
+  <div class="pt-4 fill-height">
+    <h3>Data Table</h3>
+    <div class="ui divider" />
+    <div class="ui input">
+      <input v-model="options.searchFor" type="text" />
+    </div>
+    <data-table class="celled" :data="data" :fields="fields" v-bind="options">
+      <!-- <template #prepend-tbody="{ mapper }">
                 <tr>
                     <td colspan="2">Prepend Test</td>
                     <td>Test</td>
@@ -20,13 +20,13 @@
                     <td colspan="4">test</td>
                 </tr>
             </template> -->
-            <!-- <template #heading-row="{ fields, sort, getClass }">
+      <!-- <template #heading-row="{ fields, sort, getClass }">
                 <th v-for="(f, fKey) in fields" :key="fKey" @click="sort(f.dataField)" :class="getClass(f)">
                     <i v-if="f.icon" class="icon" :class="f.icon" />
                     {{ f.title }}
                 </th>
             </template> -->
-            <!-- <template #row="{ rowData, raw }">
+      <!-- <template #row="{ rowData, raw }">
                 <td v-for="(d, dKey) in rowData" :key="dKey">
                     {{ d }}
                 </td>
@@ -34,7 +34,7 @@
                     action button
                 </td>
             </template> -->
-            <!-- <template #body="{ tableData, pagination, fields }">
+      <!-- <template #body="{ tableData, pagination, fields }">
                 <tr v-for="(row, rKey) in tableData" :key="rKey">
                     <td v-for="(col, cKey) in row" :key="cKey">
                         {{ col }}
@@ -51,13 +51,13 @@
                     </template>
                 </tr>
             </template> -->
-            <template #actions="{ value }">
-                <button class="ui button basic right aligned">
-                    <i class="icon edit fitted" />
-                    {{ value }}
-                </button>
-            </template>
-            <!-- <template #t-foot="{ pagination, paginate }">
+      <template #actions="{ value }">
+        <button class="ui button basic right aligned">
+          <i class="icon edit fitted" />
+          {{ value }}
+        </button>
+      </template>
+      <!-- <template #t-foot="{ pagination, paginate }">
                 <tr>
                     <th><Pagination :pagination="pagination" :paginate="paginate" /></th>
                     <th colspan="6">
@@ -73,113 +73,116 @@
                     </th>
                 </tr>
             </template> -->
-            <!-- <template #no-data-template>
+      <!-- <template #no-data-template>
                 <span class="ui text large grey center">Test</span>
             </template> -->
-        </DataTable>
-    </div>
+    </data-table>
+  </div>
 </template>
 
 <script>
+/* eslint-disable vue/no-unused-components */
+
 import Pagination from '@/components/DataTable/Pagination'
 import DataTable from '@/components/DataTable/DataTable.vue'
 import { reactive, toRefs } from '@vue/composition-api'
 import data from './dummy.table.js'
 
 export default {
-    components: {
-        Pagination,
-        DataTable
-    },
-    props: {},
-    setup() {
-        const state = reactive({
-            data,
-            options: {
-                searchFor: '',
-                noHeader: false,
-                noPagination: false,
-                // noDataText: '',
-                groupBy: 'group',
-                searchFields: ['title'],
-                fixedHeader: false,
-                width: '100%',
-                perPage: 10
-            },
-            fields: [
-                {
-                    title: 'Id',
-                    dataField: 'id',
-                    hide: true
-                },
-                {
-                    title: 'Group',
-                    dataField: 'group'
-                },
-                {
-                    title: 'Title',
-                    dataField: 'title',
-                    icon: 'cog',
-                    // width: '25px',
-                    thClass: 'left aligned',
-                    tdClass: 'left aligned',
-                    sortable: true,
-                    tooltip: 'top left',
-                    tooltipText: 'Testing the tooltip'
-                },
-                {
-                    title: 'Url',
-                    dataField: 'url',
-                    thClass: 'left aligned',
-                    tdClass: 'left aligned',
-                    transform: val => `url: ${val}`
-                },
-                {
-                    title: 'Test.Relation',
-                    dataField: 'test.nested.another.hulo',
-                    thClass: 'left aligned',
-                    tdClass: 'left aligned',
-                    sortable: true,
-                    sortType: 'string'
-                },
-                {
-                    title: 'Count',
-                    dataField: 'count',
-                    thClass: 'center aligned',
-                    tdClass: 'center aligned',
-                    sortable: true,
-                    sortType: 'number'
-                },
-                {
-                    title: 'Total',
-                    dataField: 'total',
-                    thClass: 'right aligned',
-                    tdClass: 'right aligned',
-                    sortable: true,
-                    sortType: 'number'
-                },
-                {
-                    title: 'Created Date',
-                    dataField: 'createdDate',
-                    thClass: 'center aligned',
-                    tdClass: 'center aligned',
-                    sortable: true,
-                    sortType: 'date'
-                },
-                {
-                    title: 'Actions',
-                    slotName: 'actions',
-                    thClass: 'center aligned',
-                    tdClass: 'center aligned'
-                }
-            ]
-        })
-
-        const test = i => {
-            console.log(i)
+  name: 'datatable-ex',
+  components: {
+    Pagination,
+    DataTable
+  },
+  props: {},
+  setup() {
+    const state = reactive({
+      data,
+      options: {
+        searchFor: '',
+        noHeader: false,
+        noPagination: false,
+        // noDataText: '',
+        groupBy: 'group',
+        searchFields: ['title'],
+        fixedHeader: false,
+        width: '100%',
+        perPage: 10
+      },
+      fields: [
+        {
+          title: 'Id',
+          dataField: 'id',
+          hide: true
+        },
+        {
+          title: 'Group',
+          dataField: 'group'
+        },
+        {
+          title: 'Title',
+          dataField: 'title',
+          icon: 'cog',
+          // width: '25px',
+          thClass: 'left aligned',
+          tdClass: 'left aligned',
+          sortable: true,
+          tooltip: 'top left',
+          tooltipText: 'Testing the tooltip'
+        },
+        {
+          title: 'Url',
+          dataField: 'url',
+          thClass: 'left aligned',
+          tdClass: 'left aligned',
+          transform: val => `url: ${val}`
+        },
+        {
+          title: 'Test.Relation',
+          dataField: 'test.nested.another.hulo',
+          thClass: 'left aligned',
+          tdClass: 'left aligned',
+          sortable: true,
+          sortType: 'string'
+        },
+        {
+          title: 'Count',
+          dataField: 'count',
+          thClass: 'center aligned',
+          tdClass: 'center aligned',
+          sortable: true,
+          sortType: 'number'
+        },
+        {
+          title: 'Total',
+          dataField: 'total',
+          thClass: 'right aligned',
+          tdClass: 'right aligned',
+          sortable: true,
+          sortType: 'number'
+        },
+        {
+          title: 'Created Date',
+          dataField: 'createdDate',
+          thClass: 'center aligned',
+          tdClass: 'center aligned',
+          sortable: true,
+          sortType: 'date'
+        },
+        {
+          title: 'Actions',
+          slotName: 'actions',
+          thClass: 'center aligned',
+          tdClass: 'center aligned'
         }
+      ]
+    })
 
-        return { ...toRefs(state), test }
+    const test = i => {
+      console.log(i)
     }
+
+    return { ...toRefs(state), test }
+  }
 }
 </script>
