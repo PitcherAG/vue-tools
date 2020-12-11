@@ -21,23 +21,23 @@ import Fuse from 'fuse.js'
  **/
 
 export const search = (
-    data,
-    searchFor,
-    fields,
-    options = { threshold: 0.15, distance: 1000, useExtendedSearch: true },
-    returnFull = false
+  data,
+  searchFor,
+  fields,
+  options = { threshold: 0.15, distance: 1000, useExtendedSearch: true },
+  returnFull = false
 ) => {
-    if (fields) {
-        options.keys = fields
-    }
+  if (fields) {
+    options.keys = fields
+  }
 
-    const fuse = new Fuse(data, { ...options })
+  const fuse = new Fuse(data, { ...options })
 
-    const result = fuse.search(`${options.useExtendedSearch ? "'" : ''}${searchFor}`)
+  const result = fuse.search(`${options.useExtendedSearch ? "'" : ''}${searchFor}`)
 
-    if (returnFull) {
-        return result
-    }
+  if (returnFull) {
+    return result
+  }
 
-    return result.map(i => i.item && i.item)
+  return result.map(i => i.item && i.item)
 }

@@ -5,92 +5,92 @@ import Checkbox from '@/components/Checkbox'
 <!-- Story args -->
 <!-- https://storybook.js.org/docs/react/writing-stories/args -->
 export const args = {
-    value: false
+  value: false
 }
 
 <!-- https://storybook.js.org/docs/react/api/argtypes -->
 export const argTypes = {
-    'v-model': {
-        description: 'model to track checkbox status',
-        type: { required: true },
-        table: {
-            type: { summary: 'boolean' }
-        }
+  'v-model': {
+    description: 'model to track checkbox status',
+    type: { required: true },
+    table: {
+      type: { summary: 'boolean' }
+    }
+  },
+  value: {
+    table: { 
+        disable: true
     },
-    value: {
-        table: { 
-            disable: true
-        },
-    },
-    label: {
-        description: 'checkbox label text'
-    },
-    radio: {
-        description: 'radio style checkbox'
-    },
-    toggle: {
-        description: 'toggle style checkbox'
-    },
-    slider: {
-        description: 'slider style checkbox'
-    },
-    readonly: {
-        description: 'readonly checkbox'
-    },
-    disabled: {
-        description: 'disable checkbox'
-    },
-    fitted: {
-        description: 'remove the padding for the input box. Useful when you dont have a label to have equal spacing'
-    },
-    uncheckable: {
-        description: 'make the checbox uncheckable. Can be useful for radio style checboxes'
-    },
-    inverted: {
-        description: 'inverts the color of checkbox'
-    },
-    size: {
-        description: 'mini | tiny | small | medium | large | big | huge | massive'
-    }    
+  },
+  label: {
+    description: 'checkbox label text'
+  },
+  radio: {
+    description: 'radio style checkbox'
+  },
+  toggle: {
+    description: 'toggle style checkbox'
+  },
+  slider: {
+    description: 'slider style checkbox'
+  },
+  readonly: {
+    description: 'readonly checkbox'
+  },
+  disabled: {
+    description: 'disable checkbox'
+  },
+  fitted: {
+    description: 'remove the padding for the input box. Useful when you dont have a label to have equal spacing'
+  },
+  uncheckable: {
+    description: 'make the checbox uncheckable. Can be useful for radio style checboxes'
+  },
+  inverted: {
+    description: 'inverts the color of checkbox'
+  },
+  size: {
+    description: 'mini | tiny | small | medium | large | big | huge | massive'
+  }
 }
 
 <!-- Named exports of stories here -->
 export const Template = (args, { argTypes }) => {
-    return {
-        props: Object.keys(argTypes),
-        components: { Checkbox },
-        template: '<Checkbox v-bind="$props" />'
-    }
+  return {
+    props: Object.keys(argTypes),
+    components: { Checkbox },
+    template: '<Checkbox v-bind="$props" />'
+  }
 } 
 
 <!-- Define story settings here -->
 <Meta 
-    title="Components/Checkbox"
-    component={Checkbox}
-    argTypes={argTypes}
-    args={args}
+  title="Components/Checkbox"
+  component={Checkbox}
+  argTypes={argTypes}
+  args={args}
 />
 
 # Checkbox
 Displays a fomantic checkbox
 
 <Story name="Default">
-    {Template.bind({})}
+  {Template.bind({})}
 </Story>
 
 ## Disabled
 <Story name="Disabled" args={{ disabled: true }}>
-    {Template.bind({})}
+  {Template.bind({})}
 </Story>
 
 ## Toggle
 <Story name="Toggle" args={{ toggle: true }}>
-    {Template.bind({})}
+  {Template.bind({})}
 </Story>
 
 ## Slider
 <Story name="Slider" args={{ slider: true }}>
-    {Template.bind({})}
+  {Template.bind({})}
 </Story>
 
 ### Available props and slots
