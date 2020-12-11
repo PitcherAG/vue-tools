@@ -1,12 +1,12 @@
 <template>
-    <div class="pt-4 fill-height">
-        <h2 class="mb-1">Demo Page</h2>
-        <select v-model="selectedPage">
-            <option v-for="page in pages" :key="page.value" :value="page.value">{{ page.text }}</option>
-        </select>
-        <div class="ui divider" />
-        <component :is="selectedPage" />
-    </div>
+  <div class="pt-4 fill-height">
+    <h2 class="mb-1">Demo Page</h2>
+    <select v-model="selectedPage">
+      <option v-for="page in pages" :key="page.value" :value="page.value">{{ page.text }}</option>
+    </select>
+    <div class="ui divider" />
+    <component :is="selectedPage" />
+  </div>
 </template>
 
 <script>
@@ -21,57 +21,58 @@ import NumpadInputEx from './examples/NumpadInput.example.vue'
 import ProgressBarEx from './examples/ProgressBar.example.vue'
 
 export default {
-    components: {
-        CalendarEx,
-        DataTableEx,
-        DropdownEx,
-        FileCardEx,
-        FilterEx,
-        ModalEx,
-        NumpadInputEx,
-        ProgressBarEx
-    },
-    setup() {
-        const selectedPage = ref('DropdownEx')
-        const pages = ref([
-            {
-                text: 'Modal',
-                value: 'ModalEx'
-            },
-            {
-                text: 'Numpad input',
-                value: 'NumpadInputEx'
-            },
-            {
-                text: 'Calendar',
-                value: 'CalendarEx'
-            },
-            {
-                text: 'Datatable',
-                value: 'DataTableEx'
-            },
-            {
-                text: 'Dropdown',
-                value: 'DropdownEx'
-            },
-            {
-                text: 'Filter Dropdown',
-                value: 'FilterEx'
-            },
-            {
-                text: 'File Card',
-                value: 'FileCardEx'
-            },
-            {
-                text: 'Progress Bar',
-                value: 'ProgressBarEx'
-            }
-        ])
-        return {
-            pages,
-            selectedPage
-        }
+  name: 'demo',
+  components: {
+    CalendarEx,
+    DataTableEx,
+    DropdownEx,
+    FileCardEx,
+    FilterEx,
+    ModalEx,
+    NumpadInputEx,
+    ProgressBarEx
+  },
+  setup() {
+    const selectedPage = ref('DropdownEx')
+    const pages = ref([
+      {
+        text: 'Modal',
+        value: 'ModalEx'
+      },
+      {
+        text: 'Numpad input',
+        value: 'NumpadInputEx'
+      },
+      {
+        text: 'Calendar',
+        value: 'CalendarEx'
+      },
+      {
+        text: 'Datatable',
+        value: 'DataTableEx'
+      },
+      {
+        text: 'Dropdown',
+        value: 'DropdownEx'
+      },
+      {
+        text: 'Filter Dropdown',
+        value: 'FilterEx'
+      },
+      {
+        text: 'File Card',
+        value: 'FileCardEx'
+      },
+      {
+        text: 'Progress Bar',
+        value: 'ProgressBarEx'
+      }
+    ])
+    return {
+      pages,
+      selectedPage
     }
+  }
 }
 </script>
 
