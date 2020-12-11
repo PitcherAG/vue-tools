@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.5.0]
+## [NEXT: 1.5.0]
 ### Changed
 - Insfrastructure updates, added @pitcher/eslint-config
 - Change files according to the new eslint rules
