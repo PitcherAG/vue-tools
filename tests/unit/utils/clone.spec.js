@@ -43,12 +43,10 @@ describe('clone utility method', () => {
 
   it('throws an error when the object does not have own properties', () => {
     const a = () => {
-      const data = Object.create(null)
-      const res1 = clone(data)
+      clone(Object.create(null))
     }
     const b = () => {
-      const data = Object.create(undefined)
-      const res2 = clone(data)
+      clone(Object.create(undefined))
     }
     expect(a).toThrow(TypeError)
     expect(b).toThrow(TypeError)
