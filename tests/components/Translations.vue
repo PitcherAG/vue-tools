@@ -10,6 +10,7 @@
 </template>
 
 <script>
+/* eslint-disable vue/no-unused-properties */
 import { ref } from '@vue/composition-api'
 
 export default {
@@ -32,5 +33,3 @@ export default {
   }
 }
 </script>
-
-<style scoped></style>
