@@ -13,10 +13,10 @@ export async function loadServerJSON(timeout = 5) {
         window.Ti.App.fireEvent = () => true
     }
 
-    ///This is for Android -- Ti is not injected for a very small period of time
+    // This is for Android -- Ti is not injected for a very small period of time
     await waitForWindowProp('Ti', timeout)
 
-    ///Event to get serverJSON - can only be called once, otherwise will not return data
+    // Event to get serverJSON - can only be called once, otherwise will not return data
     fireEvent('askJSON')
 
     // for testing
@@ -40,7 +40,7 @@ export async function loadServerJSON(timeout = 5) {
         window.presentationsObject = JSON.parse(process.env.VUE_APP_PRESENTATIONSOBJECT)
     }
 
-    ///Event to get presentation list, which contains slides from admin & custom presentations
+    // Event to get presentation list, which contains slides from admin & custom presentations
     fireEvent('loadPresentationsFromDB', {})
 
     const presentationsObject = await waitForWindowProp('presentationsObject', timeout)
