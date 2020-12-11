@@ -1,7 +1,7 @@
+import { reactive, computed } from '@vue/composition-api'
 import { fireEvent } from '../../event'
 import { createStore } from '../../store'
-import { reactive, computed } from '@vue/composition-api'
-import UI_CONSTANTS from '../../constants/ui'
+import UI_CONSTANTS from '../constants'
 
 class CategoriesStore {
   id = 'categoriesStore'
