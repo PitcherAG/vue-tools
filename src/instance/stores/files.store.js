@@ -1,9 +1,9 @@
-import { createStore } from '../../store'
+import Vue from 'vue'
 import { reactive, computed } from '@vue/composition-api'
+import { createStore } from '../../store'
 import { fireEvent } from '../../event'
 import { joinPath } from '../../utils'
-import Vue from 'vue'
-import UI_CONSTANTS from '../../constants/ui'
+import UI_CONSTANTS from '../constants'
 
 class FilesStore {
   id = 'filesStore'
@@ -20,8 +20,8 @@ class FilesStore {
   })
 
   /*
-        Checks start datetime & end datetime of the distribution of file
-    */
+      Checks start datetime & end datetime of the distribution of file
+  */
   isFileExpiredOrNotReady(now, startDate, endDate) {
     if (typeof startDate === 'undefined' || typeof endDate === 'undefined') return false
     if (startDate == null || endDate == null) return false
@@ -30,11 +30,11 @@ class FilesStore {
   }
 
   /*
-        Decides if:
-    *       file is a valid content
-    *       is not hidden from UI (e.g postcall)
-    *       is not expired or ready to show
-    */
+    Decides if:
+    *  file is a valid content
+    *  is not hidden from UI (e.g postcall)
+    *  is not expired or ready to show
+  */
   shouldShowInUI(now, file) {
     if (
       file.ID[0] == 'T' ||
@@ -50,9 +50,9 @@ class FilesStore {
   }
 
   /*
-        Add extension to files, like if file should be shown in (whether it's ready or not)
-        or adds thumbnail property
-    */
+    Add extension to files, like if file should be shown in (whether it's ready or not)
+    or adds thumbnail property
+  */
   extendFiles(files) {
     const now = new Date().getTime() / 1000
     files.forEach(file => {
@@ -63,8 +63,8 @@ class FilesStore {
   }
 
   /*
-        When presentations are retrieved, validates arguments and created presentations
-    */
+    When presentations are retrieved, validates arguments and created presentations
+  */
   parsePresentations(files) {
     this.state.customs = []
     this.state.presentations = []
@@ -85,8 +85,8 @@ class FilesStore {
   }
 
   /*
-        Single presentation object parse
-    */
+    Single presentation object parse
+  */
   parseSinglePresentation(file) {
     try {
       if (file.isCustom != UI_CONSTANTS.IGNORE_CUSTOM_TYPE) {
@@ -122,8 +122,8 @@ class FilesStore {
   }
 
   /*
-        Custom decks are retrived with presentation objects, this adds them to custom list
-    */
+      Custom decks are retrived with presentation objects, this adds them to custom list
+  */
   addFileAsCustom(file) {
     let original = this.state.files.find(f => f.ID == file.ID)
     if (original) {
@@ -141,8 +141,8 @@ class FilesStore {
   }
 
   /*
-        Extends presentation object with original file attributes
-    */
+      Extends presentation object with original file attributes
+  */
   mergePresentation(file) {
     this.state.presentations.push(file)
     const original = this.state.files.find(f => f.ID == file.ID)
@@ -152,9 +152,9 @@ class FilesStore {
   }
 
   /*
-        Favorite file Ids are retrieved separately, so files needs to be marked as favorite after that
-        isFavorite property is added as an observable
-    */
+      Favorite file Ids are retrieved separately, so files needs to be marked as favorite after that
+      isFavorite property is added as an observable
+  */
   markFavorites(fileIdMapping) {
     this.state.files.forEach(file => {
       if (typeof file.isFavorite === 'undefined') {
@@ -167,9 +167,9 @@ class FilesStore {
   }
 
   /*
-        Impact tells UIs which files should be shown in UI at a moment
-        This filter might be due to now downloaded content(ios), or when call with pre selected is started (all platforms)
-    */
+      Impact tells UIs which files should be shown in UI at a moment
+      This filter might be due to now downloaded content(ios), or when call with pre selected is started (all platforms)
+  */
   setAllowedIds(fileIds) {
     if (fileIds && fileIds.length > 0 && this.state.initialAllowedIDs == null) {
       this.state.initialAllowedIDs = fileIds
