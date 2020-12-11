@@ -26,14 +26,9 @@
             <div v-if="showFileOptions" class="file-card__stacked right bottom">
                 <div class="actions">
                     <Dropdown v-model="optionsExpanded">
-                        <template v-if="hasButtonSlot">
-                            <slot name="button" />
-                        </template>
-                        <template v-else>
-                            <button class="ui button basic icon option-button">
-                                <i class="ellipsis horizontal icon fitted" />
-                            </button>
-                        </template>
+                        <button class="ui button basic icon option-button">
+                            <i class="ellipsis horizontal icon fitted" />
+                        </button>
                         <div class="menu">
                             <!-- items slots -->
                             <template v-if="hasItemsSlot">
@@ -55,17 +50,15 @@
                 {{ date }}
             </div>
         </div>
-        <template v-if="hasBodyAndKeywordSlot">
-            <slot name="bodyAndKeyword" />
+        <template v-if="hasBodySlot">
+            <slot name="body" />
         </template>
+
+        <!-- Default Body -->
         <template v-else>
             <!-- File name -->
-            <template v-if="hasBodySlot">
-                <slot name="body" />
-            </template>
-            <template v-else>
-                <div class="file-card__file-name">{{ body }}</div>
-            </template>
+            <div class="file-card__file-name">{{ body }}</div>
+
             <!-- Keywords -->
             <div v-if="hasKeywordsSlot" class="mt-1">
                 <slot name="keywords" />
@@ -138,6 +131,7 @@ export default defineComponent({
             type: Array,
             default: function() {
                 return [
+                    /* eslint-disable vue/no-deprecated-props-default-this */
                     {
                         text: this.downloadText,
                         icon: 'download icon thin',
@@ -148,6 +142,7 @@ export default defineComponent({
                         icon: 'share icon thin',
                         click: () => this.$emit('onClickShare')
                     }
+                    /* eslint-enable vue/no-deprecated-props-default-this */
                 ]
             }
         }
@@ -156,11 +151,9 @@ export default defineComponent({
         const state = reactive({
             optionsExpanded: false,
             hasItemsSlot: !!slots.items,
-            hasButtonSlot: !!slots.button,
             hasNewSlot: !!slots.new,
             hasKeywordsSlot: !!slots.keywords,
-            hasBodySlot: !!slots.body,
-            hasBodyAndKeywordSlot: !!slots.bodyAndKeyword
+            hasBodySlot: !!slots.body
         })
 
         const styles = computed(() => ({
