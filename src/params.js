@@ -1,11 +1,10 @@
-import { fireEvent } from './event'
 import { waitForWindowProp } from './utils'
-import Vue from 'vue'
 import { createStore } from './store'
 import { reactive, ref } from '@vue/composition-api'
+
 /** For Pitcher Impact
  |--------------------------------------------------
- |    params
+ |    Params
  |--------------------------------------------------
  **/
 
