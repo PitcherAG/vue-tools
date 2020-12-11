@@ -77,6 +77,7 @@ import { defineComponent, reactive, computed, toRefs } from '@vue/composition-ap
 import Dropdown from '../Dropdown'
 
 export default defineComponent({
+  name: 'file-card',
   components: {
     Dropdown
   },
@@ -147,6 +148,7 @@ export default defineComponent({
       }
     }
   },
+  emits: ['onClickDownload', 'onClickShare'],
   setup(props, { slots, emit }) {
     const state = reactive({
       optionsExpanded: false,

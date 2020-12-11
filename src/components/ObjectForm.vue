@@ -69,7 +69,7 @@
 </template>
 
 <script>
-/* eslint-disable no-unused-vars, max-len */
+/* eslint-disable no-unused-vars, max-len, vue/no-unused-properties */
 
 import { computed, reactive, ref, watch, onMounted } from '@vue/composition-api'
 import { loadSchema, useConfigStore, contextQuery, saveObject, Field, loadLayout } from '../index'
@@ -77,6 +77,7 @@ import ObjectFormField from './ObjectFormField'
 import Dropdown from './Dropdown'
 
 export default {
+  name: 'object-form',
   components: { Dropdown, ObjectFormField },
   props: {
     objectType: {
@@ -118,9 +119,6 @@ export default {
     value: {
       type: Object
     },
-    onSave: {
-      type: Function
-    },
     ignoreExternalIdValidation: {
       type: Boolean,
       default: false
@@ -134,6 +132,7 @@ export default {
       default: 'eight wide column'
     }
   },
+  emits: ['fieldChange', 'input'],
 
   setup: function(props, attrs) {
     const excludes = [

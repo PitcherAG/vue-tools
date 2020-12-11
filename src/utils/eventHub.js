@@ -10,4 +10,5 @@
 // this.$bus.$on('myEvent', (message) => {console.log(message})
 import Vue from 'vue'
 
+// eslint-disable-next-line vue/require-name-property
 export const eventHub = new Vue({})

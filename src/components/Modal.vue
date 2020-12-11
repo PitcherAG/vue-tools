@@ -44,10 +44,13 @@
 </template>
 
 <script>
+/* eslint-disable vue/require-prop-types, vue/no-unused-properties */
+
 import { defineComponent, reactive, toRefs, computed, watch, onMounted } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 
 export default defineComponent({
+  name: 'modal',
   props: {
     value: {
       required: true
@@ -111,6 +114,7 @@ export default defineComponent({
       default: '100%'
     }
   },
+  emits: ['input', 'onClosed', 'onHidden', 'onShow', 'onVisible'],
   setup(props, { refs, slots, emit }) {
     const state = reactive({
       hasHeaderSlot: !!slots.header,
