@@ -1,6 +1,13 @@
 # Changelog
 
-## [UNRELEASED]
+## [1.5.0]
+### Changed
+- Insfrastructure updates, added @pitcher/eslint-config
+- Change files according to the new eslint rules
+
+### Added
+- Added new slot named `body` to replace FileCard body content
+- Pitcher UI business logic, includes functions to fetch stuff from serverJSON / params. Includes also multiple stores to keep the information
 
 ## [1.4.13]
 - Added validations store, usage with `loadValidations(validationsJsonFile)` and `useValidations()`
