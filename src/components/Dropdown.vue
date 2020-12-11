@@ -80,10 +80,12 @@
 </template>
 
 <script>
+/* eslint-disable vue/require-prop-types, vue/no-unused-properties */
 import { computed, reactive, toRefs, onMounted } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 
 export default {
+  name: 'dropdown',
   props: {
     value: {
       required: true
@@ -93,12 +95,15 @@ export default {
       required: false
     },
     itemText: {
+      type: String,
       default: 'text'
     },
     itemValue: {
+      type: String,
       default: 'value'
     },
     icon: {
+      type: String,
       default: 'dropdown'
     },
     defaultText: {

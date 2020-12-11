@@ -6,6 +6,7 @@
 </template>
 
 <script>
+/* eslint-disable vue/require-prop-types, vue/no-unused-properties */
 import { onMounted, computed, watch } from '@vue/composition-api'
 import { validateSize } from './mixins'
 
@@ -34,6 +35,7 @@ export default {
       validator: val => validateSize(val, 'Dropdown.vue')
     }
   },
+  emits: ['input', 'beforeChecked', 'onChecked', 'beforeUnchecked', 'onUnchecked'],
   setup(props, { refs, emit, root }) {
     // Validate
     if (props.value === null || props.value === undefined) {

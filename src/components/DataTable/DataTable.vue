@@ -188,6 +188,7 @@ import Pagination from './Pagination.vue'
 import TableRow from './TableRow.vue'
 
 export default defineComponent({
+  name: 'data-table',
   components: {
     Pagination,
     TableRow
@@ -207,6 +208,7 @@ export default defineComponent({
     },
     searchFields: Array,
     groupBy: {
+      type: String,
       default: undefined
     },
     searchOptions: {
@@ -268,6 +270,7 @@ export default defineComponent({
       default: false
     }
   },
+  emits: ['onSearch', 'onSort'],
   setup(props, { slots, emit }) {
     // Local state
     const state = reactive({

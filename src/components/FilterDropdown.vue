@@ -130,12 +130,14 @@
 </template>
 
 <script>
+/* eslint-disable vue/no-unused-properties */
 import { computed, reactive, toRefs, onMounted, watch, ref } from '@vue/composition-api'
 import Checkbox from './Checkbox'
 import { parsePxStyle, validateSize } from './mixins'
 import { search } from '../utils'
 
 export default {
+  name: 'filter-dropdown',
   components: {
     Checkbox
   },
@@ -150,9 +152,11 @@ export default {
       required: true
     },
     itemText: {
+      type: String,
       default: 'text'
     },
     itemValue: {
+      type: String,
       default: 'value'
     },
     returnType: {
@@ -160,6 +164,7 @@ export default {
       default: 'value'
     },
     icon: {
+      type: String,
       default: 'filter'
     },
     fluid: Boolean,

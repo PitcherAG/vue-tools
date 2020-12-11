@@ -123,16 +123,25 @@ export default {
   name: 'object-form-field',
   components: { Checkbox, Calendar, Dropdown },
   props: {
-    field: { required: true },
+    field: {
+      type: Object,
+      required: true
+    },
     index: {
       type: Number
     },
     hideHelpText: {
+      type: Boolean,
       default: false
     },
-    showError: {},
+    showError: {
+      type: Boolean
+    },
+    // eslint-disable-next-line vue/require-prop-types
     value: {},
-    valueLabel: {},
+    valueLabel: {
+      type: String
+    },
     label: {
       type: String
     }
@@ -168,11 +177,7 @@ export default {
       emit('input', value)
     }
 
-    const log = (a, b, c) => {
-      console.log(a, b, c)
-    }
-
-    return { picklist, emitInput, error, log, formatDate, formatCurrency }
+    return { picklist, emitInput, error, formatDate, formatCurrency }
   }
 }
 </script>

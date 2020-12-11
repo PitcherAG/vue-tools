@@ -8,11 +8,13 @@
 </template>
 
 <script>
+/* eslint-disable vue/no-unused-properties, vue/no-deprecated-props-default-this */
 import { onMounted, ref, computed, watch } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 import { formatDate } from '../i18n/date.js'
 
 export default {
+  name: 'calendar',
   props: {
     value: {
       type: [String, Date],
@@ -132,6 +134,7 @@ export default {
     const parseDate = dateString => {
       if (!dateString) return undefined
 
+      // eslint-disable-next-line valid-typeof
       if (typeof dateString === 'Date') {
         return dateString
       }
