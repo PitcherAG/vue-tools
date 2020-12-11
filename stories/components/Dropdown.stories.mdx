@@ -6,128 +6,128 @@ import { options } from './data/dropdown.data'
 <!-- Story args -->
 <!-- https://storybook.js.org/docs/react/writing-stories/args -->
 export const args = {
-    value: '',
-    items: options,
-    defaultText: ''
+  value: '',
+  items: options,
+  defaultText: ''
 }
 
 <!-- https://storybook.js.org/docs/react/api/argtypes -->
 export const argTypes = {
-    'v-model': {
-        description: 'model to track selected value(s)',
-        type: { required: true },
-        table: {
-            type: { summary: 'string' }
-        }
-    },    
-    value: {
-        table: { 
-            disable: true
-        },
-    },
-    items: {
-        description: 'object array for dropdown items. Required if you want to use with JS declaration. Do not use items if you use default slot'
-    },
-    itemText: {
-        description: 'which property to map as text in your items declaration'
-    },
-    itemValue: {
-        description: 'which property to map as value in your items declaration'
-    },
-    icon: {
-        description: 'default icon for dropdown. If anything else than dropdown, the icon will be placed to the left side'
-    },
-    defaultText: {
-        description: 'default text that will be show when there is not any value selected'
-    },
-    action: {
-        description: 'default action when initializing fomantic dropdown element. Default is activate.'
-    },
-    settings: {
-        description: 'Fomantic dropdown settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/dropdown.html#/settings'
-    },
-    fluid: {
-        description: 'makes the component width fluid 100% by adding fluid class to the container'
-    },
-    compact: {
-        description: 'makes the component compact thru adding compact class to the container. Width of dropdown increases the more you select from the dropdown'
-    },
-    selection: {
-        description: 'makes the component a selection dropdown thru adding selection class to the container'
-    },
-    multiple: {
-        description: 'enables multiple selection of items in dropdown thru adding multiple class to the container'
-    },
-    searchable: {
-        description: 'makes the dropdown searchable thru adding search class to the container'
-    },
-    clearable: {
-        description: 'makes the dropdown selection clearable. Note that combining searchable = true with selection = false is not recommended!'
-    },
-    disabled: {
-        description: 'disables the component thru adding disabled class to the container'
-    },
-    loading: {
-        description: 'sets the dropdown to loading state thru adding loading class to the container'
-    },
-    error: {
-        description: 'adds error class to the container'
-    },
-    color: {
-        description: 'sets the color of button thru adding the color class to the container. (check available colors at Fomantic)'
-    },
-    minWidth: {
-        description: 'min-width css property for input element'
-    },
-    maxWidth: {
-        description: 'max-width css property for input element'
-    },
-    size: {
-        description: 'mini | tiny | small | medium | large | big | huge | massive'
-    },
-    /* Slots */
-    default: {
-        description: 'Default slot to replace the content of `div.ui.dropdown`. You can use this without naming the slot i.e. `<Dropdown>content</Dropdown>`. When using default slot, you need to add data-value and data-item options to each `div.item`. **Using slot option in dropdown is a little bit experimental.**'
+  'v-model': {
+    description: 'model to track selected value(s)',
+    type: { required: true },
+    table: {
+      type: { summary: 'string' }
     }
+  },    
+  value: {
+    table: { 
+      disable: true
+    },
+  },
+  items: {
+    description: 'object array for dropdown items. Required if you want to use with JS declaration. Do not use items if you use default slot'
+  },
+  itemText: {
+    description: 'which property to map as text in your items declaration'
+  },
+  itemValue: {
+    description: 'which property to map as value in your items declaration'
+  },
+  icon: {
+    description: 'default icon for dropdown. If anything else than dropdown, the icon will be placed to the left side'
+  },
+  defaultText: {
+    description: 'default text that will be show when there is not any value selected'
+  },
+  action: {
+    description: 'default action when initializing fomantic dropdown element. Default is activate.'
+  },
+  settings: {
+    description: 'Fomantic dropdown settings, here you can define extra JS options that are available in Fomantic. Details: https://fomantic-ui.com/modules/dropdown.html#/settings'
+  },
+  fluid: {
+    description: 'makes the component width fluid 100% by adding fluid class to the container'
+  },
+  compact: {
+    description: 'makes the component compact thru adding compact class to the container. Width of dropdown increases the more you select from the dropdown'
+  },
+  selection: {
+    description: 'makes the component a selection dropdown thru adding selection class to the container'
+  },
+  multiple: {
+    description: 'enables multiple selection of items in dropdown thru adding multiple class to the container'
+  },
+  searchable: {
+    description: 'makes the dropdown searchable thru adding search class to the container'
+  },
+  clearable: {
+    description: 'makes the dropdown selection clearable. Note that combining searchable = true with selection = false is not recommended!'
+  },
+  disabled: {
+    description: 'disables the component thru adding disabled class to the container'
+  },
+  loading: {
+    description: 'sets the dropdown to loading state thru adding loading class to the container'
+  },
+  error: {
+    description: 'adds error class to the container'
+  },
+  color: {
+    description: 'sets the color of button thru adding the color class to the container. (check available colors at Fomantic)'
+  },
+  minWidth: {
+    description: 'min-width css property for input element'
+  },
+  maxWidth: {
+    description: 'max-width css property for input element'
+  },
+  size: {
+    description: 'mini | tiny | small | medium | large | big | huge | massive'
+  },
+  /* Slots */
+  default: {
+    description: 'Default slot to replace the content of `div.ui.dropdown`. You can use this without naming the slot i.e. `<Dropdown>content</Dropdown>`. When using default slot, you need to add data-value and data-item options to each `div.item`. **Using slot option in dropdown is a little bit experimental.**'
+  }
 }
 
 <!-- Named exports of stories here -->
 export const Template = (args, { argTypes }) => {
-    return {
-        props: Object.keys(argTypes),
-        components: { Dropdown },
-        template: '<Dropdown v-bind="$props" />'
-    }
+  return {
+    props: Object.keys(argTypes),
+    components: { Dropdown },
+    template: '<Dropdown v-bind="$props" />'
+  }
 } 
 
 <!-- Define story settings here -->
 <Meta 
-    title="Components/Dropdown"
-    component={Dropdown}
-    argTypes={argTypes}
-    args={args}
+  title="Components/Dropdown"
+  component={Dropdown}
+  argTypes={argTypes}
+  args={args}
 />
 
 # Dropdown
 Fomantic Dropdown component
 
 <Story name="Default">
-    {Template.bind({})}
+  {Template.bind({})}
 </Story>
 
 ## Small
 <Story name="Small" args={{ size: 'small' }}>
-    {Template.bind({})}
+  {Template.bind({})}
 </Story>
 
 ## Large
 <Story name="Large" args={{ size: 'large' }}>
-    {Template.bind({})}
+  {Template.bind({})}
 </Story>
 
 ## Multi-select
 <Story name="Multi-select" args={{ multiple: true }}>
-    {Template.bind({})}
+  {Template.bind({})}
 </Story>
 
 ### Available props and slots
@@ -154,20 +154,20 @@ items: Item[] | String[]
 
 // a single item definition inside items array
 item: {
-    // The name of your dropdown item. This will be shown as the name in the Dropdown. Also you can rename text to anything else. Let's say if you change text -> to name and set item-text="name" in your dropdown properties, dropdown will show name property as the text.
-    text: String,
-    // The value of your dropdown item that will be saved when you select. Same option as text applies to this property as well, combine with item-value property in dropdown.
-    value: String,
-    // Type of the dropdown item, default is 'item'
-    type: 'item | header | divider',
-    // Description for the item
-    description: String,
-    // icon name to prepend to the item text. use only icon name i.e. cog, times etc.
-    icon: String,
-    // image url to prepend an image to the item text.
-    image: String,
-    // to disable dropdown item
-    disabled: Boolean
+  // The name of your dropdown item. This will be shown as the name in the Dropdown. Also you can rename text to anything else. Let's say if you change text -> to name and set item-text="name" in your dropdown properties, dropdown will show name property as the text.
+  text: String,
+  // The value of your dropdown item that will be saved when you select. Same option as text applies to this property as well, combine with item-value property in dropdown.
+  value: String,
+  // Type of the dropdown item, default is 'item'
+  type: 'item | header | divider',
+  // Description for the item
+  description: String,
+  // icon name to prepend to the item text. use only icon name i.e. cog, times etc.
+  icon: String,
+  // image url to prepend an image to the item text.
+  image: String,
+  // to disable dropdown item
+  disabled: Boolean
 }
 ```
 
@@ -178,22 +178,22 @@ import { Dropdown } from '@pitcher/vue-sdk'
 // data that will be presented in dropdown
 const items = [
 {
-    text: 'Cantons',
-    type: 'header'
+  text: 'Cantons',
+  type: 'header'
 },
 {
-    text: 'Zürich',
-    value: 'zurich',
-    icon: 'city',
-    description: '10'
+  text: 'Zürich',
+  value: 'zurich',
+  icon: 'city',
+  description: '10'
 },
 {
-    type: 'divider'
+  type: 'divider'
 },
 {
-    text: 'Aargau',
-    value: 'aargau',
-    image: 'https://image_url'
+  text: 'Aargau',
+  value: 'aargau',
+  image: 'https://image_url'
 },
 ...
 ...
@@ -215,51 +215,51 @@ const selectedItem = ''
  
 <!-- Usage with slot -->
 <Dropdown class="ui dropdown left pointing icon button" v-model="selectedItem">
-    <i class="settings icon" />
-    <div class="menu">
-        <div class="ui left search icon input">
-            <i class="search icon" />
-            <input type="text" name="search" placeholder="Search issues..." />
-        </div>
-        <div class="divider" />
-        <div class="header">
-            <i class="tags icon" />
-            Filter by tag
-        </div>
-        <div class="item" data-value="important">
-            <div class="ui red empty circular label" />
-            Important
-        </div>
-        <div class="item" data-value="announcement">
-            <div class="ui blue empty circular label" />
-            Announcement
-        </div>
-        <div class="item" data-value="discussion">
-            <div class="ui black empty circular label" />
-            Discussion
-        </div>
+  <i class="settings icon" />
+  <div class="menu">
+    <div class="ui left search icon input">
+      <i class="search icon" />
+      <input type="text" name="search" placeholder="Search issues..." />
     </div>
+    <div class="divider" />
+    <div class="header">
+      <i class="tags icon" />
+      Filter by tag
+    </div>
+    <div class="item" data-value="important">
+      <div class="ui red empty circular label" />
+      Important
+    </div>
+    <div class="item" data-value="announcement">
+      <div class="ui blue empty circular label" />
+      Announcement
+    </div>
+    <div class="item" data-value="discussion">
+      <div class="ui black empty circular label" />
+      Discussion
+    </div>
+  </div>
 </Dropdown>
 
 <!-- Usage with slot example 2 -->
 <Dropdown class="fluid multiple search selection" v-model="selectedItem">
-    <input type="hidden" name="country" />
-    <i class="dropdown icon" />
-    <div v-if="!selectedItem || selectedItem.length < 1" class="default">Select Country</div>
-    <div class="text" />
-    <div class="menu">
-        <div class="item" data-value="at"><i class="at flag" />Austria</div>
-        <div class="item" data-value="be"><i class="be flag" />Belgium</div>
-        <div class="item" data-value="dk"><i class="dk flag" />Denmark</div>
-        <div class="item" data-value="gb"><i class="gb flag" />England</div>
-        <div class="item" data-value="de"><i class="de flag" />Germany</div>
-        <div class="item" data-value="it"><i class="it flag" />Italy</div>
-        <div class="item" data-value="mx"><i class="mx flag" />Mexico</div>
-        <div class="item" data-value="pl"><i class="pl flag" />Poland</div>
-        <div class="item" data-value="se"><i class="se flag" />Sweden</div>
-        <div class="item" data-value="ch"><i class="ch flag" />Switzerland</div>
-        <div class="item" data-value="tr"><i class="tr flag" />Turkey</div>
-        <div class="item" data-value="us"><i class="us flag" />United States</div>
-    </div>
+  <input type="hidden" name="country" />
+  <i class="dropdown icon" />
+  <div v-if="!selectedItem || selectedItem.length < 1" class="default">Select Country</div>
+  <div class="text" />
+  <div class="menu">
+    <div class="item" data-value="at"><i class="at flag" />Austria</div>
+    <div class="item" data-value="be"><i class="be flag" />Belgium</div>
+    <div class="item" data-value="dk"><i class="dk flag" />Denmark</div>
+    <div class="item" data-value="gb"><i class="gb flag" />England</div>
+    <div class="item" data-value="de"><i class="de flag" />Germany</div>
+    <div class="item" data-value="it"><i class="it flag" />Italy</div>
+    <div class="item" data-value="mx"><i class="mx flag" />Mexico</div>
+    <div class="item" data-value="pl"><i class="pl flag" />Poland</div>
+    <div class="item" data-value="se"><i class="se flag" />Sweden</div>
+    <div class="item" data-value="ch"><i class="ch flag" />Switzerland</div>
+    <div class="item" data-value="tr"><i class="tr flag" />Turkey</div>
+    <div class="item" data-value="us"><i class="us flag" />United States</div>
+  </div>
 </Dropdown>
 ```
