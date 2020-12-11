@@ -5,7 +5,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'file-card-container'
+}
 </script>
 
 <style lang="scss" scoped>

@@ -22,10 +22,12 @@
 </template>
 
 <script>
+/* eslint-disable vue/no-unused-properties */
 import { computed, reactive, toRefs, watch, onMounted } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 
 export default {
+  name: 'progress-bar',
   props: {
     value: {
       type: [String, Number],
@@ -84,6 +86,7 @@ export default {
       validator: val => validateSize(val, 'ProgressBar.vue')
     }
   },
+  emits: ['onChange', 'onSuccess', 'onActive', 'onError', 'onWarning'],
 
   setup(props, { refs, slots, emit }) {
     // local state
