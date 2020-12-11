@@ -14,14 +14,17 @@ export default {
   name: 'popup',
   props: {
     on: String,
-    position: String
+    position: {
+      type: String,
+      default: 'bottom left'
+    }
   },
   setup(props, { refs }) {
     onMounted(() => {
       $(refs.trigger).popup({
         on: props.on,
         popup: refs.popup,
-        position: 'bottom left'
+        position: props.position
       })
     })
 

@@ -41,6 +41,7 @@ import { defineComponent } from '@vue/composition-api'
 import has from 'lodash/has'
 
 export default defineComponent({
+  name: 'table-pagination',
   props: {
     pagination: {
       type: Object,
@@ -59,16 +60,17 @@ export default defineComponent({
           console.error('[Vue warn]: Validation error in Pagination.vue!')
           console.error('[Vue warn]: prop.pagination is not valid!')
           throw `
-                    Expected
-                    pagination: {
-                        currentPage: Number,
-                        totalPages: Number
-                        startPage: Number
-                        endPage: Number
-                        startIndex: Number
-                        endIndex: Number
-                        pages: Number
-                    }`
+            Expected
+            pagination: {
+                currentPage: Number,
+                totalPages: Number
+                startPage: Number
+                endPage: Number
+                startIndex: Number
+                endIndex: Number
+                pages: Number
+            }
+          `
         }
         return valid
       }
@@ -82,9 +84,9 @@ export default defineComponent({
           console.error('[Vue warn]: Validation error in Pagination.vue!')
           console.error('[Vue warn]: prop.paginate is not valid!')
           throw `
-                    Expected
-                    function paginate(to) { state.pagination.currentPage = to }
-                    `
+            Expected
+            function paginate(to) { state.pagination.currentPage = to }
+          `
         }
         return valid
       }

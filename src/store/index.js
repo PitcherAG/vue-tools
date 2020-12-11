@@ -64,8 +64,6 @@ export function transform(obj) {
   // function watches, methods, computed
   Object.keys(descriptors).forEach(key => {
     if (key !== 'constructor' && !key.startsWith('__')) {
-      const get = descriptors[key].get
-      const set = descriptors[key].set
       const value = descriptors[key].value
       if (key.startsWith('on_')) {
         result[key] = watch(

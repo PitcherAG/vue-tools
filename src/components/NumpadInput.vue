@@ -97,6 +97,7 @@ import { defineComponent, reactive, toRefs, computed, watch, onMounted, onUnmoun
 import { parsePxStyle, validateSize } from './mixins'
 
 export default defineComponent({
+  name: 'numpad-input',
   props: {
     value: {
       type: [String, Number]
@@ -451,7 +452,6 @@ export default defineComponent({
       backspace,
       reset,
       focus,
-      emit,
       jumpNextSibling,
       jumpNextGroup,
       handleKeydown
