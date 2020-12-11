@@ -53,6 +53,7 @@ module.exports = {
         //         }
         //     }
         // ],
+        'vue/no-v-for-template-key-on-child': 0,
         'vue/max-len': [
             'warn',
             {
