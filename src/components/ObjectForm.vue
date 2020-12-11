@@ -54,9 +54,9 @@
                                     :show-error="state.showErrors"
                                     :hide-help-text="hideHelpText"
                                     :label="item.label"
-                                    @input="emitUpdate"
                                     :data-debug-name="comp.details.name"
                                     :class="fieldsClass"
+                                    @input="emitUpdate"
                                 />
                             </template>
                         </fragment>
@@ -566,9 +566,8 @@ export default {
 
 <style lang="scss" scoped>
 .ui.form.object-form ::v-deep {
-
     .field > label {
-        color: rgba(0,0,0,.7);
+        color: rgba(0, 0, 0, 0.7);
     }
 
     .ui.grid.fields {
@@ -593,7 +592,6 @@ export default {
 
     .ui.header:first-child {
         margin-top: 0.5em;
-    }    
-
+    }
 }
 </style>
