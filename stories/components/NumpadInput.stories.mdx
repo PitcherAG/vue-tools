@@ -5,111 +5,111 @@ import NumpadInput from '@/components/NumpadInput'
 <!-- Story args -->
 <!-- https://storybook.js.org/docs/react/writing-stories/args -->
 export const args = {
-    value: 50,
-    group: 'test'
+  value: 50,
+  group: 'test'
 }
 
 <!-- https://storybook.js.org/docs/react/api/argtypes -->
 export const argTypes = {
-    'v-model': {
-        description: 'input value',
-        type: { required: true },
-        table: {
-            type: { summary: 'string | number' }
-        }
-    },    
-    value: {
-        table: { 
-            disable: true
-        },
-    },
-    lazy: {
-        description: 'set v-model value on blur event. This is useful if you do calculations based on your v-model value after updating it'
-    },
-    decimals: {
-        description: 'decimal value for input'
-    },
-    group: {
-        description: 'for grouping inputs & navigate thru numpad buttons'
-    },
-    resetBefore: {
-      description: 'if numpad has a value higher than 0 initially, first numpad click will reset the value to 0 first'
-    },
-    fluid: {
-        description: 'makes the input fluid'
-    },
-    disabled: {
-        description: 'disabled input'
-    },
-    transparent: {
-        description: 'fomantic transparent input style'
-    },
-    color: {
-        description: 'color for input container class (fomantic)'
-    },
-    minWidth: {
-        description: 'min-width css property for input element'
-    },
-    maxWidth: {
-        description: 'max-width css property for input element'
-    },
-    size: {
-        description: 'mini | tiny | small | medium | large | big | huge | massive '
-    },
-    rightIcon: {
-        description: 'FA icon name. Use ONLY icon name i.e. users times etc.'
-    },
-    leftIcon: {
-        description: 'FA icon name. Use ONLY icon name i.e. users times etc.'
-    },
-    placeholder: {
-        description: 'placeholder for input element'
-    },
-    max: {
-        description: 'maximum number that input can reach'
-    },
-    disableKeyboard: {
-        description: 'disable keyboard keydown events on numpad'
-    },
-    noAnimation: {
-        description: 'input animation on focus'
-    },
-    /* Slots */
-    labelLeft: {
-        description: 'Slot to add custom label html to the left side of input'
-    },
-    labelRight: {
-        description: 'Slot to add custom label html to the right side of input'
+  'v-model': {
+    description: 'input value',
+    type: { required: true },
+    table: {
+      type: { summary: 'string | number' }
     }
+  },    
+  value: {
+    table: { 
+      disable: true
+    },
+  },
+  lazy: {
+    description: 'set v-model value on blur event. This is useful if you do calculations based on your v-model value after updating it'
+  },
+  decimals: {
+    description: 'decimal value for input'
+  },
+  group: {
+    description: 'for grouping inputs & navigate thru numpad buttons'
+  },
+  resetBefore: {
+    description: 'if numpad has a value higher than 0 initially, first numpad click will reset the value to 0 first'
+  },
+  fluid: {
+    description: 'makes the input fluid'
+  },
+  disabled: {
+    description: 'disabled input'
+  },
+  transparent: {
+    description: 'fomantic transparent input style'
+  },
+  color: {
+    description: 'color for input container class (fomantic)'
+  },
+  minWidth: {
+    description: 'min-width css property for input element'
+  },
+  maxWidth: {
+    description: 'max-width css property for input element'
+  },
+  size: {
+    description: 'mini | tiny | small | medium | large | big | huge | massive '
+  },
+  rightIcon: {
+    description: 'FA icon name. Use ONLY icon name i.e. users times etc.'
+  },
+  leftIcon: {
+    description: 'FA icon name. Use ONLY icon name i.e. users times etc.'
+  },
+  placeholder: {
+    description: 'placeholder for input element'
+  },
+  max: {
+    description: 'maximum number that input can reach'
+  },
+  disableKeyboard: {
+    description: 'disable keyboard keydown events on numpad'
+  },
+  noAnimation: {
+    description: 'input animation on focus'
+  },
+  /* Slots */
+  labelLeft: {
+    description: 'Slot to add custom label html to the left side of input'
+  },
+  labelRight: {
+    description: 'Slot to add custom label html to the right side of input'
+  }
 }
 
 <!-- Named exports of stories here -->
 export const Template = (args, { argTypes }) => {
-    return {
-        props: Object.keys(argTypes),
-        components: { NumpadInput },
-        template: '<NumpadInput v-bind="$props" />'
-    }
+  return {
+    props: Object.keys(argTypes),
+    components: { NumpadInput },
+    template: '<NumpadInput v-bind="$props" />'
+  }
 } 
 
 <!-- Define story settings here -->
 <Meta 
-    title="Components/NumpadInput"
-    component={NumpadInput}
-    argTypes={argTypes}
-    args={args}
+  title="Components/NumpadInput"
+  component={NumpadInput}
+  argTypes={argTypes}
+  args={args}
 />
 
 # NumpadInput
 Custom component
 
 <Story name="Default">
-    {Template.bind({})}
+  {Template.bind({})}
 </Story>
 
 ## Disabled
 <Story name="Disabled" args={{ disabled: true }}>
-    {Template.bind({})}
+  {Template.bind({})}
 </Story>
 
 ### Available props and slots
@@ -130,14 +130,14 @@ import { NumpadInput } from '@pitcher/vue-sdk'
  
 // Usage with slots
 <NumpadInput v-model="fooInputValue" group="foo">
-    // add left label
-    <template #labelLeft>
-        <div class="ui label">http://</div>
-    </template>
-      
-      // add right label
-    <template #labelRight>
-        <div class="ui label">.com</div>
-    </template>
+  // add left label
+  <template #labelLeft>
+    <div class="ui label">http://</div>
+  </template>
+    
+    // add right label
+  <template #labelRight>
+    <div class="ui label">.com</div>
+  </template>
 </NumpadInput>
 ```

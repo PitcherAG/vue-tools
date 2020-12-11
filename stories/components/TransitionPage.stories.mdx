@@ -9,23 +9,23 @@ Gives you transitions between router pages.
 ### Example
 ```html
 <template>
-    <div id="app">
-        <Header />
-        <div>
-            <TransitionPage>
-                <router-view v-if="loaded"></router-view>
-            </TransitionPage>
-        </div>
+  <div id="app">
+    <Header />
+    <div>
+      <transition-page>
+        <router-view v-if="loaded"></router-view>
+      </transition-page>
     </div>
+  </div>
 </template> 
 
 <script>
 import { TransitionPage } from "@pitcher/vue-sdk";
 
 export default {
-    components: {
-      TransitionPage
-    }
+  components: {
+    TransitionPage
+  }
 }
 </script>
 ```
