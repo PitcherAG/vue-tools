@@ -16,7 +16,9 @@ describe('ProgressBar.vue', () => {
     localVue,
     propsData: {
       value: 10,
-      showLabel: false
+      showLabel: false,
+      color: 'red',
+      maxWidth: '100%'
     }
   })
 
@@ -45,5 +47,15 @@ describe('ProgressBar.vue', () => {
     // need to delay 1 sec as it animates the text inside as well
     await delay(1000)
     expect(wrapper.find('.ui.progress .progress').text()).toBe(`${wrapper.vm.$props.value}%`)
+  })
+
+  it(`Progress Bar's container initialize correctly`, () => {
+      // checks all props in progress container div and no need to await since animations are not important
+      expect(wrapper.html()).toContain(`<div data-value=\"${wrapper.vm.$props.value}\" data-total=\"${wrapper.vm.$props.total}\" class=\"ui progress pitcher-progress ${wrapper.vm.$props.color}\" style=\"max-width: ${wrapper.vm.$props.maxWidth};\" data-percent=\"${wrapper.vm.$props.value}\">`)
+  })
+
+  it(`Updating Progress Bar's color works`, async () => {
+      await updateValue('color', 'brown')
+      expect(wrapper.html()).toContain(`<div data-value=\"${wrapper.vm.$props.value}\" data-total=\"${wrapper.vm.$props.total}\" class=\"ui progress pitcher-progress brown\" style=\"max-width: ${wrapper.vm.$props.maxWidth};\" data-percent=\"${wrapper.vm.$props.value}\">`)
   })
 })
