@@ -115,6 +115,10 @@ export function saveObject(obj) {
         obj.fieldsToNull.splice(obj.fieldsToNull.indexOf(a), 1)
       }
     }
+    // Convert boolean values to numbers (0, 1)
+    if (typeof obj[a] === 'boolean') {
+      obj[a] = Number(obj[a])
+    }
   }
   for (const i of ignores) {
     if (obj.ignoreFields.indexOf(i) === -1) {
