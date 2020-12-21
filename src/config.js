@@ -48,13 +48,29 @@ export async function loadConfig() {
       objectName: 'Account',
       sfObjectName: 'Account',
       tableToCache: 'tbl_crm_accounts_m_v3',
-      query: result.sfdcAccountQuery
+      query: result.sfdcAccountQuery,
+      fieldTypes: {
+        account: 'TEXT',
+        id: 'TEXT',
+        lat: 'TEXT',
+        lon: 'TEXT',
+        city: 'TEXT',
+        lastVisit: 'TEXT',
+        accountName: 'TEXT'
+      }
     })
     result.customCaches.push({
       objectName: 'Contact',
       sfObjectName: 'Contact',
       tableToCache: 'tbl_crm_contacts_m_v4',
-      query: result.sfdcContactQuery
+      query: result.sfdcContactQuery,
+      fieldTypes: {
+        contact: 'TEXT',
+        id: 'TEXT',
+        accountID: 'TEXT',
+        lastVisit: 'TEXT',
+        name: 'TEXT'
+      }
     })
     result.customCaches.push({
       objectName: 'Call',
@@ -66,7 +82,17 @@ export async function loadConfig() {
       objectName: 'User',
       sfObjectName: 'User',
       tableToCache: 'tbl_crm_users_m_v3',
-      query: ''
+      query: '',
+      fieldTypes: {
+        userObject: 'TEXT',
+        id: 'TEXT',
+        lastName: 'TEXT',
+        firstName: 'TEXT',
+        name: 'TEXT',
+        roleID: 'TEXT',
+        parentRoleID: 'TEXT',
+        extraField: 'TEXT'
+      }
     })
   } else if (PLATFORM === 'ANDROID') {
     result.customCaches.push({
