@@ -90,7 +90,8 @@ export function saveObject(obj) {
     'LastActivityDate',
     'LastModifiedById',
     'LastModifiedDate',
-    'SystemModstamp'
+    'SystemModstamp',
+    'fieldsToNull'
   ]
   if (!obj.ignoreFields) {
     obj.ignoreFields = []
