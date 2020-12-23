@@ -10,6 +10,7 @@
 - Pitcher UI business logic, includes functions to fetch stuff from serverJSON / params. Includes also multiple stores to keep the information
 - Added field types for Account/Contact/User in iOS
 - Added conversion of Boolean values to Numbers when saving
+- Added fieldsToNull to ignored fields on save
 
 ## [1.4.13]
 - Added validations store, usage with `loadValidations(validationsJsonFile)` and `useValidations()`
