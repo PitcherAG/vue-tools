@@ -85,10 +85,6 @@ window.$gettext = function(msgid, context) {
   return trans(msgid, 1, context)
 }
 
-window.translateUI = function(json) {
-  console.warn('not implemented', JSON.parse(json))
-}
-
 window._ = function(msgid, context) {
   return trans(msgid, 1, context)
 }
@@ -99,6 +95,10 @@ window.$t = function(msgid, context) {
 
 window.$ngettext = function(msgid, n, context) {
   return trans(msgid, n, context)
+}
+
+window.translateUI = function(json) {
+  console.warn('not implemented', JSON.parse(json))
 }
 
 export function TranslationPlugin(_Vue, options = {}) {
