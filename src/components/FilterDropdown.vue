@@ -42,8 +42,8 @@
     <!-- Dropdown menu -->
     <div v-bind="menuAttr">
       <!-- Header & Close button -->
-      <template v-if="hasHeaderSlot" :closeMenu="closeMenu">
-        <slot name="header" />
+      <template v-if="hasHeaderSlot">
+        <slot name="header" :closeMenu="closeMenu" />
       </template>
 
       <!-- Default header -->
@@ -59,8 +59,8 @@
       </div>
 
       <!-- Actions container -->
-      <template v-if="hasActionsSlot" :selectAll="selectAll" :reset="reset">
-        <slot name="actions" />
+      <template v-if="hasActionsSlot">
+        <slot name="actions" :selectAll="selectAll" :reset="reset" />
       </template>
 
       <!-- Default actions -->
