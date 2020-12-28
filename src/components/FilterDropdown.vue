@@ -356,6 +356,7 @@ export default {
     const initFilter = () => {
       // initialize
       $(refs.filter).dropdown({
+        showOnFocus: false,
         onShow: () => {
           state.menuIsOpen = true
           refresh()
