@@ -304,13 +304,10 @@ export default {
     cursor: pointer;
   }
 
-  // ::v-deep {
-  //   .table.hour,
-  //   .table.minute {
-  //     .icon.chevron {
-  //       display: none !important;
-  //     }
-  //   }
-  // }
+  ::v-deep {
+    input::-ms-clear {
+      display: none !important;
+    }
+  }
 }
 </style>
