@@ -2,7 +2,7 @@
   <div ref="calendar" class="ui calendar pitcher-calendar">
     <div class="ui input left icon" v-bind="inputAttr">
       <i class="calendar icon" />
-      <input ref="input" type="text" :placeholder="placeholder" />
+      <input ref="input" v-model="dateStr" type="text" :placeholder="placeholder" />
     </div>
   </div>
 </template>
@@ -87,24 +87,6 @@ export default {
       type: Boolean,
       default: false
     },
-    // inputFormatter: {
-    //   type: Function,
-    //   required: false,
-    //   default: function(dateTime) {
-    //     // if date time
-    //     if (this.type.includes('time')) {
-    //       const date = formatDate(dateTime)
-    //       const time = formatTime(dateTime)
-    //       const res = `${date} ${time}`
-    //       console.log('----------------------------------------')
-    //       console.log(date)
-    //       console.log(time)
-    //       console.log(res)
-    //       console.log('----------------------------------------')
-    //       return res
-    //     }
-    //   }
-    // },
     setting: Object,
     action: {
       type: String,
@@ -133,7 +115,10 @@ export default {
 
   setup(props, { emit, refs, root }) {
     const state = reactive({
-      placeholder: computed(() => (props.defaultText === 'Date/Time' ? $gettext('Date/Time') : props.defaultText))
+      placeholder: computed(() => (props.defaultText === 'Date/Time' ? $gettext('Date/Time') : props.defaultText)),
+      dateStr: '',
+      timeStr: '',
+      date: ''
     })
 
     const inputAttr = computed(() => ({
@@ -168,12 +153,22 @@ export default {
       return new Date(date)
     }
 
+    const handleInputEmit = () => {
+      console.log('HANDLE_INPUT_EMIT')
+      // $(refs.calendar).calendar('set date', state.dateStr, false, false)
+
+      // if formatting disabled, emit raw value
+      if (props.disableValueFormatting) {
+        emit('input', state.date)
+      }
+
+      // format
+      emit('input', props.valueFormatter(state.date))
+    }
+
     const initCalendar = () => {
       const settings = {
         type: props.type,
-        minDate: parseDate(props.minDate),
-        maxDate: parseDate(props.maxDate),
-        initialDate: props.value,
         startMode: props.startMode,
         today: props.showToday,
         ampm: props.showAmPm,
@@ -225,17 +220,15 @@ export default {
           am: $gettext('AM'),
           pm: $gettext('PM')
         },
-        onChange: date => {
-          let result = date
-
-          // if formatting disabled, emit raw value
-          if (props.disableValueFormatting) {
-            emit('input', result)
-          }
-
-          // format
-          result = props.valueFormatter(result)
-          emit('input', result)
+        // Events
+        onChange: (date, text) => {
+          console.log('----------------------------------------')
+          console.log('ON CHANGE')
+          console.log('date', date)
+          console.log('text', text)
+          console.log('----------------------------------------')
+          state.date = date
+          state.dateStr = text
         },
         onBeforeChange: () => emit('onBeforeChange'),
         onShow: () => emit('onShow'),
@@ -250,12 +243,17 @@ export default {
       // add formatter conditionally
       if (!props.disableInputFormatting) {
         settings.formatter = {
-          date: internalDate => (internalDate ? formatDate(props.value) : ''),
-          time: internalDate => (internalDate ? formatTime(props.value) : '')
+          date: internalDate => (internalDate ? formatDate(internalDate) : ''),
+          time: internalDate => (internalDate ? formatTime(internalDate) : '')
         }
       }
 
       $(refs.calendar).calendar(settings)
+    }
+
+    const refreshCalendar = () => {
+      $(refs.calendar).calendar('destroy')
+      initCalendar()
     }
 
     onMounted(() => {
@@ -264,14 +262,45 @@ export default {
       })
     })
 
-    // props watch list for re-initializing calendar
-    const watchList = [
+    // watch input changes
+    watch(
+      () => state.dateStr,
+      () => handleInputEmit()
+    )
+
+    // watch value changes to update input string
+    watch(
       () => props.value,
-      () => props.minDate,
-      () => props.maxDate,
+      newVal => {
+        root.$nextTick(() => {
+          // set minDate to current date
+          // to load properly on init
+          if (parseDate(newVal) < parseDate(props.minDate)) {
+            $(refs.calendar).calendar('set minDate', parseDate(newVal))
+          }
+
+          // update input but do not re-format actual value
+          $(refs.calendar).calendar('set date', parseDate(newVal), true, false)
+        })
+      },
+      { immediate: true }
+    )
+
+    // watch min/max date
+    watch(
+      [() => props.minDate, () => props.maxDate],
+      ([newMinDate, newMaxDate]) => {
+        root.$nextTick(() => {
+          $(refs.calendar).calendar('set minDate', parseDate(newMinDate))
+          $(refs.calendar).calendar('set maxDate', parseDate(newMaxDate))
+        })
+      },
+      { immediate: true }
+    )
+
+    const watchList = [
       () => props.type,
       () => props.startMode,
-      () => props.defaultText,
       () => props.showAmPm,
       () => props.showToday,
       () => props.showWeekNumbers,
@@ -290,9 +319,9 @@ export default {
       () => props.disableInputFormatting
     ]
 
-    watch(watchList, () => {
-      initCalendar()
-    })
+    // watch everything else
+    watch(watchList, () => refreshCalendar())
+
     return { ...toRefs(state), inputAttr, initCalendar }
   }
 }
@@ -304,6 +333,7 @@ export default {
     cursor: pointer;
   }
 
+  // hide clear button on windows
   ::v-deep {
     input::-ms-clear {
       display: none !important;
