@@ -9,7 +9,7 @@
 
 <script>
 /* eslint-disable vue/no-unused-properties, vue/no-deprecated-props-default-this */
-import { onMounted, ref, computed, watch } from '@vue/composition-api'
+import { onMounted, reactive, computed, watch, toRefs } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 import { formatDate, formatTime } from '../i18n/date.js'
 
@@ -132,7 +132,9 @@ export default {
   emits: ['input', 'onBeforeChange', 'onShow', 'onVisible', 'onHide', 'onHidden', 'onSelect'],
 
   setup(props, { emit, refs, root }) {
-    const placeholder = ref()
+    const state = reactive({
+      placeholder: computed(() => (props.defaultText === 'Date/Time' ? $gettext('Date/Time') : props.defaultText))
+    })
 
     const inputAttr = computed(() => ({
       class: {
@@ -253,8 +255,6 @@ export default {
         }
       }
 
-      placeholder.value = props.defaultText === 'Date/Time' ? $gettext('Date/Time') : props.defaultText
-
       $(refs.calendar).calendar(settings)
     }
 
@@ -287,18 +287,13 @@ export default {
       () => props.settings,
       () => props.disableValueFormatting,
       () => props.valueFormatter,
-      () => props.disableInputFormatting,
-      () => props.inputFormatter
+      () => props.disableInputFormatting
     ]
 
-    watch(
-      watchList,
-      () => {
-        initCalendar()
-      },
-      { immediate: true }
-    )
-    return { inputAttr, initCalendar, placeholder }
+    watch(watchList, () => {
+      initCalendar()
+    })
+    return { ...toRefs(state), inputAttr, initCalendar }
   }
 }
 </script>
@@ -308,5 +303,14 @@ export default {
   input:hover {
     cursor: pointer;
   }
+
+  // ::v-deep {
+  //   .table.hour,
+  //   .table.minute {
+  //     .icon.chevron {
+  //       display: none !important;
+  //     }
+  //   }
+  // }
 }
 </style>
