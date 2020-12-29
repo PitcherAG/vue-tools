@@ -11,7 +11,7 @@
 /* eslint-disable vue/no-unused-properties, vue/no-deprecated-props-default-this */
 import { onMounted, ref, computed, watch } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
-import { formatDate } from '../i18n/date.js'
+import { formatDate, formatTime } from '../i18n/date.js'
 
 export default {
   name: 'calendar',
@@ -50,6 +50,10 @@ export default {
       type: Boolean,
       default: false
     },
+    minTimeGap: {
+      type: Number,
+      default: 10
+    },
     disabledDaysOfWeek: Array,
     disabledDates: Array,
     enabledDates: Array,
@@ -83,11 +87,24 @@ export default {
       type: Boolean,
       default: false
     },
-    inputFormatter: {
-      type: Function,
-      required: false,
-      default: date => formatDate(date)
-    },
+    // inputFormatter: {
+    //   type: Function,
+    //   required: false,
+    //   default: function(dateTime) {
+    //     // if date time
+    //     if (this.type.includes('time')) {
+    //       const date = formatDate(dateTime)
+    //       const time = formatTime(dateTime)
+    //       const res = `${date} ${time}`
+    //       console.log('----------------------------------------')
+    //       console.log(date)
+    //       console.log(time)
+    //       console.log(res)
+    //       console.log('----------------------------------------')
+    //       return res
+    //     }
+    //   }
+    // },
     setting: Object,
     action: {
       type: String,
@@ -169,6 +186,8 @@ export default {
         disableMinute: props.disableMinute,
         touchReadonly: true,
         action: props.action,
+        minTimeGap: props.minTimeGap,
+        on: 'click',
         text: {
           days: $gettext('S,M,T,W,T,F,S').split(','),
           months: [
@@ -210,21 +229,11 @@ export default {
           // if formatting disabled, emit raw value
           if (props.disableValueFormatting) {
             emit('input', result)
-            return
           }
 
           // format
           result = props.valueFormatter(result)
           emit('input', result)
-        },
-        formatter: {
-          date: internalDate => {
-            const date = props.value
-            if (!internalDate) return ''
-            if (props.disableInputFormatting) return date
-
-            return props.inputFormatter(date)
-          }
         },
         onBeforeChange: () => emit('onBeforeChange'),
         onShow: () => emit('onShow'),
@@ -236,11 +245,15 @@ export default {
         ...props.setting
       }
 
-      if (props.defaultText === 'Date/Time') {
-        placeholder.value = $gettext('Date/Time')
-      } else {
-        placeholder.value = props.defaultText
+      // add formatter conditionally
+      if (!props.disableInputFormatting) {
+        settings.formatter = {
+          date: internalDate => (internalDate ? formatDate(props.value) : ''),
+          time: internalDate => (internalDate ? formatTime(props.value) : '')
+        }
       }
+
+      placeholder.value = props.defaultText === 'Date/Time' ? $gettext('Date/Time') : props.defaultText
 
       $(refs.calendar).calendar(settings)
     }
