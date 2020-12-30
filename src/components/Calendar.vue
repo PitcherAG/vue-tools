@@ -13,12 +13,28 @@ import { onMounted, reactive, computed, watch, toRefs } from '@vue/composition-a
 import { parsePxStyle, validateSize } from './mixins'
 import { formatDate, formatTime } from '../i18n/date.js'
 
+const parseDate = dateString => {
+  if (!dateString) return undefined
+  // eslint-disable-next-line valid-typeof
+  if (dateString instanceof Date) {
+    return dateString
+  }
+
+  const regex = /\+\d{4}/g
+  let date = dateString
+
+  if (date.match(regex)) {
+    date = date.replace(regex, '')
+  }
+
+  return new Date(date)
+}
+
 export default {
   name: 'calendar',
   props: {
     value: {
-      type: [String, Date],
-      required: true
+      type: [String, Date]
     },
     type: {
       default: 'datetime',
@@ -135,28 +151,7 @@ export default {
       }
     }))
 
-    const parseDate = dateString => {
-      if (!dateString) return undefined
-
-      // eslint-disable-next-line valid-typeof
-      if (typeof dateString === 'Date') {
-        return dateString
-      }
-
-      const regex = /\+\d{4}/g
-      let date = dateString
-
-      if (date.match(regex)) {
-        date = date.replace(regex, '')
-      }
-
-      return new Date(date)
-    }
-
     const handleInputEmit = () => {
-      console.log('HANDLE_INPUT_EMIT')
-      // $(refs.calendar).calendar('set date', state.dateStr, false, false)
-
       // if formatting disabled, emit raw value
       if (props.disableValueFormatting) {
         emit('input', state.date)
@@ -222,11 +217,7 @@ export default {
         },
         // Events
         onChange: (date, text) => {
-          console.log('----------------------------------------')
-          console.log('ON CHANGE')
-          console.log('date', date)
-          console.log('text', text)
-          console.log('----------------------------------------')
+          // Starting point of selection
           state.date = date
           state.dateStr = text
         },
@@ -273,10 +264,13 @@ export default {
       () => props.value,
       newVal => {
         root.$nextTick(() => {
-          // set minDate to current date
-          // to load properly on init
+          // To load properly on init
+          // if currentDate is before minDAte set minDate to current date
           if (parseDate(newVal) < parseDate(props.minDate)) {
-            $(refs.calendar).calendar('set minDate', parseDate(newVal))
+            // set min hours to midnight first
+            const newMinDate = parseDate(newVal)
+            newMinDate.setHours(0, 0, 0, 0)
+            $(refs.calendar).calendar('set minDate', newMinDate)
           }
 
           // update input but do not re-format actual value
