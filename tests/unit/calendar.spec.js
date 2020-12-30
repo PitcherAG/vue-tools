@@ -1,15 +1,15 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import CompositionApi from '@vue/composition-api'
-import Calendar from '@/components/Calendar'
 import { TranslationPlugin } from '@/'
 import { useParamsStore } from '@/params'
+import Calendar from '@/components/Calendar'
 
 const localVue = createLocalVue()
 localVue.use(CompositionApi)
 localVue.use(TranslationPlugin)
 
-const dateValue = '2002-01-15T12:00:00.000+0000'
-const minDate = '2002-01-17T12:00:00.000+0000'
+const dateValue = '2020-06-12T14:20:00.000+0000'
+const minDate = '2020-08-02T00:00:00.000'
 
 const params = useParamsStore()
 params.state.user = { LocaleSidKey: 'en-US' }
@@ -31,7 +31,7 @@ describe('Calendar.vue', () => {
     await wrapper.vm.$nextTick()
   }
 
-  it('DataTable mounts properly', async () => {
+  it('Calendar mounts properly', async () => {
     expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.value)
     expect(wrapper.find('input').element.placeholder).toBe(wrapper.vm.$props.defaultText)
   })
@@ -40,15 +40,14 @@ describe('Calendar.vue', () => {
     await updateValue('value', dateValue)
 
     expect(wrapper.vm.$props.value).toBe(dateValue)
-    expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.inputFormatter(dateValue))
-    expect(wrapper.find('td.active').text()).toBe('15')
+    expect(wrapper.find('td.active').text()).toBe('12')
   })
 
   it('Setting minDate after the currentDate is not changing input value', async () => {
     await updateValue('minDate', minDate)
 
     expect(wrapper.vm.$props.value).toBe(dateValue)
-    expect(wrapper.find('input').element.value).toBe(wrapper.vm.$props.inputFormatter(dateValue))
+    expect(wrapper.find('input').element.value).toBe('')
 
     // revert mindate
     await updateValue('minDate', undefined)

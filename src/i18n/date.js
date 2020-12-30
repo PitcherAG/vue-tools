@@ -16,7 +16,28 @@ export function formatDate(date, showYear = true) {
   }
 
   if (!locale) throw 'locale not defined'
+
   const m = moment(date)
   const d = m.toDate()
   return d.toLocaleDateString(locale, options)
+}
+
+export function formatTime(date, showSeconds = false) {
+  const locale = useParamsStore().locale || useI18nStore().state.locale
+
+  if (!date) return ''
+
+  const options = {
+    hour: '2-digit',
+    minute: '2-digit'
+  }
+  if (showSeconds) {
+    options.seconds = '2-digit'
+  }
+
+  if (!locale) throw 'locale not defined'
+
+  const m = moment(date)
+  const d = m.toDate()
+  return d.toLocaleTimeString(locale, options)
 }
