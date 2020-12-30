@@ -5,6 +5,8 @@
 - Insfrastructure updates, added @pitcher/eslint-config
 - Change files according to the new eslint rules
 - formatDate & numbers, fallback to i18nStore locale
+- Calendar component is re-written, IE bugs fixed
+- filter dropdown focus bug fixed
 
 ### Added
 - Added new slot named `body` to replace FileCard body content
