@@ -1,24 +1,41 @@
 <template>
   <div ref="calendar" class="ui calendar pitcher-calendar">
-    <div class="ui input left icon" v-bind="inputAttr">
+    <div class="ui input left icon right" v-bind="inputAttr">
       <i class="calendar icon" />
-      <input ref="input" type="text" :placeholder="placeholder" />
+      <input ref="input" v-model="dateStr" type="text" :placeholder="placeholder" />
+      <i v-if="clearable" class="close icon outline link" style="left: auto; right: 0px" @click="clear" />
     </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable vue/no-unused-properties, vue/no-deprecated-props-default-this */
-import { onMounted, ref, computed, watch } from '@vue/composition-api'
+import { onMounted, reactive, computed, watch, toRefs } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
-import { formatDate } from '../i18n/date.js'
+import { formatDate, formatTime } from '../i18n/date.js'
+
+const parseDate = dateString => {
+  if (!dateString) return undefined
+  // eslint-disable-next-line valid-typeof
+  if (dateString instanceof Date) {
+    return dateString
+  }
+
+  const regex = /\+\d{4}/g
+  let date = dateString
+
+  if (date.match(regex)) {
+    date = date.replace(regex, '')
+  }
+
+  return new Date(date)
+}
 
 export default {
   name: 'calendar',
   props: {
     value: {
-      type: [String, Date],
-      required: true
+      type: [String, Date]
     },
     type: {
       default: 'datetime',
@@ -33,6 +50,10 @@ export default {
       validator: value => {
         return ['year', 'month', 'day', 'hour', 'minute'].indexOf(value) !== -1
       }
+    },
+    clearable: {
+      type: Boolean,
+      default: false
     },
     defaultText: {
       type: String,
@@ -49,6 +70,10 @@ export default {
     showWeekNumbers: {
       type: Boolean,
       default: false
+    },
+    minTimeGap: {
+      type: Number,
+      default: 10
     },
     disabledDaysOfWeek: Array,
     disabledDates: Array,
@@ -67,6 +92,8 @@ export default {
       required: false,
       // must be function instead of array function to be able to reach component instance
       default: function(date) {
+        if (!date) return ''
+
         // if date time
         if (this.type.includes('time')) {
           return date.toISOString()
@@ -82,11 +109,6 @@ export default {
     disableInputFormatting: {
       type: Boolean,
       default: false
-    },
-    inputFormatter: {
-      type: Function,
-      required: false,
-      default: date => formatDate(date)
     },
     setting: Object,
     action: {
@@ -115,7 +137,12 @@ export default {
   emits: ['input', 'onBeforeChange', 'onShow', 'onVisible', 'onHide', 'onHidden', 'onSelect'],
 
   setup(props, { emit, refs, root }) {
-    const placeholder = ref()
+    const state = reactive({
+      placeholder: computed(() => (props.defaultText === 'Date/Time' ? $gettext('Date/Time') : props.defaultText)),
+      dateStr: '',
+      timeStr: '',
+      date: ''
+    })
 
     const inputAttr = computed(() => ({
       class: {
@@ -131,30 +158,19 @@ export default {
       }
     }))
 
-    const parseDate = dateString => {
-      if (!dateString) return undefined
-
-      // eslint-disable-next-line valid-typeof
-      if (typeof dateString === 'Date') {
-        return dateString
+    const handleInputEmit = () => {
+      // if formatting disabled, emit raw value
+      if (props.disableValueFormatting) {
+        emit('input', state.date)
       }
 
-      const regex = /\+\d{4}/g
-      let date = dateString
-
-      if (date.match(regex)) {
-        date = date.replace(regex, '')
-      }
-
-      return new Date(date)
+      // format
+      emit('input', props.valueFormatter(state.date))
     }
 
     const initCalendar = () => {
       const settings = {
         type: props.type,
-        minDate: parseDate(props.minDate),
-        maxDate: parseDate(props.maxDate),
-        initialDate: props.value,
         startMode: props.startMode,
         today: props.showToday,
         ampm: props.showAmPm,
@@ -169,6 +185,8 @@ export default {
         disableMinute: props.disableMinute,
         touchReadonly: true,
         action: props.action,
+        minTimeGap: props.minTimeGap,
+        on: 'click',
         text: {
           days: $gettext('S,M,T,W,T,F,S').split(','),
           months: [
@@ -204,27 +222,11 @@ export default {
           am: $gettext('AM'),
           pm: $gettext('PM')
         },
-        onChange: date => {
-          let result = date
-
-          // if formatting disabled, emit raw value
-          if (props.disableValueFormatting) {
-            emit('input', result)
-            return
-          }
-
-          // format
-          result = props.valueFormatter(result)
-          emit('input', result)
-        },
-        formatter: {
-          date: internalDate => {
-            const date = props.value
-            if (!internalDate) return ''
-            if (props.disableInputFormatting) return date
-
-            return props.inputFormatter(date)
-          }
+        // Events
+        onChange: (date, text) => {
+          // Starting point of selection
+          state.date = date
+          state.dateStr = text
         },
         onBeforeChange: () => emit('onBeforeChange'),
         onShow: () => emit('onShow'),
@@ -236,13 +238,30 @@ export default {
         ...props.setting
       }
 
-      if (props.defaultText === 'Date/Time') {
-        placeholder.value = $gettext('Date/Time')
-      } else {
-        placeholder.value = props.defaultText
+      // add formatter conditionally
+      if (!props.disableInputFormatting) {
+        settings.formatter = {
+          date: internalDate => (internalDate ? formatDate(internalDate) : ''),
+          time: internalDate => (internalDate ? formatTime(internalDate) : '')
+        }
       }
 
       $(refs.calendar).calendar(settings)
+    }
+
+    const refreshCalendar = () => {
+      $(refs.calendar).calendar('destroy')
+      initCalendar()
+
+      setTimeout(() => {
+        $(refs.calendar).calendar('set date', parseDate(props.value), true, false)
+      })
+    }
+
+    const clear = e => {
+      e.preventDefault()
+      e.stopPropagation()
+      emit('input', '')
     }
 
     onMounted(() => {
@@ -251,14 +270,49 @@ export default {
       })
     })
 
-    // props watch list for re-initializing calendar
-    const watchList = [
+    // watch input changes
+    watch(
+      () => state.dateStr,
+      () => handleInputEmit()
+    )
+
+    // watch value changes to update input string
+    watch(
       () => props.value,
-      () => props.minDate,
-      () => props.maxDate,
+      newVal => {
+        root.$nextTick(() => {
+          // To load properly on init
+          // if currentDate is before minDAte set minDate to current date
+          if (parseDate(newVal) < parseDate(props.minDate)) {
+            // set min hours to midnight first
+            const newMinDate = parseDate(newVal)
+            newMinDate.setHours(0, 0, 0, 0)
+            $(refs.calendar).calendar('set minDate', newMinDate)
+          }
+
+          // update input but do not re-format actual value
+          $(refs.calendar).calendar('set date', parseDate(newVal), true, false)
+        })
+      },
+      { immediate: true }
+    )
+
+    // watch min/max date
+    watch(
+      [() => props.minDate, () => props.maxDate],
+      ([newMinDate, newMaxDate]) => {
+        root.$nextTick(() => {
+          $(refs.calendar).calendar('set minDate', parseDate(newMinDate))
+          $(refs.calendar).calendar('set maxDate', parseDate(newMaxDate))
+        })
+      },
+      { immediate: true }
+    )
+
+    const watchList = [
       () => props.type,
+      () => props.clearable,
       () => props.startMode,
-      () => props.defaultText,
       () => props.showAmPm,
       () => props.showToday,
       () => props.showWeekNumbers,
@@ -274,18 +328,13 @@ export default {
       () => props.settings,
       () => props.disableValueFormatting,
       () => props.valueFormatter,
-      () => props.disableInputFormatting,
-      () => props.inputFormatter
+      () => props.disableInputFormatting
     ]
 
-    watch(
-      watchList,
-      () => {
-        initCalendar()
-      },
-      { immediate: true }
-    )
-    return { inputAttr, initCalendar, placeholder }
+    // watch everything else
+    watch(watchList, () => refreshCalendar())
+
+    return { ...toRefs(state), inputAttr, initCalendar, clear }
   }
 }
 </script>
@@ -294,6 +343,13 @@ export default {
 .pitcher-calendar {
   input:hover {
     cursor: pointer;
+  }
+
+  // hide clear button on windows
+  ::v-deep {
+    input::-ms-clear {
+      display: none !important;
+    }
   }
 }
 </style>
