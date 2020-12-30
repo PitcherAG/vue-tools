@@ -34,6 +34,7 @@ export default defineComponent({
       attrs: {
         type: 'datetime',
         showToday: true,
+        clearable: true,
         // disabledDaysOfWeek: [0, 3],
         // eventClass: 'red',
         // eventDates: [{
