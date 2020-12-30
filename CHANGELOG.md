@@ -1,12 +1,18 @@
 # Changelog
 
-## [NEXT: 1.5.0]
+## [NEXT: 1.5.1]
+### Changed
+### Added
+
+## 1.5.0
 ### Changed
 - Insfrastructure updates, added @pitcher/eslint-config
 - Change files according to the new eslint rules
 - formatDate & numbers, fallback to i18nStore locale
 - Calendar component is re-written, IE bugs fixed
 - filter dropdown focus bug fixed
+- Added validations store, usage with `loadValidations(validationsJsonFile)` and `useValidations()`
+- fix remove null hardcode in `contextQuery`
 
 ### Added
 - Added new slot named `body` to replace FileCard body content
@@ -14,10 +20,8 @@
 - Added field types for Account/Contact/User in iOS
 - Added conversion of Boolean values to Numbers when saving
 - Added fieldsToNull to ignored fields on save
+- Added new prop `clearable` to Calendar component
 
-## [1.4.13]
-- Added validations store, usage with `loadValidations(validationsJsonFile)` and `useValidations()`
-- fix remove null hardcode in `contextQuery`
 
 ## 1.4.12
 ### Breaking changes
