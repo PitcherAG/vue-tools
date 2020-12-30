@@ -9,5 +9,6 @@ import { Meta } from '@storybook/addon-docs/blocks';
 It returns the file object from a keyword
 
 ```javascript
-getFilesWithKeyword('myKeyword').then(file => console.log(file))
+const file = await getFilesWithKeyword('myKeyword')
+console.log(file)
 ```
