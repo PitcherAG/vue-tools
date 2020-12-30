@@ -1,8 +1,9 @@
 <template>
   <div ref="calendar" class="ui calendar pitcher-calendar">
-    <div class="ui input left icon" v-bind="inputAttr">
+    <div class="ui input left icon right" v-bind="inputAttr">
       <i class="calendar icon" />
       <input ref="input" v-model="dateStr" type="text" :placeholder="placeholder" />
+      <i v-if="clearable" class="close icon outline link" style="left: auto; right: 0px" @click="clear" />
     </div>
   </div>
 </template>
@@ -50,6 +51,10 @@ export default {
         return ['year', 'month', 'day', 'hour', 'minute'].indexOf(value) !== -1
       }
     },
+    clearable: {
+      type: Boolean,
+      default: false
+    },
     defaultText: {
       type: String,
       default: 'Date/Time'
@@ -87,6 +92,8 @@ export default {
       required: false,
       // must be function instead of array function to be able to reach component instance
       default: function(date) {
+        if (!date) return ''
+
         // if date time
         if (this.type.includes('time')) {
           return date.toISOString()
@@ -245,6 +252,16 @@ export default {
     const refreshCalendar = () => {
       $(refs.calendar).calendar('destroy')
       initCalendar()
+
+      setTimeout(() => {
+        $(refs.calendar).calendar('set date', parseDate(props.value), true, false)
+      })
+    }
+
+    const clear = e => {
+      e.preventDefault()
+      e.stopPropagation()
+      emit('input', '')
     }
 
     onMounted(() => {
@@ -294,6 +311,7 @@ export default {
 
     const watchList = [
       () => props.type,
+      () => props.clearable,
       () => props.startMode,
       () => props.showAmPm,
       () => props.showToday,
@@ -316,7 +334,7 @@ export default {
     // watch everything else
     watch(watchList, () => refreshCalendar())
 
-    return { ...toRefs(state), inputAttr, initCalendar }
+    return { ...toRefs(state), inputAttr, initCalendar, clear }
   }
 }
 </script>
