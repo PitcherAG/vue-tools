@@ -14,10 +14,19 @@ Example:
 ```javascript
 import { fireEvent } from '@pitcher/vue-sdk'
 
+// Recommended way
+await fireEvent('dbFunction', {
+  'query': query,
+  'pType': 'query',
+  'db': 'pitcher',
+})
+
+
+// Old promise way
 fireEvent('dbFunction', {
-    'query': query,
-    'pType': 'query',
-    'db': 'pitcher',
+  'query': query,
+  'pType': 'query',
+  'db': 'pitcher',
 }).then((result) => {
     ...
 })

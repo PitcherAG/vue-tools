@@ -11,7 +11,8 @@ Example:
 ```javascript
 import { query } from '@pitcher/vue-sdk'
 
-query('select * from tbl_event_v1').then(e => window.console.log(e))
+const result = await query('select * from tbl_event_v1')
+console.log(result)
 ```
 
 
@@ -35,15 +36,15 @@ As a result `contextQuery` has knowledge about the current environment and provi
 
 
 ```javascript
-  contextQuery("SELECT * from {{ Account }} \
-                WHERE Id='{{ account.id }} AND \    
-                ModifiedDate < TODAY AND Name='{{ Name }}'", { Name:'ABCDEF1234' })
+contextQuery("SELECT * from {{ Account }} \
+              WHERE Id='{{ account.id }} AND \    
+              ModifiedDate < TODAY AND Name='{{ Name }}'", { Name:'ABCDEF1234' })
 
-  contextQuery("SELECT * from {{ Account }} \
-                WHERE Id IN ({{ ids.join(',') }})", {ids:[1,2,3] })
+contextQuery("SELECT * from {{ Account }} \
+              WHERE Id IN ({{ ids.join(',') }})", {ids:[1,2,3] })
 
-  contextQuery("SELECT AccountId__c='{{ account.id }}{% if account.isVIP %} AND \  
-                IsVIP=TRUE{% endif %}", {ids:[1,2,3] })
+contextQuery("SELECT AccountId__c='{{ account.id }}{% if account.isVIP %} AND \  
+              IsVIP=TRUE{% endif %}", {ids:[1,2,3] })
 ```
 
 You can either reference API names of Salesforce objects or normal names.
