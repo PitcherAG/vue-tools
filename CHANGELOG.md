@@ -1,6 +1,9 @@
 # Changelog
 
-## [NEXT: 1.5.2]
+## [NEXT: 1.5.3]
+
+## 1.5.2
+- add `emulate-ios` option to declare as browser user-agent for ti-web testing
 
 ## 1.5.1
 ### Changed
@@ -9,6 +12,7 @@
 - documentation updates for instance store
 - fix user extra field in `query`
 - `fuse.js` & `moment` are now imported as CJS modules. No need to compile in consumer project
+
 
 ## 1.5.0
 ### Changed
