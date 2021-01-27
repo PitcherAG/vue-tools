@@ -12,3 +12,7 @@ export function getPitcherFolderPath() {
   }
   return location.split('zip/')[0]
 }
+
+export function getFullFilepath(vUrl) {
+  return getPitcherFolderPath() + vUrl
+}
