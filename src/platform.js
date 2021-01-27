@@ -1,6 +1,9 @@
 function getMobileOperatingSystem() {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera
 
+  if (navigator.userAgent.indexOf('emulate-ios') !== -1) {
+    return 'IOS'
+  }
   if (window.parent !== window.self) {
     return 'CONNECT'
   }
