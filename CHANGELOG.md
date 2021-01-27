@@ -4,7 +4,7 @@
 
 ## 1.5.2
 - Add `emulate-ios` option to declare as browser user-agent for ti-web testing
-- Add pitcher-folder-path method that returns the absolute normalized path of the instance's folder
+- Add getFullFilepath method that returns the absolute normalized path of a given vUrl filepath
 - Fixed loadValidations for Windows environment
 
 ## 1.5.1
