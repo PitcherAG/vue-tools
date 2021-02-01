@@ -94,6 +94,7 @@ packageCategory | string | `undefined` | Define if the category named is differe
 ## Scripts
 
 ### Extract Messages
+Create `locale` folder in your project root if it does not exist.
 Run `npx config-gettext-extract` to extract messages from your source code.
 
 ### Translate Messages
@@ -201,9 +202,9 @@ format a number value into a localized currency:
 ### Workflow
 
 1. Mark strings for translation
-2. Collect strings with `npm run config-gettext-extract`
+2. Collect strings with `npx config-gettext-extract`
 3. Edit `.po` files
-4. Transform `.po` files to `json` with `npm run config-gettext-compile`
+4. Transform `.po` files to `json` with `npx config-gettext-compile`
 
 ### Marking strings for translation
 
