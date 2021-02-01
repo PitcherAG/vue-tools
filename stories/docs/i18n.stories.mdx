@@ -123,25 +123,23 @@ import { TranslationPlugin } from '@pitcher/vue-sdk'
 Vue.use(TranslationPlugin, { availableLanguages: JSON.parse(process.env.VUE_APP_LANGUAGES) })
 ```
 
-In your App.vue call `await setLanguage('en')` to load the file `translations/en/app.json` that is in the public folder.
+In your App.vue call, import `useI18nStore` first, then use `await i18n.setLanguage('en')` to load the file `translations/en/app.json` that is in the public folder.
 If you don't need translations but just the number and date formatting: `await setLanguage('en', {load: false})`
 
 ```javascript
-import { loadParams, loadConfig, useParamsStore, setLanguage } from '@pitcher/vue-sdk'
+import { useParamsStore, useI18nStore } from '@pitcher/vue-sdk'
 
 export default {
   setup() {
-    console.log('App setup')
-    const loaded = ref(false)
+    // i18 store
+    const i18n = useI18nStore()
 
     onMounted(async () => {
-      await loadParams()
-      await loadConfig()
-      const params = useParamsStore()
-      const i18n = useI18nStore()
-      await i18n.setLanguage(params.locale.value, {load: false}) // false does not load any translation files but supports dates and number formatting
-      console.info('data loading finished')
-      loaded.value = true
+      await i18n.setLanguage(LANGUAGE)
+      
+      // usage with params
+      // const params = useParamsStore()
+      // await i18n.setLanguage(params.locale.value, {load: false}) // false does not load any translation files but supports dates and number formatting
     })
     return { loaded }
   }
