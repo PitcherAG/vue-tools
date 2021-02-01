@@ -3,6 +3,7 @@
 ## [NEXT: 1.5.3]
 
 ## 1.5.2
+### Changed
 - Add `emulate-ios` option to declare as browser user-agent for ti-web testing
 - Add getFullFilepath method that returns the absolute normalized path of a given vUrl filepath
 - Fixed loadValidations for Windows environment
