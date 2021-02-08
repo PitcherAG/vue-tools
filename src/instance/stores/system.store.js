@@ -1,5 +1,6 @@
 import { createStore } from '../../store'
 import { reactive } from '@vue/composition-api'
+import { ref } from 'vue'
 
 class SystemStore {
   id = 'systemStore'
@@ -18,8 +19,8 @@ class SystemStore {
     ajaxtoken: null,
     isCustomerUI: false,
     batteryLevel: 0,
-    statusBadge: '',
-    todoBadge: ''
+    statusBadge: ref(0),
+    todoBadge: ref(0)
   })
 }
 
@@ -51,11 +52,11 @@ export function getExtraFieldValue(property, defaultValue) {
 window.updateStatusBadge = function(value) {
   const store = useSystemStore()
   value = parseInt(value)
-  store.state.statusBadge = value || ''
+  store.state.statusBadge = value || 0
 }
 
 window.updateTodoBadge = function(value) {
   const store = useSystemStore()
   value = parseInt(value)
-  store.state.todoBadge = value || ''
+  store.state.todoBadge = value || 0
 }
