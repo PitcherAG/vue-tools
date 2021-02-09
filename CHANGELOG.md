@@ -1,6 +1,12 @@
 # Changelog
 
-## [NEXT: 1.5.3]
+## [NEXT: 1.5.4]
+
+## 1.5.3
+### Changed
+- export functions from filePath.js & filePath fixes
+- getFavoriteItems fix not working on android. Using `then` instead of `await` 
+- docs update
 
 ## 1.5.2
 ### Changed
