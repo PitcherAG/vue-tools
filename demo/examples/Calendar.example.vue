@@ -32,8 +32,9 @@ export default defineComponent({
       // stringDate: '',
       stringDate: '2020-08-05T11:20:00.000+0000',
       attrs: {
-        type: 'date',
+        type: 'datetime',
         showToday: true,
+        clearable: true,
         // disabledDaysOfWeek: [0, 3],
         // eventClass: 'red',
         // eventDates: [{
@@ -45,16 +46,16 @@ export default defineComponent({
     })
 
     const setDate = () => {
-      const newDate = '2020-06-12T11:20:00.000+0000'
+      const newDate = '2020-06-12T14:20:00.000+0000'
       console.log('----------------------------------------')
       console.log('SET DATE')
-      console.log(state.stringDate)
+      console.log('BEFORE', state.stringDate)
       state.stringDate = newDate
-      console.log(state.stringDate)
+      console.log('AFTER', state.stringDate)
     }
 
     const setMinDate = () => {
-      const newDate = '2020-08-02T11:20:00.000'
+      const newDate = '2020-08-02T00:00:00.000'
       console.log('----------------------------------------')
       console.log('SET MINDATE', newDate)
       state.attrs.minDate = newDate
