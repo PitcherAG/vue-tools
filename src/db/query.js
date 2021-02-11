@@ -65,8 +65,8 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
           for (let j = 0; j < e.columns.length; j++) {
             const column = e.columns[j]
             let fieldData = res[j]
-            if (PLATFORM === "WINDOWS" && typeof fieldData == "string") {
-              fieldData = fieldData.split("''").join("'") // WTF!!!!
+            if (PLATFORM === "WINDOWS" && typeof fieldData === "string") {
+              fieldData = fieldData.replace(/''/g, "'")// WTF!!!!
             }
             if (
               column === 'extraField' ||
