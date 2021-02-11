@@ -17,17 +17,17 @@ import { onMounted } from '@vue/composition-api'
 import { loadParams, useParamsStore } from '@pitcher/vue-sdk'
 
 export default {
-        name: 'app',
-        setup() {
-            console.log('App setup')
-            onMounted(async () => {
-                console.log('on App mounted')
-                await loadParams()
-                const paramsStore = useParamsStore()
-                console.log(paramsStore.state.Account.Id)
-            })
-        }
-    }
+  name: 'app',
+  setup() {
+    console.log('App setup')
+    onMounted(async () => {
+      console.log('on App mounted')
+      await loadParams()
+      const paramsStore = useParamsStore()
+      console.log(paramsStore.state.Account.Id)
+    })
+  }
+}
 ```
  
 ### Example - usage with useParams()
@@ -39,66 +39,15 @@ import { onMounted } from '@vue/composition-api'
 import { loadParams, useParams } from '@pitcher/vue-sdk'
 
 export default {
-        name: 'app',
-        setup() {
-            console.log('App setup')
-            onMounted(async () => {
-                console.log('on App mounted')
-                await loadParams()
-                const params = useParams()
-                console.log(params.Account.Id)
-            })
-        }
-    }
-```
- 
-
-## serverJSON
-To get serverJSON from Pitcher Connect, you **MUST** use ```loadServerJSON()``` in the entry point of your application. When you use ```loadServerJSON()``` function, the SDK injects ```window.setMainNav```,  ```window.gotJSON```,  ```window.loadPresentations```  and  ```window.showUI``` functions for Connect to be able to work.
-
-After calling ```loadServerJSON()```, we can use ```useServerJSONStore()``` function anywhere in the application. As it is a store, the data inside is reactive.
- 
-### Example - usage with useServerJSONStore()
- 
-*App.vue*
- ```javascript
-import { onMounted } from '@vue/composition-api'
-import { loadServerJSON, useServerJSONStore } from '@pitcher/vue-sdk'
-
-export default {
-        name: 'app',
-        setup() {
-            console.log('App setup')
-            onMounted(async () => {
-                console.log('on App mounted')
-                await loadServerJSON()
-                const serverJSONStore = useServerJSONStore()
-                console.log(serverJSONStore.state.files)
-                console.log(serverJSONStore.state.appID)
-            })
-        }
-    }
-```
- 
-### Example - usage with useServerJSON()
-If you only need to use the data inside ```serverJSON```, and you don't need the store, you can use ```useServerJSON()``` to get ```serverJSON``` only.
- 
-*App.vue*
- ```javascript
-import { onMounted } from '@vue/composition-api'
-import { loadServerJSON, useServerJSONStore } from '@pitcher/vue-sdk'
-
-export default {
-        name: 'app',
-        setup() {
-            console.log('App setup')
-            onMounted(async () => {
-                console.log('on App mounted')
-                await loadServerJSON()
-                const serverJSONStore = useServerJSON()
-                console.log(serverJSONStore.files)
-                console.log(serverJSONStore.appID)
-            })
-        }
-    }
+  name: 'app',
+  setup() {
+    console.log('App setup')
+    onMounted(async () => {
+      console.log('on App mounted')
+      await loadParams()
+      const params = useParams()
+      console.log(params.Account.Id)
+    })
+  }
+}
 ```

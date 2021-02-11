@@ -24,13 +24,13 @@
         </div>
         <i v-if="!value.length" class="chevron icon right-icon" :class="{ down: !menuIsOpen, up: menuIsOpen }" />
       </button>
+
       <!-- clear button on side -->
       <template v-if="value.length > 0">
         <button
           v-if="value.length > 0"
-          class="ui icon button"
+          class="ui icon button reset-button-outer"
           :class="buttonAttr.class"
-          style="flex: 0;"
           @click.stop="reset"
           @touchstart.stop="reset"
         >
@@ -42,8 +42,8 @@
     <!-- Dropdown menu -->
     <div v-bind="menuAttr">
       <!-- Header & Close button -->
-      <template v-if="hasHeaderSlot" :closeMenu="closeMenu">
-        <slot name="header" />
+      <template v-if="hasHeaderSlot">
+        <slot name="header" :closeMenu="closeMenu" />
       </template>
 
       <!-- Default header -->
@@ -59,8 +59,8 @@
       </div>
 
       <!-- Actions container -->
-      <template v-if="hasActionsSlot" :selectAll="selectAll" :reset="reset">
-        <slot name="actions" />
+      <template v-if="hasActionsSlot">
+        <slot name="actions" :selectAll="selectAll" :reset="reset" />
       </template>
 
       <!-- Default actions -->
@@ -356,6 +356,7 @@ export default {
     const initFilter = () => {
       // initialize
       $(refs.filter).dropdown({
+        showOnFocus: false,
         onShow: () => {
           state.menuIsOpen = true
           refresh()
@@ -482,6 +483,7 @@ export default {
   .ui.buttons {
     width: 100%;
     max-width: 100%;
+    border-radius: 4px;
 
     & > button {
       width: 100%;
@@ -500,8 +502,7 @@ export default {
       }
 
       @include polyfillIE {
-        border-left-style: solid !important;
-        border-left-width: 1px !important;
+        border-left: 1px transparent !important;
       }
     }
 
@@ -511,6 +512,12 @@ export default {
       top: 1px;
       height: calc(100% - 2px);
       right: 1px;
+    }
+
+    .reset-button-outer {
+      flex-grow: 0;
+      flex-shrink: 1;
+      max-width: 38.5px;
     }
   }
 

@@ -1,10 +1,39 @@
 # Changelog
 
-## [NEXT: 1.5.0]
+## [NEXT: 1.5.4]
+- Fix a windows bug in DB for single quote duplication
+
+## 1.5.3
+### Changed
+- export functions from filePath.js & filePath fixes
+- getFavoriteItems fix not working on android. Using `then` instead of `await` 
+- docs update
+
+## 1.5.2
+### Changed
+- Add `emulate-ios` option to declare as browser user-agent for ti-web testing
+- Add getFullFilepath method that returns the absolute normalized path of a given vUrl filepath
+- Fixed loadValidations for Windows environment
+- Revert `moment` usage from minifed file to esm version
+
+## 1.5.1
+### Changed
+- loadConfig default parameter `source = 'modal'` added
+- detailingStore changes
+- documentation updates for instance store
+- fix user extra field in `query`
+- `fuse.js` & `moment` are now imported as CJS modules. No need to compile in consumer project
+
+
+## 1.5.0
 ### Changed
 - Insfrastructure updates, added @pitcher/eslint-config
 - Change files according to the new eslint rules
-- Fix a windows bug in DB for single quote duplication
+- formatDate & numbers, fallback to i18nStore locale
+- Calendar component is re-written, IE bugs fixed
+- filter dropdown focus bug fixed
+- Added validations store, usage with `loadValidations(validationsJsonFile)` and `useValidations()`
+- fix remove null hardcode in `contextQuery`
 
 ### Added
 - Added new slot named `body` to replace FileCard body content
@@ -12,10 +41,8 @@
 - Added field types for Account/Contact/User in iOS
 - Added conversion of Boolean values to Numbers when saving
 - Added fieldsToNull to ignored fields on save
+- Added new prop `clearable` to Calendar component
 
-## [1.4.13]
-- Added validations store, usage with `loadValidations(validationsJsonFile)` and `useValidations()`
-- fix remove null hardcode in `contextQuery`
 
 ## 1.4.12
 ### Breaking changes

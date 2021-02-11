@@ -74,7 +74,8 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
               column === 'eventJSON' ||
               column === 'contact' ||
               column === 'Json' ||
-              column === 'user'
+              column === 'user' ||
+              column === 'userObject'
             ) {
               const o = JSON.parse(fieldData)
               for (const n in o) {
