@@ -1,5 +1,5 @@
-import {fireEvent} from '../event'
-import {PLATFORM} from "../platform";
+import { fireEvent } from '../event'
+import { PLATFORM } from '../platform'
 
 let cache = {}
 
@@ -65,8 +65,8 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
           for (let j = 0; j < e.columns.length; j++) {
             const column = e.columns[j]
             let fieldData = res[j]
-            if (PLATFORM === "WINDOWS" && typeof fieldData === "string") {
-              fieldData = fieldData.replace(/''/g, "'")// WTF!!!!
+            if (PLATFORM === 'WINDOWS' && typeof fieldData === 'string') {
+              fieldData = fieldData.replace(/''/g, "'")
             }
             if (
               column === 'extraField' ||
@@ -104,4 +104,4 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
   })
 }
 
-export {clearCache, dbSettings, query}
+export { clearCache, dbSettings, query }
