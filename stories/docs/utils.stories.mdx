@@ -13,35 +13,35 @@ Searches through your data array with specified options. The search function use
 import { search } from '@pitcher/vue-sdk'
 
 const data = [
-    {
-        title: "Old Man's War",
-        author: 'John Scalzi',
-        tags: ['fiction'],
-        details: {
-            stock: true,
-            shop: 'Globus'
-        }
-
-    },
-    {
-        title: 'The Lock Artist',
-        author: 'Steve',
-        tags: ['thriller'],
-        details: {
-            stock: false,
-            shop: 'Walmart'
-        }
+  {
+    title: "Old Man's War",
+    author: 'John Scalzi',
+    tags: ['fiction'],
+    details: {
+      stock: true,
+      shop: 'Globus'
     }
+
+  },
+  {
+    title: 'The Lock Artist',
+    author: 'Steve',
+    tags: ['thriller'],
+    details: {
+      stock: false,
+      shop: 'Walmart'
+    }
+  }
 ]
 
 const searchFields = ['author', 'details.shop']
 // fuse.js options - https://fusejs.io/api/options.html#basic-options
 const options = {
-    threshold: 0.15  // how strict the search should be
-    useExtendedSearch: true,
-    distance: 1000
-    ...
-    ...
+  threshold: 0.15  // how strict the search should be
+  useExtendedSearch: true,
+  distance: 1000
+  ...
+  ...
 }
 const searchFor = 'John'
 const results = search(data, searchFor, searchFields, options)
@@ -74,19 +74,23 @@ Example:
 This would open the interactive with the keyword `keyword` and save myParam and otherParam to local storage
 
 ```javascript
-    import { openLink } from '@pitcher/vue-sdk'
-    const link = 'pitcher://keyword/?myParam=5&otherParam={{ a.count}}'
-    const context = {a:5}
-    openLink(link, context)
+import { openLink } from '@pitcher/vue-sdk'
+
+const link = 'pitcher://keyword/?myParam=5&otherParam={{ a.count}}'
+const context = { a: 5 }
+
+openLink(link, context)
 ```
 
 This would open a file with fileID: `12345`
 
 ```javascript
-    import { openLink } from '@pitcher/vue-sdk'
-    const link = 'pitcher://12345/?myParam=5&otherParam={{ a.count}}'
-    const context = {a:5}
-    openLink(link, context)
+import { openLink } from '@pitcher/vue-sdk'
+
+const link = 'pitcher://12345/?myParam=5&otherParam={{ a.count}}'
+const context = { a: 5 }
+
+openLink(link, context)
 ```
 
 

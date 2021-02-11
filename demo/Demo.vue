@@ -33,7 +33,7 @@ export default {
     ProgressBarEx
   },
   setup() {
-    const selectedPage = ref('DropdownEx')
+    const selectedPage = ref('CalendarEx')
     const pages = ref([
       {
         text: 'Modal',
