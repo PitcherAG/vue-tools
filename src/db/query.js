@@ -1,5 +1,5 @@
 import {fireEvent} from '../event'
-import {PLATFORM} from "@/platform";
+import {PLATFORM} from "../platform";
 
 let cache = {}
 
