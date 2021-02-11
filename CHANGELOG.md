@@ -1,6 +1,7 @@
 # Changelog
 
 ## [NEXT: 1.5.4]
+- Fix a windows bug in DB for single quote duplication
 
 ## 1.5.3
 ### Changed
