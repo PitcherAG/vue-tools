@@ -4,6 +4,7 @@
 ### Changed
 - Insfrastructure updates, added @pitcher/eslint-config
 - Change files according to the new eslint rules
+- Fix a windows bug in DB for single quote duplication
 
 ### Added
 - Added new slot named `body` to replace FileCard body content
