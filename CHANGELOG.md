@@ -2,6 +2,7 @@
 
 ## [NEXT: 1.5.4]
 - Fix a windows bug in DB for single quote duplication
+- Added custom caches - field types, for Windows
 
 ## 1.5.3
 ### Changed
