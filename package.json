@@ -55,7 +55,7 @@
     "eslint-plugin-vue": "^7.1.0",
     "gettext-parser": "^4.0.3",
     "glob": "^7.1.6",
-    "husky": "^4.2.5",
+    "husky": "^5.1.1",
     "jest": "^25.5.4",
     "jquery": "^3.5.1",
     "lint-staged": "^10.2.4",
