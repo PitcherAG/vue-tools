@@ -14,7 +14,7 @@
     "config-gettext-translate": "GOOGLE_APPLICATION_CREDENTIALS=google.json node src/gettext/translate-cli.js",
     "demo": "vue-cli-service serve --port 5000 --public http://localhost:5000/demo --open",
     "google:encrypt": "gpg --symmetric --cipher-algo AES256 google.json",
-    "google:decrypt": "if [[ ! -f google.json ]]; then gpg --decrypt --no-symkey-cache --output google.json google.json.gpg; fi",
+    "google:decrypt": "if [[ ! -f google.json ]]; then gpg --decrypt --output google.json google.json.gpg; fi",
     "lint": "vue-cli-service lint",
     "npm link": "npm link",
     "test:unit": "npm run google:decrypt && vue-cli-service test:unit",
