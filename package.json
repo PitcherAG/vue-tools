@@ -13,7 +13,7 @@
     "config-gettext-extract": "node src/gettext/extract-cli.js",
     "config-gettext-translate": "GOOGLE_APPLICATION_CREDENTIALS=google.json node src/gettext/translate-cli.js",
     "demo": "vue-cli-service serve --port 5000 --public http://localhost:5000/demo --open",
-    "google:decrypt": "if [[ ! -f google.json ]]; then gpg --decrypt --output google.json google.json.gpg; fi",
+    "google:decrypt": "bash -c 'if [[ ! -f google.json ]]; then gpg --decrypt --output google.json google.json.gpg; fi'",
     "google:encrypt": "gpg --symmetric --cipher-algo AES256 google.json",
     "google:install": "brew install gpg",
     "lint": "vue-cli-service lint",
