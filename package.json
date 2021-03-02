@@ -15,9 +15,10 @@
     "demo": "vue-cli-service serve --port 5000 --public http://localhost:5000/demo --open",
     "google:encrypt": "gpg --symmetric --cipher-algo AES256 google.json",
     "google:decrypt": "if [[ ! -f google.json ]]; then gpg --decrypt --output google.json google.json.gpg; fi",
+    "install:macOS": "brew install gpg",
     "lint": "vue-cli-service lint",
     "npm link": "npm link",
-    "test:unit": "npm run google:decrypt && vue-cli-service test:unit",
+    "test:unit": "npm run google:decrypt && GOOGLE_APPLICATION_CREDENTIALS=google.json vue-cli-service test:unit",
     "storybook": "start-storybook -s ./stories/assets -p 6006",
     "build:storybook": "build-storybook -o storybook-build -s ./stories/assets",
     "deploy:storybook": "npm run build:storybook && storybook-to-ghpages -e=storybook-build && rimraf storybook-build"
