@@ -75,6 +75,7 @@ import { computed, reactive, ref, watch, onMounted } from '@vue/composition-api'
 import { loadSchema, useConfigStore, contextQuery, saveObject, Field, loadLayout } from '../index'
 import ObjectFormField from './ObjectFormField'
 import Dropdown from './Dropdown'
+import Vue from 'vue'
 
 export default {
   name: 'object-form',
@@ -150,6 +151,7 @@ export default {
     const state = reactive({
       ready: false,
       fields: [],
+      fieldsDict: {},
       id: props.id,
       obj: {},
       recordTypes: computed(() => {
@@ -394,9 +396,35 @@ export default {
             state.ready = true
           }
         }
+
+        if (props.value) {
+          state.obj = props.value
+        }
+
         for (const field of state.fields) {
-          if (props.value) {
-            state.obj = props.value
+          state.fieldsDict[field.name] = field
+          if (field.type === 'picklist' && field.controllerName) {
+            field.dependentValueWatcher = watch(
+              () => state.obj[field.controllerName],
+              newVal => {
+                if (state.fieldsDict[field.controllerName]) {
+                  // When controller field changes - Reset dependent value
+                  Vue.set(state.obj, field.name, null)
+                  // Find the index of the selected value in the controller field
+                  const index = state.fieldsDict[field.controllerName].picklistValues.findIndex(o => o.value === newVal)
+                  field.filteredValues = field.picklistValues.filter(p => {
+                    // base64 decode
+                    const bitmap = atob(p.validFor)
+                    // Test each of the available options and use bitwise operators
+                    // to check whether each dependent value is valid
+                    return !!(bitmap.charCodeAt(index >> 3) & (128 >> index % 8))
+                  })
+                }
+              },
+              {
+                immediate: true
+              }
+            )
           }
         }
       }
