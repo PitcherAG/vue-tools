@@ -75,7 +75,8 @@ class DetailingStore {
       Id: value.Id,
       isAllDay: !!value.IsAllDay,
       name: [value.AccountName, value.ContactName || ''].map(value => value).join(', '),
-      date: new Date(value.StartDateTime)
+      date: new Date(value.StartDateTime),
+      event: value
     }
   }
 
