@@ -4,7 +4,7 @@ import { eventHub } from './eventHub'
 try {
     window.localStorage.setItem('reloadConsole', 'false')
 } catch (e) {
-    
+    console.log(e)
 }
 
 export function refreshWatcher(timeout) {
