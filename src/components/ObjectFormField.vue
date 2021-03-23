@@ -20,12 +20,12 @@
     <dropdown
       v-if="field.type === 'picklist' || field.type === 'multipicklist'"
       :default-text="$gettext('Select')"
-      :items="picklist"
+      :items="filteredValues"
       :multiple="field.type === 'multipicklist'"
       :value="value"
       add-class="selection"
       v-bind="field.settings"
-      :searchable="picklist.length > 20"
+      :searchable="filteredValues.length > 20"
       @input="emitInput($event)"
     />
     <dropdown
@@ -160,6 +160,13 @@ export default {
       }
     }
 
+    const filteredValues = computed(() => {
+      const newValues = props.field.filteredValues ? props.field.filteredValues : picklist.value
+      return newValues.map(p => {
+        return { text: p.label, value: p.value }
+      })
+    })
+
     const error = computed(() => {
       return props.field && !props.field.valid(props.value) && props.showError
     })
@@ -177,7 +184,7 @@ export default {
       emit('input', value)
     }
 
-    return { picklist, emitInput, error, formatDate, formatCurrency }
+    return { filteredValues, emitInput, error, formatDate, formatCurrency }
   }
 }
 </script>
