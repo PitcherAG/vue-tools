@@ -71,7 +71,7 @@
 <script>
 /* eslint-disable no-unused-vars, max-len, vue/no-unused-properties */
 
-import { computed, reactive, ref, watch, onMounted } from '@vue/composition-api'
+import { computed, reactive, ref, watch, onMounted, onBeforeUnmount } from '@vue/composition-api'
 import { loadSchema, useConfigStore, contextQuery, saveObject, Field, loadLayout } from '../index'
 import ObjectFormField from './ObjectFormField'
 import Dropdown from './Dropdown'
@@ -234,6 +234,14 @@ export default {
     }
     onMounted(async () => {
       initSchema()
+    })
+
+    onBeforeUnmount(async () => {
+      for (const field of state.fields) {        
+        if (field.dependentValueWatcher) {
+          field.dependentValueWatcher()
+        }
+      }
     })
 
     watch(() => [props.objectType], initSchema)
