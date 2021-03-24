@@ -1,6 +1,22 @@
 # Changelog
 
-## [NEXT: 1.5.5]
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [1.5.5](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.1.4...v1.5.5) (2021-03-24)
+
+
+### Features
+
+* add original event object to parsed crm event ([c59689f](https://github.com/PitcherAG/pitcher-vue-sdk/commit/c59689fe133a4e677264f81a16c229369762ae67))
+* add windows debug instructions ([c83351b](https://github.com/PitcherAG/pitcher-vue-sdk/commit/c83351b3882ecde965392af01643503e767b3fd4))
+* update dropdown list values when its controller change ([3b148c2](https://github.com/PitcherAG/pitcher-vue-sdk/commit/3b148c2431b555597b80f131ba53e118214a85f0))
+
+
+### Bug Fixes
+
+* localstorage without ready was causing issues ([197f1c1](https://github.com/PitcherAG/pitcher-vue-sdk/commit/197f1c13eb40c94f03d3521f6eed4ef41e1663e3))
+* log error ([5d50b3b](https://github.com/PitcherAG/pitcher-vue-sdk/commit/5d50b3b36925aa9fe669dda4191342a383375fc7))
+* remove field watchers before unmount ([dcc4315](https://github.com/PitcherAG/pitcher-vue-sdk/commit/dcc431574fef98f2dfd77d80c9617651329efaf6))
 
 ## 1.5.4
 - Fix a windows bug in DB for single quote duplication
