@@ -14,6 +14,10 @@ export class Field {
 
     this.required = !obj.nillable || obj.nameField
 
+    if (obj.type === 'picklist') {
+      this.filteredValues = obj.picklistValues
+    }
+
     this.errors = []
     if (load) {
       this.load_refs()
