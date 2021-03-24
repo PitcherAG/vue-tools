@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.6-beta.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.5...v1.5.6-beta.0) (2021-03-24)
+
+
+### Bug Fixes
+
+* add default filtered values for picklist ([9a48b08](https://github.com/PitcherAG/pitcher-vue-sdk/commit/9a48b0871b5f2bdf1978497cb1d88a24cb201af2))
+* fix lint issues ([e32c16b](https://github.com/PitcherAG/pitcher-vue-sdk/commit/e32c16b93ae40694f86b537a7b80668240c344de))
+
 ### [1.5.5](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.1.4...v1.5.5) (2021-03-24)
 
 
