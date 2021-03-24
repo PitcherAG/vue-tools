@@ -237,7 +237,7 @@ export default {
     })
 
     onBeforeUnmount(async () => {
-      for (const field of state.fields) {        
+      for (const field of state.fields) {
         if (field.dependentValueWatcher) {
           field.dependentValueWatcher()
         }
