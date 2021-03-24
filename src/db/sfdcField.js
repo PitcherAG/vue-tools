@@ -14,7 +14,7 @@ export class Field {
 
     this.required = !obj.nillable || obj.nameField
 
-    if(obj.type === 'picklist') {
+    if (obj.type === 'picklist') {
       this.filteredValues = obj.picklistValues
     }
 
