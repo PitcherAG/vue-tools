@@ -1,9 +1,9 @@
 ### Issue link
 https://...
 
-### 📖 Description
+### 📖  Description
 This pull request
 
 - [ ] Tested on Windows
 
-### 📷 Screenshots
+### 📷  Screenshots
