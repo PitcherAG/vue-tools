@@ -4,7 +4,7 @@
     <div class="ui divider" />
     <div class="mb-4">Date value: {{ stringDate }}</div>
     <div class="mb-4">minDate: {{ attrs.minDate }}</div>
-    <calendar v-model="stringDate" v-bind="attrs" @input="val => log('input', val)" />
+    <Calendar v-model="stringDate" v-bind="attrs" @input="(val) => log('input', val)" />
     <br />
     <div class="ui button" @click="setDate">
       Update value
@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import { defineComponent, reactive, toRefs } from '@vue/composition-api'
 import Calendar from '@/components/Calendar.vue'
+import { defineComponent, reactive, toRefs } from '@vue/composition-api'
 
 export default defineComponent({
-  name: 'calendar-ex',
+  name: 'CalendarEx',
   components: {
-    Calendar
+    Calendar,
   },
   setup() {
     const state = reactive({
@@ -41,12 +41,13 @@ export default defineComponent({
         //     date: new Date('2020-08-12T11:20:00.000'),
         //     message:'test event',
         // }],
-        minDate: '2020-08-07T11:20:00.000'
-      }
+        minDate: '2020-08-07T11:20:00.000',
+      },
     })
 
     const setDate = () => {
       const newDate = '2020-06-12T14:20:00.000+0000'
+
       console.log('----------------------------------------')
       console.log('SET DATE')
       console.log('BEFORE', state.stringDate)
@@ -56,6 +57,7 @@ export default defineComponent({
 
     const setMinDate = () => {
       const newDate = '2020-08-02T00:00:00.000'
+
       console.log('----------------------------------------')
       console.log('SET MINDATE', newDate)
       state.attrs.minDate = newDate
@@ -71,6 +73,6 @@ export default defineComponent({
     }
 
     return { ...toRefs(state), setDate, setMinDate, toggleToday, log }
-  }
+  },
 })
 </script>

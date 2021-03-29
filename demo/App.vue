@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="px-4 fill-height">
-    <demo />
+    <Demo />
   </div>
 </template>
 
@@ -8,10 +8,10 @@
 import Demo from './Demo'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    Demo
-  }
+    Demo,
+  },
 }
 </script>
 
