@@ -4,6 +4,8 @@
 [![npm version](https://badge.fury.io/js/%40pitcher%2Fvue-sdk.svg)](https://badge.fury.io/js/%40pitcher%2Fvue-sdk)
 ![GitHub issues](https://img.shields.io/github/issues/pitcherag/pitcher-vue-sdk)
 
+This package is not being developed for new features, maintenance only.
+
 Please open pull request if you want to change something and please include docs and unit tests. If you have a bug fix or feature request feel free to open a new issue.
 
 
