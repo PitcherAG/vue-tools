@@ -59,7 +59,7 @@ export default defineComponent({
         if (!valid) {
           console.error('[Vue warn]: Validation error in Pagination.vue!')
           console.error('[Vue warn]: prop.pagination is not valid!')
-          throw `
+          throw new Error(`
             Expected
             pagination: {
                 currentPage: Number,
@@ -70,7 +70,7 @@ export default defineComponent({
                 endIndex: Number
                 pages: Number
             }
-          `
+          `)
         }
 
         return valid
@@ -84,10 +84,10 @@ export default defineComponent({
         if (!valid) {
           console.error('[Vue warn]: Validation error in Pagination.vue!')
           console.error('[Vue warn]: prop.paginate is not valid!')
-          throw `
+          throw new Error(`
             Expected
             function paginate(to) { state.pagination.currentPage = to }
-          `
+          `)
         }
 
         return valid

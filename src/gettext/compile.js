@@ -46,7 +46,7 @@ function getTranslationData(path) {
 }
 
 function getCategory(translation) {
-  if (translation.type == 'package' && translation.packageCategory) {
+  if (translation.type === 'package' && translation.packageCategory) {
     return translation.packageCategory
   } else {
     return translation.category
@@ -54,7 +54,7 @@ function getCategory(translation) {
 }
 
 function getInputDirname(config, translation) {
-  if (translation.type == 'package') {
+  if (translation.type === 'package') {
     const packageConfig = require(path.join(process.cwd(), 'node_modules', translation.package, 'gettext.config.js'))
 
     return path.join('node_modules', translation.package, getInputDirnameDefault(packageConfig))

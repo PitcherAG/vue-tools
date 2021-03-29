@@ -1,3 +1,4 @@
+/* eslint-disable no-lonely-if */
 import { PLATFORM } from './platform'
 import { fireEvent } from './event'
 import { getFilesWithKeyword } from './files'
@@ -154,12 +155,12 @@ export function getSchema(objectName) {
   } else if (PLATFORM === 'IOS') {
     desc = `${objectName}_desc_cache`
   } else {
-    throw `no supported: ${PLATFORM}`
+    throw new Error(`no supported: ${PLATFORM}`)
   }
   try {
     return fireEvent('getFromHTML', { id: desc, useSFDCDB: true })
   } catch (e) {
-    throw `Schema not found:${objectName}`
+    throw new Error(`Schema not found:${objectName}`)
   }
 }
 

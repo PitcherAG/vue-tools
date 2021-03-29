@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const source = 'modal'
 let fireEventCount = 0
 
