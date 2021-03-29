@@ -44,7 +44,7 @@ module.exports = {
     uz: 'Uzbek',
     vi: 'Vietnamese',
     'zh-CN': 'Chinese (Simplified)',
-    'zh-TW': 'Chinese (Traditional)'
+    'zh-TW': 'Chinese (Traditional)',
   },
   translations: [
     { category: 'app', type: 'source', patterns: ['src/**/!(*-cli).js', 'src/**/*.vue', 'src/**/*.html'] },
@@ -52,7 +52,7 @@ module.exports = {
     {
       category: 'object-form',
       type: 'source',
-      patterns: ['src/components/ObjectForm.vue', 'src/components/ObjectFormField.vue']
-    }
-  ]
+      patterns: ['src/components/ObjectForm.vue', 'src/components/ObjectFormField.vue'],
+    },
+  ],
 }

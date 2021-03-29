@@ -13,12 +13,14 @@ export function mapper(key, obj) {
   else if (key.includes('.')) {
     return key.split('.').reduce((o, i) => o[i], obj)
   }
+
   // map simple key
   return obj[key]
 }
 
 export function sortBy(data, fields, by, order) {
-  const field = fields.find(f => f.dataField === by)
+  const field = fields.find((f) => f.dataField === by)
+
   if (!field) {
     return data
   }
@@ -30,8 +32,9 @@ export function sortBy(data, fields, by, order) {
     // sortType: number
     return orderBy(
       data,
-      item => {
+      (item) => {
         const val = mapper(field.dataField, item) === '' ? -1 : mapper(field.dataField, item)
+
         return Number(val)
       },
       [order]
@@ -40,11 +43,13 @@ export function sortBy(data, fields, by, order) {
     // sortType: date
     return orderBy(
       data,
-      item => {
+      (item) => {
         const val = mapper(field.dataField, item)
+
         if (!val) {
           return ''
         }
+
         return new Date(val.split('+')[0])
       },
       [order]

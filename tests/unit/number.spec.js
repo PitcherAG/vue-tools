@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { useParamsStore } from '@/params'
-import { formatCurrency, formatDate, formatDecimal, formatPercent, useI18nStore } from '@/'
-import { createLocalVue } from '@vue/test-utils'
 import CompositionApi from '@vue/composition-api'
+import { createLocalVue } from '@vue/test-utils'
+import { formatCurrency, formatDate, formatDecimal, formatPercent, useI18nStore } from '@/'
+import { useParamsStore } from '@/params'
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 
 jest.mock('@/i18n/i18n')
@@ -11,6 +12,7 @@ jest.mock('@/i18n/i18n')
 describe('numbers', () => {
   it('currency', () => {
     const params = useParamsStore()
+
     params.state.user = { LocaleSidKey: null }
     expect(() => {
       formatCurrency()
@@ -23,6 +25,7 @@ describe('numbers', () => {
 
   it('decimal', () => {
     const params = useParamsStore()
+
     params.state.user = { LocaleSidKey: null }
     expect(() => {
       formatDecimal()
@@ -37,6 +40,7 @@ describe('numbers', () => {
 
   test('percent', () => {
     const params = useParamsStore()
+
     params.state.user = { LocaleSidKey: null }
     expect(() => {
       formatPercent()

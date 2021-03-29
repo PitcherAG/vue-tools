@@ -1,9 +1,10 @@
 import CompositionApi from '@vue/composition-api'
-import { mount, createLocalVue } from '@vue/test-utils'
 import DataTable from '@/components/DataTable/DataTable.vue'
 import data from '../helpers/table-dummy-data'
+import { createLocalVue, mount } from '@vue/test-utils'
 
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 
 const options = {
@@ -14,14 +15,14 @@ const options = {
   noDataText: 'No data!',
   fixedHeader: false,
   width: '50%',
-  perPage: 5
+  perPage: 5,
 }
 
 const fields = [
   {
     title: 'Id',
     dataField: 'id',
-    hide: true
+    hide: true,
   },
   {
     title: 'Title',
@@ -29,21 +30,21 @@ const fields = [
     icon: 'cog',
     sortable: true,
     thClass: 'center aligned th_find_me',
-    tdClass: 'center aligned td_find_me'
+    tdClass: 'center aligned td_find_me',
   },
   {
     title: 'Url',
     dataField: 'url',
-    transform: val => `url: ${val}`
+    transform: (val) => `url: ${val}`,
   },
   {
     title: 'Created Date',
-    dataField: 'createdDate'
+    dataField: 'createdDate',
   },
   {
     title: 'Actions',
-    dataField: '__slot:actions'
-  }
+    dataField: '__slot:actions',
+  },
 ]
 
 describe('DataTable.vue', () => {
@@ -52,14 +53,14 @@ describe('DataTable.vue', () => {
     propsData: {
       fields,
       data,
-      ...options
-    }
+      ...options,
+    },
   })
 
   // Helper function
   async function updateValue(key, value) {
     wrapper.setProps({
-      [key]: value
+      [key]: value,
     })
     await wrapper.vm.$nextTick()
   }

@@ -1,6 +1,6 @@
 import moment from 'moment'
-import { useParamsStore } from '../params'
 import { useI18nStore } from '../i18n/i18n'
+import { useParamsStore } from '../params'
 
 export function formatDate(date, showYear = true) {
   const locale = useParamsStore().locale || useI18nStore().state.locale
@@ -19,6 +19,7 @@ export function formatDate(date, showYear = true) {
 
   const m = moment(date)
   const d = m.toDate()
+
   return d.toLocaleDateString(locale, options)
 }
 
@@ -29,8 +30,9 @@ export function formatTime(date, showSeconds = false) {
 
   const options = {
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
   }
+
   if (showSeconds) {
     options.seconds = '2-digit'
   }
@@ -39,5 +41,6 @@ export function formatTime(date, showSeconds = false) {
 
   const m = moment(date)
   const d = m.toDate()
+
   return d.toLocaleTimeString(locale, options)
 }

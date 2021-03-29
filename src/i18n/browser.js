@@ -1,6 +1,6 @@
 export function useBrowserLanguage() {
   function getAvailableBrowserLanguage(availableLanguages) {
-    return getBrowserLanguages().find(l => availableLanguages.includes(l))
+    return getBrowserLanguages().find((l) => availableLanguages.includes(l))
   }
 
   function getBrowserLanguages() {
@@ -13,7 +13,7 @@ export function useBrowserLanguage() {
         }
       }
 
-      ;['language', 'browserLanguage', 'systemLanguage', 'userLanguage'].forEach(prop => {
+      ;['language', 'browserLanguage', 'systemLanguage', 'userLanguage'].forEach((prop) => {
         if (navigator[prop]) {
           languages.add(navigator[prop])
         }
@@ -29,6 +29,6 @@ export function useBrowserLanguage() {
 
   return {
     getAvailableBrowserLanguage,
-    getBrowserLanguages
+    getBrowserLanguages,
   }
 }

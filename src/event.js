@@ -23,7 +23,7 @@ function fireEvent(name, params) {
       delete window[errorCallback]
     }
 
-    window[callback] = res => {
+    window[callback] = (res) => {
       if (typeof res === 'string' && (res.startsWith('{') || res.startsWith('['))) {
         try {
           resolve(JSON.parse(res))
@@ -37,7 +37,7 @@ function fireEvent(name, params) {
       destroyEvent()
     }
 
-    window[errorCallback] = error => {
+    window[errorCallback] = (error) => {
       reject(error)
       destroyEvent()
     }

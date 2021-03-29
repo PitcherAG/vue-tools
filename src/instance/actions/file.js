@@ -10,11 +10,11 @@ const categoryActionMapping = {
   video: loadVideo,
   'video-online': loadOnlineVideo,
   surveys: loadSurvey,
-  zip: loadInteractive
+  zip: loadInteractive,
 }
 
 function addSlashes(value) {
-  return (value + '')
+  return `${value}`
     .replace(/[\\"']/g, '\\$&')
     .replace(/\\u0000/g, '\\0')
     .replace('"', '')
@@ -46,7 +46,7 @@ function loadPDF(file) {
   } else {
     showPdf(file, {
       launchMode: 1,
-      viewMode: file.year
+      viewMode: file.year,
     })
   }
 }
@@ -55,18 +55,19 @@ function loadModel(file, eventName) {
   const path = file.vUrl
   const folders = path.split('/')
   const title = addSlashes(file.body)
+
   if (folders.length) {
     fireEvent(eventName, {
       model: folders[1],
       folder: folders[0],
-      title: title,
-      fileID: file.ID
+      title,
+      fileID: file.ID,
     })
   } else {
     fireEvent(eventName, {
       model: path,
-      title: title,
-      fileID: file.ID
+      title,
+      fileID: file.ID,
     })
   }
 }
@@ -82,7 +83,7 @@ function load3D(file) {
 function loadBrochure(file) {
   showPdf(file, {
     launchMode: 2,
-    viewMode: file.year
+    viewMode: file.year,
   })
 }
 
@@ -90,11 +91,12 @@ function playVideo(file, isOnline) {
   const path = file.vUrl
   const title = addSlashes(file.body)
   const eventName = file.keywords && file.keywords.indexOf('ybVideo') > -1 ? 'loadYB' : 'loadMovie'
+
   fireEvent(eventName, {
     file: path,
-    isOnline: isOnline,
-    title: title,
-    fileID: file.ID
+    isOnline,
+    title,
+    fileID: file.ID,
   })
 }
 
@@ -109,35 +111,38 @@ function loadOnlineVideo(file) {
 function loadSurvey(file, parameters) {
   const path = file.vUrl
   const title = addSlashes(file.body)
+
   fireEvent('loadWebPageFromFolder', {
     ID: file.ID,
     urlValue: `${path.replace('.zip', '').replace('surveys', '')}/index.html`,
-    title: title,
+    title,
     showBar: true,
     folderName: 'surveys',
     allowPortrait: true,
-    parameters: parameters
+    parameters,
   })
 }
 
 function loadInteractive(file, parameters) {
   const path = file.vUrl
   const title = addSlashes(file.body)
-  let allowPortrait = 0,
-    showBar = 1
+  let allowPortrait = 0
+  let showBar = 1
+
   if (file.extra2 != null) {
     const parts = file.extra2.split('|')
+
     showBar = parts.length > 0 && parts[0] == 1 ? 0 : 1
     allowPortrait = parts.length > 1 && parts[1] == 1 ? 1 : 0
   }
   fireEvent('loadWebPageFromFolder', {
     ID: file.ID,
     urlValue: `${path.replace('.zip', '').replace('zip', '')}/index.html`,
-    title: title,
-    showBar: showBar,
+    title,
+    showBar,
     folderName: 'zip',
-    allowPortrait: allowPortrait,
-    parameters: parameters
+    allowPortrait,
+    parameters,
   })
 }
 
@@ -150,6 +155,7 @@ export function openContent(file, parameters) {
 
 export function editFile(file) {
   const store = useFilesStore()
+
   store.oneTimeLoadPresentations = true
   if (file) {
     fireEvent('editPresentation', {
@@ -158,9 +164,9 @@ export function editFile(file) {
         {
           nameV: 'Slides',
           startIndex: 0,
-          endIndex: file.vNumber
-        }
-      ]
+          endIndex: file.vNumber,
+        },
+      ],
     })
   } else {
     fireEvent('editPresentation', { mix: true, allowMix: true })
@@ -169,12 +175,13 @@ export function editFile(file) {
 
 export function deleteFile(file) {
   const store = useFilesStore()
+
   store.oneTimeLoadPresentations = true
   fireEvent('deletePresentation', { dataOfPres: file })
 }
 
 export function sendPickingContent(fileIds, via) {
-  fireEvent('sendPickingContent', { fileIDs: fileIds, via: via })
+  fireEvent('sendPickingContent', { fileIDs: fileIds, via })
 }
 
 export function sendDocuments() {
@@ -183,6 +190,7 @@ export function sendDocuments() {
 
 export function createSlideSet() {
   const store = useFilesStore()
+
   store.oneTimeLoadPresentations = true
   editFile()
 }
@@ -207,7 +215,7 @@ export function loadPdfWithPage(file, page, searchText) {
     annotationEnabled: true,
     jumpToPage: page,
     pdfID: file.ID,
-    searchString: searchText
+    searchString: searchText,
   })
 }
 

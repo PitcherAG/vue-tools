@@ -39,5 +39,5 @@ export const search = (
     return result
   }
 
-  return result.map(i => i.item && i.item)
+  return result.map((i) => i.item && i.item)
 }

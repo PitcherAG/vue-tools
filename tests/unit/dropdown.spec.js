@@ -1,14 +1,15 @@
 import CompositionApi from '@vue/composition-api'
-import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Dropdown from '@/components/Dropdown'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 
 describe('Dropdown.vue', () => {
   const items = [
     { name: 'Hello', value: 'hello', type: 'item hello' },
-    { name: 'World', value: 'world', type: 'item world' }
+    { name: 'World', value: 'world', type: 'item world' },
   ]
 
   const wrapper = shallowMount(Dropdown, {
@@ -18,14 +19,14 @@ describe('Dropdown.vue', () => {
       items,
       itemText: 'name',
       itemValue: 'value',
-      defaultText: 'select'
-    }
+      defaultText: 'select',
+    },
   })
 
   // Helper function
   async function updateValue(key, value) {
     wrapper.setProps({
-      [key]: value
+      [key]: value,
     })
     await wrapper.vm.$nextTick()
   }
@@ -43,7 +44,7 @@ describe('Dropdown.vue', () => {
       { name: 'Test header', type: 'header' },
       { name: 'Test Item', value: 'new-item', type: 'item test' },
       { type: 'divider' },
-      ...items
+      ...items,
     ])
     expect(wrapper.find('.menu .item.test').text()).toBe('Test Item')
     expect(wrapper.find('.menu .header').exists()).toBe(true)

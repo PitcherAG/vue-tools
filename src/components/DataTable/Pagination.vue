@@ -37,16 +37,16 @@
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
 import has from 'lodash/has'
+import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-  name: 'table-pagination',
+  name: 'TablePagination',
   props: {
     pagination: {
       type: Object,
       required: true,
-      validator: item => {
+      validator: (item) => {
         const valid =
           has(item, 'currentPage') &&
           has(item, 'totalPages') &&
@@ -72,12 +72,13 @@ export default defineComponent({
             }
           `
         }
+
         return valid
-      }
+      },
     },
     paginate: {
       type: Function,
-      validator: item => {
+      validator: (item) => {
         const valid = typeof item === 'function'
 
         if (!valid) {
@@ -88,13 +89,14 @@ export default defineComponent({
             function paginate(to) { state.pagination.currentPage = to }
           `
         }
+
         return valid
-      }
+      },
     },
     size: {
       type: String,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 })
 </script>

@@ -11,26 +11,26 @@
 import { onBeforeUnmount, onMounted } from '@vue/composition-api'
 
 export default {
-  name: 'popup',
+  name: 'Popup',
   props: {
     on: String,
     position: {
       type: String,
-      default: 'bottom left'
-    }
+      default: 'bottom left',
+    },
   },
   setup(props, { refs }) {
     onMounted(() => {
       $(refs.trigger).popup({
         on: props.on,
         popup: refs.popup,
-        position: props.position
+        position: props.position,
       })
     })
 
     onBeforeUnmount(() => {
       $(refs.trigger).popup('destroy')
     })
-  }
+  },
 }
 </script>

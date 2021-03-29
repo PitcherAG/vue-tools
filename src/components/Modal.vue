@@ -46,14 +46,14 @@
 <script>
 /* eslint-disable vue/require-prop-types, vue/no-unused-properties */
 
-import { defineComponent, reactive, toRefs, computed, watch, onMounted } from '@vue/composition-api'
+import { computed, defineComponent, onMounted, reactive, toRefs, watch } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 
 export default defineComponent({
-  name: 'modal',
+  name: 'Modal',
   props: {
     value: {
-      required: true
+      required: true,
     },
     title: String,
     titleIcon: String,
@@ -61,7 +61,7 @@ export default defineComponent({
     denyText: String,
     hideCloseIcon: {
       type: Boolean,
-      default: false
+      default: false,
     },
     basic: Boolean,
     fullscreen: Boolean,
@@ -71,55 +71,55 @@ export default defineComponent({
     imageContent: Boolean,
     duration: {
       type: Number,
-      default: 400
+      default: 400,
     },
     align: {
       type: String,
-      default: 'center'
+      default: 'center',
     },
     multiple: Boolean,
     closable: {
       type: Boolean,
-      default: true
+      default: true,
     },
     blurring: {
       type: Boolean,
-      default: false
+      default: false,
     },
     contentClass: {
       type: String,
-      default: ''
+      default: '',
     },
     approveClass: {
       type: String,
-      default: 'positive'
+      default: 'positive',
     },
     denyClass: {
       type: String,
-      default: 'negative'
+      default: 'negative',
     },
     size: {
       type: String,
-      validator: val => validateSize(val, 'Modal.vue')
+      validator: (val) => validateSize(val, 'Modal.vue'),
     },
     settings: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     minWidth: {
-      type: [Number, String]
+      type: [Number, String],
     },
     maxWidth: {
       type: [Number, String],
-      default: '100%'
-    }
+      default: '100%',
+    },
   },
   emits: ['input', 'onClosed', 'onHidden', 'onShow', 'onVisible'],
   setup(props, { refs, slots, emit }) {
     const state = reactive({
       hasHeaderSlot: !!slots.header,
       hasActionsSlot: !!slots.actions,
-      hasCustomSlot: !!slots.custom
+      hasCustomSlot: !!slots.custom,
     })
 
     const modalAttr = computed(() => ({
@@ -129,22 +129,24 @@ export default defineComponent({
         fullscreen: props.fullscreen,
         inverted: props.inverted,
         [props.size]: !!props.size,
-        [`${props.align} aligned`]: !!props.align
+        [`${props.align} aligned`]: !!props.align,
       },
       style: {
         minWidth: props.minWidth ? parsePxStyle(props.minWidth) : undefined,
-        maxWidth: parsePxStyle(props.maxWidth)
-      }
+        maxWidth: parsePxStyle(props.maxWidth),
+      },
     }))
 
     const contentAttr = computed(() => {
       const cls = {
         scrolling: props.scrollingContent,
-        image: props.imageContent
+        image: props.imageContent,
       }
-      props.contentClass.split(' ').forEach(v => {
+
+      props.contentClass.split(' ').forEach((v) => {
         cls[v] = true
       })
+
       return cls
     })
 
@@ -163,7 +165,7 @@ export default defineComponent({
         },
         onHidden: () => emit('onHidden'),
         onShow: () => emit('onShow'),
-        onVisible: () => emit('onVisible')
+        onVisible: () => emit('onVisible'),
       })
     }
 
@@ -177,9 +179,10 @@ export default defineComponent({
 
     watch(
       () => props.value,
-      newVal => {
+      (newVal) => {
         if (newVal) {
           $(refs.modal).modal('show')
+
           return
         }
         $(refs.modal).modal('hide')
@@ -192,6 +195,6 @@ export default defineComponent({
     }
 
     return { ...toRefs(state), modalAttr, contentAttr, exec, emit }
-  }
+  },
 })
 </script>

@@ -1,6 +1,7 @@
 if (!Date.prototype.adjustDate) {
   Date.prototype.adjustDate = function(days) {
     let date
+
     days = days || 0
 
     if (days === 0) {
@@ -21,6 +22,7 @@ if (!Date.prototype.adjustDate) {
       )
     }
     this.setTime(date.getTime())
+
     return this
   }
 }

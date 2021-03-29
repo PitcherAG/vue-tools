@@ -3,6 +3,7 @@ import { execBool, execString, renderContext, renderSimpleContext } from '@/util
 describe('context', () => {
   it('renderContext', async () => {
     let result = renderContext('{{ a }} world', { a: 'hello' })
+
     expect(result).toBe('hello world')
     result = renderContext('{{ a }} world {{b}}', { a: 'hello', b: '2' })
     expect(result).toBe('hello world 2')
@@ -16,6 +17,7 @@ describe('context', () => {
 
   it('simpleContext', async () => {
     let result = renderSimpleContext('{ a } world', { a: 'hello' })
+
     expect(result).toBe('hello world')
     result = renderSimpleContext('{ a } world {b}', { a: 'hello', b: '2' })
     expect(result).toBe('hello world 2')
@@ -25,6 +27,7 @@ describe('context', () => {
 
   it('execBool', async () => {
     let result = execBool('a > 1', { a: 2 })
+
     expect(result).toBe(true)
     result = execBool('a > 1 && a < 2', { a: 0 })
     expect(result).toBe(false)
@@ -32,6 +35,7 @@ describe('context', () => {
 
   it('execString', async () => {
     const result = execString('a + " world"', { a: 'hello' })
+
     expect(result).toBe('hello world')
   })
 })

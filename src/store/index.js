@@ -9,8 +9,9 @@ export function transform(obj) {
   let result = {}
 
   // data, string watches
-  Object.keys(obj).forEach(key => {
+  Object.keys(obj).forEach((key) => {
     const value = obj[key]
+
     if (key.startsWith('on_')) {
       return
     } else {
@@ -22,11 +23,12 @@ export function transform(obj) {
   })
 
   // function watches, methods, computed
-  Object.keys(descriptors).forEach(key => {
+  Object.keys(descriptors).forEach((key) => {
     if (key !== 'constructor' && !key.startsWith('__')) {
       const get = descriptors[key].get
       const set = descriptors[key].set
       const value = descriptors[key].value
+
       if (key.startsWith('on_')) {
         return
       } else if (value) {
@@ -43,8 +45,9 @@ export function transform(obj) {
   })
   result = reactive(result)
 
-  Object.keys(obj).forEach(key => {
+  Object.keys(obj).forEach((key) => {
     const value = obj[key]
+
     if (key.startsWith('on_')) {
       result[key] = watch(
         computed(() =>
@@ -62,9 +65,10 @@ export function transform(obj) {
   })
 
   // function watches, methods, computed
-  Object.keys(descriptors).forEach(key => {
+  Object.keys(descriptors).forEach((key) => {
     if (key !== 'constructor' && !key.startsWith('__')) {
       const value = descriptors[key].value
+
       if (key.startsWith('on_')) {
         result[key] = watch(
           computed(() =>
@@ -81,6 +85,7 @@ export function transform(obj) {
       }
     }
   })
+
   return result
 }
 

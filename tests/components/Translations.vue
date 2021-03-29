@@ -14,22 +14,23 @@
 import { ref } from '@vue/composition-api'
 
 export default {
-  name: 'translations',
+  name: 'Translations',
   props: {
     title: {
       type: String,
-      default: 'hello world'
+      default: 'hello world',
     },
     subTitle: {
-      type: String
-    }
+      type: String,
+    },
   },
   setup() {
     const na = 2
     const asd = 3
     const b = ref($gettext('underscore in js'))
     const c = ref($ngettext('underscore in js', na))
+
     return { na, asd, b, c }
-  }
+  },
 }
 </script>

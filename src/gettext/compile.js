@@ -56,6 +56,7 @@ function getCategory(translation) {
 function getInputDirname(config, translation) {
   if (translation.type == 'package') {
     const packageConfig = require(path.join(process.cwd(), 'node_modules', translation.package, 'gettext.config.js'))
+
     return path.join('node_modules', translation.package, getInputDirnameDefault(packageConfig))
   } else {
     return getInputDirnameDefault(config)
@@ -71,5 +72,5 @@ function getInputDirnameDefault(config) {
 }
 
 module.exports = {
-  compileConfig
+  compileConfig,
 }
