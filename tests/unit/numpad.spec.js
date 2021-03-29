@@ -1,8 +1,9 @@
 import CompositionApi from '@vue/composition-api'
-import { shallowMount, createLocalVue } from '@vue/test-utils'
 import NumpadInput from '@/components/NumpadInput.vue'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 
 describe('NumpadInput.vue', () => {
@@ -12,14 +13,14 @@ describe('NumpadInput.vue', () => {
       value: '0.00',
       decimals: 2,
       group: 'foo',
-      max: 1000000
-    }
+      max: 1000000,
+    },
   })
 
   // Helper function
   async function updateValue(value) {
     wrapper.setProps({
-      value
+      value,
     })
     await wrapper.vm.$nextTick()
   }
@@ -41,12 +42,14 @@ describe('NumpadInput.vue', () => {
   it('Updated props value updates input value', async () => {
     // const currentVal = wrapper.find('input').element.value
     const value = '250.00'
+
     await updateValue(value)
     expect(wrapper.find('input').element.value).toBe(value)
   })
 
   it('incDec function increase value', async () => {
     const oldValue = parseInt(wrapper.find('input').element.value)
+
     wrapper.vm.incDec('inc')
     expect(wrapper.emitted().input).toBeTruthy()
     await updateValue(wrapper.emitted().input[1][0])
@@ -55,6 +58,7 @@ describe('NumpadInput.vue', () => {
 
   it('incDec function decrease value', async () => {
     const oldValue = parseInt(wrapper.find('input').element.value)
+
     wrapper.vm.incDec('dec')
     expect(wrapper.emitted().input).toBeTruthy()
     await updateValue(wrapper.emitted().input[2][0])
@@ -63,6 +67,7 @@ describe('NumpadInput.vue', () => {
 
   it('Backspace removes last char', async () => {
     const oldValueLength = wrapper.find('input').element.value.length
+
     wrapper.vm.backspace()
     expect(wrapper.emitted().input).toBeTruthy()
     await updateValue(wrapper.emitted().input[3][0])

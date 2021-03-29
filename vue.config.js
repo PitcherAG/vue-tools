@@ -5,8 +5,8 @@ module.exports = {
       // entry for the page
       entry: 'demo/main.js',
       // the source template
-      template: 'demo/index.html'
-    }
+      template: 'demo/index.html',
+    },
   },
-  transpileDependencies: ['fuse.js']
+  transpileDependencies: ['fuse.js'],
 }

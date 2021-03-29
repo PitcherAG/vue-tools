@@ -11,7 +11,7 @@ const updateTranslation = (el, binding, vnode) => {
   let context = vnode.context
 
   if (!isPlural && (translateN || translatePlural)) {
-    throw new Error('`translate-n` and `translate-plural` attributes must be used together:' + msgid + '.')
+    throw new Error(`\`translate-n\` and \`translate-plural\` attributes must be used together:${msgid}.`)
   }
 
   if (attrs['translate-params']) {
@@ -83,5 +83,5 @@ export default {
     if (doUpdate) {
       updateTranslation(el, binding, vnode)
     }
-  }
+  },
 }

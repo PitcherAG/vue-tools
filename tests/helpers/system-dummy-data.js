@@ -1,7 +1,7 @@
 export const TI = {
   App: {
-    fireEvent: () => {}
-  }
+    fireEvent: () => {},
+  },
 }
 
 export const PRESENTATIONS_OBJECT = []
@@ -13,7 +13,7 @@ export const SERVER_JSON = {
       vType: 'thumbs',
       bucket: 'bucket',
       vVersion: 1603291716,
-      ID: 'T900000'
+      ID: 'T900000',
     },
     {
       sendPDF: '0',
@@ -42,8 +42,8 @@ export const SERVER_JSON = {
       endDate: 1630160640,
       thumb: 'thumbs/900000_1598624690.png',
       lastDownloadTime: '1603373556225.0',
-      lastLaunchTime: '1605772289177.0'
-    }
+      lastLaunchTime: '1605772289177.0',
+    },
   ],
   slides: [
     {
@@ -71,8 +71,8 @@ export const SERVER_JSON = {
       vType: 'slides',
       bucket: 'bucket',
       startDate: 1602161340,
-      endDate: 1633697340
-    }
+      endDate: 1633697340,
+    },
   ],
   config: {
     extraField: {
@@ -81,7 +81,7 @@ export const SERVER_JSON = {
       disableRefresh: true,
       zeroDriveEnabled: true,
       exchangeMode: true,
-      nativeAppEnabled: true
+      nativeAppEnabled: true,
     },
     statsEnabled: '1',
     systemLang: 'EN',
@@ -128,7 +128,7 @@ export const SERVER_JSON = {
     message: 'New version - please install...',
     updateURL: '',
     langV: 'EN',
-    appStore: 1
+    appStore: 1,
   },
   groups: [],
   appID: '1200',
@@ -141,7 +141,7 @@ export const SERVER_JSON = {
       isDefault: null,
       hasLogo: '1',
       isContainAll: '0',
-      orderValue: '1'
+      orderValue: '1',
     },
     {
       ID: '40001',
@@ -151,7 +151,7 @@ export const SERVER_JSON = {
       isDefault: null,
       hasLogo: '0',
       isContainAll: '0',
-      orderValue: '2'
+      orderValue: '2',
     },
     {
       ID: '40000',
@@ -161,7 +161,7 @@ export const SERVER_JSON = {
       isDefault: null,
       hasLogo: '1',
       isContainAll: '0',
-      orderValue: '3'
+      orderValue: '3',
     },
     {
       ID: '40004',
@@ -171,7 +171,7 @@ export const SERVER_JSON = {
       isDefault: null,
       hasLogo: '0',
       isContainAll: '0',
-      orderValue: '4'
+      orderValue: '4',
     },
     {
       ID: '40003',
@@ -181,7 +181,7 @@ export const SERVER_JSON = {
       isDefault: null,
       hasLogo: '0',
       isContainAll: '0',
-      orderValue: '5'
+      orderValue: '5',
     },
     {
       ID: '40007',
@@ -191,7 +191,7 @@ export const SERVER_JSON = {
       isDefault: null,
       hasLogo: '0',
       isContainAll: '0',
-      orderValue: '3'
+      orderValue: '3',
     },
     {
       ID: '40006',
@@ -201,7 +201,7 @@ export const SERVER_JSON = {
       isDefault: null,
       hasLogo: '0',
       isContainAll: '0',
-      orderValue: '2'
+      orderValue: '2',
     },
     {
       ID: '40005',
@@ -211,8 +211,8 @@ export const SERVER_JSON = {
       isDefault: null,
       hasLogo: '0',
       isContainAll: '0',
-      orderValue: '1'
-    }
+      orderValue: '1',
+    },
   ],
   supportEmail: null,
   deviceName: 'TestDevice',
@@ -220,5 +220,5 @@ export const SERVER_JSON = {
   messages: [],
   md5: 'md5_value',
   appVersion: '2.82.86',
-  appName: 'tes_app_name@pitcher.com'
+  appName: 'tes_app_name@pitcher.com',
 }

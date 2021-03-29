@@ -1,4 +1,4 @@
-import { TI, SERVER_JSON, PRESENTATIONS_OBJECT } from './system-dummy-data'
+import { PRESENTATIONS_OBJECT, SERVER_JSON, TI } from './system-dummy-data'
 
 global.jQuery = global.$ = require('jquery')
 require('@pitcher/fomantic-ui')

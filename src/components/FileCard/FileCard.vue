@@ -6,7 +6,7 @@
         class="file-card__content--image"
         :style="{
           backgroundImage: styles.imgUrl,
-          height: styles.contentH
+          height: styles.contentH,
         }"
         @click="emit('onClickImage')"
       />
@@ -25,7 +25,7 @@
       <!-- Actions -->
       <div v-if="showFileOptions" class="file-card__stacked right bottom">
         <div class="actions">
-          <dropdown v-model="optionsExpanded">
+          <Dropdown v-model="optionsExpanded">
             <button class="ui button basic icon option-button">
               <i class="ellipsis horizontal icon fitted" />
             </button>
@@ -42,7 +42,7 @@
                 </div>
               </template>
             </div>
-          </dropdown>
+          </Dropdown>
         </div>
       </div>
       <!-- Date -->
@@ -73,80 +73,80 @@
 </template>
 
 <script>
-import { defineComponent, reactive, computed, toRefs } from '@vue/composition-api'
 import Dropdown from '../Dropdown'
+import { computed, defineComponent, reactive, toRefs } from '@vue/composition-api'
 
 export default defineComponent({
-  name: 'file-card',
+  name: 'FileCard',
   components: {
-    Dropdown
+    Dropdown,
   },
   props: {
     body: {
       type: String,
-      default: ''
+      default: '',
     },
     favoriteIcon: {
       type: String,
-      default: 'star'
+      default: 'star',
     },
     hideFavorite: {
       type: Boolean,
-      default: false
+      default: false,
     },
     imgUrl: String,
     date: String,
     keywords: {
       type: String,
-      default: ''
+      default: '',
     },
     isFavorite: Boolean,
     isNew: Boolean,
     showFileOptions: {
       type: Boolean,
-      default: true
+      default: true,
     },
     downloadText: {
       type: String,
       default: () => {
         $gettext('Download')
-      }
+      },
     },
     shareText: {
       type: String,
       default: () => {
         $gettext('Share')
-      }
+      },
     },
     newText: {
       type: String,
       default: () => {
         $gettext('New')
-      }
+      },
     },
     height: {
       type: [String, Number],
-      default: 295
+      default: 295,
     },
     fileOptionsItems: {
       type: Array,
-      default: function() {
+      default() {
         return [
           /* eslint-disable vue/no-deprecated-props-default-this */
           {
             text: this.downloadText,
             icon: 'download icon thin',
-            click: () => this.$emit('onClickDownload')
+            click: () => this.$emit('onClickDownload'),
           },
           {
             text: this.shareText,
             icon: 'share icon thin',
-            click: () => this.$emit('onClickShare')
-          }
+            click: () => this.$emit('onClickShare'),
+          },
           /* eslint-enable vue/no-deprecated-props-default-this */
         ]
-      }
-    }
+      },
+    },
   },
   emits: ['onClickDownload', 'onClickShare'],
   setup(props, { slots, emit }) {
@@ -155,17 +155,17 @@ export default defineComponent({
       hasItemsSlot: !!slots.items,
       hasNewSlot: !!slots.new,
       hasKeywordsSlot: !!slots.keywords,
-      hasBodySlot: !!slots.body
+      hasBodySlot: !!slots.body,
     })
 
     const styles = computed(() => ({
       containerH: `${parseInt(props.height)}px`,
       contentH: `${Math.ceil(parseInt(props.height) * 0.71)}px`,
-      imgUrl: `url("${props.imgUrl}")`
+      imgUrl: `url("${props.imgUrl}")`,
     }))
 
     return { ...toRefs(state), styles, emit }
-  }
+  },
 })
 </script>
 

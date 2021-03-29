@@ -1,7 +1,7 @@
-import { reactive, computed } from '@vue/composition-api'
-import { fireEvent } from '../../event'
-import { createStore } from '../../store'
 import UI_CONSTANTS from '../constants'
+import { computed, reactive } from '@vue/composition-api'
+import { createStore } from '../../store'
+import { fireEvent } from '../../event'
 
 class CategoriesStore {
   id = 'categoriesStore'
@@ -10,11 +10,11 @@ class CategoriesStore {
     category: {},
     categories: [],
     parentCategories: computed(() =>
-      this.state.categories.filter(category => category.parentCategory == UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+      this.state.categories.filter((category) => category.parentCategory == UI_CONSTANTS.PARENT_CATEGORY_VALUE)
     ),
     subCategories: computed(() =>
-      this.state.categories.filter(category => category.parentCategory != UI_CONSTANTS.PARENT_CATEGORY_VALUE)
-    )
+      this.state.categories.filter((category) => category.parentCategory != UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+    ),
   })
 
   /*

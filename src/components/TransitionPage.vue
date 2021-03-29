@@ -1,7 +1,7 @@
 <template>
-  <transition :name="transitionName" :mode="transitionMode" :enter-active-class="transitionEnterActiveClass">
+  <Transition :name="transitionName" :mode="transitionMode" :enterActiveClass="transitionEnterActiveClass">
     <slot />
-  </transition>
+  </Transition>
 </template>
 
 <script>
@@ -9,13 +9,13 @@ const DEFAULT_TRANSITION = 'fade'
 const DEFAULT_TRANSITION_MODE = 'out-in'
 
 export default {
-  name: 'transition-page',
+  name: 'TransitionPage',
   data() {
     return {
       prevHeight: 0,
       transitionName: DEFAULT_TRANSITION,
       transitionMode: DEFAULT_TRANSITION_MODE,
-      transitionEnterActiveClass: ''
+      transitionEnterActiveClass: '',
     }
   },
   created() {
@@ -25,6 +25,7 @@ export default {
       if (transitionName === 'slide') {
         const toDepth = to.path.split('/').length
         const fromDepth = from.path.split('/').length
+
         transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
       }
 
@@ -47,7 +48,7 @@ export default {
 
       next()
     })
-  }
+  },
   /*methods: {
             beforeLeave(element) {
                 this.prevHeight = getComputedStyle(element).height
