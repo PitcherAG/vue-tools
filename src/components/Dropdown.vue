@@ -81,45 +81,45 @@
 
 <script>
 /* eslint-disable vue/require-prop-types, vue/no-unused-properties */
-import { computed, reactive, toRefs, onMounted } from '@vue/composition-api'
+import { computed, onMounted, reactive, toRefs } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 
 export default {
-  name: 'dropdown',
+  name: 'Dropdown',
   props: {
     value: {
-      required: true
+      required: true,
     },
     items: {
       type: Array,
-      required: false
+      required: false,
     },
     itemText: {
       type: String,
-      default: 'text'
+      default: 'text',
     },
     itemValue: {
       type: String,
-      default: 'value'
+      default: 'value',
     },
     icon: {
       type: String,
-      default: 'dropdown'
+      default: 'dropdown',
     },
     defaultText: {
       type: String,
-      default: () => $gettext('Select')
+      default: () => $gettext('Select'),
     },
     action: {
       type: String,
-      default: 'activate'
+      default: 'activate',
     },
     settings: Object,
     fluid: Boolean,
     compact: Boolean,
     selection: {
       type: Boolean,
-      default: true
+      default: true,
     },
     multiple: Boolean,
     searchable: Boolean,
@@ -127,21 +127,21 @@ export default {
     disabled: Boolean,
     loading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     error: Boolean,
     color: String,
     minWidth: {
-      type: [Number, String]
+      type: [Number, String],
     },
     maxWidth: {
       type: [Number, String],
-      default: '100%'
+      default: '100%',
     },
     size: {
       type: String,
-      validator: val => validateSize(val, 'Dropdown.vue')
-    }
+      validator: (val) => validateSize(val, 'Dropdown.vue'),
+    },
   },
   emits: ['input', 'onSelected'],
 
@@ -156,7 +156,7 @@ export default {
       isSearching: false,
       isSingleItem: false,
       hasCustomIcon: props.icon !== 'dropdown',
-      hasDefaultSlot: !!slots.default
+      hasDefaultSlot: !!slots.default,
     })
 
     const dropdownAttr = computed(() => ({
@@ -172,19 +172,21 @@ export default {
         disabled: props.disabled || props.loading,
         error: props.error,
         [props.color]: !!props.color,
-        [props.size]: !!props.size
+        [props.size]: !!props.size,
       },
       style: {
         minWidth: props.minWidth ? parsePxStyle(props.minWidth) : undefined,
-        maxWidth: parsePxStyle(props.maxWidth)
-      }
+        maxWidth: parsePxStyle(props.maxWidth),
+      },
     }))
 
     const selectedItemText = computed(() => {
       if (!props.multiple) {
-        const found = listItems.value.find(i => i.value === props.value)
+        const found = listItems.value.find((i) => i.value === props.value)
+
         return found ? found.text : ''
       }
+
       return ''
     })
 
@@ -199,14 +201,15 @@ export default {
         style: {
           zIndex: '100',
           display: 'inline-block',
-          right: state.hasCustomIcon || state.isSearching ? '1.5em' : undefined
-        }
+          right: state.hasCustomIcon || state.isSearching ? '1.5em' : undefined,
+        },
       }
 
       if (!props.selection && !props.multiple && props.clearable && props.value) {
         attr.style.right = '-10px'
         attr.style.top = '-2px'
       }
+
       return attr
     })
 
@@ -215,7 +218,8 @@ export default {
       if (!props.items) {
         return []
       }
-      return props.items.map(item => {
+
+      return props.items.map((item) => {
         if (item.constructor === Object) {
           return {
             text: item[props.itemText],
@@ -224,28 +228,29 @@ export default {
             description: item.description,
             icon: item.icon,
             image: item.image,
-            disabled: item.disabled
+            disabled: item.disabled,
           }
         } else {
           // if not key/value pair
           state.isSingleItem = true
+
           return {
             text: item,
             value: item,
-            type: 'item'
+            type: 'item',
           }
         }
       })
     })
 
-    const filteredItems = computed(() => listItems.value.filter(i => i.type === 'item'))
+    const filteredItems = computed(() => listItems.value.filter((i) => i.type === 'item'))
 
     // fomantic dropdown initialization
     const initDropdown = () => {
       const settings = $.extend(
         {
           action: props.action,
-          onChange: value => {
+          onChange: (value) => {
             if (props.searchable) {
               state.isSearching = false
 
@@ -259,10 +264,12 @@ export default {
 
             if (props.multiple || refs.dropdown.className.includes('multiple')) {
               const split = value.split(',')
+
               // usage with items
               if (props.items) {
-                returnValue = props.items.filter(item => {
+                returnValue = props.items.filter((item) => {
                   const findItem = state.isSingleItem ? item : item[props.itemValue]
+
                   if (split.includes(findItem)) {
                     return item
                   }
@@ -271,16 +278,17 @@ export default {
             } else {
               // usage with items
               if (props.items) {
-                returnValue = state.isSingleItem ? value : props.items.find(item => item[props.itemValue] === value)
+                returnValue = state.isSingleItem ? value : props.items.find((item) => item[props.itemValue] === value)
               }
             }
             emit('input', value)
             emit('onSelected', returnValue)
-          }
+          },
         },
         // additional settings for dropdown
         props.settings
       )
+
       // initialize
       $(refs.dropdown).dropdown(settings)
     }
@@ -295,14 +303,15 @@ export default {
       event.stopPropagation()
 
       let valueArray = props.value.split(',')
-      valueArray = valueArray.filter(v => v !== value)
+
+      valueArray = valueArray.filter((v) => v !== value)
 
       emit('input', valueArray.join(','))
       emit('onSelected', valueArray)
     }
 
     // function to clear
-    const clear = event => {
+    const clear = (event) => {
       event.preventDefault()
       event.stopPropagation()
       emit('input', '')
@@ -326,6 +335,7 @@ export default {
       if (!arg) {
         return $(refs.dropdown).dropdown(comm)
       }
+
       return $(refs.dropdown).dropdown(comm, arg)
     }
 
@@ -346,9 +356,9 @@ export default {
       clear,
       handleSearchBlur,
       toggleDropdown,
-      exec
+      exec,
     }
-  }
+  },
 }
 </script>
 

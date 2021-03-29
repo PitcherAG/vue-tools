@@ -7,12 +7,15 @@ export function getPitcherFolderPath() {
     throw Error('"zip" folder not found in path')
   }
   const pos = location.lastIndexOf('zip//')
+
   if (pos !== -1) {
     const parts = splitStringAt(location, pos)
+
     location = parts[0] + parts[1].replace('zip//', 'zip/')
   }
   location = location.split('zip/')[0]
-  return location.endsWith('/') ? location : location + '/'
+
+  return location.endsWith('/') ? location : `${location}/`
 }
 
 export function getFullFilepath(vUrl) {

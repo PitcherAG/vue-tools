@@ -3,10 +3,10 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{js,vue}',
-    '!src/index.js' // No need to cover bootstrap file
+    '!src/index.js', // No need to cover bootstrap file
   ],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
-  setupFiles: ['./tests/helpers/setup.js']
+  setupFiles: ['./tests/helpers/setup.js'],
 }

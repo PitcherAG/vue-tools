@@ -10,13 +10,13 @@ describe('gettext', () => {
   const config = {
     languages: {
       de: 'Deutsch',
-      en: 'English'
+      en: 'English',
     },
     translations: [{ category: 'app', type: 'source', patterns: [`/tmp/${time}.js`] }],
     output: {
       po: `/tmp/${time}/po`,
-      json: `/tmp/${time}/json`
-    }
+      json: `/tmp/${time}/json`,
+    },
   }
 
   fs.mkdirSync(`/tmp/${time}/po`, { recursive: true })
@@ -25,6 +25,7 @@ describe('gettext', () => {
 
   function parseFile(path) {
     const data = fs.readFileSync(path)
+
     return gettextParser.po.parse(data)
   }
 
@@ -34,13 +35,16 @@ describe('gettext', () => {
     await compileConfig(config)
 
     const pot = parseFile(`/tmp/${time}/po/app.pot`)
+
     expect(pot.translations['']).toHaveProperty('Hello World!')
 
     const po = parseFile(`/tmp/${time}/po/de/LC_MESSAGES/app.po`)
+
     expect(po.translations['']).toHaveProperty('Hello World!')
     expect(po.translations['']['Hello World!'].msgstr[0]).toEqual('Hallo Welt!')
 
     const json = fs.readFileSync(`/tmp/${time}/json/de/app.json`).toString()
+
     expect(json).toEqual('{"de":{"Hello World!":"Hallo Welt!"}}')
   })
 })

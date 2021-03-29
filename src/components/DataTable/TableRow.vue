@@ -23,36 +23,36 @@
 </template>
 
 <script>
-import { defineComponent, computed } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 import { mapper } from './table.helpers'
 
 export default defineComponent({
-  name: 'table-row',
+  name: 'TableRow',
   props: {
     fields: {
       type: Array,
-      required: true
+      required: true,
     },
     item: {
       type: Object,
-      required: true
+      required: true,
     },
     trClass: {
       type: [String, Function],
-      default: undefined
-    }
+      default: undefined,
+    },
   },
   setup(props, ctx) {
     const trAttr = computed(() => ({
-      class: typeof props.trClass === 'function' ? props.trClass(props.item) : props.trClass
+      class: typeof props.trClass === 'function' ? props.trClass(props.item) : props.trClass,
     }))
 
     const hasSlot = computed(() => ({
-      row: !!ctx.slots.row
+      row: !!ctx.slots.row,
     }))
 
     return { trAttr, emit: ctx.emit, hasSlot, mapper }
-  }
+  },
 })
 </script>
 

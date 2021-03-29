@@ -2,6 +2,7 @@ import { execBool, execReturn } from './contextExec'
 
 function parse(str, context, regex) {
   const result = ifParse(str)(context)
+
   return interpolate(result)(context, regex)
 }
 
@@ -19,6 +20,7 @@ function ifParse(str) {
       if (execBool(b, context)) {
         return c
       }
+
       return ''
     })
   }

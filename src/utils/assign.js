@@ -10,7 +10,7 @@ function assign(source, target) {
 }
 
 function assignUsingSourceKeys(target, source) {
-  Object.keys(target).forEach(key => {
+  Object.keys(target).forEach((key) => {
     if (Object.prototype.hasOwnProperty.call(source, key)) {
       target[key] = source[key]
     }

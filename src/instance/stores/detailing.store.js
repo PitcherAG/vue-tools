@@ -1,9 +1,9 @@
 import { PLATFORM } from '../../platform'
-import { fireEvent } from '../../event'
+import { computed, reactive } from '@vue/composition-api'
 import { createStore } from '../../store'
 import { eventHub } from '../../utils'
+import { fireEvent } from '../../event'
 import { loadConfig } from '../../config'
-import { reactive, computed } from '@vue/composition-api'
 
 const defaultOptions = { xPos: 50, yPos: 30, widthV: 160, heightV: 50 }
 
@@ -21,12 +21,13 @@ class DetailingStore {
     events: [],
     unsubmitted: [],
     syncEvents: [],
-    loggedIn: false
+    loggedIn: false,
   })
 
   async setLoggedIn(value) {
     if (value && !this.state.loggedIn) {
       const config = await loadConfig('homescreen')
+
       this.state.quickStartEnabled = !config.disableQuickStart
       this.state.quickPlanningEnabled = !config.disableQuickPlanning
     }
@@ -40,6 +41,7 @@ class DetailingStore {
 
   setCurrentContact(newContact, newAccount) {
     const isAdding = this.state.currentContact != null
+
     if (newContact == null && newAccount == null) {
       this.afterCallEnded()
     } else {
@@ -65,8 +67,10 @@ class DetailingStore {
   checkLogin(response) {
     if (response.loggedin == '0') {
       fireEvent('startDetailing', defaultOptions)
+
       return false
     }
+
     return true
   }
 
@@ -74,9 +78,9 @@ class DetailingStore {
     return {
       Id: value.Id,
       isAllDay: !!value.IsAllDay,
-      name: [value.AccountName, value.ContactName || ''].map(value => value).join(', '),
+      name: [value.AccountName, value.ContactName || ''].map((value) => value).join(', '),
       date: new Date(value.StartDateTime),
-      event: value
+      event: value,
     }
   }
 
@@ -106,11 +110,13 @@ export function useDetailing() {
 
 window.setCurrentContact = function(newContact, newAccount) {
   const store = useDetailingStore()
+
   store.setCurrentContact(newContact, newAccount)
 }
 
 export async function startStopDetailing(options) {
   const store = useDetailingStore()
+
   if (store.state.hasActiveCall) {
     fireEvent('stopDetailing', options || defaultOptions)
   } else {
@@ -127,6 +133,7 @@ export async function startStopDetailing(options) {
 
 export function startPreCall(options) {
   const store = useDetailingStore()
+
   if (!store.state.hasActiveCall) {
     fireEvent('startPreCall', options)
   }
@@ -134,8 +141,9 @@ export function startPreCall(options) {
 
 export async function getCrmEventsByDate(options, timestamp) {
   const store = useDetailingStore()
+
   store.parseEventData(
-    await fireEvent('getCrmEventsByDate', { target: options || defaultOptions, timestamp: timestamp }),
+    await fireEvent('getCrmEventsByDate', { target: options || defaultOptions, timestamp }),
     new Date(parseInt(timestamp))
   )
 }
@@ -150,13 +158,15 @@ export function resyncData() {
 
 export function removeEvent(Id) {
   const store = useDetailingStore()
-  fireEvent('removeEvent', { Id: Id })
-  store.state.syncEvents = store.state.syncEvents.filter(event => event.Id != Id)
+
+  fireEvent('removeEvent', { Id })
+  store.state.syncEvents = store.state.syncEvents.filter((event) => event.Id != Id)
 }
 
 export function removeAllEvents() {
   const store = useDetailingStore()
-  store.state.syncEvents.forEach(event => {
+
+  store.state.syncEvents.forEach((event) => {
     fireEvent('removeEvent', { Id: event.Id })
   })
   store.state.syncEvents = []
@@ -164,15 +174,18 @@ export function removeAllEvents() {
 
 window.loggedOut = function() {
   const store = useDetailingStore()
+
   store.setLoggedIn(false)
 }
 
 window.updateCRM = function() {
   const store = useDetailingStore()
+
   store.setLoggedIn(true)
 }
 
 window.enableCrm = function(enabled) {
   const store = useDetailingStore()
+
   store.setLoggedIn(enabled === 'true')
 }

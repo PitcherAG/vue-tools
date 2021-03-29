@@ -1,10 +1,11 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Calendar from '@/components/Calendar'
 import CompositionApi from '@vue/composition-api'
 import { TranslationPlugin } from '@/'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import { useParamsStore } from '@/params'
-import Calendar from '@/components/Calendar'
 
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 localVue.use(TranslationPlugin)
 
@@ -12,6 +13,7 @@ const dateValue = '2020-06-12T14:20:00.000+0000'
 const minDate = '2020-08-02T00:00:00.000'
 
 const params = useParamsStore()
+
 params.state.user = { LocaleSidKey: 'en-US' }
 
 describe('Calendar.vue', () => {
@@ -19,14 +21,14 @@ describe('Calendar.vue', () => {
     localVue,
     propsData: {
       value: '',
-      type: 'date'
-    }
+      type: 'date',
+    },
   })
 
   // Helper function
   async function updateValue(key, value) {
     wrapper.setProps({
-      [key]: value
+      [key]: value,
     })
     await wrapper.vm.$nextTick()
   }

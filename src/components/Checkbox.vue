@@ -7,17 +7,17 @@
 
 <script>
 /* eslint-disable vue/require-prop-types, vue/no-unused-properties */
-import { onMounted, computed, watch } from '@vue/composition-api'
+import { computed, onMounted, watch } from '@vue/composition-api'
 import { validateSize } from './mixins'
 
 export default {
-  name: 'checkbox',
+  name: 'Checkbox',
   props: {
     value: {
-      required: true
+      required: true,
     },
     label: {
-      type: String
+      type: String,
     },
     radio: Boolean,
     toggle: Boolean,
@@ -27,13 +27,13 @@ export default {
     fitted: Boolean,
     uncheckable: {
       type: Boolean,
-      default: true
+      default: true,
     },
     inverted: Boolean,
     size: {
       type: String,
-      validator: val => validateSize(val, 'Dropdown.vue')
-    }
+      validator: (val) => validateSize(val, 'Dropdown.vue'),
+    },
   },
   emits: ['input', 'beforeChecked', 'onChecked', 'beforeUnchecked', 'onUnchecked'],
   setup(props, { refs, emit, root }) {
@@ -53,8 +53,8 @@ export default {
         disabled: !!props.disabled,
         fitted: !!props.fitted,
         inverted: !!props.inverted,
-        [props.size]: !!props.size
-      }
+        [props.size]: !!props.size,
+      },
     }))
 
     const initCheckbox = () => {
@@ -71,7 +71,7 @@ export default {
         onUnchecked: async () => {
           await root.$nextTick()
           emit('onUnchecked', props.value)
-        }
+        },
       })
     }
 
@@ -89,10 +89,11 @@ export default {
       if (!arg) {
         return $(refs.checkbox).progress(comm)
       }
+
       return $(refs.checkbox).progress(comm, arg)
     }
 
     return { checkboxAttr, exec }
-  }
+  },
 }
 </script>

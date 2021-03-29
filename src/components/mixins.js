@@ -9,16 +9,18 @@ export const validateSize = (val, compName) => {
     val === 'big' ||
     val === 'huge' ||
     val === 'massive'
+
   if (!valid) {
     console.error(`[Vue warn]: Validation error in ${compName}!`)
     console.error('[Vue warn]: prop.size is not valid!')
     throw `Accepted values: tiny | small | medium | large | big | huge | massive`
   }
+
   return valid
 }
 
 // Px & Percentage parser
-export const parsePxStyle = val => {
+export const parsePxStyle = (val) => {
   return val.toString().includes('%') || val.toString().includes('px') ? val : `${parseInt(val)}px`
 }
 
@@ -39,8 +41,10 @@ export function countLines(target) {
     const padding_bottom = parseInt(style.getPropertyValue('padding-bottom'))
     const border_top = parseInt(style.getPropertyValue('border-top-width'))
     const border_bottom = parseInt(style.getPropertyValue('border-bottom-width'))
+
     height = height - padding_top - padding_bottom - border_top - border_bottom
   }
   const lines = Math.ceil(height / line_height)
+
   return lines
 }
