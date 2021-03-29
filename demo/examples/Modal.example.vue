@@ -3,7 +3,7 @@
     <h3>Modal</h3>
     <div class="ui divider" />
     <div class="ui button" @click="show = !show">Show modal</div>
-    <modal v-model="show" title="Register" title-icon="user" approve-text="Submit" deny-text="Cancel" hide-close-icon>
+    <Modal v-model="show" title="Register" titleIcon="user" approveText="Submit" denyText="Cancel" hideCloseIcon>
       <!-- <template #header>
                 <i class="setting icon" />
                 Settings
@@ -27,7 +27,7 @@
       <!-- <template #actions>
                 <button class="ui button primary">Submit</button>
             </template> -->
-    </modal>
+    </Modal>
     <br />
     <br />
   </div>
@@ -38,18 +38,18 @@ import Modal from '@/components/Modal'
 import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
-  name: 'modal-ex',
+  name: 'ModalEx',
   components: {
-    Modal
+    Modal,
   },
   props: {},
   setup() {
     const state = reactive({
       show: false,
-      agreed: false
+      agreed: false,
     })
 
     return { ...toRefs(state) }
-  }
+  },
 }
 </script>

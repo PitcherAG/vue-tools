@@ -5,12 +5,11 @@
       <option v-for="page in pages" :key="page.value" :value="page.value">{{ page.text }}</option>
     </select>
     <div class="ui divider" />
-    <component :is="selectedPage" />
+    <Component :is="selectedPage" />
   </div>
 </template>
 
 <script>
-import { ref } from '@vue/composition-api'
 import CalendarEx from './examples/Calendar.example.vue'
 import DataTableEx from './examples/DataTable.example.vue'
 import DropdownEx from './examples/Dropdown.example.vue'
@@ -19,9 +18,10 @@ import FilterEx from './examples/FilterDropdown.example.vue'
 import ModalEx from './examples/Modal.example.vue'
 import NumpadInputEx from './examples/NumpadInput.example.vue'
 import ProgressBarEx from './examples/ProgressBar.example.vue'
+import { ref } from '@vue/composition-api'
 
 export default {
-  name: 'demo',
+  name: 'Demo',
   components: {
     CalendarEx,
     DataTableEx,
@@ -30,49 +30,50 @@ export default {
     FilterEx,
     ModalEx,
     NumpadInputEx,
-    ProgressBarEx
+    ProgressBarEx,
   },
   setup() {
     const selectedPage = ref('CalendarEx')
     const pages = ref([
       {
         text: 'Modal',
-        value: 'ModalEx'
+        value: 'ModalEx',
       },
       {
         text: 'Numpad input',
-        value: 'NumpadInputEx'
+        value: 'NumpadInputEx',
       },
       {
         text: 'Calendar',
-        value: 'CalendarEx'
+        value: 'CalendarEx',
       },
       {
         text: 'Datatable',
-        value: 'DataTableEx'
+        value: 'DataTableEx',
       },
       {
         text: 'Dropdown',
-        value: 'DropdownEx'
+        value: 'DropdownEx',
       },
       {
         text: 'Filter Dropdown',
-        value: 'FilterEx'
+        value: 'FilterEx',
       },
       {
         text: 'File Card',
-        value: 'FileCardEx'
+        value: 'FileCardEx',
       },
       {
         text: 'Progress Bar',
-        value: 'ProgressBarEx'
-      }
+        value: 'ProgressBarEx',
+      },
     ])
+
     return {
       pages,
-      selectedPage
+      selectedPage,
     }
-  }
+  },
 }
 </script>
 

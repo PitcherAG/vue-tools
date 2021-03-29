@@ -9,7 +9,7 @@
       :class="{ 'mt-5': inputs[i - 1] && inputs[i - 1].group !== inp.group }"
     >
       <span class="mr-4">Group: {{ inp.group }}</span>
-      <numpad-input v-model="inp.val" :group="inp.group" />
+      <NumpadInput v-model="inp.val" :group="inp.group" />
     </div>
     <br />
     <button @click="add">add</button>
@@ -22,9 +22,9 @@ import NumpadInput from '@/components/NumpadInput'
 import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
-  name: 'numpad-ex',
+  name: 'NumpadEx',
   components: {
-    NumpadInput
+    NumpadInput,
   },
   props: {},
   setup() {
@@ -33,39 +33,39 @@ export default {
         {
           id: 0,
           group: 'test',
-          val: '55.55'
+          val: '55.55',
         },
         {
           id: 1,
           group: 'test',
-          val: ''
+          val: '',
         },
         {
           id: 2,
           group: 'test2',
-          val: ''
+          val: '',
         },
         {
           id: 3,
           group: 'test2',
-          val: ''
-        }
-      ]
+          val: '',
+        },
+      ],
     })
 
     const add = () => {
       state.inputs.push({
         id: state.inputs.length,
         group: 'test3',
-        val: ''
+        val: '',
       })
     }
 
     const remove = () => {
-      state.inputs = state.inputs.filter(i => i.id !== state.inputs.length - 1)
+      state.inputs = state.inputs.filter((i) => i.id !== state.inputs.length - 1)
     }
 
     return { ...toRefs(state), add, remove }
-  }
+  },
 }
 </script>

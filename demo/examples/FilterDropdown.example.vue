@@ -5,12 +5,12 @@
 
     <!-- default usage -->
     <h4>Default usage</h4>
-    <filter-dropdown v-model="recordTypeSaved" title="Cities" :items="recordTypes" @input="test" />
+    <FilterDropdown v-model="recordTypeSaved" title="Cities" :items="recordTypes" @input="test" />
     <br />
     <br />
 
     <h4>String array example</h4>
-    <filter-dropdown
+    <FilterDropdown
       v-model="recordTypeSingleSaved"
       title="Cities"
       color="blue"
@@ -24,13 +24,13 @@
     <h4>Complex example</h4>
     <div class="d-flex">
       <template v-for="(f, i) in filters">
-        <filter-dropdown
+        <FilterDropdown
           :key="i"
           v-model="f.val"
           class="mx-1"
           :title="f.name"
           :items="f.options"
-          return-type="object"
+          returnType="object"
           basic
           fluid
           @input="test"
@@ -41,13 +41,13 @@
     <h4>Performance example with {{ perfList.length }} items - pagination enabled</h4>
     <div class="ui grid">
       <div class="four wide column">
-        <filter-dropdown
+        <FilterDropdown
           v-model="selectedPerfItems"
           color="blue"
           basic
           fluid
           title="Names"
-          :items-per-page="20"
+          :itemsPerPage="20"
           :items="perfList"
           @input="inputTest"
         />
@@ -63,9 +63,9 @@ import perfList from './dummy.fiterDropdown'
 import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
-  name: 'filterdropdown-ex',
+  name: 'FilterdropdownEx',
   components: {
-    FilterDropdown
+    FilterDropdown,
   },
   props: {},
   setup() {
@@ -80,47 +80,47 @@ export default {
         {
           text: 'Cantons',
           type: 'header',
-          description: 5
+          description: 5,
         },
         {
           text: 'Zürich',
           value: 'zurich',
-          description: 15
+          description: 15,
         },
         {
-          type: 'divider'
+          type: 'divider',
         },
         {
           text: 'Aargau',
           value: 'aargau',
-          description: 2
+          description: 2,
         },
         {
           text: 'Vaud',
           value: 'vaud',
           disabled: true,
-          description: 0
+          description: 0,
         },
         {
           text: 'Ticino',
           value: 'ticino',
-          description: 3
+          description: 3,
         },
         {
           text: 'Bern',
           value: 'bern',
-          description: 12
+          description: 12,
         },
         {
           text: 'Lucerne',
           value: 'lucerne',
-          description: 123
+          description: 123,
         },
         {
           text: 'Geneva',
           value: 'geneva',
-          description: 44
-        }
+          description: 44,
+        },
       ],
       recordTypesSingle: ['Zurich', 'Ticino', 'Vaud', 'Lucerne', 'Geneva'],
       recordTypeSingleSaved: [],
@@ -138,8 +138,8 @@ export default {
             { value: '1A Pharma', text: '1A Pharma' },
             { value: 'Novartis CH', text: 'Novartis CH' },
             { value: 'Novartis DG', text: 'Novartis DG' },
-            { value: 'EBEWE', text: 'EBEWE' }
-          ]
+            { value: 'EBEWE', text: 'EBEWE' },
+          ],
         },
         {
           field: 'product.SCT_Brand__c',
@@ -247,8 +247,8 @@ export default {
             { value: 'qw84', text: 'qw84' },
             { value: 'qw89', text: 'qw89' },
             { value: 'qw65', text: 'qw65' },
-            { value: 'qw1', text: 'qw1' }
-          ]
+            { value: 'qw1', text: 'qw1' },
+          ],
         },
         {
           field: 'product.SCT_Dosage_Form__c',
@@ -265,12 +265,12 @@ export default {
             { value: 'TABLET ORAL DISINTEGRATING', text: 'TABLET, ORAL DISINTEGRATING' },
             {
               value: 'POWDER FOR SOLUTION FOR INJECTION/INFUSION',
-              text: 'POWDER FOR SOLUTION FOR INJECTION/INFUSION'
+              text: 'POWDER FOR SOLUTION FOR INJECTION/INFUSION',
             },
             { value: 'LIQUID IN AMPOULE', text: 'LIQUID IN AMPOULE' },
             { value: 'TABLET SUGAR-COATED', text: 'TABLET, SUGAR-COATED' },
-            { value: 'LIQUID AS DROPS', text: 'LIQUID AS DROPS' }
-          ]
+            { value: 'LIQUID AS DROPS', text: 'LIQUID AS DROPS' },
+          ],
         },
         {
           field: 'product.SCT_Molecule__c',
@@ -378,10 +378,10 @@ export default {
             { value: 'qw84', text: 'qw84' },
             { value: 'qw89', text: 'qw89' },
             { value: 'qw65', text: 'qw65' },
-            { value: 'qw1', text: 'qw1' }
-          ]
-        }
-      ]
+            { value: 'qw1', text: 'qw1' },
+          ],
+        },
+      ],
     })
 
     function test(v) {
@@ -389,6 +389,6 @@ export default {
     }
 
     return { ...toRefs(state), test, inputTest }
-  }
+  },
 }
 </script>

@@ -4,7 +4,7 @@
     <div class="ui divider" />
 
     <!-- default usage -->
-    <dropdown
+    <Dropdown
       v-model="recordTypeSaved"
       :items="recordTypes"
       clearable
@@ -21,7 +21,7 @@
     <br />
 
     <!-- slot example -->
-    <dropdown v-model="slotModel" class="ui dropdown left pointing icon button">
+    <Dropdown v-model="slotModel" class="ui dropdown left pointing icon button">
       <i class="settings icon" />
       <div class="menu">
         <div class="ui left search icon input">
@@ -46,13 +46,13 @@
           Discussion
         </div>
       </div>
-    </dropdown>
+    </Dropdown>
     <br />
     <br />
     <br />
 
     <!-- Advanced slot example -->
-    <dropdown v-model="slotModel2" class="fluid multiple search selection">
+    <Dropdown v-model="slotModel2" class="fluid multiple search selection">
       <input type="hidden" name="country" />
       <i class="dropdown icon" />
       <div v-if="!slotModel2 || slotModel2.length < 1" class="default">Select Country</div>
@@ -163,7 +163,7 @@
           United States
         </div>
       </div>
-    </dropdown>
+    </Dropdown>
     <br />
     <br />
     <br />
@@ -175,9 +175,9 @@ import Dropdown from '@/components/Dropdown'
 import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
-  name: 'dropdown-ex',
+  name: 'DropdownEx',
   components: {
-    Dropdown
+    Dropdown,
   },
   props: {},
   setup() {
@@ -186,45 +186,45 @@ export default {
       recordTypes: [
         {
           text: 'Cantons',
-          type: 'header'
+          type: 'header',
         },
         {
           text: 'Zürich',
           value: 'zurich',
-          icon: 'cog'
+          icon: 'cog',
         },
         {
           text: 'Aargau',
           value: 'aargau',
-          type: 'item'
+          type: 'item',
         },
         {
           text: 'Vaud',
           value: 'vaud',
-          disabled: true
+          disabled: true,
         },
         {
           text: 'Ticino',
-          value: 'ticino'
+          value: 'ticino',
         },
         {
           text: 'Bern',
-          value: 'bern'
+          value: 'bern',
         },
         {
           text: 'Lucerne',
           value: 'lucerne',
           // image: 'https://fomantic-ui.com/images/avatar/small/jenny.jpg',
-          icon: 'users'
+          icon: 'users',
         },
         {
           text: 'Geneva',
-          value: 'geneva'
-        }
+          value: 'geneva',
+        },
       ],
       recordTypesSingle: ['Zurich', 'Ticino', 'Vaud', 'Lucerne', 'Geneva'],
       slotModel: '',
-      slotModel2: []
+      slotModel2: [],
     })
 
     function setValue() {
@@ -237,6 +237,6 @@ export default {
     }
 
     return { ...toRefs(state), setValue, onInput }
-  }
+  },
 }
 </script>

@@ -4,45 +4,45 @@
     <div class="ui divider" />
 
     <!-- Container -->
-    <file-card-container>
-      <file-card
+    <FileCardContainer>
+      <FileCard
         v-for="f in data"
         :key="f.ID"
-        :img-url="f.s3Url"
+        :imgUrl="f.s3Url"
         :body="f.body"
         :keywords="f.keywords"
         :date="f.startDate.toString()"
-        :is-new="f.isNew"
-        :is-favorite="f.isFavorite"
+        :isNew="f.isNew"
+        :isFavorite="f.isFavorite"
         @onClickDownload="test(f)"
       />
-    </file-card-container>
+    </FileCardContainer>
   </div>
 </template>
 
 <script>
 import FileCard from '@/components/FileCard/FileCard.vue'
 import FileCardContainer from '@/components/FileCard/FileCardContainer.vue'
-import { reactive, toRefs } from '@vue/composition-api'
 import data from './dummy.filecard.js'
+import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
-  name: 'filecard-ex',
+  name: 'FilecardEx',
   components: {
     FileCard,
-    FileCardContainer
+    FileCardContainer,
   },
   props: {},
   setup() {
     const state = reactive({
-      data
+      data,
     })
 
-    const test = i => {
+    const test = (i) => {
       console.log(i)
     }
 
     return { ...toRefs(state), test }
-  }
+  },
 }
 </script>

@@ -5,7 +5,7 @@
     <div class="ui input">
       <input v-model="options.searchFor" type="text" />
     </div>
-    <data-table class="celled" :data="data" :fields="fields" v-bind="options">
+    <DataTable class="celled" :data="data" :fields="fields" v-bind="options">
       <!-- <template #prepend-tbody="{ mapper }">
                 <tr>
                     <td colspan="2">Prepend Test</td>
@@ -76,23 +76,23 @@
       <!-- <template #no-data-template>
                 <span class="ui text large grey center">Test</span>
             </template> -->
-    </data-table>
+    </DataTable>
   </div>
 </template>
 
 <script>
 /* eslint-disable vue/no-unused-components */
 
-import Pagination from '@/components/DataTable/Pagination'
 import DataTable from '@/components/DataTable/DataTable.vue'
-import { reactive, toRefs } from '@vue/composition-api'
+import Pagination from '@/components/DataTable/Pagination'
 import data from './dummy.table.js'
+import { reactive, toRefs } from '@vue/composition-api'
 
 export default {
-  name: 'datatable-ex',
+  name: 'DatatableEx',
   components: {
     Pagination,
-    DataTable
+    DataTable,
   },
   props: {},
   setup() {
@@ -107,17 +107,17 @@ export default {
         searchFields: ['title'],
         fixedHeader: false,
         width: '100%',
-        perPage: 10
+        perPage: 10,
       },
       fields: [
         {
           title: 'Id',
           dataField: 'id',
-          hide: true
+          hide: true,
         },
         {
           title: 'Group',
-          dataField: 'group'
+          dataField: 'group',
         },
         {
           title: 'Title',
@@ -128,14 +128,14 @@ export default {
           tdClass: 'left aligned',
           sortable: true,
           tooltip: 'top left',
-          tooltipText: 'Testing the tooltip'
+          tooltipText: 'Testing the tooltip',
         },
         {
           title: 'Url',
           dataField: 'url',
           thClass: 'left aligned',
           tdClass: 'left aligned',
-          transform: val => `url: ${val}`
+          transform: (val) => `url: ${val}`,
         },
         {
           title: 'Test.Relation',
@@ -143,7 +143,7 @@ export default {
           thClass: 'left aligned',
           tdClass: 'left aligned',
           sortable: true,
-          sortType: 'string'
+          sortType: 'string',
         },
         {
           title: 'Count',
@@ -151,7 +151,7 @@ export default {
           thClass: 'center aligned',
           tdClass: 'center aligned',
           sortable: true,
-          sortType: 'number'
+          sortType: 'number',
         },
         {
           title: 'Total',
@@ -159,7 +159,7 @@ export default {
           thClass: 'right aligned',
           tdClass: 'right aligned',
           sortable: true,
-          sortType: 'number'
+          sortType: 'number',
         },
         {
           title: 'Created Date',
@@ -167,22 +167,22 @@ export default {
           thClass: 'center aligned',
           tdClass: 'center aligned',
           sortable: true,
-          sortType: 'date'
+          sortType: 'date',
         },
         {
           title: 'Actions',
           slotName: 'actions',
           thClass: 'center aligned',
-          tdClass: 'center aligned'
-        }
-      ]
+          tdClass: 'center aligned',
+        },
+      ],
     })
 
-    const test = i => {
+    const test = (i) => {
       console.log(i)
     }
 
     return { ...toRefs(state), test }
-  }
+  },
 }
 </script>
