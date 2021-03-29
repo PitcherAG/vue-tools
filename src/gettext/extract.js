@@ -10,7 +10,7 @@ async function extractConfig(config) {
   const output = config.output && config.output.po ? config.output.po : 'locale'
 
   for (const t of config.translations) {
-    if (t.type == 'source') {
+    if (t.type === 'source') {
       console.log(`[config-gettext-extract] category: ${t.category}`)
       await extractFile(
         t.patterns || ['src/**/*.js', 'src/**/*.vue', 'src/**/*.html'],

@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return, eqeqeq */
 export function watchLocalStorage(name) {
   return new Promise((resolve) => {
     const storage = window.localStorage

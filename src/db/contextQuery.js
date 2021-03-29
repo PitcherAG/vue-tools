@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { query as oQuery } from './query'
 import { renderContext } from '../utils'
 import { useConfigStore } from '../config'

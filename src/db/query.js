@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { PLATFORM } from '../platform'
 import { fireEvent } from '../event'
 

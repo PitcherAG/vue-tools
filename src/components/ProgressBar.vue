@@ -77,7 +77,7 @@ export default {
         if (!valid) {
           console.error('[Vue warn]: Validation error in ProgressBar.vue!')
           console.error('[Vue warn]: prop.attached is not valid!')
-          throw `Accepted values: top | bottom`
+          throw new Error(`Accepted values: top | bottom`)
         }
 
         return valid

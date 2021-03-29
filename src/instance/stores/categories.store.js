@@ -10,10 +10,10 @@ class CategoriesStore {
     category: {},
     categories: [],
     parentCategories: computed(() =>
-      this.state.categories.filter((category) => category.parentCategory == UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+      this.state.categories.filter((category) => category.parentCategory === UI_CONSTANTS.PARENT_CATEGORY_VALUE)
     ),
     subCategories: computed(() =>
-      this.state.categories.filter((category) => category.parentCategory != UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+      this.state.categories.filter((category) => category.parentCategory !== UI_CONSTANTS.PARENT_CATEGORY_VALUE)
     ),
   })
 

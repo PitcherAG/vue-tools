@@ -12,7 +12,7 @@ class DetailingStore {
   state = reactive({
     currentContact: null,
     currentAccount: null,
-    hasActiveCall: computed(() => this.state.currentContact != null),
+    hasActiveCall: computed(() => this.state.currentContact !== null),
     todaysCalls: [],
     isFilterActive: false,
     quickStartEnabled: true,
@@ -40,9 +40,9 @@ class DetailingStore {
   }
 
   setCurrentContact(newContact, newAccount) {
-    const isAdding = this.state.currentContact != null
+    const isAdding = this.state.currentContact !== null
 
-    if (newContact == null && newAccount == null) {
+    if (newContact === null && newAccount === null) {
       this.afterCallEnded()
     } else {
       try {
@@ -51,20 +51,21 @@ class DetailingStore {
       } catch (e) {
         console.log(e)
       }
-      this.state.isFilterActive = this.state.currentContact != null && !isAdding
+      this.state.isFilterActive = this.state.currentContact !== null && !isAdding
     }
     eventHub.$emit('contactChanged')
   }
 
   setQuickStart(response) {
     if (typeof response.quickstartenabled !== 'undefined') {
-      this.state.quickStartEnabled = response.quickstartenabled == '1'
+      this.state.quickStartEnabled = response.quickstartenabled === '1'
     } else {
       this.state.quickStartEnabled = true
     }
   }
 
   checkLogin(response) {
+    // eslint-disable-next-line eqeqeq
     if (response.loggedin == '0') {
       fireEvent('startDetailing', defaultOptions)
 
@@ -160,7 +161,7 @@ export function removeEvent(Id) {
   const store = useDetailingStore()
 
   fireEvent('removeEvent', { Id })
-  store.state.syncEvents = store.state.syncEvents.filter((event) => event.Id != Id)
+  store.state.syncEvents = store.state.syncEvents.filter((event) => event.Id !== Id)
 }
 
 export function removeAllEvents() {

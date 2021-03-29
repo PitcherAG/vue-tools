@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { Field } from './sfdcField'
 import { createStore } from '../store'
 import { getSchema } from '../app'

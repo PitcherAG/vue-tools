@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { PLATFORM } from '../platform'
 import { useI18nStore } from '../i18n/i18n'
 import { useParamsStore } from '../params'
@@ -29,10 +30,12 @@ export function formatCurrency(value, currency, currencyDisplay = 'symbol') {
   }
 
   if (currencyDisplayTypes.indexOf(currencyDisplay) === -1) {
-    throw `Provided currency display type is invalid. Possible values are: ${currencyDisplayTypes.join(', ')}`
+    throw new Error(
+      `Provided currency display type is invalid. Possible values are: ${currencyDisplayTypes.join(', ')}`
+    )
   }
 
-  if (!locale) throw 'locale not defined'
+  if (!locale) throw new Error('Locale not defined')
   let result = new Intl.NumberFormat(locale, { style: 'currency', currency, currencyDisplay }).format(value)
 
   if (minus) {
@@ -49,7 +52,7 @@ export function formatCurrency(value, currency, currencyDisplay = 'symbol') {
 export function formatDecimal(value, maximumFractionDigits = 1, minimumFractionDigits = 0) {
   const locale = useParamsStore().locale || useI18nStore().state.locale
 
-  if (!locale) throw 'locale not defined'
+  if (!locale) throw new Error('locale not defined')
 
   return new Intl.NumberFormat(locale, { maximumFractionDigits, minimumFractionDigits }).format(value)
 }
@@ -57,7 +60,7 @@ export function formatDecimal(value, maximumFractionDigits = 1, minimumFractionD
 export function formatPercent(value, maximumFractionDigits = 1, minimumFractionDigits = 0) {
   const locale = useParamsStore().locale || useI18nStore().state.locale
 
-  if (!locale) throw 'locale not defined'
+  if (!locale) throw new Error('locale not defined')
 
   return new Intl.NumberFormat(locale, { maximumFractionDigits, minimumFractionDigits }).format(value)
 }

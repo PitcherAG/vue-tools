@@ -1,3 +1,5 @@
+/* eslint-disable eqeqeq */
+/* eslint-disable no-param-reassign */
 import UI_CONSTANTS from '../constants'
 import Vue from 'vue'
 import { computed, reactive } from '@vue/composition-api'
@@ -24,7 +26,7 @@ class FilesStore {
   */
   isFileExpiredOrNotReady(now, startDate, endDate) {
     if (typeof startDate === 'undefined' || typeof endDate === 'undefined') return false
-    if (startDate == null || endDate == null) return false
+    if (startDate === null || endDate === null) return false
     if (startDate == 0 || endDate == 0) return false
 
     return startDate > now || endDate < now
@@ -94,15 +96,15 @@ class FilesStore {
   */
   parseSinglePresentation(file) {
     try {
-      if (file.isCustom != UI_CONSTANTS.IGNORE_CUSTOM_TYPE) {
-        if (typeof file.ID === 'undefined' || file.ID == null) {
+      if (file.isCustom !== UI_CONSTANTS.IGNORE_CUSTOM_TYPE) {
+        if (typeof file.ID === 'undefined' || file.ID === null) {
           file = this.parseCustomPdf(file)
         }
-        if (file.vSubFolder == null) {
+        if (file.vSubFolder === null) {
           file.containsMultiple = true
           file.vSubFolder = file.slideOrder.split(',')[0].split('|')[0]
           file.ID = file.slideOrder.split(',')[0].split('|')[0]
-          if (file.vSubFolder.indexOf('_') == -1) {
+          if (file.vSubFolder.indexOf('_') === -1) {
             file.isCustomPdf = true
           } else {
             file.ID = `${parseInt(file.ID)}`
@@ -133,15 +135,15 @@ class FilesStore {
       Custom decks are retrived with presentation objects, this adds them to custom list
   */
   addFileAsCustom(file) {
-    let original = this.state.files.find((f) => f.ID == file.ID)
+    let original = this.state.files.find((f) => f.ID === file.ID)
 
     if (original) {
       this.createAppendCustomFile(original, file)
     } else {
-      const originalSlide = this.state.slides.find((f) => f.vSubfolder == file.vSubFolder)
+      const originalSlide = this.state.slides.find((f) => f.vSubfolder === file.vSubFolder)
 
       if (originalSlide) {
-        original = this.state.files.find((f) => f.ID == originalSlide.ID)
+        original = this.state.files.find((f) => f.ID === originalSlide.ID)
         if (original) {
           file.ID = original.ID
           this.createAppendCustomFile(original, file)
@@ -155,7 +157,7 @@ class FilesStore {
   */
   mergePresentation(file) {
     this.state.presentations.push(file)
-    const original = this.state.files.find((f) => f.ID == file.ID)
+    const original = this.state.files.find((f) => f.ID === file.ID)
 
     if (original) {
       Object.assign(original, file)
@@ -183,7 +185,7 @@ class FilesStore {
       This filter might be due to now downloaded content(ios), or when call with pre selected is started (all platforms)
   */
   setAllowedIds(fileIds) {
-    if (fileIds && fileIds.length > 0 && this.state.initialAllowedIDs == null) {
+    if (fileIds && fileIds.length > 0 && this.state.initialAllowedIDs === null) {
       this.state.initialAllowedIDs = fileIds
     }
     this.state.allowedIDs = fileIds || []

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 function removeRoot(path) {
   const splits = path.split('.')
 

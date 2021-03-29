@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import { fireEvent } from '../../event'
 import { useFilesStore } from '../stores/index'
 
@@ -129,7 +130,7 @@ function loadInteractive(file, parameters) {
   let allowPortrait = 0
   let showBar = 1
 
-  if (file.extra2 != null) {
+  if (file.extra2 !== null) {
     const parts = file.extra2.split('|')
 
     showBar = parts.length > 0 && parts[0] == 1 ? 0 : 1

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { launchContentWithID, launchFileWithKeyword } from '../app'
 import { renderContext } from './renderContext'
 

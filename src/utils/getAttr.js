@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return, no-param-reassign */
+
 export function getAttr(obj, path) {
   path = path.replace(/\[(\w+)\]/g, '.$1') // convert indexes to properties
   path = path.replace(/^\./, '') // strip a leading dot

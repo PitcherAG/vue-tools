@@ -42,7 +42,7 @@ export function getLastCategory() {
     typeof localStorage !== 'undefined' ? localStorage.getItem(`${store.state.appID}.mainNavItem`) : null
 
   if (store.state.categories && lastCategoryId) {
-    return store.state.categories.find((category) => category.ID == lastCategoryId)
+    return store.state.categories.find((category) => category.ID === lastCategoryId)
   } else {
     return null
   }
@@ -57,7 +57,7 @@ export function getInitialCategory() {
   if (store.state.categories) {
     return (
       store.state.categories.find((category) => category.isDefault) ||
-      store.state.categories.find((category) => category.parentCategory == UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+      store.state.categories.find((category) => category.parentCategory === UI_CONSTANTS.PARENT_CATEGORY_VALUE)
     )
   }
 

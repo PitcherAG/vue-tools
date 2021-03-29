@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 if (!Date.prototype.adjustDate) {
   Date.prototype.adjustDate = function(days) {
     let date

@@ -15,7 +15,7 @@ export function formatDate(date, showYear = true) {
     options = { month: 'short', day: '2-digit' }
   }
 
-  if (!locale) throw 'locale not defined'
+  if (!locale) throw new Error('locale not defined')
 
   const m = moment(date)
   const d = m.toDate()
@@ -37,7 +37,7 @@ export function formatTime(date, showSeconds = false) {
     options.seconds = '2-digit'
   }
 
-  if (!locale) throw 'locale not defined'
+  if (!locale) throw new Error('locale not defined')
 
   const m = moment(date)
   const d = m.toDate()

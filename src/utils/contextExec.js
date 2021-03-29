@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 export function execBool(func, context, printOnError) {
   try {
     const ref = new Function(`with(this){\nreturn Boolean(${func})\n}`)
