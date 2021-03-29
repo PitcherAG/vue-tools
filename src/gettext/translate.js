@@ -40,7 +40,7 @@ async function translateConfig(config) {
         continue
       }
 
-      if (t.type == 'source') {
+      if (t.type === 'source') {
         await translateFile(
           path.join(output, `${t.category}.pot`),
           language,

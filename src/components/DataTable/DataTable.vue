@@ -178,6 +178,7 @@
 </template>
 
 <script>
+/* eslint-disable vue/no-side-effects-in-computed-properties, no-lonely-if */
 import Pagination from './Pagination.vue'
 import TableRow from './TableRow.vue'
 import groupBy from 'lodash/groupBy'
@@ -397,6 +398,7 @@ export default defineComponent({
         })
       // set sorting by
       state.sort.by = field.dataField
+      // eslint-disable-next-line default-case
       switch (state.sort.order) {
         case '':
           state.sort.order = 'asc'

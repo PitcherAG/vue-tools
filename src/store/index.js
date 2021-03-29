@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { computed, reactive, watch } from '@vue/composition-api'
 import { getAttr } from '../utils/getAttr'
 
@@ -91,7 +92,7 @@ export function transform(obj) {
 
 export function createStore(obj) {
   if (!obj.id) {
-    throw 'store needs an id attribute'
+    throw new Error('store needs an id attribute')
   }
   if (stores && stores[obj.id]) {
     return stores[obj.id]

@@ -69,7 +69,7 @@
 </template>
 
 <script>
-/* eslint-disable no-unused-vars, max-len, vue/no-unused-properties */
+/* eslint-disable no-unused-vars, max-len, vue/no-unused-properties, consistent-return, vue/return-in-computed-property, vue/no-side-effects-in-computed-properties */
 
 import Dropdown from './Dropdown'
 import ObjectFormField from './ObjectFormField'

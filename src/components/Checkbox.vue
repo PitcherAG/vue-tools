@@ -41,7 +41,7 @@ export default {
     if (props.value === null || props.value === undefined) {
       emit('input', false)
     } else if (typeof props.value === 'string') {
-      throw 'Checkbox value type can not be string!'
+      throw new Error('Checkbox value type can not be string!')
     }
 
     const checkboxAttr = computed(() => ({

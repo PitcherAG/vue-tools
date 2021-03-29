@@ -130,7 +130,7 @@
 </template>
 
 <script>
-/* eslint-disable vue/no-unused-properties */
+/* eslint-disable vue/no-unused-properties, vue/no-side-effects-in-computed-properties */
 import Checkbox from './Checkbox'
 import { computed, onMounted, reactive, ref, toRefs, watch } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
@@ -237,7 +237,7 @@ export default {
       if (props.width) {
         // validate
         if (props.compact) {
-          throw `Combining compact = true with width is not recommended!`
+          throw new Error(`Combining compact = true with width is not recommended!`)
         }
         attr.style.width = parsePxStyle(props.width)
         attr.style.maxWidth = parsePxStyle(props.width)
@@ -397,13 +397,14 @@ export default {
       // select
       if (!isSelected(item)) {
         if (props.returnType === 'object') {
-          return emit('input', props.value.concat([item]))
+          emit('input', props.value.concat([item]))
         } else {
-          return emit('input', props.value.concat([item[props.returnType]]))
+          emit('input', props.value.concat([item[props.returnType]]))
         }
       }
 
       // unselect
+      // eslint-disable-next-line consistent-return
       return props.returnType === 'object'
         ? emit(
             'input',

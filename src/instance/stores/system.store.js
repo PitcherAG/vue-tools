@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createStore } from '../../store'
 import { reactive } from '@vue/composition-api'
 

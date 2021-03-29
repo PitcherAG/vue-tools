@@ -13,7 +13,7 @@ export const validateSize = (val, compName) => {
   if (!valid) {
     console.error(`[Vue warn]: Validation error in ${compName}!`)
     console.error('[Vue warn]: prop.size is not valid!')
-    throw `Accepted values: tiny | small | medium | large | big | huge | massive`
+    throw new Error(`Accepted values: tiny | small | medium | large | big | huge | massive`)
   }
 
   return valid
@@ -36,7 +36,7 @@ export function countLines(target) {
     line_height = font_size * 1.2
   }
 
-  if (box_sizing == 'border-box') {
+  if (box_sizing === 'border-box') {
     const padding_top = parseInt(style.getPropertyValue('padding-top'))
     const padding_bottom = parseInt(style.getPropertyValue('padding-bottom'))
     const border_top = parseInt(style.getPropertyValue('border-top-width'))

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import Component from './component'
 import Directive from './directive'
 import { createStore } from '../store'
@@ -45,7 +46,7 @@ export const useI18nStore = () => {
 }
 
 export function trans(msgid, n = 0, placeholders) {
-  if (msgid == '') {
+  if (msgid === '') {
     return msgid
   }
 

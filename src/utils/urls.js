@@ -1,5 +1,6 @@
-export function getParamsFromUrl(url) {
-  url = decodeURI(url)
+export function getParamsFromUrl(_url) {
+  const url = decodeURI(_url)
+
   if (typeof url === 'string') {
     const params = url.split('?')
     const eachParamsArr = params[1].split('&')
@@ -17,4 +18,6 @@ export function getParamsFromUrl(url) {
 
     return obj
   }
+
+  return null
 }
