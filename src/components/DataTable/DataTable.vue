@@ -74,13 +74,13 @@
           </td>
         </tr>
 
-        <table-row
+        <TableRow
           v-for="item in group"
           :key="item.__rowID"
           :item="item"
           :fields="filteredFields"
-          :tr-class="trClass"
-          :has-row-slot="hasRowSlot"
+          :trClass="trClass"
+          :hasRowSlot="hasRowSlot"
           @click="emit('rowClick', item)"
         >
           <!-- forward row slot -->
@@ -97,7 +97,7 @@
           </template>
 
           <!-- forward field slots -->
-          <template v-for="field in filteredFields.filter(f => !!f.slotName)" #[field.slotName]>
+          <template v-for="field in filteredFields.filter((f) => !!f.slotName)" #[field.slotName]>
             <slot
               :name="field.slotName"
               :rowData="item"
@@ -106,18 +106,18 @@
               :sortData="sort"
             />
           </template>
-        </table-row>
+        </TableRow>
       </template>
 
       <!-- Default body without groups -->
-      <table-row
+      <TableRow
         v-else
         v-for="item in tableData"
         :key="item.__rowID"
         :item="item"
         :fields="filteredFields"
-        :tr-class="trClass"
-        :has-row-slot="hasRowSlot"
+        :trClass="trClass"
+        :hasRowSlot="hasRowSlot"
         @click="emit('rowClick', item)"
       >
         <!-- forward row slot -->
@@ -134,7 +134,7 @@
         </template>
 
         <!-- forward field slots -->
-        <template v-for="field in filteredFields.filter(f => !!f.slotName)" #[field.slotName]>
+        <template v-for="field in filteredFields.filter((f) => !!f.slotName)" #[field.slotName]>
           <slot
             :name="field.slotName"
             :rowData="item"
@@ -143,7 +143,7 @@
             :sortData="sort"
           />
         </template>
-      </table-row>
+      </TableRow>
 
       <!-- append-body slot -->
       <template v-if="hasAppendTbodySlot">
@@ -162,7 +162,7 @@
     <tfoot v-if="!noPagination && pagination.totalPages > 1">
       <tr>
         <th :colspan="fields.length" :class="`${alignPagination} aligned`">
-          <pagination :pagination="pagination" :paginate="paginate" :size="paginationSize" />
+          <Pagination :pagination="pagination" :paginate="paginate" :size="paginationSize" />
         </th>
       </tr>
     </tfoot>
@@ -178,97 +178,97 @@
 </template>
 
 <script>
-import { defineComponent, computed, reactive, toRefs, watch, onMounted } from '@vue/composition-api'
+import Pagination from './Pagination.vue'
+import TableRow from './TableRow.vue'
 import groupBy from 'lodash/groupBy'
 import orderBy from 'lodash/orderBy'
 import range from 'lodash/range'
+import { computed, defineComponent, onMounted, reactive, toRefs, watch } from '@vue/composition-api'
 import { mapper, sortBy } from './table.helpers'
 import { search, uid } from '../../utils'
-import Pagination from './Pagination.vue'
-import TableRow from './TableRow.vue'
 
 export default defineComponent({
-  name: 'data-table',
+  name: 'DataTable',
   components: {
     Pagination,
-    TableRow
+    TableRow,
   },
   props: {
     data: {
       type: Array,
-      required: true
+      required: true,
     },
     fields: {
       type: Array,
-      required: true
+      required: true,
     },
     searchFor: {
       type: [String, Number],
-      default: ''
+      default: '',
     },
     searchFields: Array,
     groupBy: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     searchOptions: {
       type: Object,
       default: () => ({
         threshold: 0.15,
         distance: 1000,
-        useExtendedSearch: true
-      })
+        useExtendedSearch: true,
+      }),
     },
     trClass: {
       type: [String, Function],
-      default: undefined
+      default: undefined,
     },
     width: {
       type: String,
-      default: '100%'
+      default: '100%',
     },
     maxWidth: {
-      type: String
+      type: String,
     },
     noDataText: {
       type: String,
       default: () => {
         $gettext('Table has not any data to show')
-      }
+      },
     },
     noHeader: {
       type: Boolean,
-      default: false
+      default: false,
     },
     fixedHeader: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // Pagination related
     initialPage: {
       type: Number,
-      default: 1
+      default: 1,
     },
     perPage: {
       type: Number,
-      default: 15
+      default: 15,
     },
     totalVisible: {
       type: Number,
-      default: 5
+      default: 5,
     },
     paginationSize: {
       type: String,
-      default: ''
+      default: '',
     },
     alignPagination: {
       type: String,
-      default: 'right'
+      default: 'right',
     },
     noPagination: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   emits: ['onSearch', 'onSort'],
   setup(props, { slots, emit }) {
@@ -276,7 +276,7 @@ export default defineComponent({
     const state = reactive({
       sort: {
         by: '',
-        order: ''
+        order: '',
       },
       pagination: {
         currentPage: props.initialPage,
@@ -285,7 +285,7 @@ export default defineComponent({
         endPage: 0,
         startIndex: 0,
         endIndex: 0,
-        pages: []
+        pages: [],
       },
       shouldGroup: false,
       // Check slots if they exist
@@ -295,28 +295,28 @@ export default defineComponent({
       hasPrependTbodySlot: !!slots['prepend-tbody'],
       hasBodySlot: !!slots.body,
       hasTFootSlot: !!slots['t-foot'],
-      hasNoDataSlot: !!slots['no-data-template']
+      hasNoDataSlot: !!slots['no-data-template'],
     })
 
     // Table classes
     const tableAttr = computed(() => ({
       class: {
-        sortable: props.fields.some(f => f.sortable),
-        'fixed-header': props.fixedHeader
+        sortable: props.fields.some((f) => f.sortable),
+        'fixed-header': props.fixedHeader,
       },
       style: {
         width: props.width,
-        maxWidth: props.maxWidth
-      }
+        maxWidth: props.maxWidth,
+      },
     }))
 
     // generate colID for each field
-    props.fields.forEach(i => {
+    props.fields.forEach((i) => {
       i.__colID = uid()
     })
 
     const injectIDs = (items, key) => {
-      items.forEach(i => {
+      items.forEach((i) => {
         i[key] = uid()
       })
     }
@@ -327,7 +327,7 @@ export default defineComponent({
       let backup = null
 
       // generate rowID for each row
-      if (temp.find(i => !i.__rowID)) {
+      if (temp.find((i) => !i.__rowID)) {
         injectIDs(temp, '__rowID')
       }
 
@@ -367,6 +367,7 @@ export default defineComponent({
         ) {
           temp = backup
           state.shouldGroup = false
+
           return temp
         }
 
@@ -377,7 +378,7 @@ export default defineComponent({
     })
 
     const filteredFields = computed(() => {
-      return props.fields.filter(f => !f.hide)
+      return props.fields.filter((f) => !f.hide)
     })
 
     // Calculate pagination data
@@ -387,8 +388,8 @@ export default defineComponent({
     function sortTable(field) {
       // reset sorting for other fields first
       props.fields
-        .filter(f => f.dataField !== field.dataField && f.sorted)
-        .forEach(f => {
+        .filter((f) => f.dataField !== field.dataField && f.sorted)
+        .forEach((f) => {
           if (f.sorted) {
             delete f.sorted
             state.sort.order = ''
@@ -417,21 +418,25 @@ export default defineComponent({
     // helper for building th class
     function getTHClass(f) {
       let cls = f.thClass ? f.thClass : ''
+
       cls += f.sortable ? ' sortable' : ' no-sort'
 
       cls += f.sorted ? ' sorted' : ''
       cls += f.sorted && f.sorted === 'desc' ? ' descending' : ' ascending'
+
       return cls
     }
 
     // filtered data thru fields
     function getScopeData(item) {
       const filtered = []
-      props.fields.forEach(f => {
+
+      props.fields.forEach((f) => {
         if (!f.hide && typeof f.slotName !== 'string') {
           filtered.push(mapper(f.dataField, item))
         }
       })
+
       return filtered
     }
 
@@ -444,6 +449,7 @@ export default defineComponent({
       if (!f.tooltipText) {
         return f.title
       }
+
       return f.tooltipText
     }
 
@@ -493,6 +499,7 @@ export default defineComponent({
       const scrollWidth = tbody.offsetWidth - tbody.scrollWidth
       const heading = document.querySelector('thead tr')
       const tfoot = document.querySelector('tfoot')
+
       heading.style.paddingRight = `${scrollWidth}px`
       tfoot.style.display = 'block'
     }
@@ -523,6 +530,7 @@ export default defineComponent({
         emit('onSearch', { key: props.searchFor, result: tableData.value })
       }
     )
+
     return {
       ...toRefs(state),
       tableData,
@@ -535,9 +543,9 @@ export default defineComponent({
       hasSlot,
       paginate,
       emit,
-      mapper
+      mapper,
     }
-  }
+  },
 })
 </script>
 

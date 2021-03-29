@@ -1,16 +1,17 @@
 import CompositionApi from '@vue/composition-api'
-import { mount, createLocalVue } from '@vue/test-utils'
 import FilterDropdown from '@/components/FilterDropdown'
 import { TranslationPlugin } from '@/'
+import { createLocalVue, mount } from '@vue/test-utils'
 
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 localVue.use(TranslationPlugin)
 
 describe('FilterDropdown.vue', () => {
   const items = [
     { name: 'Hello', value: 'hello', type: 'item hello' },
-    { name: 'World', value: 'world', type: 'item world' }
+    { name: 'World', value: 'world', type: 'item world' },
   ]
 
   const wrapper = mount(FilterDropdown, {
@@ -22,14 +23,14 @@ describe('FilterDropdown.vue', () => {
       itemValue: 'value',
       title: 'FilterTestTitle',
       icon: 'filter',
-      hideSearch: false
-    }
+      hideSearch: false,
+    },
   })
 
   // Helper function
   async function updateValue(key, value) {
     wrapper.setProps({
-      [key]: value
+      [key]: value,
     })
     await wrapper.vm.$nextTick()
   }
@@ -57,7 +58,7 @@ describe('FilterDropdown.vue', () => {
       ...items,
       { name: 'Test Item', value: 'new-item', type: 'item test' },
       { name: 'Test header', type: 'header' },
-      { type: 'divider' }
+      { type: 'divider' },
     ])
     expect(wrapper.find('.item.test').text()).toBe('Test Item')
     expect(wrapper.find('.menu .header').exists()).toBe(true)

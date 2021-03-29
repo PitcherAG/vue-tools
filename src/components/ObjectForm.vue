@@ -11,131 +11,131 @@
         </div>
       </div>
     </div>
-    <sui-form v-if="state.needsRecordType && !validationError">
-      <sui-form-field :required="true" :error="state.showErrors && !state.recordType">
+    <SuiForm v-if="state.needsRecordType && !validationError">
+      <SuiFormField :required="true" :error="state.showErrors && !state.recordType">
         <label>Please select a Record Type</label>
-        <dropdown
+        <Dropdown
           v-model="state.recordTypeSaved"
-          :default-text="$gettext('Select Record Type')"
+          :defaultText="$gettext('Select Record Type')"
           :items="state.recordTypes"
-          item-text="name"
-          item-value="recordTypeId"
+          itemText="name"
+          itemValue="recordTypeId"
         />
-      </sui-form-field>
-    </sui-form>
-    <sui-form v-if="!state.needsRecordType && !validationError && !state.layout">
-      <object-form-field
+      </SuiFormField>
+    </SuiForm>
+    <SuiForm v-if="!state.needsRecordType && !validationError && !state.layout">
+      <ObjectFormField
         v-for="(field, key) in state.fields"
         :key="key"
         v-model="state.obj[field.name]"
-        :value-label="toLabel(state.obj, field.name)"
+        :valueLabel="toLabel(state.obj, field.name)"
         :field="field"
-        :show-error="state.showErrors"
-        :hide-help-text="hideHelpText"
+        :showError="state.showErrors"
+        :hideHelpText="hideHelpText"
         @input="emitUpdate"
-        @fieldChange="v => $emit('fieldChange', v)"
+        @fieldChange="(v) => $emit('fieldChange', v)"
       />
-      <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
-    </sui-form>
-    <sui-form v-if="!state.needsRecordType && !validationError && state.layout && state.ready" class="object-form">
-      <fragment v-for="(section, sectionKey) in state.layout.visibleEditLayoutSections" :key="sectionKey">
+      <SuiButton v-if="hasSave" type="submit">{{ $gettext('Save') }}</SuiButton>
+    </SuiForm>
+    <SuiForm v-if="!state.needsRecordType && !validationError && state.layout && state.ready" class="object-form">
+      <Fragment v-for="(section, sectionKey) in state.layout.visibleEditLayoutSections" :key="sectionKey">
         <h3 class="ui header">{{ section.heading }}</h3>
         <div class="ui grid fields">
-          <fragment v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
+          <Fragment v-for="(row, rowKey) in section.layoutRows" :key="rowKey">
             <!-- Layout rows are ignored and fields are plotted one after another -->
-            <fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
+            <Fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
               <template v-for="(comp, compKey) in item.layoutComponents">
-                <object-form-field
+                <ObjectFormField
                   v-if="!comp.exclude"
                   :key="compKey"
                   v-model="state.obj[comp.value]"
-                  :value-label="toLabel(state.obj, comp.value, comp.field)"
+                  :valueLabel="toLabel(state.obj, comp.value, comp.field)"
                   :field="comp.field"
-                  :show-error="state.showErrors"
-                  :hide-help-text="hideHelpText"
+                  :showError="state.showErrors"
+                  :hideHelpText="hideHelpText"
                   :label="item.label"
                   :data-debug-name="comp.details.name"
                   :class="fieldsClass"
                   @input="emitUpdate"
                 />
               </template>
-            </fragment>
-          </fragment>
+            </Fragment>
+          </Fragment>
         </div>
-      </fragment>
-      <sui-button v-if="hasSave" type="submit">{{ $gettext('Save') }}</sui-button>
-    </sui-form>
+      </Fragment>
+      <SuiButton v-if="hasSave" type="submit">{{ $gettext('Save') }}</SuiButton>
+    </SuiForm>
   </div>
 </template>
 
 <script>
 /* eslint-disable no-unused-vars, max-len, vue/no-unused-properties */
 
-import { computed, reactive, ref, watch, onMounted, onBeforeUnmount } from '@vue/composition-api'
-import { loadSchema, useConfigStore, contextQuery, saveObject, Field, loadLayout } from '../index'
-import ObjectFormField from './ObjectFormField'
 import Dropdown from './Dropdown'
+import ObjectFormField from './ObjectFormField'
 import Vue from 'vue'
+import { Field, contextQuery, loadLayout, loadSchema, saveObject, useConfigStore } from '../index'
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from '@vue/composition-api'
 
 export default {
-  name: 'object-form',
+  name: 'ObjectForm',
   components: { Dropdown, ObjectFormField },
   props: {
     objectType: {
       require: true,
-      type: String
+      type: String,
     },
     fields: {
       default: () => [],
-      type: Array
+      type: Array,
     },
     excludeFields: {
       default: () => [],
-      type: Array
+      type: Array,
     },
     readOnlyFields: {
       default: () => [],
-      type: Array
+      type: Array,
     },
     customReferences: {
-      type: Object
+      type: Object,
     },
     customSettings: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     hideHelpText: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hasSave: {
-      type: Boolean
+      type: Boolean,
     },
     id: {
-      type: String
+      type: String,
     },
     recordType: {
-      type: String
+      type: String,
     },
     value: {
-      type: Object
+      type: Object,
     },
     ignoreExternalIdValidation: {
       type: Boolean,
-      default: false
+      default: false,
     },
     allFieldsReadOnly: {
       type: Boolean,
-      default: false
+      default: false,
     },
     fieldsClass: {
       type: String,
-      default: 'eight wide column'
-    }
+      default: 'eight wide column',
+    },
   },
   emits: ['fieldChange', 'input'],
 
-  setup: function(props, attrs) {
+  setup(props, attrs) {
     const excludes = [
       'attributes',
       'Id',
@@ -146,7 +146,7 @@ export default {
       'LastActivityDate',
       'LastModifiedById',
       'LastModifiedDate',
-      'SystemModstamp'
+      'SystemModstamp',
     ]
     const state = reactive({
       ready: false,
@@ -158,6 +158,7 @@ export default {
         if (state.schema) {
           return state.schema.recordTypeInfos
         }
+
         return []
       }),
       recordType: props.recordType,
@@ -185,42 +186,47 @@ export default {
       }),
       isValid: computed(() => {
         let valid = true
+
         for (const field of state.fields) {
           if (!field.valid(state.obj[field.name])) {
             valid = false
           }
         }
+
         return valid
       }),
       showErrors: true,
       result: computed(() => {
         const result = {
-          ignoreFields: []
+          ignoreFields: [],
         }
         let valid = true
+
         for (const field of state.fields) {
           result[field.name] = state.obj[field.name]
           if (field.relationshipName && state.obj[field.name]) {
             let found = false
+
             for (const ref of field.references) {
               if (ref.value === state.obj[field.name]) {
                 result[field.relationshipName] = {
                   Id: ref.value,
-                  Name: ref.text
+                  Name: ref.text,
                 }
                 result.ignoreFields.push(field.relationshipName)
                 found = true
                 break
               }
             }
-            if (!found) console.log('ref not found:' + field.name, state.obj[field.name])
+            if (!found) console.log(`ref not found:${field.name}`, state.obj[field.name])
           }
-          if (!field.nillable && (typeof result[field.name] == 'undefined' || String(result[field.name]) === 'null')) {
+          if (!field.nillable && (typeof result[field.name] === 'undefined' || String(result[field.name]) === 'null')) {
             valid = false
           }
         }
+
         return result
-      })
+      }),
     })
 
     const name = ref()
@@ -230,8 +236,10 @@ export default {
         return
       }
       const schema = await loadSchema(props.objectType)
+
       state.schema = schema
     }
+
     onMounted(async () => {
       initSchema()
     })
@@ -263,6 +271,7 @@ export default {
 
         const includeFields = props.fields
         const excludeFields = [...props.excludeFields]
+
         if (includeFields.length) {
           // handle if field list is provided
           for (const field_name of includeFields) {
@@ -270,6 +279,7 @@ export default {
               for (const field of state.schema.fields) {
                 if (field.name === field_name.trim()) {
                   const f = new Field(field, props.objectType, false)
+
                   if (props.customSettings && props.customSettings.includes[f.name]) {
                     f.settings = props.customSettings[f.name]
                   }
@@ -296,6 +306,7 @@ export default {
           }
           // handle if no field list is provided but we have a layout
           let layout
+
           try {
             layout = await loadLayout(props.objectType, state.recordTypeId)
           } catch (e) {
@@ -307,18 +318,22 @@ export default {
           if (layout) {
             layout.visibleEditLayoutSections = computed(() => {
               const result = []
+
               for (const section of layout.editLayoutSections) {
                 if (section.fieldCount > 0) {
                   result.push(section)
                 }
               }
+
               return result
             })
             const data = []
             const filed = []
             const fieldDict = {}
+
             for (const section of layout.editLayoutSections) {
               let fieldCount = 0
+
               for (const row of section.layoutRows) {
                 for (const row of section.layoutRows) {
                   for (const item of row.layoutItems) {
@@ -326,6 +341,7 @@ export default {
                       for (const comp of item.layoutComponents) {
                         if (excludeFields.indexOf(comp.value) === -1) {
                           let field
+
                           if (fieldDict[comp.details.name]) {
                             field = fieldDict[comp.details.name]
                           } else {
@@ -368,6 +384,7 @@ export default {
               }
               if (excludes.indexOf(field.name) === -1) {
                 let f
+
                 try {
                   f = new Field(field, this, false)
                 } catch (e) {
@@ -392,12 +409,13 @@ export default {
               }
             }
             req_fields = req_fields.concat(fields)
-            req_fields = req_fields.filter(obj => {
+            req_fields = req_fields.filter((obj) => {
               for (const excludeField of excludeFields) {
                 if (obj.name === excludeField.trim()) {
                   return false
                 }
               }
+
               return true
             })
             state.fields = req_fields
@@ -414,15 +432,19 @@ export default {
           if (field.type === 'picklist' && field.controllerName) {
             field.dependentValueWatcher = watch(
               () => state.obj[field.controllerName],
-              newVal => {
+              (newVal) => {
                 if (state.fieldsDict[field.controllerName]) {
                   // When controller field changes - Reset dependent value
                   Vue.set(state.obj, field.name, null)
                   // Find the index of the selected value in the controller field
-                  const index = state.fieldsDict[field.controllerName].picklistValues.findIndex(o => o.value === newVal)
-                  field.filteredValues = field.picklistValues.filter(p => {
+                  const index = state.fieldsDict[field.controllerName].picklistValues.findIndex(
+                    (o) => o.value === newVal
+                  )
+
+                  field.filteredValues = field.picklistValues.filter((p) => {
                     // base64 decode
                     const bitmap = atob(p.validFor)
+
                     // Test each of the available options and use bitwise operators
                     // to check whether each dependent value is valid
                     return !!(bitmap.charCodeAt(index >> 3) & (128 >> index % 8))
@@ -430,7 +452,7 @@ export default {
                 }
               },
               {
-                immediate: true
+                immediate: true,
               }
             )
           }
@@ -441,12 +463,14 @@ export default {
     const validationError = computed(() => {
       const configStore = useConfigStore()
       const table = configStore.getCacheDict[props.objectType]
+
       if (!props.ignoreExternalIdValidation) {
         if (!table.externalField && !props.id) {
           validationErrorTitle.value = $gettext('You can not add an object of this type.')
           validationErrorDescription.value = $gettext(
             'This Object does not have an external ID field in the config.json.'
           )
+
           return true
         }
         if (props.id && props.id.startsWith('PIT_') && !table.externalField) {
@@ -454,13 +478,16 @@ export default {
           validationErrorDescription.value = $gettext(
             'This Object does not have an external ID field in the config.json. Please provide one or sync first before editing.'
           )
+
           return true
         }
       }
+
       return false
     })
     const validationErrorTitle = ref('')
     const validationErrorDescription = ref('')
+
     watch(
       () => [props.id, state.fields],
       async () => {
@@ -482,8 +509,9 @@ export default {
         if (validationError.value) {
           return
         }
-        const q = 'select * from {{' + props.objectType + "}} where Id='{{ id }}'"
+        const q = `select * from {{${props.objectType}}} where Id='{{ id }}'`
         const data = await contextQuery(q, { id: props.id })
+
         name.value = data.Name
         state.loadedObj = data[0]
         state.obj = data[0]
@@ -492,35 +520,40 @@ export default {
 
     const validate = () => {
       let valid = true
+
       for (const field of state.fields) {
         field.show_errors = true
         if (!field.valid.value) {
           valid = false
         }
       }
+
       return valid
     }
 
-    const save = extra => {
+    const save = (extra) => {
       if (state.needsRecordType && state.recordTypeSaved) {
         state.recordTypeId = state.recordTypeSaved
         state.showErrors = false
+
         return
       }
       if (!state.isValid) {
         state.showErrors = true
+
         return
       }
       const obj = {
         ...state.result,
-        ...extra
+        ...extra,
       }
+
       if (state.recordTypeId && state.recordTypes.length > 1) {
         for (const t of state.recordTypes) {
           if (t.recordTypeId === state.recordTypeId) {
             obj.RecordType = {
               Id: t.recordTypeId,
-              Name: t.name
+              Name: t.name,
             }
             obj.RecordTypeId = state.recordTypeId
             obj.ignoreFields.push('RecordType')
@@ -536,6 +569,7 @@ export default {
       }
       window.console.info('save form', obj)
       saveObject(obj)
+
       return true
     }
 
@@ -558,7 +592,8 @@ export default {
         }
       }
 
-      let newPath = path.substr(0, path.length - 1) + 'r'
+      let newPath = `${path.substr(0, path.length - 1)}r`
+
       if (obj[newPath]) {
         return obj[newPath].Name
       }
@@ -568,10 +603,11 @@ export default {
           return obj[newPath].Name
         }
       }
+
       return ''
     }
 
-    const fieldShouldBeReadOnly = field => {
+    const fieldShouldBeReadOnly = (field) => {
       return props.readOnlyFields.includes(field.name) || props.allFieldsReadOnly
     }
 
@@ -585,9 +621,9 @@ export default {
       validationErrorTitle,
       validationErrorDescription,
       name,
-      emitUpdate
+      emitUpdate,
     }
-  }
+  },
 }
 </script>
 

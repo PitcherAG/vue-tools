@@ -1,5 +1,5 @@
-import { getLayout } from '../app'
 import { createStore } from '../store'
+import { getLayout } from '../app'
 
 class LayoutStore {
   id = 'layout'
@@ -11,13 +11,16 @@ export const useLayoutStore = () => {
 }
 
 export async function loadLayout(objectName, objectTypeId) {
-  const key = objectName + '_' + objectTypeId
+  const key = `${objectName}_${objectTypeId}`
   const store = useLayoutStore()
+
   if (store.state[key]) {
     return store.state[key]
   } else {
     const result = await getLayout(objectName, objectTypeId)
+
     store.state[key] = new Schema(result, objectName)
+
     return store.state[key]
   }
 }

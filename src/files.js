@@ -6,10 +6,12 @@ const keywordDict = {}
 async function loadFiles() {
   if (!loaded) {
     const files = await fireEvent('getPitcherFiles', { fullData: true })
+
     for (const file of files) {
       let keywords
+
       try {
-        keywords = file.keywords.split(',').map(f => f.trim())
+        keywords = file.keywords.split(',').map((f) => f.trim())
       } catch (e) {
         keywords = []
       }
@@ -26,5 +28,6 @@ async function loadFiles() {
 
 export async function getFilesWithKeyword(keyword) {
   await loadFiles()
+
   return keywordDict[keyword]
 }

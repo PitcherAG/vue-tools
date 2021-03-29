@@ -1,5 +1,5 @@
-import { renderContext } from './renderContext'
 import { launchContentWithID, launchFileWithKeyword } from '../app'
+import { renderContext } from './renderContext'
 
 export async function openLink(link, context) {
   /*
@@ -11,6 +11,7 @@ export async function openLink(link, context) {
   window.console.info('open link', link)
   link = link.split('pitcher://').join('')
   let id
+
   if (link.split('/').length === 2) {
     id = link.split('/')[0]
   } else if (link.split('?').length === 2) {
@@ -20,10 +21,12 @@ export async function openLink(link, context) {
   }
   let args = link.split('?')[1]
   const params = {}
+
   if (args.length) {
     args = decodeURI(args).split('&')
     for (const arg of args) {
       const splits = arg.split('=')
+
       params[splits[0]] = splits[1]
     }
   }

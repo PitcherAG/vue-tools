@@ -6,7 +6,7 @@ export function exitApp(options) {
 
 export function showAlertBox(title, message) {
   fireEvent('showAlertBox', {
-    title: title,
-    message: message
+    title,
+    message,
   })
 }

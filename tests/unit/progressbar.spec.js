@@ -1,14 +1,15 @@
 import CompositionApi from '@vue/composition-api'
-import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ProgressBar from '@/components/ProgressBar'
 import { TranslationPlugin } from '@/'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 localVue.use(TranslationPlugin)
 
 function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 describe('ProgressBar.vue', () => {
@@ -18,14 +19,14 @@ describe('ProgressBar.vue', () => {
       value: 10,
       showLabel: false,
       color: 'red',
-      maxWidth: '100%'
-    }
+      maxWidth: '100%',
+    },
   })
 
   // Helper function
   async function updateValue(key, value) {
     wrapper.setProps({
-      [key]: value
+      [key]: value,
     })
     await wrapper.vm.$nextTick()
   }
@@ -50,12 +51,16 @@ describe('ProgressBar.vue', () => {
   })
 
   it(`Progress Bar's container initialize correctly`, () => {
-      // checks all props in progress container div and no need to await since animations are not important
-      expect(wrapper.html()).toContain(`<div data-value=\"${wrapper.vm.$props.value}\" data-total=\"${wrapper.vm.$props.total}\" class=\"ui progress pitcher-progress ${wrapper.vm.$props.color}\" style=\"max-width: ${wrapper.vm.$props.maxWidth};\" data-percent=\"${wrapper.vm.$props.value}\">`)
+    // checks all props in progress container div and no need to await since animations are not important
+    expect(wrapper.html()).toContain(
+      `<div data-value=\"${wrapper.vm.$props.value}\" data-total=\"${wrapper.vm.$props.total}\" class=\"ui progress pitcher-progress ${wrapper.vm.$props.color}\" style=\"max-width: ${wrapper.vm.$props.maxWidth};\" data-percent=\"${wrapper.vm.$props.value}\">`
+    )
   })
 
   it(`Updating Progress Bar's color works`, async () => {
-      await updateValue('color', 'brown')
-      expect(wrapper.html()).toContain(`<div data-value=\"${wrapper.vm.$props.value}\" data-total=\"${wrapper.vm.$props.total}\" class=\"ui progress pitcher-progress brown\" style=\"max-width: ${wrapper.vm.$props.maxWidth};\" data-percent=\"${wrapper.vm.$props.value}\">`)
+    await updateValue('color', 'brown')
+    expect(wrapper.html()).toContain(
+      `<div data-value=\"${wrapper.vm.$props.value}\" data-total=\"${wrapper.vm.$props.total}\" class=\"ui progress pitcher-progress brown\" style=\"max-width: ${wrapper.vm.$props.maxWidth};\" data-percent=\"${wrapper.vm.$props.value}\">`
+    )
   })
 })

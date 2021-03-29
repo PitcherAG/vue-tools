@@ -10,7 +10,7 @@ const translate = new Translate()
 function formatForTranslation(str) {
   return str
     .replace(/\\n/g, '<br>')
-    .replace(/{\S+}/, match => `<span class="notranslate">${match}</span>`)
+    .replace(/{\S+}/, (match) => `<span class="notranslate">${match}</span>`)
     .replace('%s', '{0}')
 }
 
@@ -23,6 +23,7 @@ function formatFromTranslation(str) {
 
 async function parseFile(file) {
   const data = fs.readFileSync(file)
+
   return gettextParser.po.parse(data)
 }
 
@@ -34,7 +35,7 @@ async function translateConfig(config) {
     console.log(`[config-gettext-translate] translating ${t.category}`)
 
     for (const language in config.languages) {
-      if (!languages.find(l => l.code === language)) {
+      if (!languages.find((l) => l.code === language)) {
         console.error(chalk.red`[config-gettext-translate] language ${language} not supported`)
         continue
       }
@@ -71,7 +72,8 @@ async function translateFile(file, language, output) {
   }
 
   // translate empty message strings
-  const msgids = Object.keys(_.pickBy(po.translations[''], msg => msg.msgid && !msg.msgstr[0]))
+  const msgids = Object.keys(_.pickBy(po.translations[''], (msg) => msg.msgid && !msg.msgstr[0]))
+
   console.log(chalk.grey`[config-gettext-translate] ${language} has ${msgids.length} untranslated messages`)
 
   if (msgids.length) {
@@ -80,6 +82,7 @@ async function translateFile(file, language, output) {
     translations.forEach((t, i) => {
       if (t) {
         const item = po.translations[''][msgids[i]]
+
         item.msgstr = t
 
         if (!item.comments) {
@@ -101,10 +104,11 @@ async function translateFile(file, language, output) {
 async function translateMessages(messages, language) {
   const input = messages.map(formatForTranslation)
   const [translations] = await translate.translate(input, language)
+
   return translations.map(formatFromTranslation)
 }
 
 module.exports = {
   translateConfig,
-  translateFile
+  translateFile,
 }

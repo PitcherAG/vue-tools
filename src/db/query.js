@@ -1,5 +1,5 @@
-import { fireEvent } from '../event'
 import { PLATFORM } from '../platform'
+import { fireEvent } from '../event'
 
 let cache = {}
 
@@ -7,13 +7,13 @@ const dbSettings = {
   cacheEnabled: false,
   cacheTimeout: 500,
   defaultDatabase: 'pitcher',
-  longQueryWarning: false
+  longQueryWarning: false,
 }
 
 function cacheQuery(query, result) {
   cache[query] = {
-    result: result,
-    time: Date.now()
+    result,
+    time: Date.now(),
   }
 }
 
@@ -35,25 +35,30 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
   if (process.env.LOG) {
     console.log(query)
   }
+
   return new Promise((resolve, reject) => {
     if (hasCached(query) && dbSettings.cacheEnabled) {
       console.log('cache hit')
+
       return resolve(cache[query].result)
     }
     const start = new Date()
+
     fireEvent('dbFunction', {
       db: db ? db : dbSettings.defaultDatabase,
       iosMode: true,
       pType: 'query',
-      query: query,
-      source: source
+      query,
+      source,
     })
-      .then(e => {
+      .then((e) => {
         const time = new Date() - start
+
         if (time > 1000 && dbSettings.longQueryWarning) {
-          console.warn('slow query (' + (time / 1000).toFixed(2) + 's): ' + query)
+          console.warn(`slow query (${(time / 1000).toFixed(2)}s): ${query}`)
         }
         const result = []
+
         if (e.error) {
           console.error(query)
           reject(new Error(e.error))
@@ -65,6 +70,7 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
           for (let j = 0; j < e.columns.length; j++) {
             const column = e.columns[j]
             let fieldData = res[j]
+
             if (PLATFORM === 'WINDOWS' && typeof fieldData === 'string') {
               fieldData = fieldData.replace(/''/g, "'")
             }
@@ -78,6 +84,7 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
               column === 'userObject'
             ) {
               const o = JSON.parse(fieldData)
+
               for (const n in o) {
                 if (Object.prototype.hasOwnProperty.call(o, n) && n !== 'attributes') {
                   if (!(removeNull && o[n] === null)) {
@@ -85,12 +92,10 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
                   }
                 }
               }
+            } else if (typeof fieldData === 'undefined') {
+              obj[column] = null
             } else {
-              if (typeof fieldData == 'undefined') {
-                obj[column] = null
-              } else {
-                obj[column] = fieldData
-              }
+              obj[column] = fieldData
             }
           }
           result.push(obj)

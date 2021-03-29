@@ -1,7 +1,8 @@
-import CompositionApi from '@vue/composition-api'
-import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Checkbox from '@/components/Checkbox.vue'
+import CompositionApi from '@vue/composition-api'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 
 describe('Checkbox.vue', () => {
@@ -9,14 +10,14 @@ describe('Checkbox.vue', () => {
     localVue,
     propsData: {
       value: true,
-      label: 'hello'
-    }
+      label: 'hello',
+    },
   })
 
   // Helper function
   async function updateValue(value) {
     wrapper.setProps({
-      value
+      value,
     })
     await wrapper.vm.$nextTick()
   }

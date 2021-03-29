@@ -1,8 +1,8 @@
+import { PLATFORM } from '../platform'
+import { execBool } from '../utils/contextExec'
+import { query } from './query'
 import { ref } from '@vue/composition-api'
 import { useConfigStore } from '../config'
-import { query } from './query'
-import { execBool } from '../utils/contextExec'
-import { PLATFORM } from '../platform'
 
 export class Field {
   references = ref([])
@@ -31,17 +31,22 @@ export class Field {
     if (!value && this.required) {
       return false
     }
+
     return true
   }
 
   load_refs() {
     const store = useConfigStore()
+
     if (this.referenceTo && this.referenceTo.length) {
       const sourceTable = store.getCacheDict[this.parentObjectType]
+
       for (const reference of this.referenceTo) {
         const targetTable = store.getCacheDict[reference]
+
         if (!targetTable) {
-          window.console.warn('referenced object not found: ' + reference)
+          window.console.warn(`referenced object not found: ${reference}`)
+
           return
         }
         this.load(targetTable, sourceTable, reference)
@@ -51,13 +56,15 @@ export class Field {
 
   async load(targetTable, sourceTable, reference) {
     let filters = null
+
     if (sourceTable && sourceTable.filters) {
       filters = sourceTable.filters[this.name]
     }
     const table_name = targetTable.tableToCache
     let q = 'select Id, '
     let nameField = 'Name'
-    if (targetTable.fieldTypes && targetTable.fieldTypes['Name']) {
+
+    if (targetTable.fieldTypes && targetTable.fieldTypes.Name) {
       q += 'Name'
     } else if (reference === 'Account') {
       if (PLATFORM === 'ANDROID') {
@@ -73,17 +80,19 @@ export class Field {
     } else if (reference === 'User') {
       q += 'name'
       nameField = 'name'
-    } else if (targetTable.fieldTypes['extraField']) {
+    } else if (targetTable.fieldTypes.extraField) {
       q += 'extraField'
     } else {
-      alert('no name field found in table for ' + reference)
+      alert(`no name field found in table for ${reference}`)
     }
-    q += ' from ' + table_name
+    q += ` from ${table_name}`
     const data = await query(q)
     const result = []
+
     for (const obj of data) {
       if (filters) {
         const pass = execBool(filters, obj)
+
         if (!pass) {
           continue
         }
@@ -95,6 +104,7 @@ export class Field {
 
   loadExternalReferences(data, nameField = 'Name') {
     const result = []
+
     for (const obj of data) {
       result.push({ value: obj.Id, text: obj[nameField] })
     }

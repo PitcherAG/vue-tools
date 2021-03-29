@@ -1,7 +1,8 @@
-import { formatDate, useParamsStore } from '@/'
-import { createLocalVue } from '@vue/test-utils'
 import CompositionApi from '@vue/composition-api'
+import { createLocalVue } from '@vue/test-utils'
+import { formatDate, useParamsStore } from '@/'
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 
 jest.mock('@/i18n/i18n')
@@ -9,6 +10,7 @@ jest.mock('@/i18n/i18n')
 describe('i18n', () => {
   it('date', () => {
     const params = useParamsStore()
+
     params.state.user = { LocaleSidKey: 'de-CH' }
     expect(formatDate('2020-02-20')).toBe('20.02.20')
     params.state.user = { LocaleSidKey: 'en-US' }

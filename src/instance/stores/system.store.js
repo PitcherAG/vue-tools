@@ -19,7 +19,7 @@ class SystemStore {
     isCustomerUI: false,
     batteryLevel: 0,
     statusBadge: 0,
-    todoBadge: 0
+    todoBadge: 0,
   })
 }
 
@@ -30,6 +30,7 @@ export const useSystemStore = () => {
 export function getExtraFieldValue(property, defaultValue) {
   const store = useSystemStore()
   let value = defaultValue
+
   try {
     if (typeof store.state.config.extraField === 'string') {
       store.state.config.extraField = JSON.parse(store.state.config.extraField)
@@ -45,17 +46,20 @@ export function getExtraFieldValue(property, defaultValue) {
       console.log(e)
     }
   }
+
   return value
 }
 
 window.updateStatusBadge = function(value) {
   const store = useSystemStore()
+
   value = parseInt(value)
   store.state.statusBadge = value || 0
 }
 
 window.updateTodoBadge = function(value) {
   const store = useSystemStore()
+
   value = parseInt(value)
   store.state.todoBadge = value || 0
 }

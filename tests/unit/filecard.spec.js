@@ -1,9 +1,10 @@
 import CompositionApi from '@vue/composition-api'
-import { mount, createLocalVue } from '@vue/test-utils'
 import FileCard from '@/components/FileCard/FileCard'
 import { TranslationPlugin } from '@/'
+import { createLocalVue, mount } from '@vue/test-utils'
 
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 localVue.use(TranslationPlugin)
 
@@ -18,20 +19,20 @@ describe('FileCard.vue', () => {
     newText: 'NewText',
     shareText: 'Share',
     downloadText: 'Download',
-    showFileOptions: false
+    showFileOptions: false,
   }
 
   const wrapper = mount(FileCard, {
     localVue,
     propsData: {
-      ...item
-    }
+      ...item,
+    },
   })
 
   // Helper function
   async function updateValue(key, value) {
     wrapper.setProps({
-      [key]: value
+      [key]: value,
     })
     await wrapper.vm.$nextTick()
   }

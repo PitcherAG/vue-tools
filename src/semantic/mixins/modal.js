@@ -3,18 +3,18 @@ const changedEvent = 'changed'
 export default {
   model: {
     prop: 'open',
-    event: changedEvent
+    event: changedEvent,
   },
   props: {
     open: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   events: {
     [changedEvent]: {
-      custom: true
-    }
+      custom: true,
+    },
   },
   watch: {
     open(value) {
@@ -23,7 +23,7 @@ export default {
       } else {
         this.hideModal()
       }
-    }
+    },
   },
   methods: {
     hideModal() {
@@ -50,7 +50,7 @@ export default {
     },
     showModal() {
       $(this.$el).modal('show')
-    }
+    },
   },
   mounted() {
     $(this.$refs.modal).modal({
@@ -60,7 +60,7 @@ export default {
       onHidden: this.onHidden,
       onHide: this.onHide,
       onShow: this.onShow,
-      onVisible: this.onVisible
+      onVisible: this.onVisible,
     })
-  }
+  },
 }

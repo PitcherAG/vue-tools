@@ -1,6 +1,6 @@
+import { assignUsingSourceKeys, waitForWindowProp } from '../utils'
 import { fireEvent } from '../event'
-import { waitForWindowProp, assignUsingSourceKeys } from '../utils'
-import { useSystemStore, useFilesStore, useCategoriesStore } from './stores/index'
+import { useCategoriesStore, useFilesStore, useSystemStore } from './stores/index'
 
 export async function loadServerJSON(timeout = 5) {
   const systemStore = useSystemStore()

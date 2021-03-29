@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { onMounted, shallowRef, computed } from '@vue/composition-api'
+import { computed, onMounted, shallowRef } from '@vue/composition-api'
 import { createStore } from '..'
 
 const useSidebarStore = () => {
@@ -14,7 +14,7 @@ const useSidebarStore = () => {
     id: 'sidebar',
     state: {
       data: shallowRef(),
-      open: false
+      open: false,
     },
     toggle() {
       $('.ui.sidebar').sidebar('toggle')
@@ -24,27 +24,29 @@ const useSidebarStore = () => {
     },
     hide() {
       $('.ui.sidebar').sidebar('hide')
-    }
+    },
   }
+
   return createStore(s)
 }
 
 export default {
-  name: 'sidebar',
+  name: 'Sidebar',
   props: {
     type: {
       type: String,
-      default: 'push'
-    }
+      default: 'push',
+    },
   },
   setup(props, ctx) {
     const store = useSidebarStore()
 
     const sidebarAttr = computed(() => ({
       class: {
-        [props.type]: !!props.type
-      }
+        [props.type]: !!props.type,
+      },
     }))
+
     onMounted(() => {
       $(ctx.refs.sidebar).sidebar('setting', 'onChange', () => {
         store.state.open = !store.state.open
@@ -53,7 +55,7 @@ export default {
 
     return { sidebarAttr }
   },
-  useSidebarStore
+  useSidebarStore,
 }
 </script>
 

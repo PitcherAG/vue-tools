@@ -10,6 +10,7 @@ class TestStore {
 
   get double() {
     console.log('double')
+
     return this.count * 2
   }
 
@@ -23,6 +24,7 @@ class TestStore {
 }
 
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 
 describe('state', () => {
@@ -33,11 +35,12 @@ describe('state', () => {
       double: computed(() => {
         return a.state.count * 2
       }),
-      treble: function() {
+      treble() {
         return this.state.count * 3
-      }
+      },
     }
     const store = createStore(a)
+
     expect(store.double).toBe(10)
     expect(store.double).toBe(10)
     expect(store.treble()).toBe(15)
@@ -46,6 +49,7 @@ describe('state', () => {
   })
   it('class state', () => {
     const store = createStore(new TestStore())
+
     expect(store.double).toBe(10)
     expect(store.double).toBe(10)
     expect(store.doubleState).toBe(12)

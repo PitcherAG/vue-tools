@@ -1,6 +1,6 @@
-import { waitForWindowProp } from './utils'
 import { createStore } from './store'
 import { reactive, ref } from '@vue/composition-api'
+import { waitForWindowProp } from './utils'
 
 /** For Pitcher Impact
  |--------------------------------------------------
@@ -19,13 +19,15 @@ class ParamStore {
     contacts: null,
     contact: null,
     salesForceUser: null,
-    user: null
+    user: null,
   })
 
   get locale() {
     const user = this.state.salesForceUser ? this.state.salesForceUser : this.state.user
     let localeLangugage = null
+
     if (user) localeLangugage = user.LocaleSidKey ? user.LocaleSidKey : user.LanguageLocaleKey
+
     return localeLangugage
       ? localeLangugage
           .split('_')
@@ -57,7 +59,7 @@ class ParamStore {
         SCH: 'zh-CN',
         TCH: 'zh-TW',
         UA: 'uk',
-        VN: 'vi'
+        VN: 'vi',
       }
 
       if (isoLocaleMap[this.state.config.langV]) {
@@ -66,6 +68,7 @@ class ParamStore {
         return this.state.config.langV.toLowerCase()
       }
     }
+
     return null
   }
 
@@ -74,7 +77,7 @@ class ParamStore {
       Account: this.state.account,
       Contact: this.state.contact,
       Contacts: this.state.contacts,
-      User: this.state.salesForceUser ? this.state.salesForceUser : this.state.user
+      User: this.state.salesForceUser ? this.state.salesForceUser : this.state.user,
     }
   }
 }
@@ -86,19 +89,24 @@ export function useParamsStore() {
 // Params initializer
 export async function loadParams() {
   const store = useParamsStore()
+
   console.log(store.state.account)
 
   // for testing
   if (process.env.VUE_APP_PARAMS) {
     const preParams = JSON.parse(process.env.VUE_APP_PARAMS)
+
     Object.assign(store.state, preParams)
+
     return store.state
   }
 
   const params = await waitForWindowProp('params')
+
   if (params) {
     Object.assign(store.state, window.params)
   }
+
   return store.state
 }
 

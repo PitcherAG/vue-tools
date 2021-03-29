@@ -1,5 +1,5 @@
 <template>
-  <sui-form-field v-if="field.updateable" :error="error" :required="field.required && field.type !== 'boolean'">
+  <SuiFormField v-if="field.updateable" :error="error" :required="field.required && field.type !== 'boolean'">
     <label>{{ label || field.label }}</label>
     <input
       v-if="field.type === 'string' || field.type === 'phone' || field.type === 'url' || field.type === 'combobox'"
@@ -17,32 +17,32 @@
       v-bind="field.settings"
       @input="emitInput($event.target.value)"
     />
-    <dropdown
+    <Dropdown
       v-if="field.type === 'picklist' || field.type === 'multipicklist'"
-      :default-text="$gettext('Select')"
+      :defaultText="$gettext('Select')"
       :items="filteredValues"
       :multiple="field.type === 'multipicklist'"
       :value="value"
-      add-class="selection"
+      addClass="selection"
       v-bind="field.settings"
       :searchable="filteredValues.length > 20"
       @input="emitInput($event)"
     />
-    <dropdown
+    <Dropdown
       v-if="field.type === 'reference'"
-      :default-text="$gettext('Select')"
+      :defaultText="$gettext('Select')"
       :items="field.references.value"
       :multiple="field.type === 'multipicklist'"
       :value="value"
-      add-class="selection"
+      addClass="selection"
       v-bind="field.settings"
       :searchable="field.references.value.length > 20"
       @input="emitInput($event)"
     />
 
-    <calendar
+    <Calendar
       v-if="field.type === 'date' || field.type === 'datetime'"
-      :default-text="field.type === 'date' ? $gettext('Date') : $gettext('Date/Time')"
+      :defaultText="field.type === 'date' ? $gettext('Date') : $gettext('Date/Time')"
       :type="field.type"
       :value="value || ''"
       v-bind="field.settings"
@@ -69,17 +69,17 @@
                type="number"
                readonly="readonly"
                step="any" -->
-    <checkbox
+    <Checkbox
       v-if="field.type === 'boolean'"
       :value="value"
       toggle
       v-bind="field.settings"
-      @input="v => emitInput(v)"
+      @input="(v) => emitInput(v)"
     />
     <small v-if="!hideHelpText && field.inlineHelpText" class="helper">{{ field.inlineHelpText }}</small>
-  </sui-form-field>
+  </SuiFormField>
   <!-- not updateable -->
-  <sui-form-field v-else :style="{ minHeight: !value ? '1em' : undefined }">
+  <SuiFormField v-else :style="{ minHeight: !value ? '1em' : undefined }">
     <label>{{ label || field.label }}</label>
     <div>
       <template v-if="value">
@@ -109,46 +109,47 @@
         -
       </span>
     </div>
-  </sui-form-field>
+  </SuiFormField>
 </template>
 
 <script>
-import { computed, ref } from '@vue/composition-api'
-import Dropdown from './Dropdown'
 import Calendar from './Calendar'
 import Checkbox from './Checkbox'
+import Dropdown from './Dropdown'
+import { computed, ref } from '@vue/composition-api'
 import { formatCurrency, formatDate } from '..'
 
 export default {
-  name: 'object-form-field',
+  name: 'ObjectFormField',
   components: { Checkbox, Calendar, Dropdown },
   props: {
     field: {
       type: Object,
-      required: true
+      required: true,
     },
     index: {
-      type: Number
+      type: Number,
     },
     hideHelpText: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showError: {
-      type: Boolean
+      type: Boolean,
     },
     // eslint-disable-next-line vue/require-prop-types
     value: {},
     valueLabel: {
-      type: String
+      type: String,
     },
     label: {
-      type: String
-    }
+      type: String,
+    },
   },
   setup(props, ctxt) {
     const emit = ctxt.emit
     const picklist = ref([])
+
     if (props.field) {
       if (props.field.type === 'boolean' && !props.value) {
         emit('input', false)
@@ -162,7 +163,8 @@ export default {
 
     const filteredValues = computed(() => {
       const newValues = props.field.filteredValues ? props.field.filteredValues : picklist.value
-      return newValues.map(p => {
+
+      return newValues.map((p) => {
         return { text: p.label, value: p.value }
       })
     })
@@ -178,14 +180,15 @@ export default {
         field: props.field,
         label: props.label,
         type: props.field.type,
-        showError: props.showError
+        showError: props.showError,
       }
+
       emit('fieldChange', fieldChange)
       emit('input', value)
     }
 
     return { filteredValues, emitInput, error, formatDate, formatCurrency }
-  }
+  },
 }
 </script>
 

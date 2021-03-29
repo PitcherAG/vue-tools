@@ -1,22 +1,22 @@
+import UI_CONSTANTS from '../constants'
 import Vue from 'vue'
-import { reactive, computed } from '@vue/composition-api'
+import { computed, reactive } from '@vue/composition-api'
 import { createStore } from '../../store'
 import { fireEvent } from '../../event'
 import { joinPath } from '../../utils'
-import UI_CONSTANTS from '../constants'
 
 class FilesStore {
   id = 'filesStore'
   oneTimeLoadPresentations = false
   state = reactive({
     files: [],
-    uiFiles: computed(() => this.state.files.filter(file => file.shouldShowInUI)),
+    uiFiles: computed(() => this.state.files.filter((file) => file.shouldShowInUI)),
     slides: [],
     documentPath: null,
     presentations: [],
     customs: [],
     initialAllowedIDs: null,
-    allowedIDs: []
+    allowedIDs: [],
   })
 
   /*
@@ -26,6 +26,7 @@ class FilesStore {
     if (typeof startDate === 'undefined' || typeof endDate === 'undefined') return false
     if (startDate == null || endDate == null) return false
     if (startDate == 0 || endDate == 0) return false
+
     return startDate > now || endDate < now
   }
 
@@ -46,6 +47,7 @@ class FilesStore {
     ) {
       return false
     }
+
     return true
   }
 
@@ -55,10 +57,12 @@ class FilesStore {
   */
   extendFiles(files) {
     const now = new Date().getTime() / 1000
-    files.forEach(file => {
+
+    files.forEach((file) => {
       file.shouldShowInUI = this.shouldShowInUI(now, file)
       file.thumbnailUrl = joinPath(window.documentPath, file.thumb)
     })
+
     return files
   }
 
@@ -68,7 +72,7 @@ class FilesStore {
   parsePresentations(files) {
     this.state.customs = []
     this.state.presentations = []
-    files.forEach(file => this.parseSinglePresentation(file))
+    files.forEach((file) => this.parseSinglePresentation(file))
     if (this.oneTimeLoadPresentations) {
       fireEvent('loadPresentationsFromDB', {})
       this.oneTimeLoadPresentations = false
@@ -81,6 +85,7 @@ class FilesStore {
   parseCustomPdf(file) {
     file.ID = file.slideOrder.split(',')[0].split('|')[0]
     file.isCustomPdf = true
+
     return file
   }
 
@@ -100,21 +105,24 @@ class FilesStore {
           if (file.vSubFolder.indexOf('_') == -1) {
             file.isCustomPdf = true
           } else {
-            file.ID = '' + parseInt(file.ID)
+            file.ID = `${parseInt(file.ID)}`
           }
         }
-        file.ID = '' + file.ID
+        file.ID = `${file.ID}`
         file.isCustom ? this.addFileAsCustom(file) : this.mergePresentation(file)
       }
+
       return true
     } catch (e) {
       fireEvent('Error', e)
     }
+
     return false
   }
 
   createAppendCustomFile(original, file) {
     const customFile = {}
+
     Object.assign(customFile, original)
     Object.assign(customFile, file)
     customFile.body = file.presentationName
@@ -125,13 +133,15 @@ class FilesStore {
       Custom decks are retrived with presentation objects, this adds them to custom list
   */
   addFileAsCustom(file) {
-    let original = this.state.files.find(f => f.ID == file.ID)
+    let original = this.state.files.find((f) => f.ID == file.ID)
+
     if (original) {
       this.createAppendCustomFile(original, file)
     } else {
-      const originalSlide = this.state.slides.find(f => f.vSubfolder == file.vSubFolder)
+      const originalSlide = this.state.slides.find((f) => f.vSubfolder == file.vSubFolder)
+
       if (originalSlide) {
-        original = this.state.files.find(f => f.ID == originalSlide.ID)
+        original = this.state.files.find((f) => f.ID == originalSlide.ID)
         if (original) {
           file.ID = original.ID
           this.createAppendCustomFile(original, file)
@@ -145,7 +155,8 @@ class FilesStore {
   */
   mergePresentation(file) {
     this.state.presentations.push(file)
-    const original = this.state.files.find(f => f.ID == file.ID)
+    const original = this.state.files.find((f) => f.ID == file.ID)
+
     if (original) {
       Object.assign(original, file)
     }
@@ -156,13 +167,14 @@ class FilesStore {
       isFavorite property is added as an observable
   */
   markFavorites(fileIdMapping) {
-    this.state.files.forEach(file => {
+    this.state.files.forEach((file) => {
       if (typeof file.isFavorite === 'undefined') {
         Vue.set(file, 'isFavorite', fileIdMapping[file.ID] || false)
       } else {
         file.isFavorite = fileIdMapping[file.ID] || false
       }
     })
+
     return this.state.files
   }
 
@@ -184,6 +196,7 @@ export const useFilesStore = () => {
 
 window.getAllowedIDs = function() {
   const store = useFilesStore()
+
   return store.state.allowedIDs
 }
 
@@ -194,12 +207,14 @@ window.loadPresentations = function(presentationsObject) {
   window.presentationsObject = presentationsObject
   if (window.presentationsObject) {
     const store = useFilesStore()
+
     store.parsePresentations(window.presentationsObject)
   }
 }
 
 window.filterJSON = function(allowedIDsV) {
   const store = useFilesStore()
+
   if (allowedIDsV) {
     store.setAllowedIds(JSON.parse(allowedIDsV))
   } else {

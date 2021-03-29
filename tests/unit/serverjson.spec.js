@@ -1,9 +1,10 @@
 import CompositionApi from '@vue/composition-api'
 import { createLocalVue } from '@vue/test-utils'
+import { getExtraFieldValue, useCategoriesStore, useFilesStore, useSystemStore } from '@/instance/stores/index'
 import { loadServerJSON } from '@/instance/server.json'
-import { useSystemStore, getExtraFieldValue, useFilesStore, useCategoriesStore } from '@/instance/stores/index'
 
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 
 describe('serverjson data - (you must have env variables)', () => {
@@ -14,26 +15,31 @@ describe('serverjson data - (you must have env variables)', () => {
 
   it('useSystemStore', () => {
     const store = useSystemStore()
+
     expect(store.state.appID).not.toBeNull()
   })
 
   it('useFilesStore - files', () => {
     const store = useFilesStore()
+
     expect(store.state.files.length).toBeGreaterThan(0)
   })
 
   it('useFilesStore - slides', () => {
     const store = useFilesStore()
+
     expect(store.state.slides.length).toBeGreaterThan(0)
   })
 
   it('useCategoriesStore - categories', () => {
     const store = useCategoriesStore()
+
     expect(store.state.categories.length).toBeGreaterThan(0)
   })
 
   it('useCategoriesStore - subCategories', () => {
     const store = useCategoriesStore()
+
     expect(store.state.subCategories.length).toBeGreaterThan(0)
   })
 

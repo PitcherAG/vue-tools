@@ -1,10 +1,11 @@
-import { fireEvent } from '@/event'
-import { openLink } from '@/utils'
-import { getFilesWithKeyword } from '@/files'
-import { createLocalVue } from '@vue/test-utils'
 import CompositionApi from '@vue/composition-api'
+import { createLocalVue } from '@vue/test-utils'
+import { fireEvent } from '@/event'
+import { getFilesWithKeyword } from '@/files'
+import { openLink } from '@/utils'
 
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 
 jest.mock('@/event')
@@ -22,7 +23,7 @@ describe('link', () => {
       fileID: '11111',
       forceChange: false,
       parameters: { hello: 'world' },
-      subId: 0
+      subId: 0,
     })
 
     await openLink('pitcher://myKeyword2/?hello2=world2')
@@ -31,7 +32,7 @@ describe('link', () => {
       fileID: '11111',
       forceChange: false,
       parameters: { hello2: 'world2' },
-      subId: 0
+      subId: 0,
     })
   })
 
@@ -44,7 +45,7 @@ describe('link', () => {
       fileID: '12345',
       forceChange: false,
       parameters: { hello2: 'world2' },
-      subId: 0
+      subId: 0,
     })
   })
 })

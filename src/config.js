@@ -1,36 +1,42 @@
-import { fireEvent } from './event'
 import { PLATFORM } from './platform'
 import { createStore } from './store'
+import { fireEvent } from './event'
 
 class ConfigStore {
   id = 'config'
   state = {
-    customCaches: null
+    customCaches: null,
   }
 
   get getTableDict() {
     const d = {}
+
     if (!this.state.customCaches) {
       return d
     }
     for (let i = 0; i < this.state.customCaches.length; i++) {
       const table = this.state.customCaches[i]
+
       d[table.sfObjectName] = table.tableToCache
       d[table.objectName] = table.tableToCache
     }
+
     return d
   }
 
   get getCacheDict() {
     const d = {}
+
     if (!this.state.customCaches) {
       return d
     }
     for (let i = 0; i < this.state.customCaches.length; i++) {
       const table = this.state.customCaches[i]
+
       d[table.sfObjectName] = table
       d[table.objectName] = table
     }
+
     return d
   }
 }
@@ -41,7 +47,8 @@ export function useConfigStore() {
 
 export async function loadConfig(source = 'modal') {
   const store = useConfigStore()
-  let result = await fireEvent('getAppConfig', { source: source })
+  let result = await fireEvent('getAppConfig', { source })
+
   console.log('app config', result)
   if (PLATFORM === 'IOS') {
     result.customCaches.push({
@@ -56,8 +63,8 @@ export async function loadConfig(source = 'modal') {
         lon: 'TEXT',
         city: 'TEXT',
         lastVisit: 'TEXT',
-        accountName: 'TEXT'
-      }
+        accountName: 'TEXT',
+      },
     })
     result.customCaches.push({
       objectName: 'Contact',
@@ -69,14 +76,14 @@ export async function loadConfig(source = 'modal') {
         id: 'TEXT',
         accountID: 'TEXT',
         lastVisit: 'TEXT',
-        name: 'TEXT'
-      }
+        name: 'TEXT',
+      },
     })
     result.customCaches.push({
       objectName: 'Call',
       sfObjectName: 'Call',
       tableToCache: 'tbl_calls',
-      query: ''
+      query: '',
     })
     result.customCaches.push({
       objectName: 'User',
@@ -91,33 +98,33 @@ export async function loadConfig(source = 'modal') {
         name: 'TEXT',
         roleID: 'TEXT',
         parentRoleID: 'TEXT',
-        extraField: 'TEXT'
-      }
+        extraField: 'TEXT',
+      },
     })
   } else if (PLATFORM === 'ANDROID') {
     result.customCaches.push({
       objectName: 'Account',
       sfObjectName: 'Account',
       tableToCache: 'tbl_crm_accounts',
-      query: result.sfdcAccountQuery
+      query: result.sfdcAccountQuery,
     })
     result.customCaches.push({
       objectName: 'Contact',
       sfObjectName: 'Contact',
       tableToCache: 'tbl_crm_contacts',
-      query: result.sfdcContactQuery
+      query: result.sfdcContactQuery,
     })
     result.customCaches.push({
       objectName: 'Call',
       sfObjectName: 'Call',
       tableToCache: 'tbl_calls',
-      query: ''
+      query: '',
     })
     result.customCaches.push({
       objectName: 'User',
       sfObjectName: 'User',
       tableToCache: 'tbl_crm_users',
-      query: ''
+      query: '',
     })
   } else if (PLATFORM === 'WINDOWS') {
     result = result[0]
@@ -139,8 +146,8 @@ export async function loadConfig(source = 'modal') {
         LastVisitTimeStamp: 'INTEGER',
         Lat__c: 'REAL',
         Long__c: 'REAL',
-        Name: 'TEXT'
-      }
+        Name: 'TEXT',
+      },
     })
     result.customCaches.push({
       objectName: 'Contact',
@@ -155,14 +162,14 @@ export async function loadConfig(source = 'modal') {
         AccountId: 'TEXT',
         Email: 'TEXT',
         Json: 'TEXT',
-        JsonUntouched: 'TEXT'
-      }
+        JsonUntouched: 'TEXT',
+      },
     })
     result.customCaches.push({
       objectName: 'Call',
       sfObjectName: 'Call',
       tableToCache: 'SQLiteSfEvent',
-      query: ''
+      query: '',
     })
     result.customCaches.push({
       objectName: 'User',
@@ -175,14 +182,15 @@ export async function loadConfig(source = 'modal') {
         LastModifiedDate: 'TEXT',
         FirstName: 'TEXT',
         LastName: 'TEXT',
-        Json: 'TEXT'
-      }
+        Json: 'TEXT',
+      },
     })
   } else {
-    throw new Error('Platform not supported: ' + PLATFORM)
+    throw new Error(`Platform not supported: ${PLATFORM}`)
   }
   for (const a in result) {
     store.state[a] = result[a]
   }
+
   return store.state
 }

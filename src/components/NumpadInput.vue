@@ -93,37 +93,40 @@
 </template>
 
 <script>
-import { defineComponent, reactive, toRefs, computed, watch, onMounted, onUnmounted } from '@vue/composition-api'
+import { computed, defineComponent, onMounted, onUnmounted, reactive, toRefs, watch } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 
 export default defineComponent({
-  name: 'numpad-input',
+  name: 'NumpadInput',
   props: {
     value: {
-      type: [String, Number]
+      type: [String, Number],
     },
     lazy: Boolean,
     decimals: {
       type: Number,
       default: 2,
-      validator: val => {
+      validator: (val) => {
         if (val > 5) {
           console.error("[Vue warn]: The value of decimals can't be higher than 10!")
+
           return false
         } else if (val < 0) {
           console.error("[Vue warn]: The value of decimals can't be lower than 0!")
+
           return false
         }
+
         return true
-      }
+      },
     },
     group: {
       type: String,
-      default: 'no-group'
+      default: 'no-group',
     },
     resetBefore: {
       type: Boolean,
-      default: true
+      default: true,
     },
     fluid: Boolean,
     disabled: Boolean,
@@ -131,33 +134,33 @@ export default defineComponent({
     color: String,
     minWidth: {
       type: [Number, String],
-      default: 50
+      default: 50,
     },
     maxWidth: {
       type: [Number, String],
-      default: '100%'
+      default: '100%',
     },
     size: {
       type: String,
-      validator: val => validateSize(val, 'NumpadInput.vue')
+      validator: (val) => validateSize(val, 'NumpadInput.vue'),
     },
     rightIcon: String,
     leftIcon: String,
     placeholder: {
       type: String,
-      default: ''
+      default: '',
     },
     max: {
-      type: Number
+      type: Number,
     },
     disableKeyboard: {
       type: Boolean,
-      default: false
+      default: false,
     },
     noAnimation: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   emits: ['input'],
   setup(props, ctx) {
@@ -166,7 +169,7 @@ export default defineComponent({
       labelLeftSlot: !!ctx.slots.labelLeft,
       labelRightSlot: !!ctx.slots.labelRight,
       localValue: props.value,
-      shouldReset: false
+      shouldReset: false,
     })
 
     const inputAttrs = computed(() => {
@@ -181,18 +184,18 @@ export default defineComponent({
           labeled: ctx.slots.labelLeft || ctx.slots.labelRight,
           icon: props.rightIcon || props.leftIcon,
           transparent: props.transparent,
-          input: true
+          input: true,
         },
         style: {
           minWidth: parsePxStyle(props.minWidth),
-          maxWidth: parsePxStyle(props.maxWidth)
-        }
+          maxWidth: parsePxStyle(props.maxWidth),
+        },
       }
     })
 
     // set divider value connected to decimals
     // 10, 100, 1000 etc.
-    const dividerValue = parseInt('1' + '0'.repeat(props.decimals))
+    const dividerValue = parseInt(`1${'0'.repeat(props.decimals)}`)
     // default zero value
     const defaultValue = props.decimals === 0 ? '0' : `0.${'0'.repeat(props.decimals)}`
 
@@ -200,7 +203,7 @@ export default defineComponent({
       // before adding a new value, check if next value will pass over the max number
       if (
         props.max &&
-        (parseFloat(localState.localValue) >= props.max || parseInt('1' + localState.localValue) >= props.max)
+        (parseFloat(localState.localValue) >= props.max || parseInt(`1${localState.localValue}`) >= props.max)
       ) {
         // max number passing on next click, don't add value
         return
@@ -219,6 +222,7 @@ export default defineComponent({
       const value = parsed + val.toString()
       // mask the value with decimals
       const masked = (value / dividerValue).toFixed(props.decimals)
+
       // set value
       emit(masked)
     }
@@ -275,11 +279,12 @@ export default defineComponent({
       // get groups in view
       const groups = getNumpadGroups()
       // convert object model to array
-      const groupsArray = Object.keys(groups).map(k => groups[k])
+      const groupsArray = Object.keys(groups).map((k) => groups[k])
       // get all items except self
-      const allItems = [].concat(...groupsArray).filter(i => i.input !== ctx.refs.input)
+      const allItems = [].concat(...groupsArray).filter((i) => i.input !== ctx.refs.input)
+
       // remove focus from all the other items
-      allItems.forEach(i => i.input.blur())
+      allItems.forEach((i) => i.input.blur())
     }
 
     function focus(visibility) {
@@ -318,12 +323,14 @@ export default defineComponent({
       // get current group from the groups in view
       const { [props.group]: group } = getNumpadGroups()
       // find input element in this component and destruct selfIndex
-      const { index: selfIndex } = group.find(i => i.input === ctx.refs.input)
+      const { index: selfIndex } = group.find((i) => i.input === ctx.refs.input)
 
       const isLast = selfIndex === group.length - 1
+
       if (isLast) {
         // jump next group if this is the last one
         jumpNextGroup()
+
         return
       }
 
@@ -335,7 +342,7 @@ export default defineComponent({
       // get groups in view
       const groups = getNumpadGroups()
       // convert object model to array
-      const groupsArray = Object.keys(groups).map(k => groups[k])
+      const groupsArray = Object.keys(groups).map((k) => groups[k])
       // get group index of this component
       const groupIndex = Object.keys(groups).indexOf(props.group)
       // get next group index
@@ -360,6 +367,7 @@ export default defineComponent({
         // numbers
         addVal(parseInt(event.key))
       }
+
       return
     }
 
@@ -398,8 +406,9 @@ export default defineComponent({
       const inputsInView = document.querySelectorAll('.numpad-input')
       const groups = {}
 
-      inputsInView.forEach(elem => {
+      inputsInView.forEach((elem) => {
         const groupName = elem.getAttribute('data-group')
+
         if (!groups[groupName]) {
           groups[groupName] = []
         }
@@ -407,14 +416,15 @@ export default defineComponent({
         groups[groupName].push({
           id: `${groupName}_${groups[groupName].length}`,
           index: groups[groupName].length,
-          input: elem.querySelector('input')
+          input: elem.querySelector('input'),
         })
       })
+
       return groups
     }
 
     // to check outer click
-    const determineOuterClick = e => {
+    const determineOuterClick = (e) => {
       // if number input & keys row, do nothing
       if (
         e.target.className.includes('numpad') ||
@@ -439,7 +449,7 @@ export default defineComponent({
     // Watch props.value
     watch(
       () => props.value,
-      val => {
+      (val) => {
         localState.localValue = val
       }
     )
@@ -454,9 +464,9 @@ export default defineComponent({
       focus,
       jumpNextSibling,
       jumpNextGroup,
-      handleKeydown
+      handleKeydown,
     }
-  }
+  },
 })
 </script>
 

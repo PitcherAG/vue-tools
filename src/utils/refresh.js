@@ -1,10 +1,10 @@
-import { watchLocalStorage } from './watchers'
 import { eventHub } from './eventHub'
+import { watchLocalStorage } from './watchers'
 
 try {
-    window.localStorage.setItem('reloadConsole', 'false')
+  window.localStorage.setItem('reloadConsole', 'false')
 } catch (e) {
-    console.log(e)
+  console.log(e)
 }
 
 export function refreshWatcher(timeout) {

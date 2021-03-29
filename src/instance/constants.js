@@ -1,5 +1,5 @@
 export default {
   IGNORE_CUSTOM_TYPE: 2,
   PARENT_CATEGORY_VALUE: '0',
-  SUB_CATEGORY_VALUE: '-1'
+  SUB_CATEGORY_VALUE: '-1',
 }

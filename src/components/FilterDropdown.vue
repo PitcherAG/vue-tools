@@ -15,7 +15,7 @@
             class="button-text"
             :style="{
               whiteSpace: truncateText ? 'nowrap' : undefined,
-              textOverflow: truncateText && value.length > 0 ? 'ellipsis' : undefined
+              textOverflow: truncateText && value.length > 0 ? 'ellipsis' : undefined,
             }"
           >
             {{ buttonText }}
@@ -110,7 +110,7 @@
         >
           <!-- if this is an item -->
           <template v-if="item.type.includes('item')">
-            <checkbox :value="isSelected(item)" :label="item.text" :size="size" />
+            <Checkbox :value="isSelected(item)" :label="item.text" :size="size" />
             <div v-if="item.description" class="description">{{ item.description }}</div>
           </template>
           <!-- not an item, put as plain text -->
@@ -131,41 +131,41 @@
 
 <script>
 /* eslint-disable vue/no-unused-properties */
-import { computed, reactive, toRefs, onMounted, watch, ref } from '@vue/composition-api'
 import Checkbox from './Checkbox'
+import { computed, onMounted, reactive, ref, toRefs, watch } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 import { search } from '../utils'
 
 export default {
-  name: 'filter-dropdown',
+  name: 'FilterDropdown',
   components: {
-    Checkbox
+    Checkbox,
   },
   props: {
     value: {
       type: Array,
-      required: true
+      required: true,
     },
     title: String,
     items: {
       type: Array,
-      required: true
+      required: true,
     },
     itemText: {
       type: String,
-      default: 'text'
+      default: 'text',
     },
     itemValue: {
       type: String,
-      default: 'value'
+      default: 'value',
     },
     returnType: {
       type: String,
-      default: 'value'
+      default: 'value',
     },
     icon: {
       type: String,
-      default: 'filter'
+      default: 'filter',
     },
     fluid: Boolean,
     compact: Boolean,
@@ -175,34 +175,34 @@ export default {
     hideSearch: Boolean,
     truncateText: {
       type: Boolean,
-      default: true
+      default: true,
     },
     noDataText: {
       type: String,
       default: () => {
         $gettext('No results')
-      }
+      },
     },
     width: {
-      type: [String, Number]
+      type: [String, Number],
     },
     menuMinWidth: {
       type: [String, Number],
-      default: 300
+      default: 300,
     },
     scrollHeight: {
       type: [String, Number],
-      default: 250
+      default: 250,
     },
     color: String,
     size: {
       type: String,
-      validator: val => validateSize(val, 'Dropdown.vue')
+      validator: (val) => validateSize(val, 'Dropdown.vue'),
     },
     itemsPerPage: {
       type: Number,
-      default: null
-    }
+      default: null,
+    },
   },
   emits: ['input'],
   setup(props, { refs, emit, root, slots }) {
@@ -221,7 +221,7 @@ export default {
       hasActionsSlot: !!slots.actions,
       hasPrependListSlot: !!slots['prepend-list'],
       hasAppendListSlot: !!slots['append-list'],
-      itemsVisible: props.itemsPerPage
+      itemsVisible: props.itemsPerPage,
     })
 
     const containerAttr = computed(() => {
@@ -229,9 +229,9 @@ export default {
         class: {
           fluid: !!props.fluid,
           [props.size]: !!props.size,
-          disabled: !!props.disabled
+          disabled: !!props.disabled,
         },
-        style: {}
+        style: {},
       }
 
       if (props.width) {
@@ -252,24 +252,24 @@ export default {
         inverted: !!props.inverted,
         [props.color]: !!props.color,
         active: props.basic && props.value.length > 0,
-        ['right labeled icon']: !props.value.length
+        ['right labeled icon']: !props.value.length,
       },
       style: {
         flex: 1,
         paddingLeft: '8px !important',
         paddingRight: props.value.length > 0 ? '8px !important' : undefined,
         textAlign: 'left',
-        overflow: 'hidden'
-      }
+        overflow: 'hidden',
+      },
     }))
 
     const menuAttr = computed(() => ({
       class: {
-        ['ui grid fluid vertical menu mt-2']: true
+        ['ui grid fluid vertical menu mt-2']: true,
       },
       style: {
-        minWidth: props.menuMinWidth ? parsePxStyle(props.menuMinWidth) : undefined
-      }
+        minWidth: props.menuMinWidth ? parsePxStyle(props.menuMinWidth) : undefined,
+      },
     }))
 
     const parsedItems = computed(() => {
@@ -277,21 +277,21 @@ export default {
         return []
       }
 
-      return props.items.map(item => {
+      return props.items.map((item) => {
         if (item.constructor === Object) {
           return {
             text: item[props.itemText],
             value: item[props.itemValue],
             type: item.type ? item.type : 'item',
             description: item.description,
-            disabled: item.disabled
+            disabled: item.disabled,
           }
         } else {
           // if not key/value pair
           return {
             text: item,
             value: item,
-            type: 'item'
+            type: 'item',
           }
         }
       })
@@ -324,11 +324,12 @@ export default {
         if (!props.value.length) {
           state.buttonText = props.title
           state.hasMoreSelected = ''
+
           return
         }
 
         state.buttonText = ''
-        const selectedItems = parsedItems.value.filter(i => isSelected(i)).map(i => i.text)
+        const selectedItems = parsedItems.value.filter((i) => isSelected(i)).map((i) => i.text)
         let lineBreakIndex = 0
         let textFitsContainer = true
 
@@ -366,7 +367,7 @@ export default {
           state.searchKey = ''
           state.shouldSort = true
           refresh()
-        }
+        },
       })
     }
 
@@ -378,10 +379,11 @@ export default {
       $(refs.filter).dropdown('hide')
     }
 
-    const isSelected = item => {
+    const isSelected = (item) => {
       if (props.returnType === 'object') {
-        return props.value.some(i => i.value === item.value)
+        return props.value.some((i) => i.value === item.value)
       }
+
       return props.value.includes(item[props.returnType])
     }
 
@@ -405,22 +407,23 @@ export default {
       return props.returnType === 'object'
         ? emit(
             'input',
-            props.value.filter(i => i.value !== item.value)
+            props.value.filter((i) => i.value !== item.value)
           )
         : emit(
             'input',
-            props.value.filter(v => v !== item[props.returnType])
+            props.value.filter((v) => v !== item[props.returnType])
           )
     }
 
     function selectAll() {
       const notSelectedItems = listItems.value
-        .filter(i => !i.disabled)
-        .filter(i => i.type.includes('item'))
-        .filter(i => !isSelected(i))
+        .filter((i) => !i.disabled)
+        .filter((i) => i.type.includes('item'))
+        .filter((i) => !isSelected(i))
+
       return props.returnType === 'object'
         ? emit('input', [...props.value, ...notSelectedItems])
-        : emit('input', [...props.value, ...notSelectedItems.map(i => i[props.returnType])])
+        : emit('input', [...props.value, ...notSelectedItems.map((i) => i[props.returnType])])
     }
 
     function reset() {
@@ -430,6 +433,7 @@ export default {
 
     function loadMore() {
       const toSet = state.itemsVisible + props.itemsPerPage
+
       state.itemsVisible = toSet > parsedItems.value.length ? parsedItems.value.length : toSet
       // Scroll the list items container to the bottom when items are added
       root.$nextTick(() => {
@@ -441,6 +445,7 @@ export default {
       if (props.itemsPerPage && parsedItems.value.length !== state.itemsVisible) {
         return true
       }
+
       return false
     })
 
@@ -448,6 +453,7 @@ export default {
       // save initial button width
       if (!props.compact && !props.width) {
         const initialWidth = window.getComputedStyle(refs.button).width
+
         refs.filter.style.width = initialWidth
         refs.filter.style.maxWidth = initialWidth
       }
@@ -470,9 +476,9 @@ export default {
       showLoadMore,
       isSelected,
       refresh,
-      parsePxStyle
+      parsePxStyle,
     }
-  }
+  },
 }
 </script>
 

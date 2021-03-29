@@ -23,68 +23,70 @@
 
 <script>
 /* eslint-disable vue/no-unused-properties */
-import { computed, reactive, toRefs, watch, onMounted } from '@vue/composition-api'
+import { computed, onMounted, reactive, toRefs, watch } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
 
 export default {
-  name: 'progress-bar',
+  name: 'ProgressBar',
   props: {
     value: {
       type: [String, Number],
-      required: true
+      required: true,
     },
     total: {
       type: [String, Number],
-      default: 100
+      default: 100,
     },
     showProgress: {
       type: Boolean,
-      default: true
+      default: true,
     },
     progressCenter: Boolean,
     showLabel: {
       type: Boolean,
-      default: false
+      default: false,
     },
     indicating: Boolean,
     autoSuccess: {
       type: Boolean,
-      default: true
+      default: true,
     },
     loading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     disabled: Boolean,
     animate: {
       type: Boolean,
-      default: false
+      default: false,
     },
     color: String,
     maxWidth: {
       type: [Number, String],
-      default: '100%'
+      default: '100%',
     },
     settings: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     attached: {
       type: String,
-      validator: val => {
+      validator: (val) => {
         const valid = val === 'top' || val === 'bottom'
+
         if (!valid) {
           console.error('[Vue warn]: Validation error in ProgressBar.vue!')
           console.error('[Vue warn]: prop.attached is not valid!')
           throw `Accepted values: top | bottom`
         }
+
         return valid
-      }
+      },
     },
     size: {
       type: String,
-      validator: val => validateSize(val, 'ProgressBar.vue')
-    }
+      validator: (val) => validateSize(val, 'ProgressBar.vue'),
+    },
   },
   emits: ['onChange', 'onSuccess', 'onActive', 'onError', 'onWarning'],
 
@@ -92,7 +94,7 @@ export default {
     // local state
     const state = reactive({
       hasLabelSlot: !!slots.label,
-      percent: 0
+      percent: 0,
     })
 
     const progressBarAttr = computed(() => ({
@@ -104,11 +106,11 @@ export default {
         attached: !!props.attached,
         [props.state]: !!props.state,
         [props.color]: !!props.color,
-        [props.size]: !!props.size
+        [props.size]: !!props.size,
       },
       style: {
-        maxWidth: parsePxStyle(props.maxWidth)
-      }
+        maxWidth: parsePxStyle(props.maxWidth),
+      },
     }))
 
     // execute command with jquery on fomantic
@@ -116,6 +118,7 @@ export default {
       if (!arg) {
         return $(refs.progress).progress(comm)
       }
+
       return $(refs.progress).progress(comm, arg)
     }
 
@@ -141,11 +144,11 @@ export default {
         showActivity: props.animate,
         autoSuccess: props.autoSuccess,
         onChange: (percent, value, total) => emit('onChange', { percent, value, total }),
-        onSuccess: total => emit('onSuccess', total),
+        onSuccess: (total) => emit('onSuccess', total),
         onActive: (value, total) => emit('onActive', { value, total }),
         onError: (value, total) => emit('onError', { value, total }),
         onWarning: (value, total) => emit('onWarning', { value, total }),
-        ...props.settings
+        ...props.settings,
       })
       // save percent on init
       state.percent = exec('get percent')
@@ -155,9 +158,9 @@ export default {
       ...toRefs(state),
       progressBarAttr,
       setProgressState,
-      exec
+      exec,
     }
-  }
+  },
 }
 </script>
 

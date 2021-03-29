@@ -8,7 +8,7 @@ class ValidationsStore {
   state = {
     listviews: [],
     lookups: [],
-    rules: []
+    rules: [],
   }
 }
 
@@ -18,13 +18,16 @@ export function useValidationsStore() {
 
 export async function loadValidations(keyword) {
   const store = useValidationsStore()
+
   if (!store.loaded) {
     const files = await getFilesWithKeyword(keyword)
     const res = await fetch(getFullFilepath(files[0].vUrl))
     const data = await res.json()
+
     store.state = Object.assign(store.state, data)
     store.loaded = true
   }
+
   return store.state
 }
 

@@ -24,11 +24,11 @@ async function extractFile(patterns, output) {
   const files = new Set()
 
   for (const pattern of patterns) {
-    ;(await glob(pattern)).forEach(file => files.add(file))
+    ;(await glob(pattern)).forEach((file) => files.add(file))
   }
 
   const extractor = new extract.Extractor({
-    attributes: ['v-translate']
+    attributes: ['v-translate'],
   })
 
   for (const file of files) {
@@ -36,6 +36,7 @@ async function extractFile(patterns, output) {
 
     try {
       const data = fs.readFileSync(file, { encoding: 'utf-8' }).toString()
+
       extractor.extract(file, file.split('.').pop(), data)
     } catch (e) {
       console.error(chalk.red`[config-gettext-extract] could not extract ${file}`)
@@ -47,5 +48,5 @@ async function extractFile(patterns, output) {
 
 module.exports = {
   extractConfig,
-  extractFile
+  extractFile,
 }

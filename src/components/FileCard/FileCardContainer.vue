@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'file-card-container'
+  name: 'FileCardContainer',
 }
 </script>
 

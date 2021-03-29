@@ -1,5 +1,5 @@
 export function watchLocalStorage(name) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const storage = window.localStorage
     const oldValue = storage.getItem(name)
 
@@ -7,6 +7,7 @@ export function watchLocalStorage(name) {
       setTimeout(() => {
         if (storage.getItem(name) != oldValue) {
           resolve(storage.getItem(name))
+
           return
         }
         waitForReload()

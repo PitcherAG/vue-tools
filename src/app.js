@@ -1,6 +1,6 @@
+import { PLATFORM } from './platform'
 import { fireEvent } from './event'
 import { getFilesWithKeyword } from './files'
-import { PLATFORM } from './platform'
 
 export function closeModal() {
   fireEvent('closeOpenModal')
@@ -17,7 +17,7 @@ export function startCall() {
 export function getSFUrl(path) {
   // example: '/sfc/servlet.shepherd/version/renditionDownload?rendition=THUMB240BY180&versionId=0682E000005CNoY'
   return fireEvent('getSFUrl', {
-    path: path
+    path,
   })
 }
 
@@ -26,7 +26,7 @@ export function searchPitcherFile(q) {
     extra: q,
     body: q,
     keywords: q,
-    rangeCheck: true
+    rangeCheck: true,
   })
 }
 
@@ -41,22 +41,24 @@ export function loadWebPageFromFolder(
 ) {
   fireEvent('loadWebPageFromFolder', {
     urlValue: fileURL,
-    title: title,
-    showBar: showBar,
+    title,
+    showBar,
     ID: fileID,
-    folderName: folderName,
-    allowPortrait: allowPortrait,
-    parameters: parameter
+    folderName,
+    allowPortrait,
+    parameters: parameter,
   })
 }
 
 export async function launchFileWithKeyword(keyword, params) {
   const files = await getFilesWithKeyword(keyword)
+
   if (files.length !== 1) {
-    alert(files.length + ' files found for keyword: ' + keyword)
+    alert(`${files.length} files found for keyword: ${keyword}`)
   }
   const file = files[0]
-  const fileUrl = file.vUrl.replace('.zip', '').replace('zip/', '') + '/index.html'
+  const fileUrl = `${file.vUrl.replace('.zip', '').replace('zip/', '')}/index.html`
+
   if (PLATFORM === 'ANDROID') {
     loadWebPageFromFolder(fileUrl, file.body, file.ID, params)
   } else {
@@ -66,7 +68,7 @@ export async function launchFileWithKeyword(keyword, params) {
 
 export function launchFileWithID(id) {
   fireEvent('launchFileWithID', {
-    fileID: id
+    fileID: id,
   })
 }
 
@@ -76,7 +78,7 @@ export function launchContentWithID(id, params, subId = 0, currentID, forceChang
     parameters: params,
     subId,
     currentID,
-    forceChange
+    forceChange,
   })
 }
 
@@ -91,8 +93,9 @@ export function saveObject(obj) {
     'LastModifiedById',
     'LastModifiedDate',
     'SystemModstamp',
-    'fieldsToNull'
+    'fieldsToNull',
   ]
+
   if (!obj.ignoreFields) {
     obj.ignoreFields = []
   }
@@ -102,7 +105,7 @@ export function saveObject(obj) {
         obj.ignoreFields.push(a)
       }
     }
-    if (obj[a] === null || typeof obj[a] == 'undefined') {
+    if (obj[a] === null || typeof obj[a] === 'undefined') {
       // no value... add it to the fieldsToNull
       if (!obj.fieldsToNull) {
         obj.fieldsToNull = []
@@ -133,40 +136,43 @@ export function saveObject(obj) {
   if (obj.Id) {
     fireEvent('sendStatsFromHTML', {
       event_name: 'event_redirect_updateSFDC',
-      event_params: obj
+      event_params: obj,
     })
   } else {
     fireEvent('sendStatsFromHTML', {
       event_name: 'event_redirect_createSFDC',
-      event_params: obj
+      event_params: obj,
     })
   }
 }
 
 export function getSchema(objectName) {
   let desc
+
   if (PLATFORM === 'ANDROID' || PLATFORM === 'WINDOWS') {
-    desc = objectName + '_desc'
+    desc = `${objectName}_desc`
   } else if (PLATFORM === 'IOS') {
-    desc = objectName + '_desc_cache'
+    desc = `${objectName}_desc_cache`
   } else {
-    throw 'no supported: ' + PLATFORM
+    throw `no supported: ${PLATFORM}`
   }
   try {
     return fireEvent('getFromHTML', { id: desc, useSFDCDB: true })
   } catch (e) {
-    throw 'Schema not found:' + objectName
+    throw `Schema not found:${objectName}`
   }
 }
 
 export function getLayout(objectName, objectTypeId) {
   let desc
+
   if (PLATFORM === 'IOS' || PLATFORM === 'ANDROID') {
-    desc = objectName + '_' + objectTypeId + '_layout'
+    desc = `${objectName}_${objectTypeId}_layout`
   } else if (PLATFORM === 'WINDOWS') {
-    desc = objectName + '<' + objectTypeId + '>_desc'
+    desc = `${objectName}<${objectTypeId}>_desc`
   }
   console.log(desc)
+
   return fireEvent('getFromHTML', { id: desc, useSFDCDB: true })
 }
 
@@ -174,15 +180,16 @@ export function saveLocal(id, data, useSFDCDB = true) {
   fireEvent('saveFromHTML', {
     variables: data,
     closeWeb: false,
-    id: id,
-    useSFDCDB: useSFDCDB
+    id,
+    useSFDCDB,
   })
 }
 
 export async function loadLocal(id, useSFDCDB = true) {
   const data = await fireEvent('getFromHTML', {
-    id: id,
-    useSFDCDB: useSFDCDB
+    id,
+    useSFDCDB,
   })
+
   return data
 }

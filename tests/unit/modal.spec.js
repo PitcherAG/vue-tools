@@ -1,22 +1,23 @@
 import CompositionApi from '@vue/composition-api'
-import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Modal from '@/components/Modal'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 
 const localVue = createLocalVue()
+
 localVue.use(CompositionApi)
 
 describe('Modal.vue', () => {
   const wrapper = shallowMount(Modal, {
     localVue,
     propsData: {
-      value: false
-    }
+      value: false,
+    },
   })
 
   // Helper function
   async function updateValue(key, value) {
     wrapper.setProps({
-      [key]: value
+      [key]: value,
     })
     await wrapper.vm.$nextTick()
   }

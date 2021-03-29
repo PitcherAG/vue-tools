@@ -1,8 +1,8 @@
 import Component from './component'
 import Directive from './directive'
+import { createStore } from '../store'
 import { getTranslationIndex } from './plurals'
 import { renderSimpleContext } from '../utils'
-import { createStore } from '../store'
 
 if (!window.fetch) {
   import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch')
@@ -11,7 +11,7 @@ if (!window.fetch) {
 const defaultOptions = {
   availableLanguages: { en: 'English' },
   locale: 'en',
-  messages: { en: {} }
+  messages: { en: {} },
 }
 
 class I18nStore {
@@ -19,7 +19,7 @@ class I18nStore {
   state = defaultOptions
   async setLanguage(lang, { app = 'app', dir = 'translations', load = true } = {}) {
     if (!this.state.availableLanguages[lang]) {
-      throw new Error('invalid language: ' + lang)
+      throw new Error(`invalid language: ${lang}`)
     }
 
     if (load && lang !== 'en') {
@@ -61,6 +61,7 @@ export function trans(msgid, n = 0, placeholders) {
     if (translated) {
       if (Array.isArray(translated)) {
         const index = getTranslationIndex(language, n)
+
         translated = translated[index]
       }
     } else {
@@ -102,7 +103,7 @@ window.translateUI = function(json) {
 }
 
 export function TranslationPlugin(_Vue, options = {}) {
-  Object.keys(options).forEach(key => {
+  Object.keys(options).forEach((key) => {
     if (Object.keys(defaultOptions).indexOf(key) === -1) {
       throw new Error(`${key} is an invalid option for the translate plugin.`)
     }
@@ -111,6 +112,7 @@ export function TranslationPlugin(_Vue, options = {}) {
   options = Object.assign(defaultOptions, options)
 
   const store = useI18nStore()
+
   Object.assign(options, store.state)
   // Makes <translate> available as a global component.
   // eslint-disable-next-line vue/component-definition-name-casing
