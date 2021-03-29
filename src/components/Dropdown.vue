@@ -273,10 +273,13 @@ export default {
                   if (split.includes(findItem)) {
                     return item
                   }
+
+                  return undefined
                 })
               }
             } else {
               // usage with items
+              // eslint-disable-next-line no-lonely-if
               if (props.items) {
                 returnValue = state.isSingleItem ? value : props.items.find((item) => item[props.itemValue] === value)
               }
