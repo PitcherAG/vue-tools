@@ -31,3 +31,137 @@ import { showAlertBox } from '@pitcher/vue-sdk'
 
 showAlertBox('my title', 'my message')
 ```
+
+## Set Category
+### Sets selected category. At a moment only one category can be currently selected category, not possible to select more than one
+```javascript
+import { setCategory } from '@pitcher/vue-sdk'
+
+setCategory(category)
+```
+
+## Mark a file as favorite
+### You can access files from file store
+```javascript
+import { addFavorite } from '@pitcher/vue-sdk'
+
+addFavorite(file)
+```
+
+## Remove a file from favorite files
+### you can access files from file store
+```javascript
+import { removeFavorite } from '@pitcher/vue-sdk'
+
+removeFavorite(file)
+```
+
+## Requests favorite files from native and marks the files inn file store according to the ids retrieved
+```javascript
+import { getFavorites } from '@pitcher/vue-sdk'
+
+await getFavorites()
+```
+
+## Open a file
+### First parameter is the file to be opened, and second parameter is the parameters to send the view
+### Native may open files with different kind of views and the Ti event to open a file may differ according to the category of the file, they are handles inside this function
+```javascript
+import { openContent } from '@pitcher/vue-sdk'
+
+openContent(file, parameters)
+```
+
+## Edit a custom deck
+```javascript
+import { editFile } from '@pitcher/vue-sdk'
+
+editFile(file)
+```
+
+## Delete a custom deck
+```javascript
+import { deleteFile } from '@pitcher/vue-sdk'
+
+deleteFile(file)
+```
+
+## Send selected documents
+### Send documents via different options.
+### First parameter is the file Ids to send, and second parameter is how to send files
+
+| via  | How to send  |
+|---|---|
+ 0  | Send as attachment via email  |
+ 1  | Send via email form |
+ 2  | Send via connect  |
+ 3  | Send via native email application as a zero drive link  |
+
+
+```javascript
+import { sendPickingContent } from '@pitcher/vue-sdk'
+
+sendPickingContent(fileIds, via)
+```
+
+## Open file share dialog
+### This function opens nnative dialog where you can select files to share
+```javascript
+import { sendDocuments } from '@pitcher/vue-sdk'
+
+sendDocuments()
+```
+
+## Create custom decks
+```javascript
+import { createSlideSet } from '@pitcher/vue-sdk'
+
+createSlideSet()
+```
+
+## Load presentations from local db
+### This function refreshes presentation list in file store, by requesting info from native
+```javascript
+import { loadPresentationsFromDB } from '@pitcher/vue-sdk'
+
+loadPresentationsFromDB()
+```
+
+## Open presentation and go to the page
+### First parameter is the file Id, second parameter is page index
+```javascript
+import { loadPresentationWithPage } from '@pitcher/vue-sdk'
+
+loadPresentationWithPage(fileId, page)
+```
+
+## Open pdf and go to the page
+### First parameter is the file, second parameter is page index, and third one is text to highlight
+```javascript
+import { loadPdfWithPage } from '@pitcher/vue-sdk'
+
+loadPdfWithPage(file, page, searchText)
+```
+
+## Show ios native sync box
+options have 2 properties
+
+| property  | Used for  |
+|---|---|
+ xPos  | Horizontal position of the sync box top left |
+ yPos  | Vertical position of the sync box top left |
+
+```javascript
+import { showIOSSyncWindow } from '@pitcher/vue-sdk'
+
+showIOSSyncWindow(options)
+```
+
+## Get sync box events
+### Returns sync box events (only the ones that are send via sendStatsFromHTML)
+### parameter is the source windows (default is homescreen)
+```javascript
+import { getSyncEvents } from '@pitcher/vue-sdk'
+
+await getSyncEvents(source)
+```
