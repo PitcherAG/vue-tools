@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.6](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.6-beta.0...v1.5.6) (2021-03-31)
+
+
+### Features
+
+* missing instance action function documentation added ([#190](https://github.com/PitcherAG/pitcher-vue-sdk/issues/190)) ([cec03fe](https://github.com/PitcherAG/pitcher-vue-sdk/commit/cec03fe8d760e32c2f9a65b8bd9b5e2a1862c8c7))
+
+
+### Bug Fixes
+
+* lint errors after new lint rules ([6e18fe8](https://github.com/PitcherAG/pitcher-vue-sdk/commit/6e18fe82772d11048e3b2363202e2a5bafaf1b78))
+
 ### [1.5.6-beta.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.5...v1.5.6-beta.0) (2021-03-24)
 
 
