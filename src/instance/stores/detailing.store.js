@@ -40,9 +40,11 @@ class DetailingStore {
   }
 
   setCurrentContact(newContact, newAccount) {
-    const isAdding = this.state.currentContact !== null
+    // eslint-disable-next-line eqeqeq
+    const isAdding = this.state.currentContact != null
 
-    if (newContact === null && newAccount === null) {
+    // eslint-disable-next-line eqeqeq
+    if (newContact == null && newAccount == null) {
       this.afterCallEnded()
     } else {
       try {
@@ -51,14 +53,16 @@ class DetailingStore {
       } catch (e) {
         console.log(e)
       }
-      this.state.isFilterActive = this.state.currentContact !== null && !isAdding
+      // eslint-disable-next-line eqeqeq
+      this.state.isFilterActive = this.state.currentContact != null && !isAdding
     }
     eventHub.$emit('contactChanged')
   }
 
   setQuickStart(response) {
     if (typeof response.quickstartenabled !== 'undefined') {
-      this.state.quickStartEnabled = response.quickstartenabled === '1'
+      // eslint-disable-next-line eqeqeq
+      this.state.quickStartEnabled = response.quickstartenabled == '1'
     } else {
       this.state.quickStartEnabled = true
     }
