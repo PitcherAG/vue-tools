@@ -449,6 +449,8 @@ export default {
                     // to check whether each dependent value is valid
                     return !!(bitmap.charCodeAt(index >> 3) & (128 >> index % 8))
                   })
+
+                  if (field.filteredValues.length === 1) Vue.set(state.obj, field.name, field.filteredValues[0].value)
                 }
               },
               {
