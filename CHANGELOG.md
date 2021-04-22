@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.7-beta.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.6...v1.5.7-beta.0) (2021-04-22)
+
+
+### Bug Fixes
+
+* rollback eqeqeq rule for detailing store ([d87af11](https://github.com/PitcherAG/pitcher-vue-sdk/commit/d87af11687f89bf6a7840464630233ebbd97017f))
+
 ### [1.5.6](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.6-beta.0...v1.5.6) (2021-03-31)
 
 
