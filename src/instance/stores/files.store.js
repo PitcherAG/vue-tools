@@ -318,17 +318,23 @@ async function generateChapters(presentations) {
     resolve()
   })
 }
-window.loadPresentations = function(presentationsObject) {
-  if (typeof presentationsObject === 'string') {
-    // eslint-disable-next-line no-param-reassign
-    presentationsObject = JSON.parse(presentationsObject)
-  }
-  window.presentationsObject = presentationsObject
-  if (window.presentationsObject) {
-    const store = useFilesStore()
 
-    store.parsePresentations(window.presentationsObject)
+window.loadPresentations = function(presentationsObject) {
+  let presentations = presentationsObject
+
+  if (typeof presentationsObject === 'string') {
+    presentations = JSON.parse(presentations)
   }
+
+  generateChapters(presentationsObject).then(() => {
+    window.presentationsObject = presentations
+
+    if (window.presentationsObject) {
+      const store = useFilesStore()
+
+      store.parsePresentations(window.presentationsObject)
+    }
+  })
 }
 
 window.filterJSON = function(allowedIDsV) {
