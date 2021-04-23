@@ -1,4 +1,3 @@
-/* eslint-disable eqeqeq */
 import { fireEvent } from '../../event'
 import { useFilesStore } from '../stores/index'
 
@@ -34,6 +33,7 @@ function loadCustomPDF(file) {
 }
 
 function showPdf(file, options) {
+  // eslint-disable-next-line eqeqeq
   options.viewMode = options.viewMode == 1 ? 3 : 1
   options.file = file.vUrl
   options.pdfID = file.ID
@@ -130,10 +130,13 @@ function loadInteractive(file, parameters) {
   let allowPortrait = 0
   let showBar = 1
 
-  if (file.extra2 !== null) {
+  // eslint-disable-next-line eqeqeq
+  if (file.extra2 != null) {
     const parts = file.extra2.split('|')
 
+    // eslint-disable-next-line eqeqeq
     showBar = parts.length > 0 && parts[0] == 1 ? 0 : 1
+    // eslint-disable-next-line eqeqeq
     allowPortrait = parts.length > 1 && parts[1] == 1 ? 1 : 0
   }
   fireEvent('loadWebPageFromFolder', {
