@@ -217,6 +217,17 @@ window.getAllowedIDs = function() {
   return store.state.allowedIDs
 }
 
+function getChapterForSlideIndex(chapters, slideIndex) {
+  for (let i = 0; i < chapters.length; i++) {
+    const chapter = chapters[i]
+
+    if (slideIndex >= chapter.startIndex && slideIndex < chapter.endIndex) {
+      return chapter
+    }
+  }
+
+  return null
+}
 window.loadPresentations = function(presentationsObject) {
   if (typeof presentationsObject === 'string') {
     // eslint-disable-next-line no-param-reassign
