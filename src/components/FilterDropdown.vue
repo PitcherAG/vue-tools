@@ -397,9 +397,11 @@ export default {
       // select
       if (!isSelected(item)) {
         if (props.returnType === 'object') {
-          emit('input', props.value.concat([item]))
+          // eslint-disable-next-line consistent-return
+          return emit('input', props.value.concat([item]))
         } else {
-          emit('input', props.value.concat([item[props.returnType]]))
+          // eslint-disable-next-line consistent-return
+          return emit('input', props.value.concat([item[props.returnType]]))
         }
       }
 
