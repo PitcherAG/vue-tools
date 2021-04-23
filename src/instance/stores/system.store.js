@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createStore } from '../../store'
 import { reactive } from '@vue/composition-api'
 
@@ -54,6 +53,7 @@ export function getExtraFieldValue(property, defaultValue) {
 window.updateStatusBadge = function(value) {
   const store = useSystemStore()
 
+  // eslint-disable-next-line no-param-reassign
   value = parseInt(value)
   store.state.statusBadge = value || 0
 }
@@ -61,6 +61,7 @@ window.updateStatusBadge = function(value) {
 window.updateTodoBadge = function(value) {
   const store = useSystemStore()
 
+  // eslint-disable-next-line no-param-reassign
   value = parseInt(value)
   store.state.todoBadge = value || 0
 }
