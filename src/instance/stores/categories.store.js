@@ -10,10 +10,12 @@ class CategoriesStore {
     category: {},
     categories: [],
     parentCategories: computed(() =>
-      this.state.categories.filter((category) => category.parentCategory === UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+      // eslint-disable-next-line eqeqeq
+      this.state.categories.filter((category) => category.parentCategory == UI_CONSTANTS.PARENT_CATEGORY_VALUE)
     ),
     subCategories: computed(() =>
-      this.state.categories.filter((category) => category.parentCategory !== UI_CONSTANTS.PARENT_CATEGORY_VALUE)
+      // eslint-disable-next-line eqeqeq
+      this.state.categories.filter((category) => category.parentCategory != UI_CONSTANTS.PARENT_CATEGORY_VALUE)
     ),
   })
 

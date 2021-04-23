@@ -12,7 +12,8 @@ class DetailingStore {
   state = reactive({
     currentContact: null,
     currentAccount: null,
-    hasActiveCall: computed(() => this.state.currentContact !== null),
+    // eslint-disable-next-line eqeqeq
+    hasActiveCall: computed(() => this.state.currentContact != null),
     todaysCalls: [],
     isFilterActive: false,
     quickStartEnabled: true,
@@ -165,7 +166,8 @@ export function removeEvent(Id) {
   const store = useDetailingStore()
 
   fireEvent('removeEvent', { Id })
-  store.state.syncEvents = store.state.syncEvents.filter((event) => event.Id !== Id)
+  // eslint-disable-next-line eqeqeq
+  store.state.syncEvents = store.state.syncEvents.filter((event) => event.Id != Id)
 }
 
 export function removeAllEvents() {
