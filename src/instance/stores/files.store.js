@@ -230,7 +230,7 @@ function getChapterForSlideIndex(chapters, slideIndex) {
   return null
 }
 
-async function generateChapters(presentations) {
+async function generateCustomDeckChapters(presentations) {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve) => {
     for (const key in presentations) {
@@ -326,7 +326,7 @@ window.loadPresentations = function(presentationsObject) {
     presentations = JSON.parse(presentations)
   }
 
-  generateChapters(presentationsObject).then(() => {
+  generateCustomDeckChapters(presentationsObject).then(() => {
     window.presentationsObject = presentations
 
     if (window.presentationsObject) {
