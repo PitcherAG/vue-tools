@@ -1,5 +1,3 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable no-param-reassign */
 import UI_CONSTANTS from '../constants'
 import Vue from 'vue'
 import { computed, reactive } from '@vue/composition-api'
@@ -26,7 +24,9 @@ class FilesStore {
   */
   isFileExpiredOrNotReady(now, startDate, endDate) {
     if (typeof startDate === 'undefined' || typeof endDate === 'undefined') return false
-    if (startDate === null || endDate === null) return false
+    // eslint-disable-next-line eqeqeq
+    if (startDate == null || endDate == null) return false
+    // eslint-disable-next-line eqeqeq
     if (startDate == 0 || endDate == 0) return false
 
     return startDate > now || endDate < now
@@ -40,10 +40,15 @@ class FilesStore {
   */
   shouldShowInUI(now, file) {
     if (
+      // eslint-disable-next-line eqeqeq
       file.ID[0] == 'T' ||
+      // eslint-disable-next-line eqeqeq
       file.typeV == 7 ||
+      // eslint-disable-next-line eqeqeq
       file.typeV == -1 ||
+      // eslint-disable-next-line eqeqeq
       file.typeV == 0 ||
+      // eslint-disable-next-line eqeqeq
       file.category == 'images' ||
       this.isFileExpiredOrNotReady(now, file.startDate, file.endDate)
     ) {
@@ -96,15 +101,20 @@ class FilesStore {
   */
   parseSinglePresentation(file) {
     try {
-      if (file.isCustom !== UI_CONSTANTS.IGNORE_CUSTOM_TYPE) {
-        if (typeof file.ID === 'undefined' || file.ID === null) {
+      // eslint-disable-next-line eqeqeq
+      if (file.isCustom != UI_CONSTANTS.IGNORE_CUSTOM_TYPE) {
+        // eslint-disable-next-line eqeqeq
+        if (typeof file.ID === 'undefined' || file.ID == null) {
+          // eslint-disable-next-line no-param-reassign
           file = this.parseCustomPdf(file)
         }
-        if (file.vSubFolder === null) {
+        // eslint-disable-next-line eqeqeq
+        if (file.vSubFolder == null) {
           file.containsMultiple = true
           file.vSubFolder = file.slideOrder.split(',')[0].split('|')[0]
           file.ID = file.slideOrder.split(',')[0].split('|')[0]
-          if (file.vSubFolder.indexOf('_') === -1) {
+          // eslint-disable-next-line eqeqeq
+          if (file.vSubFolder.indexOf('_') == -1) {
             file.isCustomPdf = true
           } else {
             file.ID = `${parseInt(file.ID)}`
@@ -135,15 +145,18 @@ class FilesStore {
       Custom decks are retrived with presentation objects, this adds them to custom list
   */
   addFileAsCustom(file) {
-    let original = this.state.files.find((f) => f.ID === file.ID)
+    // eslint-disable-next-line eqeqeq
+    let original = this.state.files.find((f) => f.ID == file.ID)
 
     if (original) {
       this.createAppendCustomFile(original, file)
     } else {
-      const originalSlide = this.state.slides.find((f) => f.vSubfolder === file.vSubFolder)
+      // eslint-disable-next-line eqeqeq
+      const originalSlide = this.state.slides.find((f) => f.vSubfolder == file.vSubFolder)
 
       if (originalSlide) {
-        original = this.state.files.find((f) => f.ID === originalSlide.ID)
+        // eslint-disable-next-line eqeqeq
+        original = this.state.files.find((f) => f.ID == originalSlide.ID)
         if (original) {
           file.ID = original.ID
           this.createAppendCustomFile(original, file)
@@ -157,7 +170,8 @@ class FilesStore {
   */
   mergePresentation(file) {
     this.state.presentations.push(file)
-    const original = this.state.files.find((f) => f.ID === file.ID)
+    // eslint-disable-next-line eqeqeq
+    const original = this.state.files.find((f) => f.ID == file.ID)
 
     if (original) {
       Object.assign(original, file)
@@ -185,7 +199,8 @@ class FilesStore {
       This filter might be due to now downloaded content(ios), or when call with pre selected is started (all platforms)
   */
   setAllowedIds(fileIds) {
-    if (fileIds && fileIds.length > 0 && this.state.initialAllowedIDs === null) {
+    // eslint-disable-next-line eqeqeq
+    if (fileIds && fileIds.length > 0 && this.state.initialAllowedIDs == null) {
       this.state.initialAllowedIDs = fileIds
     }
     this.state.allowedIDs = fileIds || []
@@ -204,6 +219,7 @@ window.getAllowedIDs = function() {
 
 window.loadPresentations = function(presentationsObject) {
   if (typeof presentationsObject === 'string') {
+    // eslint-disable-next-line no-param-reassign
     presentationsObject = JSON.parse(presentationsObject)
   }
   window.presentationsObject = presentationsObject
