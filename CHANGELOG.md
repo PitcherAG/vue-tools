@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.7](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.7-beta.1...v1.5.7) (2021-04-23)
+
+
+### Bug Fixes
+
+* disable rules for instance files ([5f6f5f1](https://github.com/PitcherAG/pitcher-vue-sdk/commit/5f6f5f114c577141f1ff762e554ed693b51f6eb2))
+* preselct single picklist value in controlled dropdown ([6a18bad](https://github.com/PitcherAG/pitcher-vue-sdk/commit/6a18bada5394ae272854e4757230951363ad15a4))
+
 ### [1.5.7-beta.1](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.7-beta.0...v1.5.7-beta.1) (2021-04-22)
 
 ### [1.5.7-beta.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.6...v1.5.7-beta.0) (2021-04-22)
