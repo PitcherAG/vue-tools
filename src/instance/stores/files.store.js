@@ -268,7 +268,7 @@ async function generateCustomDeckChapters(presentations) {
 
       const chaptersByDeckId = await Promise.all(
         Array.from(usedDecksIds.values()).map((deckId) =>
-          fetch(`../slides/${deckId}/chapters.json`)
+          fetch(`${window.documentPath}/slides/${deckId}/chapters.json`)
             .then((r) => r.json())
             .catch(() => null)
             .then((data) => [deckId, data.chapters])
@@ -281,7 +281,7 @@ async function generateCustomDeckChapters(presentations) {
         slide.chapterName = foundChapter ? foundChapter.nameV : null
       })
 
-      deck.setupJSON = await fetch(`../slides/${parsedSlides[0].deckId}/setup.json`)
+      deck.setupJSON = await fetch(`${window.documentPath}/slides/${parsedSlides[0].deckId}/setup.json`)
         .then((r) => r.json())
         .catch(() => null)
 
