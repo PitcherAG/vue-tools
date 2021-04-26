@@ -5,6 +5,11 @@ import { createStore } from '../../store'
 import { fireEvent } from '../../event'
 import { joinPath } from '../../utils'
 
+// fetch polyfill
+if (!window.fetch) {
+  import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch')
+}
+
 class FilesStore {
   id = 'filesStore'
   oneTimeLoadPresentations = false
