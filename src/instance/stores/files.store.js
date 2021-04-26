@@ -276,9 +276,6 @@ async function generateCustomDeckChapters(presentations) {
         slide.chapterName = foundChapter ? foundChapter.nameV : null
       })
 
-      // TODO: what if setup of the first deck doesn't have chapter navigation?
-      // we maybe need a hardcoded default or we need to make sure to add the chapters bar there if needed
-      // if setup is empty, read from settings hardcoded
       deck.setupJSON = await fetch(`../slides/${parsedSlides[0].deckId}/setup.json`)
         .then((r) => r.json())
         .catch(() => null)
