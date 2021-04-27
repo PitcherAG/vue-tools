@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.8](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.7...v1.5.8) (2021-04-27)
+
+
+### Features
+
+* added chapter generation function ([4024b6b](https://github.com/PitcherAG/pitcher-vue-sdk/commit/4024b6b98a73a24919136f7ac71afc48c68a4369))
+* added code owners ([7853b2f](https://github.com/PitcherAG/pitcher-vue-sdk/commit/7853b2f574c4fdd78c89d375e4e47f1f5aa8c4f6))
+* generate chapters when parsing presentations ([da2037d](https://github.com/PitcherAG/pitcher-vue-sdk/commit/da2037de151492c6098b6dc75b404cbdc8ea711e))
+
+
+### Bug Fixes
+
+* filter dropdown return emits ([066fb73](https://github.com/PitcherAG/pitcher-vue-sdk/commit/066fb73c5ade5665628d0ee5bd5b3015bc24fb5f))
+* fixes document path depending on platform ([dd9f182](https://github.com/PitcherAG/pitcher-vue-sdk/commit/dd9f1829e35ba146ce3c4edef6fe9cfa0381d57c))
+
 ### [1.5.7](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.7-beta.1...v1.5.7) (2021-04-23)
 
 
