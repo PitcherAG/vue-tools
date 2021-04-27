@@ -5,6 +5,11 @@ import { createStore } from '../../store'
 import { fireEvent } from '../../event'
 import { joinPath } from '../../utils'
 
+// fetch polyfill
+if (!window.fetch) {
+  import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch')
+}
+
 class FilesStore {
   id = 'filesStore'
   oneTimeLoadPresentations = false
@@ -217,17 +222,122 @@ window.getAllowedIDs = function() {
   return store.state.allowedIDs
 }
 
-window.loadPresentations = function(presentationsObject) {
-  if (typeof presentationsObject === 'string') {
-    // eslint-disable-next-line no-param-reassign
-    presentationsObject = JSON.parse(presentationsObject)
-  }
-  window.presentationsObject = presentationsObject
-  if (window.presentationsObject) {
-    const store = useFilesStore()
+// Generation of Chapters
+function getChapterForSlideIndex(chapters, slideIndex) {
+  for (let i = 0; i < chapters.length; i++) {
+    const chapter = chapters[i]
 
-    store.parsePresentations(window.presentationsObject)
+    if (slideIndex >= chapter.startIndex && slideIndex < chapter.endIndex) {
+      return chapter
+    }
   }
+
+  return null
+}
+
+async function generateCustomDeckChapters(presentations) {
+  // eslint-disable-next-line no-async-promise-executor
+  return new Promise(async (resolve) => {
+    for (const key in presentations) {
+      const deck = presentations[key]
+
+      if (!deck.isCustom) {
+        continue
+      }
+
+      const parsedSlides = deck.slideOrder
+        ? deck.slideOrder.split(',').map((slide) => {
+            const [deckId, index] = slide.split('|')
+
+            return {
+              deckId,
+              index: parseInt(index) - 1,
+            }
+          })
+        : []
+
+      if (parsedSlides.length === 0) {
+        continue
+      }
+
+      const usedDecksIds = parsedSlides.reduce((accumulator, slide) => {
+        accumulator.add(slide.deckId)
+
+        return accumulator
+      }, new Set())
+
+      const chaptersByDeckId = await Promise.all(
+        Array.from(usedDecksIds.values()).map((deckId) =>
+          fetch(`${window.documentPath}/slides/${deckId}/chapters.json`)
+            .then((r) => r.json())
+            .catch(() => null)
+            .then((data) => [deckId, data.chapters])
+        )
+      ).then((decksChapters) => new Map(decksChapters))
+
+      parsedSlides.forEach((slide) => {
+        const foundChapter = getChapterForSlideIndex(chaptersByDeckId.get(slide.deckId), slide.index)
+
+        slide.chapterName = foundChapter ? foundChapter.nameV : null
+      })
+
+      deck.setupJSON = await fetch(`${window.documentPath}/slides/${parsedSlides[0].deckId}/setup.json`)
+        .then((r) => r.json())
+        .catch(() => null)
+
+      deck.chapters = {
+        chapters: parsedSlides
+          .reduce((chapters, currentSlide, currentSlideIndex) => {
+            const lastAddedChapter = chapters[chapters.length - 1]
+
+            if (!currentSlide.chapterName) {
+              // Required to signal a gap between chapters
+              chapters.push(null)
+            } else if (
+              lastAddedChapter &&
+              currentSlide.chapterName === lastAddedChapter.nameV &&
+              currentSlide.deckId === lastAddedChapter.deckId
+            ) {
+              lastAddedChapter.endIndex = currentSlideIndex
+            } else {
+              chapters.push({
+                nameV: currentSlide.chapterName,
+                deckId: currentSlide.deckId,
+                startIndex: currentSlideIndex === 0 ? 0 : currentSlideIndex - 1,
+                endIndex: currentSlideIndex,
+              })
+            }
+
+            return chapters
+          }, [])
+          .filter((ch) => ch !== null)
+          .map(({ nameV, startIndex, endIndex }) => ({ nameV, startIndex, endIndex })),
+      }
+
+      fireEvent('saveFromHTML', { id: deck.ID, variables: deck })
+    }
+
+    // resolve when all completed
+    resolve()
+  })
+}
+
+window.loadPresentations = function(presentationsObject) {
+  let presentations = presentationsObject
+
+  if (typeof presentationsObject === 'string') {
+    presentations = JSON.parse(presentations)
+  }
+
+  generateCustomDeckChapters(presentationsObject).then(() => {
+    window.presentationsObject = presentations
+
+    if (window.presentationsObject) {
+      const store = useFilesStore()
+
+      store.parsePresentations(window.presentationsObject)
+    }
+  })
 }
 
 window.filterJSON = function(allowedIDsV) {
