@@ -291,6 +291,7 @@ async function generateCustomDeckChapters(presentations) {
             const lastAddedChapter = chapters[chapters.length - 1]
 
             if (!currentSlide.chapterName) {
+              // Required to signal a gap between chapters
               chapters.push(null)
             } else if (
               lastAddedChapter &&
