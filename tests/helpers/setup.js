@@ -7,3 +7,9 @@ require('@pitcher/fomantic-ui')
 process.env.VUE_APP_TI = JSON.stringify(TI)
 process.env.VUE_APP_SERVERJSON = JSON.stringify(SERVER_JSON)
 process.env.VUE_APP_PRESENTATIONSOBJECT = JSON.stringify(PRESENTATIONS_OBJECT)
+
+// for testing
+if (process.env.VUE_APP_TI) {
+  window.Ti = JSON.parse(process.env.VUE_APP_TI)
+  window.Ti.App.fireEvent = () => true
+}
