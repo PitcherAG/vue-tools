@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.9](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.8...v1.5.9) (2021-04-29)
+
+
+### Bug Fixes
+
+* chapter end indexes are not added correctly ([a391f53](https://github.com/PitcherAG/pitcher-vue-sdk/commit/a391f534f3f8bafdd5daccdd91601c8e7a85d316))
+* chapters working in IE11 (PLA-761) ([d0073b5](https://github.com/PitcherAG/pitcher-vue-sdk/commit/d0073b5d9ab23b57eb6cc474d4d41211a8708df6))
+
 ### [1.5.8](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.7...v1.5.8) (2021-04-27)
 
 
