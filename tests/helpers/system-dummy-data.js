@@ -4,8 +4,6 @@ export const TI = {
   },
 }
 
-export const PRESENTATIONS_OBJECT = []
-
 export const SERVER_JSON = {
   files: [
     {
@@ -222,3 +220,343 @@ export const SERVER_JSON = {
   appVersion: '2.82.86',
   appName: 'tes_app_name@pitcher.com',
 }
+
+export const PRESENTATIONS_OBJECT = [
+  {
+    vSubFolder: '55_1583752023438',
+    vNumber: 14,
+    presentationName: 'Another Custom Deck',
+    isCustom: 1,
+    slideOrder:
+      '55_1583752023438|1,55_1583752023438|2,55_1583752023438|3,55_1583752023438|4,55_1583752023438|5,55_1583752023438|6,55_1583752023438|7,55_1583752023438|8,55_1583752023438|9,55_1583752023438|10,55_1583752023438|11,55_1583752023438|12,55_1583752023438|13,55_1583752023438|14',
+    timeValue: '1619099710381.0',
+    editorValue: 2,
+    ID: '1',
+    containsMultiple: true,
+  },
+  {
+    vSubFolder: '56_1536012496357',
+    vNumber: 109,
+    presentationName: 'First Custom Deck',
+    isCustom: 1,
+    slideOrder:
+      '56_1536012496357|1,56_1536012496357|2,56_1536012496357|3,56_1536012496357|4,56_1536012496357|5,56_1536012496357|6,56_1536012496357|7,56_1536012496357|8,56_1536012496357|9,56_1536012496357|10,56_1536012496357|11,56_1536012496357|12,56_1536012496357|13,56_1536012496357|14,56_1536012496357|15,56_1536012496357|16,56_1536012496357|17,56_1536012496357|18,56_1536012496357|19,56_1536012496357|20,56_1536012496357|21,56_1536012496357|22,56_1536012496357|23,56_1536012496357|24,56_1536012496357|25,56_1536012496357|26,56_1536012496357|27,56_1536012496357|28,56_1536012496357|29,56_1536012496357|30,56_1536012496357|31,56_1536012496357|32,56_1536012496357|33,56_1536012496357|34,56_1536012496357|35,56_1536012496357|36,56_1536012496357|37,56_1536012496357|38,56_1536012496357|39,56_1536012496357|40,56_1536012496357|41,56_1536012496357|42,56_1536012496357|43,56_1536012496357|44,56_1536012496357|45,56_1536012496357|46,56_1536012496357|47,56_1536012496357|48,56_1536012496357|49,56_1536012496357|50,56_1536012496357|51,56_1536012496357|52,56_1536012496357|53,56_1536012496357|54,56_1536012496357|55,56_1536012496357|56,56_1536012496357|57,56_1536012496357|58,56_1536012496357|59,56_1536012496357|60,56_1536012496357|61,56_1536012496357|62,56_1536012496357|63,56_1536012496357|64,56_1536012496357|65,56_1536012496357|66,56_1536012496357|67,56_1536012496357|68,56_1536012496357|69,56_1536012496357|70,56_1536012496357|71,56_1536012496357|72,56_1536012496357|73,56_1536012496357|74,56_1536012496357|75,56_1536012496357|76,56_1536012496357|77,56_1536012496357|78,56_1536012496357|79,56_1536012496357|80,56_1536012496357|81,56_1536012496357|82,56_1536012496357|83,56_1536012496357|84,56_1536012496357|85,56_1536012496357|86,56_1536012496357|87,56_1536012496357|88,56_1536012496357|89,56_1536012496357|90,56_1536012496357|91,56_1536012496357|92,56_1536012496357|93,56_1536012496357|94,56_1536012496357|95,56_1536012496357|96,56_1536012496357|97,56_1536012496357|98,56_1536012496357|99,56_1536012496357|100,56_1536012496357|101,56_1536012496357|102,56_1536012496357|103,56_1536012496357|104,56_1536012496357|105,56_1536012496357|106,56_1536012496357|107,56_1536012496357|108,56_1536012496357|109',
+    timeValue: '1619178369152.0',
+    editorValue: 2,
+    ID: '2',
+    containsMultiple: true,
+  },
+  {
+    vSubFolder: '55_1583752023438',
+    vNumber: 7,
+    presentationName: 'Mix Custom Deck 1',
+    isCustom: 1,
+    slideOrder:
+      '55_1583752023438|1,55_1583752023438|3,55_1583752023438|4,56_1536012496357|1,56_1536012496357|3,56_1536012496357|4,56_1536012496357|6',
+    timeValue: '1619618056336.0',
+    editorValue: 2,
+    ID: '3',
+    containsMultiple: true,
+  },
+  {
+    vSubFolder: '56_1536012496357',
+    vNumber: 9,
+    presentationName: 'Mix Custom Deck 2',
+    isCustom: 1,
+    slideOrder:
+      '56_1536012496357|1,56_1536012496357|3,56_1536012496357|4,56_1536012496357|6,55_1583752023438|1,55_1583752023438|3,55_1583752023438|4,55_1583752023438|6,55_1583752023438|7',
+    timeValue: '1619618089550.0',
+    editorValue: 2,
+    ID: '4',
+    containsMultiple: true,
+  },
+  {
+    vSubFolder: '57_1583749380632',
+    vNumber: 1,
+    presentationName: 'Agenda Slide',
+    isCustom: 0,
+    slideOrder: '1',
+    timeValue: '57_1619686063018',
+    editorValue: 0,
+    ID: '5',
+  },
+  {
+    vSubFolder: '58_1453276322',
+    vNumber: 7,
+    presentationName: 'Company',
+    isCustom: 0,
+    slideOrder: '1,2,3,4,5,6,7',
+    timeValue: '58_1619686063017',
+    editorValue: 0,
+    ID: '6',
+  },
+  {
+    vSubFolder: '55_1583752023438',
+    vNumber: 14,
+    presentationName: 'Exemplum',
+    isCustom: 0,
+    slideOrder: '1,2,3,4,5,6,7,8,9,10,11,12,13,14',
+    timeValue: '55_1619686063018',
+    editorValue: 0,
+    ID: '7',
+  },
+  {
+    vSubFolder: '59_1534883455851',
+    vNumber: 23,
+    presentationName: 'Exemplum B1',
+    isCustom: 0,
+    slideOrder: '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23',
+    timeValue: '59_1619686063018',
+    editorValue: 0,
+    ID: '8',
+  },
+  {
+    vSubFolder: '60_1583752023469',
+    vNumber: 12,
+    presentationName: 'Exemplum Chapters',
+    isCustom: 0,
+    slideOrder: '1,2,3,4,5,6,7,8,9,10,11,12',
+    timeValue: '60_1619686063017',
+    editorValue: 0,
+    ID: '9',
+  },
+  {
+    vSubFolder: '61_1478622740',
+    vNumber: 16,
+    presentationName: 'Introduction to Semantic',
+    isCustom: 0,
+    slideOrder: '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16',
+    timeValue: '61_1619686063018',
+    editorValue: 0,
+    ID: '10',
+  },
+  {
+    vSubFolder: '62_1563458830',
+    vNumber: 12,
+    presentationName: 'Keyword Test',
+    isCustom: 0,
+    slideOrder: '1,2,3,4,5,6,7,8,9,10,11,12',
+    timeValue: '624046_1619686063018',
+    editorValue: 0,
+    ID: '11',
+  }
+]
+
+const expected = [
+  {
+    setupJSON: {
+      menuOneItems: 'chapters',
+      menuOneColor: '#dddddd',
+      menuOneButtonColor: '#999999',
+      showMenuOnTop: false,
+      scrollBar: false,
+      hasReference: true,
+      showNavigation: true,
+      widthPerItem: 250,
+      maxCharacter: 15,
+      menuOneHeight: 44,
+      menuTwoItems: null,
+      menuTwoColor: '#dddddd',
+      menuTwoButtonColor: '#3b93cb',
+      'bar-include-linked-button': false,
+      hideHotspots: true,
+      navMode: 2,
+    },
+    chapters: {
+      chapters: [
+        {
+          nameV: 'Mode of Action',
+          startIndex: 1,
+          endIndex: 3,
+        },
+        {
+          nameV: 'Efficacy',
+          startIndex: 3,
+          endIndex: 7,
+        },
+        {
+          nameV: 'Side Effects',
+          startIndex: 7,
+          endIndex: 8,
+        },
+        {
+          nameV: 'Safety',
+          startIndex: 8,
+          endIndex: 10,
+        },
+        {
+          nameV: 'Summary',
+          startIndex: 10,
+          endIndex: 11,
+        },
+      ],
+    },
+  },
+  {
+    setupJSON: {
+      menuOneItems: 'chapters',
+      menuOneColor: '#dddddd',
+      menuOneButtonColor: '#dd363d',
+      showMenuOnTop: false,
+      scrollBar: true,
+      hasReference: true,
+      showNavigation: false,
+      widthPerItem: 120,
+      maxCharacter: 15,
+      menuOneHeight: 44,
+      menuTwoItems: null,
+      menuTwoColor: '#dddddd',
+      menuTwoButtonColor: '#3b93cb',
+      'bar-include-linked-button': false,
+      hideHotspots: false,
+      navMode: 0,
+    },
+    chapters: {
+      chapters: [
+        {
+          nameV: 'Intro',
+          startIndex: 0,
+          endIndex: 1,
+        },
+        {
+          nameV: 'Who we are',
+          startIndex: 1,
+          endIndex: 8,
+        },
+        {
+          nameV: 'Iconic Assets',
+          startIndex: 8,
+          endIndex: 20,
+        },
+        {
+          nameV: 'Occasions Framework',
+          startIndex: 20,
+          endIndex: 27,
+        },
+        {
+          nameV: 'Activ8',
+          startIndex: 27,
+          endIndex: 44,
+        },
+        {
+          nameV: 'Innovation',
+          startIndex: 44,
+          endIndex: 48,
+        },
+        {
+          nameV: 'Loyalty',
+          startIndex: 48,
+          endIndex: 54,
+        },
+        {
+          nameV: 'Super Bowl',
+          startIndex: 54,
+          endIndex: 68,
+        },
+        {
+          nameV: 'March Hoops',
+          startIndex: 68,
+          endIndex: 79,
+        },
+        {
+          nameV: 'MLB',
+          startIndex: 79,
+          endIndex: 90,
+        },
+        {
+          nameV: 'Military',
+          startIndex: 90,
+          endIndex: 101,
+        },
+        {
+          nameV: 'Appendix',
+          startIndex: 101,
+          endIndex: 108,
+        },
+      ],
+    },
+  },
+  {
+    setupJSON: {
+      menuOneItems: 'chapters',
+      menuOneColor: '#dddddd',
+      menuOneButtonColor: '#999999',
+      showMenuOnTop: false,
+      scrollBar: false,
+      hasReference: true,
+      showNavigation: true,
+      widthPerItem: 250,
+      maxCharacter: 15,
+      menuOneHeight: 44,
+      menuTwoItems: null,
+      menuTwoColor: '#dddddd',
+      menuTwoButtonColor: '#3b93cb',
+      'bar-include-linked-button': false,
+      hideHotspots: true,
+      navMode: 2,
+    },
+    chapters: {
+      chapters: [
+        {
+          nameV: 'Mode of Action',
+          startIndex: 0,
+          endIndex: 2,
+        },
+        {
+          nameV: 'Intro',
+          startIndex: 2,
+          endIndex: 3,
+        },
+        {
+          nameV: 'Who we are',
+          startIndex: 3,
+          endIndex: 6,
+        },
+      ],
+    },
+  },
+  {
+    setupJSON: {
+      menuOneItems: 'chapters',
+      menuOneColor: '#dddddd',
+      menuOneButtonColor: '#dd363d',
+      showMenuOnTop: false,
+      scrollBar: true,
+      hasReference: true,
+      showNavigation: false,
+      widthPerItem: 120,
+      maxCharacter: 15,
+      menuOneHeight: 44,
+      menuTwoItems: null,
+      menuTwoColor: '#dddddd',
+      menuTwoButtonColor: '#3b93cb',
+      'bar-include-linked-button': false,
+      hideHotspots: false,
+      navMode: 0,
+    },
+    chapters: {
+      chapters: [
+        {
+          nameV: 'Intro',
+          startIndex: 0,
+          endIndex: 0,
+        },
+        {
+          nameV: 'Who we are',
+          startIndex: 0,
+          endIndex: 3,
+        },
+        {
+          nameV: 'Mode of Action',
+          startIndex: 4,
+          endIndex: 6,
+        },
+        {
+          nameV: 'Efficacy',
+          startIndex: 6,
+          endIndex: 8,
+        },
+      ],
+    },
+  },
+]
