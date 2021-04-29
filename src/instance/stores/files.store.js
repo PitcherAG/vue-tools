@@ -308,13 +308,13 @@ export async function generateCustomDeckChapters(presentations) {
             currentSlide.chapterName === lastAddedChapter.nameV &&
             currentSlide.deckId === lastAddedChapter.deckId
           ) {
-            lastAddedChapter.endIndex = currentSlideIndex
+            lastAddedChapter.endIndex = currentSlideIndex + 1
           } else {
             chapters.push({
               nameV: currentSlide.chapterName,
               deckId: currentSlide.deckId,
-              startIndex: currentSlideIndex === 0 ? 0 : currentSlideIndex - 1,
-              endIndex: currentSlideIndex,
+              startIndex: currentSlideIndex,
+              endIndex: currentSlideIndex + 1,
             })
           }
 
