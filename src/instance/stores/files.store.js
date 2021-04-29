@@ -222,8 +222,24 @@ window.getAllowedIDs = function() {
   return store.state.allowedIDs
 }
 
+function parseCustomDeckSlides(deck) {
+  // return empty array if no slideOrder
+  if (!deck.slideOrder) return []
+
+  return deck.slideOrder.split(',').map((slide) => {
+    const [deckId, index] = slide.split('|')
+
+    return {
+      deckId,
+      index: parseInt(index) - 1,
+    }
+  })
+}
+
 // Generation of Chapters
 function getChapterForSlideIndex(chapters, slideIndex) {
+  if (!chapters) return null
+
   for (let i = 0; i < chapters.length; i++) {
     const chapter = chapters[i]
 
@@ -235,91 +251,81 @@ function getChapterForSlideIndex(chapters, slideIndex) {
   return null
 }
 
-async function generateCustomDeckChapters(presentations) {
-  // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async (resolve) => {
-    for (const key in presentations) {
-      const deck = presentations[key]
+// Export for testing purposes
+export async function generateCustomDeckChapters(presentations) {
+  for (const key in presentations) {
+    const deck = presentations[key]
 
-      if (!deck.isCustom) {
-        continue
+    // break the loop if deck is not custom
+    if (!deck.isCustom) continue
+
+    const parsedSlides = parseCustomDeckSlides(deck)
+
+    // break the loop if no parsedSlides
+    if (parsedSlides.length === 0) continue
+
+    const usedDecksIds = parsedSlides.reduce((accumulator, slide) => {
+      accumulator.add(slide.deckId)
+
+      return accumulator
+    }, new Set())
+
+    const chaptersByDeckId = new Map()
+
+    for (const deckId of usedDecksIds) {
+      try {
+        const resp = await fetch(`${window.documentPath}/slides/${deckId}/chapters.json`)
+        const data = await resp.json()
+
+        chaptersByDeckId.set(deckId, data.chapters)
+      } catch (e) {
+        console.warn(`[Chapter Generation]: ${window.documentPath}/slides/${deckId}/chapters.json does not exist!`)
       }
+    }
 
-      const parsedSlides = deck.slideOrder
-        ? deck.slideOrder.split(',').map((slide) => {
-            const [deckId, index] = slide.split('|')
+    parsedSlides.forEach((slide) => {
+      const foundChapter = getChapterForSlideIndex(chaptersByDeckId.get(slide.deckId), slide.index)
 
-            return {
-              deckId,
-              index: parseInt(index) - 1,
-            }
-          })
-        : []
+      slide.chapterName = foundChapter ? foundChapter.nameV : null
+    })
 
-      if (parsedSlides.length === 0) {
-        continue
-      }
-
-      const usedDecksIds = parsedSlides.reduce((accumulator, slide) => {
-        accumulator.add(slide.deckId)
-
-        return accumulator
-      }, new Set())
-
-      const chaptersByDeckId = await Promise.all(
-        Array.from(usedDecksIds.values()).map((deckId) =>
-          fetch(`${window.documentPath}/slides/${deckId}/chapters.json`)
-            .then((r) => r.json())
-            .catch(() => null)
-            .then((data) => [deckId, data.chapters])
-        )
-      ).then((decksChapters) => new Map(decksChapters))
-
-      parsedSlides.forEach((slide) => {
-        const foundChapter = getChapterForSlideIndex(chaptersByDeckId.get(slide.deckId), slide.index)
-
-        slide.chapterName = foundChapter ? foundChapter.nameV : null
-      })
-
+    if (parsedSlides[0]) {
       deck.setupJSON = await fetch(`${window.documentPath}/slides/${parsedSlides[0].deckId}/setup.json`)
         .then((r) => r.json())
         .catch(() => null)
-
-      deck.chapters = {
-        chapters: parsedSlides
-          .reduce((chapters, currentSlide, currentSlideIndex) => {
-            const lastAddedChapter = chapters[chapters.length - 1]
-
-            if (!currentSlide.chapterName) {
-              // Required to signal a gap between chapters
-              chapters.push(null)
-            } else if (
-              lastAddedChapter &&
-              currentSlide.chapterName === lastAddedChapter.nameV &&
-              currentSlide.deckId === lastAddedChapter.deckId
-            ) {
-              lastAddedChapter.endIndex = currentSlideIndex
-            } else {
-              chapters.push({
-                nameV: currentSlide.chapterName,
-                deckId: currentSlide.deckId,
-                startIndex: currentSlideIndex === 0 ? 0 : currentSlideIndex - 1,
-                endIndex: currentSlideIndex,
-              })
-            }
-
-            return chapters
-          }, [])
-          .filter((ch) => ch !== null)
-          .map(({ nameV, startIndex, endIndex }) => ({ nameV, startIndex, endIndex })),
-      }
-
-      fireEvent('saveFromHTML', { id: deck.ID, variables: deck })
     }
 
-    // resolve when all completed
-    resolve()
-  })
+    deck.chapters = {
+      chapters: parsedSlides
+        .reduce((chapters, currentSlide, currentSlideIndex) => {
+          const lastAddedChapter = chapters[chapters.length - 1]
+
+          if (!currentSlide.chapterName) {
+            // Required to signal a gap between chapters
+            chapters.push(null)
+          } else if (
+            lastAddedChapter &&
+            currentSlide.chapterName === lastAddedChapter.nameV &&
+            currentSlide.deckId === lastAddedChapter.deckId
+          ) {
+            lastAddedChapter.endIndex = currentSlideIndex
+          } else {
+            chapters.push({
+              nameV: currentSlide.chapterName,
+              deckId: currentSlide.deckId,
+              startIndex: currentSlideIndex === 0 ? 0 : currentSlideIndex - 1,
+              endIndex: currentSlideIndex,
+            })
+          }
+
+          return chapters
+        }, [])
+        .filter((ch) => ch !== null)
+        .map(({ nameV, startIndex, endIndex }) => ({ nameV, startIndex, endIndex })),
+    }
+
+    fireEvent('saveFromHTML', { id: deck.ID, variables: deck })
+  }
 }
 
 window.loadPresentations = function(presentationsObject) {
@@ -329,7 +335,7 @@ window.loadPresentations = function(presentationsObject) {
     presentations = JSON.parse(presentations)
   }
 
-  generateCustomDeckChapters(presentationsObject).then(() => {
+  generateCustomDeckChapters(presentations).then(() => {
     window.presentationsObject = presentations
 
     if (window.presentationsObject) {
