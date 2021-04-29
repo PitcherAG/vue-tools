@@ -7,12 +7,6 @@ export async function loadServerJSON(timeout = 5) {
   const filesStore = useFilesStore()
   const categoriesStore = useCategoriesStore()
 
-  // for testing
-  if (process.env.VUE_APP_TI) {
-    window.Ti = JSON.parse(process.env.VUE_APP_TI)
-    window.Ti.App.fireEvent = () => true
-  }
-
   // This is for Android -- Ti is not injected for a very small period of time
   await waitForWindowProp('Ti', timeout)
 
