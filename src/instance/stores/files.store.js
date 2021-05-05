@@ -253,6 +253,8 @@ function getChapterForSlideIndex(chapters, slideIndex) {
 
 // Export for testing purposes
 export async function generateCustomDeckChapters(presentations) {
+  const emptyChapterName = '-'
+
   for (const key in presentations) {
     const deck = presentations[key]
 
@@ -286,7 +288,7 @@ export async function generateCustomDeckChapters(presentations) {
     parsedSlides.forEach((slide) => {
       const foundChapter = getChapterForSlideIndex(chaptersByDeckId.get(slide.deckId), slide.index)
 
-      slide.chapterName = foundChapter?.nameV || '-'
+      slide.chapterName = foundChapter?.nameV || emptyChapterName
     })
 
     if (parsedSlides[0]) {
@@ -301,7 +303,7 @@ export async function generateCustomDeckChapters(presentations) {
           const lastAddedChapter = chapters[chapters.length - 1]
           const hasSameID = currentSlide.deckId === lastAddedChapter?.deckId
           const hasSameName = currentSlide.chapterName === lastAddedChapter?.nameV
-          const bothHasNameAsDash = currentSlide.chapterName === '-' && lastAddedChapter?.nameV === '-'
+          const bothHasNameAsDash = currentSlide.chapterName === emptyChapterName && lastAddedChapter?.nameV === emptyChapterName
 
           if (lastAddedChapter && hasSameName && (hasSameID || (!hasSameID && bothHasNameAsDash))) {
             lastAddedChapter.endIndex = currentSlideIndex + 1
@@ -318,6 +320,10 @@ export async function generateCustomDeckChapters(presentations) {
         }, [])
         .filter((ch) => ch !== null)
         .map(({ nameV, startIndex, endIndex }) => ({ nameV, startIndex, endIndex })),
+    }
+
+    if (deck.chapters.chapters.length === 1 && deck.chapters.chapters[0].nameV === emptyChapterName) {
+      deck.chapters.chapters = []
     }
 
     fireEvent('saveFromHTML', { id: deck.ID, variables: deck })
