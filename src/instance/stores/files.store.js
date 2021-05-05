@@ -286,7 +286,7 @@ export async function generateCustomDeckChapters(presentations) {
     parsedSlides.forEach((slide) => {
       const foundChapter = getChapterForSlideIndex(chaptersByDeckId.get(slide.deckId), slide.index)
 
-      slide.chapterName = foundChapter ? foundChapter.nameV : null
+      slide.chapterName = foundChapter?.nameV || '-'
     })
 
     if (parsedSlides[0]) {
@@ -299,15 +299,11 @@ export async function generateCustomDeckChapters(presentations) {
       chapters: parsedSlides
         .reduce((chapters, currentSlide, currentSlideIndex) => {
           const lastAddedChapter = chapters[chapters.length - 1]
+          const hasSameID = currentSlide.deckId === lastAddedChapter?.deckId
+          const hasSameName = currentSlide.chapterName === lastAddedChapter?.nameV
+          const bothHasNameAsDash = currentSlide.chapterName === '-' && lastAddedChapter?.nameV === '-'
 
-          if (!currentSlide.chapterName) {
-            // Required to signal a gap between chapters
-            chapters.push(null)
-          } else if (
-            lastAddedChapter &&
-            currentSlide.chapterName === lastAddedChapter.nameV &&
-            currentSlide.deckId === lastAddedChapter.deckId
-          ) {
+          if (lastAddedChapter && hasSameName && (hasSameID || (!hasSameID && bothHasNameAsDash))) {
             lastAddedChapter.endIndex = currentSlideIndex + 1
           } else {
             chapters.push({
