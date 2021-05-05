@@ -63,8 +63,8 @@
       <!-- menu items -->
       <div class="menu">
         <div
-          v-for="(item, index) in listItems"
-          :key="index"
+          v-for="item in listItems"
+          :key="item.uuid"
           :data-value="item.value"
           :data-text="item.text"
           :class="[item.type, { disabled: item.disabled, 'active filtered': value && value.includes(item.value) }]"
@@ -83,6 +83,7 @@
 /* eslint-disable vue/require-prop-types, vue/no-unused-properties */
 import { computed, onMounted, reactive, toRefs } from '@vue/composition-api'
 import { parsePxStyle, validateSize } from './mixins'
+import { uid } from '../utils/uid'
 
 export default {
   name: 'Dropdown',
@@ -229,6 +230,7 @@ export default {
             icon: item.icon,
             image: item.image,
             disabled: item.disabled,
+            uuid: uid(2),
           }
         } else {
           // if not key/value pair
@@ -238,6 +240,7 @@ export default {
             text: item,
             value: item,
             type: 'item',
+            uuid: uid(2),
           }
         }
       })
@@ -383,6 +386,7 @@ export default {
 
   .custom-text {
     display: inline-block;
+    pointer-events: none;
   }
 
   // image in list
