@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.10](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.9...v1.5.10) (2021-05-05)
+
+
+### Bug Fixes
+
+* add dash named chapters to chapterless slides ([3752888](https://github.com/PitcherAG/pitcher-vue-sdk/commit/37528884c90719048c2ba9cc0e9138a9f3abda6c))
+* change uid function ([f598f7a](https://github.com/PitcherAG/pitcher-vue-sdk/commit/f598f7a74ff44f50ec09f2f3405eb56f9a69ee78))
+* dropdown - use unique id for list items, fix styling issue ([42d9355](https://github.com/PitcherAG/pitcher-vue-sdk/commit/42d935555a3a9733958f6093d003f288685f36e5))
+* replace empty chapters ([2e5f8c6](https://github.com/PitcherAG/pitcher-vue-sdk/commit/2e5f8c6918955d23d1aa90c2e6e87b4274d1846f))
+
 ### [1.5.9](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.8...v1.5.9) (2021-04-29)
 
 
