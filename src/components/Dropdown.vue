@@ -82,8 +82,8 @@
 <script>
 /* eslint-disable vue/require-prop-types, vue/no-unused-properties */
 import { computed, onMounted, reactive, toRefs } from '@vue/composition-api'
-import { makeId } from '../db/externalID'
 import { parsePxStyle, validateSize } from './mixins'
+import { uid } from '../utils/uid'
 
 export default {
   name: 'Dropdown',
@@ -230,7 +230,7 @@ export default {
             icon: item.icon,
             image: item.image,
             disabled: item.disabled,
-            uuid: makeId(10),
+            uuid: uid(2),
           }
         } else {
           // if not key/value pair
@@ -240,7 +240,7 @@ export default {
             text: item,
             value: item,
             type: 'item',
-            uuid: makeId(10),
+            uuid: uid(2),
           }
         }
       })
