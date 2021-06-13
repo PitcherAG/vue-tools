@@ -123,7 +123,10 @@ export default {
       default: true,
     },
     multiple: Boolean,
-    searchable: Boolean,
+    searchable: {
+      type: Boolean,
+      default: false,
+    },
     minSearchItems: {
       type: Number,
       default: 20,
@@ -256,7 +259,7 @@ export default {
 
     const filteredItems = computed(() => listItems.value.filter((i) => i.type === 'item'))
 
-    const isSearchable = computed(() => props.searchable || props.items.length > props.minSearchItems)
+    const isSearchable = computed(() => props.searchable || (props.items && props.items.length > props.minSearchItems))
 
     // fomantic dropdown initialization
     const initDropdown = () => {
