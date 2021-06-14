@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.11](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.10...v1.5.11) (2021-06-14)
+
+
+### Bug Fixes
+
+* dropdown - enable full text search, change in searchable params ([f37e84e](https://github.com/PitcherAG/pitcher-vue-sdk/commit/f37e84e1e84dfd893dc7d39297dbfa5dc23abf95))
+* dropdown searchable fix - no items ([8f7a608](https://github.com/PitcherAG/pitcher-vue-sdk/commit/8f7a608e1722260879f0921a7714d5c4016fce65))
+
 ### [1.5.10](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.9...v1.5.10) (2021-05-05)
 
 
