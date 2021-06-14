@@ -29,7 +29,7 @@
 
       <!-- search input -->
       <input
-        v-show="searchable"
+        v-show="isSearchable"
         ref="search"
         class="search"
         autocomplete="off"
@@ -123,7 +123,18 @@ export default {
       default: true,
     },
     multiple: Boolean,
-    searchable: Boolean,
+    searchable: {
+      type: Boolean,
+      default: false,
+    },
+    minSearchItems: {
+      type: Number,
+      default: 20,
+    },
+    fullTextSearch: {
+      type: Boolean,
+      default: false,
+    },
     clearable: Boolean,
     disabled: Boolean,
     loading: {
@@ -148,7 +159,7 @@ export default {
 
   setup(props, { refs, emit, slots }) {
     // validate
-    if (!props.selection && props.searchable) {
+    if (!props.selection && isSearchable.value) {
       console.error(`Combining searchable = true with selection = false is not recommended!`)
     }
 
@@ -164,7 +175,7 @@ export default {
       class: {
         fluid: props.fluid,
         compact: props.compact,
-        search: props.searchable,
+        search: isSearchable.value,
         // false by default if default slot is used
         selection: state.hasDefaultSlot ? false : props.selection,
         'not-selection': !props.selection,
@@ -248,13 +259,16 @@ export default {
 
     const filteredItems = computed(() => listItems.value.filter((i) => i.type === 'item'))
 
+    const isSearchable = computed(() => props.searchable || (props.items && props.items.length > props.minSearchItems))
+
     // fomantic dropdown initialization
     const initDropdown = () => {
       const settings = $.extend(
         {
           action: props.action,
+          fullTextSearch: props.fullTextSearch,
           onChange: (value) => {
-            if (props.searchable) {
+            if (isSearchable.value) {
               state.isSearching = false
 
               if (props.multiple) {
@@ -331,7 +345,7 @@ export default {
 
     function toggleDropdown(event) {
       // if not searchable & clicked target is the container, not item
-      if (!props.searchable && event.target.className.includes('pitcher-dropdown')) {
+      if (!isSearchable.value && event.target.className.includes('pitcher-dropdown')) {
         $(refs.dropdown).dropdown('toggle')
       }
     }
@@ -351,6 +365,7 @@ export default {
 
     return {
       ...toRefs(state),
+      isSearchable,
       dropdownAttr,
       listItems,
       filteredItems,
