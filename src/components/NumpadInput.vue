@@ -161,6 +161,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    allowNegative: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['input'],
   setup(props, ctx) {
@@ -217,7 +221,9 @@ export default defineComponent({
       }
 
       // parse current value as Integer
-      const parsed = parseInt(localState.localValue.toString().replace(/\D/g, ''))
+      let parsed = parseInt(localState.localValue.toString().replace(/\D/g, ''))
+
+      if (localState.localValue < 0) parsed *= -1
       // concatenate incoming value as string with parsed value
       const value = parsed + val.toString()
       // mask the value with decimals
@@ -240,7 +246,7 @@ export default defineComponent({
       // parse the number with decimals
       let parsedNumber = parseFloat(localState.localValue).toFixed(props.decimals)
 
-      if (action === 'dec' && parsedNumber >= 1) {
+      if (action === 'dec' && (parsedNumber >= 1 || props.allowNegative)) {
         // decrease action
         parsedNumber--
         emit(parsedNumber.toFixed(props.decimals))
@@ -300,7 +306,7 @@ export default defineComponent({
           emit(defaultValue)
         }
 
-        if (props.resetBefore && parseFloat(localState.localValue) > 0) {
+        if (props.resetBefore && parseFloat(localState.localValue) !== 0) {
           localState.shouldReset = true
         }
 
