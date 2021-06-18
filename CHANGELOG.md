@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.12](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.11...v1.5.12) (2021-06-18)
+
+
+### Features
+
+* enable negative value in input ([3900940](https://github.com/PitcherAG/pitcher-vue-sdk/commit/390094008442fd38e5e64f702ab63c8a2b20c2c2))
+
 ### [1.5.11](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.10...v1.5.11) (2021-06-14)
 
 
