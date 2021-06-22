@@ -61,7 +61,7 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
         const result = []
 
         if (e.error) {
-          console.error(query)
+          console.error(e.error)
           reject(new Error(e.error))
         }
         for (let i = 0; i < e.results.length; i++) {
