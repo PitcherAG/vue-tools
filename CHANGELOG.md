@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.13](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.12...v1.5.13) (2021-06-23)
+
+
+### Features
+
+* db error logging on browser console ([90cdb14](https://github.com/PitcherAG/pitcher-vue-sdk/commit/90cdb1426a218a3a73e662403f6e10947050afa6))
+
 ### [1.5.12](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.11...v1.5.12) (2021-06-18)
 
 
