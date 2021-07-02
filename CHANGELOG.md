@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.14](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.13...v1.5.14) (2021-07-02)
+
+
+### Bug Fixes
+
+* objectformfield - read props from layoutitem, add field validation errors ([938409b](https://github.com/PitcherAG/pitcher-vue-sdk/commit/938409b44bc690e4946c908e8b2b40e7b32ebbf0))
+
 ### [1.5.13](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.12...v1.5.13) (2021-06-23)
 
 
