@@ -184,11 +184,15 @@ export default {
       needsRecordType: computed(() => {
         return !state.recordTypeId
       }),
+      fieldValidationErrors: [],
       isValid: computed(() => {
         let valid = true
 
+        state.fieldValidationErrors = []
+
         for (const field of state.fields) {
-          if (!field.valid(state.obj[field.name])) {
+          if (!field.valid(state.obj[field.name]) && field.updateable) {
+            state.fieldValidationErrors.push(`${field.label} is mandatory.`)
             valid = false
           }
         }
@@ -346,12 +350,13 @@ export default {
                             field = fieldDict[comp.details.name]
                           } else {
                             field = new Field(comp.details, null, false)
+                            if (item.required === true) field.required = item.required
                             fieldDict[comp.details.name] = field
                             fields.push(field)
                             if (props.customSettings[field.name]) {
                               field.settings = props.customSettings[field.name]
                             }
-                            if (fieldShouldBeReadOnly(field)) {
+                            if (fieldShouldBeReadOnly(field) || item.editableForNew === false || item.editableForUpdate === false) {
                               field.updateable = false
                             }
                             if (props.customReferences && props.customReferences[field.name]) {
