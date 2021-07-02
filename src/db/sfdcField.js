@@ -12,7 +12,7 @@ export class Field {
 
     this.parentObjectType = objectType
 
-    this.required = !obj.nillable || obj.nameField
+    this.required = !obj.nillable || obj.nameField || obj.required
 
     if (obj.type === 'picklist') {
       this.filteredValues = obj.picklistValues
