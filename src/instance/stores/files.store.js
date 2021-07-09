@@ -276,12 +276,12 @@ export async function generateCustomDeckChapters(presentations) {
 
     for (const deckId of usedDecksIds) {
       try {
-        const resp = await fetch(`${window.documentPath}/slides/${deckId}/chapters.json`)
+        const resp = await fetch(`${window.documentPath}/slides/${deckId}/chapters.json`.replace("//", "/"))
         const data = await resp.json()
 
         chaptersByDeckId.set(deckId, data.chapters)
       } catch (e) {
-        console.warn(`[Chapter Generation]: ${window.documentPath}/slides/${deckId}/chapters.json does not exist!`)
+        console.warn(`[Chapter Generation]: ${window.documentPath}/slides/${deckId}/chapters.json does not exist!`.replace("//", "/"))
       }
     }
 
@@ -292,7 +292,7 @@ export async function generateCustomDeckChapters(presentations) {
     })
 
     if (parsedSlides[0]) {
-      deck.setupJSON = await fetch(`${window.documentPath}/slides/${parsedSlides[0].deckId}/setup.json`)
+      deck.setupJSON = await fetch(`${window.documentPath}/slides/${parsedSlides[0].deckId}/setup.json`.replace("//", "/"))
         .then((r) => r.json())
         .catch(() => null)
     }
