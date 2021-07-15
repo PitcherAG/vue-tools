@@ -438,7 +438,7 @@ export default {
             field.dependentValueWatcher = watch(
               () => state.obj[field.controllerName],
               (newVal) => {
-                if (state.fieldsDict[field.controllerName]) {
+                if (state.fieldsDict[field.controllerName] && !fieldShouldBeReadOnly(field)) {
                   // When controller field changes - Reset dependent value
                   Vue.set(state.obj, field.name, null)
                   // Find the index of the selected value in the controller field
