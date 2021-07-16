@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.15](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.14...v1.5.15) (2021-07-16)
+
+
+### Bug Fixes
+
+* field should update controlled filed only if not readonly ([cf31bad](https://github.com/PitcherAG/pitcher-vue-sdk/commit/cf31bada880ddad72f0eaf6e4396165ff15fd02e))
+
 ### [1.5.14](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.13...v1.5.14) (2021-07-02)
 
 
