@@ -1,6 +1,7 @@
 import { PLATFORM } from './platform'
 import { createStore } from './store'
 import { fireEvent } from './event'
+import { useParams } from './params'
 
 class ConfigStore {
   id = 'config'
@@ -49,7 +50,38 @@ export async function loadConfig(source = 'modal') {
   const store = useConfigStore()
   let result = await fireEvent('getAppConfig', { source })
 
-  console.log('app config', result)
+  if (typeof result.userAttrSpecificSettings !== 'undefined') {
+    const params = useParams()
+    const user = params.user
+
+    result.userAttrSpecificSettings.forEach((custom) => {
+      const value = user[custom.attrP]
+      const matches = value && value.includes(custom.valueP)
+
+      if (matches) {
+        if (custom.typeP === 'replace') {
+          for (const a in custom.settings) {
+            result[a] = custom.settings[a]
+          }
+        } else if (custom.typeP === 'add') {
+          for (const a in custom.settings) {
+            if (!result[a]) {
+              result[a] = []
+            }
+            if (Array.isArray(custom.settings[a])) {
+              result[a] = result[a].concat(custom.settings[a])
+            } else {
+              result[a].push(custom.settings[a])
+            }
+          }
+        }
+      }
+    })
+  }
+
+  console.log('[@pitcher/core]: app config', result)
+
+  result.customCaches = Array.isArray(result.customCaches) ? result.customCaches : []
   if (PLATFORM === 'IOS') {
     result.customCaches.push({
       objectName: 'Account',
@@ -188,6 +220,7 @@ export async function loadConfig(source = 'modal') {
   } else {
     throw new Error(`Platform not supported: ${PLATFORM}`)
   }
+
   for (const a in result) {
     store.state[a] = result[a]
   }
