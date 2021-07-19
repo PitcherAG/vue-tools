@@ -23,5 +23,5 @@ jobs:
             @semantic-release/changelog@5.0.1
             @semantic-release/git@9.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS }}
+          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_RELEASE_ONUR }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN_ONUR }}
