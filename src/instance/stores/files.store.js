@@ -303,7 +303,8 @@ export async function generateCustomDeckChapters(presentations) {
           const lastAddedChapter = chapters[chapters.length - 1]
           const hasSameID = currentSlide.deckId === lastAddedChapter?.deckId
           const hasSameName = currentSlide.chapterName === lastAddedChapter?.nameV
-          const bothHasNameAsDash = currentSlide.chapterName === emptyChapterName && lastAddedChapter?.nameV === emptyChapterName
+          const bothHasNameAsDash =
+            currentSlide.chapterName === emptyChapterName && lastAddedChapter?.nameV === emptyChapterName
 
           if (lastAddedChapter && hasSameName && (hasSameID || (!hasSameID && bothHasNameAsDash))) {
             lastAddedChapter.endIndex = currentSlideIndex + 1
