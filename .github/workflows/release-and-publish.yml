@@ -2,7 +2,7 @@ name: Release and publish
 on:
   push:
     branches:
-      - main
+      - feat/release-automation
 jobs:
   release-and-publish:
     name: Release and publish
