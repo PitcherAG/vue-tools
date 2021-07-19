@@ -339,9 +339,10 @@ export const PRESENTATIONS_OBJECT = [
     timeValue: '624046_1619686063018',
     editorValue: 0,
     ID: '11',
-  }
+  },
 ]
 
+// eslint-disable-next-line no-unused-vars
 const expected = [
   {
     setupJSON: {
