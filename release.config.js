@@ -1,6 +1,5 @@
 module.exports = {
-  branches: [{ name: 'feat/release-automation' }],
-  dryRun: false,
+  branches: [{ name: 'release' }],
   plugins: [
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
