@@ -1,3 +1,16 @@
+# [1.6.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.15...v1.6.0) (2021-07-19)
+
+
+### Bug Fixes
+
+* config load ([7e117fe](https://github.com/PitcherAG/pitcher-vue-sdk/commit/7e117fe6ad4edf9278a8c5f6a6dce5542d9d29c2))
+* emit change when date is cleared with key press ([06022ee](https://github.com/PitcherAG/pitcher-vue-sdk/commit/06022ee421c15d393dc003a93d69e8a4460a2002))
+
+
+### Features
+
+* add auto release process ([56262ce](https://github.com/PitcherAG/pitcher-vue-sdk/commit/56262ce9644cb4c24647ce6223ee3fd08295161c))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
