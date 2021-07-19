@@ -228,13 +228,19 @@ export default {
           // Starting point of selection
           state.date = date
           state.dateStr = text
+
+          if (!date) emit('input', '')
         },
         onBeforeChange: () => emit('onBeforeChange'),
         onShow: () => emit('onShow'),
         onVisible: () => emit('onVisible'),
         onHide: () => emit('onHide'),
         onHidden: () => emit('onHidden'),
-        onSelect: () => emit('onSelect'),
+        onSelect: (date, mode) => {
+          state.date = date
+          handleInputEmit()
+          emit('onSelect', { date, mode })
+        },
         // merge with settings
         ...props.setting,
       }
