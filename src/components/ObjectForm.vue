@@ -356,7 +356,11 @@ export default {
                             if (props.customSettings[field.name]) {
                               field.settings = props.customSettings[field.name]
                             }
-                            if (fieldShouldBeReadOnly(field) || item.editableForNew === false || item.editableForUpdate === false) {
+                            if (
+                              fieldShouldBeReadOnly(field) ||
+                              item.editableForNew === false ||
+                              item.editableForUpdate === false
+                            ) {
                               field.updateable = false
                             }
                             if (props.customReferences && props.customReferences[field.name]) {
