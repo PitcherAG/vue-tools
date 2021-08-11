@@ -1,3 +1,17 @@
+# [1.7.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.6.0...v1.7.0) (2021-08-11)
+
+
+### Bug Fixes
+
+* lint and test action, rename branches ([d4ff2e3](https://github.com/PitcherAG/pitcher-vue-sdk/commit/d4ff2e337747d04393f084dfb75764c44d2535f7))
+* load more btn visibility fix ([42a1dee](https://github.com/PitcherAG/pitcher-vue-sdk/commit/42a1dee0b1c81e63a735fc79373f0e804bf489e3))
+* remove old action ([2842391](https://github.com/PitcherAG/pitcher-vue-sdk/commit/2842391be882d7cb53517ac9f654d3d1dbaef335))
+
+
+### Features
+
+* new action included ([8126ba5](https://github.com/PitcherAG/pitcher-vue-sdk/commit/8126ba511d9f11914b159d8ccc6d7f9a24a4d7a6))
+
 # [1.6.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.5.15...v1.6.0) (2021-07-19)
 
 
