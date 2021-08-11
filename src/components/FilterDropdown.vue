@@ -445,7 +445,7 @@ export default {
     }
 
     const showLoadMore = computed(() => {
-      if (props.itemsPerPage && parsedItems.value.length !== state.itemsVisible) {
+      if (props.itemsPerPage && parsedItems.value.length > state.itemsVisible) {
         return true
       }
 
