@@ -97,6 +97,10 @@ export default {
       default: () => [],
       type: Array,
     },
+    clearableFields: {
+      default: () => [],
+      type: Array,
+    },
     customReferences: {
       type: Object,
     },
@@ -125,6 +129,10 @@ export default {
       default: false,
     },
     allFieldsReadOnly: {
+      type: Boolean,
+      default: false,
+    },
+    allFieldsClearable: {
       type: Boolean,
       default: false,
     },
@@ -287,6 +295,9 @@ export default {
                   if (props.customSettings && props.customSettings.includes[f.name]) {
                     f.settings = props.customSettings[f.name]
                   }
+                  if (fieldShouldBeClearable(f)) {
+                    f.settings.clearable = true
+                  }
                   if (fieldShouldBeReadOnly(f)) {
                     f.updateable = false
                   } else if (props.customReferences && props.customReferences[f.name]) {
@@ -318,7 +329,6 @@ export default {
               'layout support for this env not found. Cache table needs not only schema but layout describes as well'
             )
           }
-
           if (layout) {
             layout.visibleEditLayoutSections = computed(() => {
               const result = []
@@ -363,6 +373,9 @@ export default {
                             ) {
                               field.updateable = false
                             }
+                            if (fieldShouldBeClearable(field)) {
+                              field.settings.clearable = true
+                            }
                             if (props.customReferences && props.customReferences[field.name]) {
                               field.loadExternalReferences(props.customReferences[field.name])
                             } else if (field.referenceTo && field.referenceTo.length) {
@@ -404,6 +417,9 @@ export default {
                 }
                 if (fieldShouldBeReadOnly(f)) {
                   f.updateable = false
+                }
+                if (fieldShouldBeClearable(f)) {
+                  f.settings.clearable = true
                 }
                 if (f.nillable && f.name !== 'Name') {
                   fields.push(f)
@@ -620,6 +636,12 @@ export default {
 
     const fieldShouldBeReadOnly = (field) => {
       return props.readOnlyFields.includes(field.name) || props.allFieldsReadOnly
+    }
+
+    const fieldShouldBeClearable = (field) => {
+      return (
+        (props.clearableFields.includes(field.name) || props.allFieldsClearable) && field.settings.clearable !== false
+      )
     }
 
     return {
