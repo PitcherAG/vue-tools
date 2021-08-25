@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.7.0...v1.8.0) (2021-08-25)
+
+
+### Features
+
+* add clearableFields functionality to objectform ([b4398cc](https://github.com/PitcherAG/pitcher-vue-sdk/commit/b4398cc294bd9bff2eb65ec5355a8b45ed469324))
+
 # [1.7.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.6.0...v1.7.0) (2021-08-11)
 
 
