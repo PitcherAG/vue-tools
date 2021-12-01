@@ -27,15 +27,18 @@ async function parseFile(file) {
   return gettextParser.po.parse(data)
 }
 
-async function translateConfig(config) {
-  const [languages] = await translate.getLanguages()
+async function translateConfig(config, onlyGeneratePO) {
+  const [languages] = onlyGeneratePO ? [] : await translate.getLanguages()
   const output = config.output && config.output.po ? config.output.po : 'locale'
 
   for (const t of config.translations) {
-    console.log(`[config-gettext-translate] translating ${t.category}`)
+    console.log(
+      `[${onlyGeneratePO ? 'config-gettext-generate' : 'config-gettext-translate'}] 
+      ${onlyGeneratePO ? 'generating .po files for' : 'translating'} ${t.category}`
+    )
 
     for (const language in config.languages) {
-      if (!languages.find((l) => l.code === language)) {
+      if (!onlyGeneratePO && !languages.find(l => l.code === language)) {
         console.error(chalk.red`[config-gettext-translate] language ${language} not supported`)
         continue
       }
@@ -44,14 +47,15 @@ async function translateConfig(config) {
         await translateFile(
           path.join(output, `${t.category}.pot`),
           language,
-          path.join(output, language, 'LC_MESSAGES', `${t.category}.po`)
+          path.join(output, language, 'LC_MESSAGES', `${t.category}.po`),
+          onlyGeneratePO
         )
       }
     }
   }
 }
 
-async function translateFile(file, language, output) {
+async function translateFile(file, language, output, onlyGeneratePO) {
   const pot = await parseFile(file)
   const po = await parseFile(fs.existsSync(output) ? output : file)
 
@@ -71,27 +75,29 @@ async function translateFile(file, language, output) {
     }
   }
 
-  // translate empty message strings
-  const msgids = Object.keys(_.pickBy(po.translations[''], (msg) => msg.msgid && !msg.msgstr[0]))
+  if (!onlyGeneratePO) {
+    // translate empty message strings
+    const msgids = Object.keys(_.pickBy(po.translations[''], msg => msg.msgid && !msg.msgstr[0]))
 
-  console.log(chalk.grey`[config-gettext-translate] ${language} has ${msgids.length} untranslated messages`)
+    console.log(chalk.grey`[config-gettext-translate] ${language} has ${msgids.length} untranslated messages`)
 
-  if (msgids.length) {
-    const translations = await translateMessages(msgids, language)
+    if (msgids.length) {
+      const translations = await translateMessages(msgids, language)
 
-    translations.forEach((t, i) => {
-      if (t) {
-        const item = po.translations[''][msgids[i]]
+      translations.forEach((t, i) => {
+        if (t) {
+          const item = po.translations[''][msgids[i]]
 
-        item.msgstr = t
+          item.msgstr = t
 
-        if (!item.comments) {
-          item.comments = {}
+          if (!item.comments) {
+            item.comments = {}
+          }
+
+          item.comments.flag = 'fuzzy'
         }
-
-        item.comments.flag = 'fuzzy'
-      }
-    })
+      })
+    }
   }
 
   if (!fs.existsSync(path.dirname(output))) {

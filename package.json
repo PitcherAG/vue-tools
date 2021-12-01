@@ -6,7 +6,8 @@
   "bin": {
     "config-gettext-compile": "src/gettext/compile-cli.js",
     "config-gettext-extract": "src/gettext/extract-cli.js",
-    "config-gettext-translate": "src/gettext/translate-cli.js"
+    "config-gettext-translate": "src/gettext/translate-cli.js",
+    "config-gettext-generate": "src/gettext/generate-cli.js"
   },
   "scripts": {
     "build": "rimraf ./dist && babel src -d dist",
