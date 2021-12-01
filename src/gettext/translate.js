@@ -56,27 +56,23 @@ async function translateConfig(config, onlyGeneratePO) {
 }
 
 async function translateFile(file, language, output, onlyGeneratePO) {
-  const pot = await parseFile(file)
-  const po = await parseFile(fs.existsSync(output) ? output : file)
-
-  po.headers.Language = language
-
-  // add new messages
-  for (const msgid of Object.keys(pot.translations[''])) {
-    if (!po.translations[''][msgid]) {
-      po.translations[''][msgid] = Object.assign({}, pot.translations[''][msgid])
+  const addNewMessages = () => {
+    for (const msgid of Object.keys(pot.translations[''])) {
+      if (!po.translations[''][msgid]) {
+        po.translations[''][msgid] = Object.assign({}, pot.translations[''][msgid])
+      }
     }
   }
 
-  // remove missing messages
-  for (const msgid of Object.keys(po.translations[''])) {
-    if (!pot.translations[''][msgid]) {
-      delete po.translations[''][msgid]
+  const removeMissingMessages = () => {
+    for (const msgid of Object.keys(po.translations[''])) {
+      if (!pot.translations[''][msgid]) {
+        delete po.translations[''][msgid]
+      }
     }
   }
 
-  if (!onlyGeneratePO) {
-    // translate empty message strings
+  const translateEmptyMessageStrings = async () => {
     const msgids = Object.keys(_.pickBy(po.translations[''], msg => msg.msgid && !msg.msgstr[0]))
 
     console.log(chalk.grey`[config-gettext-translate] ${language} has ${msgids.length} untranslated messages`)
@@ -100,11 +96,22 @@ async function translateFile(file, language, output, onlyGeneratePO) {
     }
   }
 
-  if (!fs.existsSync(path.dirname(output))) {
-    fs.mkdirSync(path.dirname(output), { recursive: true })
+  const createPO = () => {
+    if (!fs.existsSync(path.dirname(output))) {
+      fs.mkdirSync(path.dirname(output), { recursive: true })
+    }
+
+    fs.writeFileSync(output, gettextParser.po.compile(po))
   }
 
-  fs.writeFileSync(output, gettextParser.po.compile(po))
+  const pot = await parseFile(file)
+  const po = await parseFile(fs.existsSync(output) ? output : file)
+  po.headers.Language = language
+
+  addNewMessages()
+  removeMissingMessages()
+  if (!onlyGeneratePO) await translateEmptyMessageStrings()
+  createPO()
 }
 
 async function translateMessages(messages, language) {
