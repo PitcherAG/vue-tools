@@ -1,3 +1,59 @@
+# [1.9.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.8.0...v1.9.0) (2021-12-07)
+
+
+### Bug Fixes
+
+* add dash named chapters to chapterless slides ([73011f9](https://github.com/PitcherAG/pitcher-vue-sdk/commit/73011f95249090db5b170c619df134974ac6b31b))
+* add default filtered values for picklist ([5b3b9bb](https://github.com/PitcherAG/pitcher-vue-sdk/commit/5b3b9bb24b9fea49e804f8845756b94501dd44e9))
+* change uid function ([0a93501](https://github.com/PitcherAG/pitcher-vue-sdk/commit/0a93501646e9e7e85be222b7d6522f762847a873))
+* chapter end indexes are not added correctly ([0f4e77d](https://github.com/PitcherAG/pitcher-vue-sdk/commit/0f4e77d04ed4326b6a5a06f7025f579da0ea9a3c))
+* chapters working in IE11 (PLA-761) ([d5abc3d](https://github.com/PitcherAG/pitcher-vue-sdk/commit/d5abc3d7e8222b4e506b696aec6d1285892065eb))
+* config load ([caed3c2](https://github.com/PitcherAG/pitcher-vue-sdk/commit/caed3c29f3e1f9db71561a2c038a5794d5631255))
+* disable rules for instance files ([2013528](https://github.com/PitcherAG/pitcher-vue-sdk/commit/20135287a77dd4745c5d8284b350575cdb41471a))
+* dropdown - enable full text search, change in searchable params ([6012271](https://github.com/PitcherAG/pitcher-vue-sdk/commit/6012271bb7f8a7a6cfc618fabb8d797296a3f4a8))
+* dropdown - use unique id for list items, fix styling issue ([7c0a52a](https://github.com/PitcherAG/pitcher-vue-sdk/commit/7c0a52ab6fcfdec9d558e9f735c171d7b5f879a5))
+* dropdown searchable fix - no items ([cc63d0d](https://github.com/PitcherAG/pitcher-vue-sdk/commit/cc63d0dc5024cf34ff86b69d85bb6db4070c4349))
+* emit change when date is cleared with key press ([9c7a6fd](https://github.com/PitcherAG/pitcher-vue-sdk/commit/9c7a6fd85af33ef1b2898ffb044fbf8d83a80627))
+* enable manual updateable setting for fields ([675b201](https://github.com/PitcherAG/pitcher-vue-sdk/commit/675b20125d32dd6b1eb9cae4abec2d7fc35524e6))
+* field should update controlled filed only if not readonly ([acbf01f](https://github.com/PitcherAG/pitcher-vue-sdk/commit/acbf01fdf700c017c3bfb39da90e2935ebf362cd))
+* filter dropdown return emits ([6243998](https://github.com/PitcherAG/pitcher-vue-sdk/commit/6243998cf26a5493ef898c714eef979c79069926))
+* fix lint issues ([9d5cba7](https://github.com/PitcherAG/pitcher-vue-sdk/commit/9d5cba7b696d2205504b06e187cdabdb7b86c6af))
+* fixes document path depending on platform ([9c41e06](https://github.com/PitcherAG/pitcher-vue-sdk/commit/9c41e0693c9db3eb5f18a08bfec4581cdadeffa7))
+* lint and test action, rename branches ([4c2a9a8](https://github.com/PitcherAG/pitcher-vue-sdk/commit/4c2a9a81cb6d054bfc811ea26bc4bce552588583))
+* lint errors after new lint rules ([e02f8f3](https://github.com/PitcherAG/pitcher-vue-sdk/commit/e02f8f37e44ecd84a4527f045c3af9d403bdfe2f))
+* load more btn visibility fix ([f1a7070](https://github.com/PitcherAG/pitcher-vue-sdk/commit/f1a7070135bcf7a8402447927f7e15299d2b8d03))
+* localstorage without ready was causing issues ([afaff7b](https://github.com/PitcherAG/pitcher-vue-sdk/commit/afaff7b7aa62908e9b8fb75491240642f0884d9b))
+* log error ([87792c8](https://github.com/PitcherAG/pitcher-vue-sdk/commit/87792c867c3385cf08d206390068569329db1e0a))
+* objectformfield - read props from layoutitem, add field validation errors ([1785e69](https://github.com/PitcherAG/pitcher-vue-sdk/commit/1785e69185c0bba8ce23dca1121f054864fc6c0b))
+* preselct single picklist value in controlled dropdown ([d06c1e7](https://github.com/PitcherAG/pitcher-vue-sdk/commit/d06c1e76eb03ab14e95cbf1ad3e158063d670667))
+* remove field watchers before unmount ([28973ad](https://github.com/PitcherAG/pitcher-vue-sdk/commit/28973ad52531a9d9a91b0ae752a1ce99927bcbdc))
+* remove old action ([8a3557f](https://github.com/PitcherAG/pitcher-vue-sdk/commit/8a3557f1b9348d39bb366183f531520df08267c3))
+* replace empty chapters ([bced1a2](https://github.com/PitcherAG/pitcher-vue-sdk/commit/bced1a2156c37f990bff8949cb399595d0822974))
+* rollback eqeqeq rule for detailing store ([68abcbe](https://github.com/PitcherAG/pitcher-vue-sdk/commit/68abcbe1370c16f7888fe66e14844168c3886090))
+
+
+### Features
+
+* add auto release process ([ca1b6ce](https://github.com/PitcherAG/pitcher-vue-sdk/commit/ca1b6ce1992d41222622b0d3515442c78948c8b2))
+* add clearableFields functionality to objectform ([8eccc26](https://github.com/PitcherAG/pitcher-vue-sdk/commit/8eccc266645d4577f31560eba1c8cd55febf703e))
+* add original event object to parsed crm event ([ed27137](https://github.com/PitcherAG/pitcher-vue-sdk/commit/ed27137fdefeea500ba30e52557858443ed7a271))
+* add windows debug instructions ([cb79279](https://github.com/PitcherAG/pitcher-vue-sdk/commit/cb79279e4a5add5e8a1d71f7ed77cab7d09a9e5b))
+* added chapter generation function ([2ad7785](https://github.com/PitcherAG/pitcher-vue-sdk/commit/2ad7785d211e1d956336e435eee5e708ea18ba4c))
+* added code owners ([8993ed6](https://github.com/PitcherAG/pitcher-vue-sdk/commit/8993ed6622328ecaa356964dabef4ba81902be80))
+* db error logging on browser console ([4d1f696](https://github.com/PitcherAG/pitcher-vue-sdk/commit/4d1f6963c95301c63c040573ca9e87f35414d805))
+* enable negative value in input ([5b9a4b7](https://github.com/PitcherAG/pitcher-vue-sdk/commit/5b9a4b7475382dbadf6c45bad579274ced67c459))
+* generate chapters when parsing presentations ([6b09f80](https://github.com/PitcherAG/pitcher-vue-sdk/commit/6b09f80377674500b10eeeff2de48da264f5fe8e))
+* missing instance action function documentation added ([#190](https://github.com/PitcherAG/pitcher-vue-sdk/issues/190)) ([dbb63b1](https://github.com/PitcherAG/pitcher-vue-sdk/commit/dbb63b11aed23b581f0a41d637a24809b456f9dd))
+* new action included ([37f420f](https://github.com/PitcherAG/pitcher-vue-sdk/commit/37f420f87850dfe9cbca7dfeaaa75222cb3d31bc))
+* update dropdown list values when its controller change ([bd21a28](https://github.com/PitcherAG/pitcher-vue-sdk/commit/bd21a2855703ee6808202cd89f76217eb6ca2606))
+
+
+### Reverts
+
+* Revert "Deploying to feature-docs-storybook-new-kouts from  @ e9561f12304a42f4ce4ae7b7cb448f822ee34baa 🚀" ([ebf550c](https://github.com/PitcherAG/pitcher-vue-sdk/commit/ebf550c85b4bf366c6ab366f0b25a720bc785f65))
+* Revert "update action" ([e044db2](https://github.com/PitcherAG/pitcher-vue-sdk/commit/e044db23c8120cffa0fdc6694f34841827302637))
+* Revert "publish docs" ([ad843e6](https://github.com/PitcherAG/pitcher-vue-sdk/commit/ad843e68e42daa820c5702ba2ae3f51ac15f2176))
+
 # [1.8.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.7.0...v1.8.0) (2021-08-25)
 
 
