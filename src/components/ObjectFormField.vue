@@ -1,5 +1,9 @@
 <template>
-  <SuiFormField v-if="field.updateable" :error="error" :required="field.required && field.type !== 'boolean'">
+  <SuiFormField
+    v-if="field.updateable || field.settings.updateable"
+    :error="error"
+    :required="field.required && field.type !== 'boolean'"
+  >
     <label>{{ label || field.label }}</label>
     <input
       v-if="field.type === 'string' || field.type === 'phone' || field.type === 'url' || field.type === 'combobox'"
