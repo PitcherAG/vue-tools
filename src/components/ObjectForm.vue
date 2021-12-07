@@ -363,7 +363,7 @@ export default {
                             if (item.required === true) field.required = item.required
                             fieldDict[comp.details.name] = field
                             fields.push(field)
-                            if (props.customSettings[field.name]) {
+                            if (props.customSettings && props.customSettings[field.name]) {
                               field.settings = props.customSettings[field.name]
                             }
                             if (

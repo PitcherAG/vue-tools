@@ -4,7 +4,8 @@ const { compileConfig } = require('../../src/gettext/compile')
 const { extractConfig } = require('../../src/gettext/extract')
 const { translateConfig } = require('../../src/gettext/translate')
 
-describe('gettext', () => {
+// Skip gettext functionality for now, as it will be moved to github actions
+describe.skip('gettext', () => {
   const time = new Date().getTime()
 
   const config = {
