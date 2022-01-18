@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.9.0...v1.9.1) (2022-01-18)
+
+
+### Bug Fixes
+
+* add fieldchange emit in orderform ([54f1cd3](https://github.com/PitcherAG/pitcher-vue-sdk/commit/54f1cd3a2a8a91141487f0479625570a12d3ea37))
+
 # [1.9.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.8.0...v1.9.0) (2021-12-07)
 
 
