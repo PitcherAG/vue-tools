@@ -57,6 +57,7 @@
                   :data-debug-name="comp.details.name"
                   :class="fieldsClass"
                   @input="emitUpdate"
+                  @fieldChange="(v) => $emit('fieldChange', v)"
                 />
               </template>
             </Fragment>
