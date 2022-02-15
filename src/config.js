@@ -227,9 +227,9 @@ export async function loadConfig(source = 'modal') {
     }
   }
 
-  console.log('[@pitcher/core]: app config', config)
-
   const parsedData = parseConfigData(config)
+
+  console.log('[@pitcher/core]: app config', parsedData)
 
   for (const a in parsedData) {
     store.state[a] = parsedData[a]
