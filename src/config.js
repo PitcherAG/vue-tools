@@ -54,29 +54,31 @@ export async function loadConfig(source = 'modal') {
     const sfInfo = await fireEvent('getSFInfo', { source })
     const user = sfInfo.user
 
-    result.userAttrSpecificSettings.forEach((custom) => {
-      const value = user[custom.attrP]
-      const matches = value && value.includes(custom.valueP)
-
-      if (matches) {
-        if (custom.typeP === 'replace') {
-          for (const a in custom.settings) {
-            result[a] = custom.settings[a]
-          }
-        } else if (custom.typeP === 'add') {
-          for (const a in custom.settings) {
-            if (!result[a]) {
-              result[a] = []
+    if (user) {
+      result.userAttrSpecificSettings.forEach((custom) => {
+        const value = user[custom.attrP]
+        const matches = value && value.includes(custom.valueP)
+  
+        if (matches) {
+          if (custom.typeP === 'replace') {
+            for (const a in custom.settings) {
+              result[a] = custom.settings[a]
             }
-            if (Array.isArray(custom.settings[a])) {
-              result[a] = result[a].concat(custom.settings[a])
-            } else {
-              result[a].push(custom.settings[a])
+          } else if (custom.typeP === 'add') {
+            for (const a in custom.settings) {
+              if (!result[a]) {
+                result[a] = []
+              }
+              if (Array.isArray(custom.settings[a])) {
+                result[a] = result[a].concat(custom.settings[a])
+              } else {
+                result[a].push(custom.settings[a])
+              }
             }
           }
         }
-      }
-    })
+      })
+    }
   }
 
   console.log('[@pitcher/core]: app config', result)
