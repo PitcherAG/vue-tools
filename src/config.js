@@ -48,7 +48,7 @@ export function useConfigStore() {
 function parseConfigData(data) {
   let result = data
 
-  data.customCaches = Array.isArray(data.customCaches) ? data.customCaches : []
+  result.customCaches = Array.isArray(result.customCaches) ? result.customCaches : []
 
   if (PLATFORM === 'IOS') {
     result.customCaches.push({
