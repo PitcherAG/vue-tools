@@ -57,7 +57,7 @@ export async function loadConfig(source = 'modal') {
       result.userAttrSpecificSettings.forEach((custom) => {
         const value = user[custom.attrP]
         const matches = value && value.includes(custom.valueP)
-  
+
         if (matches) {
           if (custom.typeP === 'replace') {
             for (const a in custom.settings) {
