@@ -45,44 +45,11 @@ export function useConfigStore() {
   return createStore(new ConfigStore())
 }
 
-export async function loadConfig(source = 'modal') {
-  const store = useConfigStore()
-  let result = await fireEvent('getAppConfig', { source })
+function parseConfigData(data) {
+  let result = data
 
-  if (typeof result.userAttrSpecificSettings !== 'undefined') {
-    const sfInfo = await fireEvent('getSFInfo', { source })
-    const user = sfInfo && sfInfo.user
+  data.customCaches = Array.isArray(data.customCaches) ? data.customCaches : []
 
-    if (user) {
-      result.userAttrSpecificSettings.forEach((custom) => {
-        const value = user[custom.attrP]
-        const matches = value && value.includes(custom.valueP)
-
-        if (matches) {
-          if (custom.typeP === 'replace') {
-            for (const a in custom.settings) {
-              result[a] = custom.settings[a]
-            }
-          } else if (custom.typeP === 'add') {
-            for (const a in custom.settings) {
-              if (!result[a]) {
-                result[a] = []
-              }
-              if (Array.isArray(custom.settings[a])) {
-                result[a] = result[a].concat(custom.settings[a])
-              } else {
-                result[a].push(custom.settings[a])
-              }
-            }
-          }
-        }
-      })
-    }
-  }
-
-  console.log('[@pitcher/core]: app config', result)
-
-  result.customCaches = Array.isArray(result.customCaches) ? result.customCaches : []
   if (PLATFORM === 'IOS') {
     result.customCaches.push({
       objectName: 'Account',
@@ -222,8 +189,50 @@ export async function loadConfig(source = 'modal') {
     throw new Error(`Platform not supported: ${PLATFORM}`)
   }
 
-  for (const a in result) {
-    store.state[a] = result[a]
+  return result
+}
+
+export async function loadConfig(source = 'modal') {
+  const store = useConfigStore()
+  const config = await fireEvent('getAppConfig', { source })
+
+  if (typeof config.userAttrSpecificSettings !== 'undefined') {
+    const sfInfo = await fireEvent('getSFInfo', { source })
+    const user = sfInfo && sfInfo.user ? sfInfo.user : undefined
+
+    if (user) {
+      config.userAttrSpecificSettings.forEach((custom) => {
+        const value = user[custom.attrP]
+        const matches = value && value.includes(custom.valueP)
+
+        if (matches) {
+          if (custom.typeP === 'replace') {
+            for (const a in custom.settings) {
+              config[a] = custom.settings[a]
+            }
+          } else if (custom.typeP === 'add') {
+            for (const a in custom.settings) {
+              if (!config[a]) {
+                config[a] = []
+              }
+              if (Array.isArray(custom.settings[a])) {
+                config[a] = config[a].concat(custom.settings[a])
+              } else {
+                config[a].push(custom.settings[a])
+              }
+            }
+          }
+        }
+      })
+    }
+  }
+
+  console.log('[@pitcher/core]: app config', config)
+
+  const parsedData = parseConfigData(config)
+
+  for (const a in parsedData) {
+    store.state[a] = parsedData[a]
   }
 
   return store.state
