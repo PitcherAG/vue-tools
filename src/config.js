@@ -51,7 +51,7 @@ export async function loadConfig(source = 'modal') {
 
   if (typeof result.userAttrSpecificSettings !== 'undefined') {
     const sfInfo = await fireEvent('getSFInfo', { source })
-    const user = sfInfo.user
+    const user = sfInfo && sfInfo.user
 
     if (user) {
       result.userAttrSpecificSettings.forEach((custom) => {
