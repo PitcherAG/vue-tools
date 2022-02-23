@@ -339,7 +339,6 @@ export default {
               let count = 0
               for (const section of sections) {
                 if (section.fieldCount > 0 && ((count > 1 && readOnly) || !readOnly)) {
-                  //debugger
                   result.push(section)
                 }
                 count++
