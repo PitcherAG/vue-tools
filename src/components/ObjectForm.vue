@@ -14,26 +14,26 @@
     <SuiForm v-if="state.needsRecordType && !validationError">
       <SuiFormField :required="true" :error="state.showErrors && !state.recordType">
         <label>Please select a Record Type</label>
-        <Dropdown
+        <dropdown
           v-model="state.recordTypeSaved"
-          :defaultText="$gettext('Select Record Type')"
+          :default-text="$gettext('Select Record Type')"
           :items="state.recordTypes"
-          itemText="name"
-          itemValue="recordTypeId"
+          item-text="name"
+          item-value="recordTypeId"
         />
       </SuiFormField>
     </SuiForm>
     <SuiForm v-if="!state.needsRecordType && !validationError && !state.layout">
-      <ObjectFormField
+      <object-form-field
         v-for="(field, key) in state.fields"
         :key="key"
         v-model="state.obj[field.name]"
-        :valueLabel="toLabel(state.obj, field.name)"
+        :value-label="toLabel(state.obj, field.name)"
         :field="field"
-        :showError="state.showErrors"
-        :hideHelpText="hideHelpText"
+        :show-error="state.showErrors"
+        :hide-help-text="hideHelpText"
         @input="emitUpdate"
-        @fieldChange="(v) => $emit('fieldChange', v)"
+        @fieldChange="v => $emit('fieldChange', v)"
       />
       <SuiButton v-if="hasSave" type="submit">{{ $gettext('Save') }}</SuiButton>
     </SuiForm>
@@ -45,19 +45,20 @@
             <!-- Layout rows are ignored and fields are plotted one after another -->
             <Fragment v-for="(item, itemKey) in row.layoutItems" :key="itemKey">
               <template v-for="(comp, compKey) in item.layoutComponents">
-                <ObjectFormField
+                <object-form-field
                   v-if="!comp.exclude"
                   :key="compKey"
                   v-model="state.obj[comp.value]"
-                  :valueLabel="toLabel(state.obj, comp.value, comp.field)"
+                  :value-label="toLabel(state.obj, comp.value, comp.field)"
                   :field="comp.field"
-                  :showError="state.showErrors"
-                  :hideHelpText="hideHelpText"
+                  :show-error="state.showErrors"
+                  :hide-help-text="hideHelpText"
                   :label="item.label"
                   :data-debug-name="comp.details.name"
                   :class="fieldsClass"
+                  :obj="state.obj"
                   @input="emitUpdate"
-                  @fieldChange="(v) => $emit('fieldChange', v)"
+                  @fieldChange="v => $emit('fieldChange', v)"
                 />
               </template>
             </Fragment>
@@ -79,68 +80,68 @@ import { Field, contextQuery, loadLayout, loadSchema, saveObject, useConfigStore
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from '@vue/composition-api'
 
 export default {
-  name: 'ObjectForm',
+  name: 'object-form',
   components: { Dropdown, ObjectFormField },
   props: {
     objectType: {
       require: true,
-      type: String,
+      type: String
     },
     fields: {
       default: () => [],
-      type: Array,
+      type: Array
     },
     excludeFields: {
       default: () => [],
-      type: Array,
+      type: Array
     },
     readOnlyFields: {
       default: () => [],
-      type: Array,
+      type: Array
     },
     clearableFields: {
       default: () => [],
-      type: Array,
+      type: Array
     },
     customReferences: {
-      type: Object,
+      type: Object
     },
     customSettings: {
       type: Object,
-      default: () => {},
+      default: () => {}
     },
     hideHelpText: {
       type: Boolean,
-      default: false,
+      default: false
     },
     hasSave: {
-      type: Boolean,
+      type: Boolean
     },
     id: {
-      type: String,
+      type: String
     },
     recordType: {
-      type: String,
+      type: String
     },
     value: {
-      type: Object,
+      type: Object
     },
     ignoreExternalIdValidation: {
       type: Boolean,
-      default: false,
+      default: false
     },
     allFieldsReadOnly: {
       type: Boolean,
-      default: false,
+      default: false
     },
     allFieldsClearable: {
       type: Boolean,
-      default: false,
+      default: false
     },
     fieldsClass: {
       type: String,
-      default: 'eight wide column',
-    },
+      default: 'eight wide column'
+    }
   },
   emits: ['fieldChange', 'input'],
 
@@ -155,7 +156,7 @@ export default {
       'LastActivityDate',
       'LastModifiedById',
       'LastModifiedDate',
-      'SystemModstamp',
+      'SystemModstamp'
     ]
     const state = reactive({
       ready: false,
@@ -211,7 +212,7 @@ export default {
       showErrors: true,
       result: computed(() => {
         const result = {
-          ignoreFields: [],
+          ignoreFields: []
         }
         let valid = true
 
@@ -224,7 +225,7 @@ export default {
               if (ref.value === state.obj[field.name]) {
                 result[field.relationshipName] = {
                   Id: ref.value,
-                  Name: ref.text,
+                  Name: ref.text
                 }
                 result.ignoreFields.push(field.relationshipName)
                 found = true
@@ -239,7 +240,7 @@ export default {
         }
 
         return result
-      }),
+      })
     })
 
     const name = ref()
@@ -331,22 +332,25 @@ export default {
             )
           }
           if (layout) {
+            const readOnly = props.allFieldsReadOnly
+            const sections = readOnly ? layout.detailLayoutSections : layout.editLayoutSections
             layout.visibleEditLayoutSections = computed(() => {
               const result = []
-
-              for (const section of layout.editLayoutSections) {
-                if (section.fieldCount > 0) {
+              let count = 0
+              for (const section of sections) {
+                if (section.fieldCount > 0 && ((count > 1 && readOnly) || !readOnly)) {
+                  //debugger
                   result.push(section)
                 }
+                count++
               }
-
               return result
             })
             const data = []
             const filed = []
             const fieldDict = {}
 
-            for (const section of layout.editLayoutSections) {
+            for (const section of sections) {
               let fieldCount = 0
 
               for (const row of section.layoutRows) {
@@ -354,6 +358,10 @@ export default {
                   for (const item of row.layoutItems) {
                     if (item.layoutComponents) {
                       for (const comp of item.layoutComponents) {
+                        if (!comp.details) {
+                          comp.exclude = true
+                          continue
+                        }
                         if (excludeFields.indexOf(comp.value) === -1) {
                           let field
 
@@ -435,7 +443,7 @@ export default {
               }
             }
             req_fields = req_fields.concat(fields)
-            req_fields = req_fields.filter((obj) => {
+            req_fields = req_fields.filter(obj => {
               for (const excludeField of excludeFields) {
                 if (obj.name === excludeField.trim()) {
                   return false
@@ -458,16 +466,14 @@ export default {
           if (field.type === 'picklist' && field.controllerName) {
             field.dependentValueWatcher = watch(
               () => state.obj[field.controllerName],
-              (newVal) => {
+              newVal => {
                 if (state.fieldsDict[field.controllerName] && !fieldShouldBeReadOnly(field)) {
                   // When controller field changes - Reset dependent value
                   Vue.set(state.obj, field.name, null)
                   // Find the index of the selected value in the controller field
-                  const index = state.fieldsDict[field.controllerName].picklistValues.findIndex(
-                    (o) => o.value === newVal
-                  )
+                  const index = state.fieldsDict[field.controllerName].picklistValues.findIndex(o => o.value === newVal)
 
-                  field.filteredValues = field.picklistValues.filter((p) => {
+                  field.filteredValues = field.picklistValues.filter(p => {
                     // base64 decode
                     const bitmap = atob(p.validFor)
 
@@ -480,7 +486,7 @@ export default {
                 }
               },
               {
-                immediate: true,
+                immediate: true
               }
             )
           }
@@ -559,7 +565,7 @@ export default {
       return valid
     }
 
-    const save = (extra) => {
+    const save = extra => {
       if (state.needsRecordType && state.recordTypeSaved) {
         state.recordTypeId = state.recordTypeSaved
         state.showErrors = false
@@ -573,7 +579,7 @@ export default {
       }
       const obj = {
         ...state.result,
-        ...extra,
+        ...extra
       }
 
       if (state.recordTypeId && state.recordTypes.length > 1) {
@@ -581,7 +587,7 @@ export default {
           if (t.recordTypeId === state.recordTypeId) {
             obj.RecordType = {
               Id: t.recordTypeId,
-              Name: t.name,
+              Name: t.name
             }
             obj.RecordTypeId = state.recordTypeId
             obj.ignoreFields.push('RecordType')
@@ -635,11 +641,11 @@ export default {
       return ''
     }
 
-    const fieldShouldBeReadOnly = (field) => {
+    const fieldShouldBeReadOnly = field => {
       return props.readOnlyFields.includes(field.name) || props.allFieldsReadOnly
     }
 
-    const fieldShouldBeClearable = (field) => {
+    const fieldShouldBeClearable = field => {
       return (
         (props.clearableFields.includes(field.name) || props.allFieldsClearable) && field.settings.clearable !== false
       )
@@ -655,9 +661,9 @@ export default {
       validationErrorTitle,
       validationErrorDescription,
       name,
-      emitUpdate,
+      emitUpdate
     }
-  },
+  }
 }
 </script>
 

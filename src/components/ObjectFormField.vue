@@ -21,30 +21,30 @@
       v-bind="field.settings"
       @input="emitInput($event.target.value)"
     />
-    <Dropdown
+    <dropdown
       v-if="field.type === 'picklist' || field.type === 'multipicklist'"
-      :defaultText="$gettext('Select')"
+      :default-text="$gettext('Select')"
       :items="filteredValues"
       :multiple="field.type === 'multipicklist'"
       :value="value"
-      addClass="selection"
+      add-class="selection"
       v-bind="field.settings"
       @input="emitInput($event)"
     />
-    <Dropdown
+    <dropdown
       v-if="field.type === 'reference'"
-      :defaultText="$gettext('Select')"
+      :default-text="$gettext('Select')"
       :items="field.references.value"
       :multiple="field.type === 'multipicklist'"
       :value="value"
-      addClass="selection"
+      add-class="selection"
       v-bind="field.settings"
       @input="emitInput($event)"
     />
 
-    <Calendar
+    <calendar
       v-if="field.type === 'date' || field.type === 'datetime'"
-      :defaultText="field.type === 'date' ? $gettext('Date') : $gettext('Date/Time')"
+      :default-text="field.type === 'date' ? $gettext('Date') : $gettext('Date/Time')"
       :type="field.type"
       :value="value || ''"
       v-bind="field.settings"
@@ -71,12 +71,12 @@
                type="number"
                readonly="readonly"
                step="any" -->
-    <Checkbox
+    <checkbox
       v-if="field.type === 'boolean'"
       :value="value"
       toggle
       v-bind="field.settings"
-      @input="(v) => emitInput(v)"
+      @input="v => emitInput(v)"
     />
     <small v-if="!hideHelpText && field.inlineHelpText" class="helper">{{ field.inlineHelpText }}</small>
   </SuiFormField>
@@ -101,6 +101,10 @@
           <template v-else-if="field.type === 'date' || field.type === 'datetime'">
             {{ formatDate(value) }}
           </template>
+          <!-- Reference -->
+          <template v-else-if="field.type === 'reference'">
+            {{ getReferenceName() }}
+          </template>
           <!-- Default -->
           <template v-else>
             {{ value }}
@@ -122,31 +126,35 @@ import { computed, ref } from '@vue/composition-api'
 import { formatCurrency, formatDate } from '..'
 
 export default {
-  name: 'ObjectFormField',
+  name: 'object-form-field',
   components: { Checkbox, Calendar, Dropdown },
   props: {
     field: {
       type: Object,
-      required: true,
+      required: true
     },
     index: {
-      type: Number,
+      type: Number
     },
     hideHelpText: {
       type: Boolean,
-      default: false,
+      default: false
     },
     showError: {
-      type: Boolean,
+      type: Boolean
     },
     // eslint-disable-next-line vue/require-prop-types
     value: {},
     valueLabel: {
-      type: String,
+      type: String
     },
     label: {
-      type: String,
+      type: String
     },
+    obj: {
+      type: Object,
+      required: false
+    }
   },
   setup(props, ctxt) {
     const emit = ctxt.emit
@@ -165,8 +173,7 @@ export default {
 
     const filteredValues = computed(() => {
       const newValues = props.field.filteredValues ? props.field.filteredValues : picklist.value
-
-      return newValues.map((p) => {
+      return newValues.map(p => {
         return { text: p.label, value: p.value }
       })
     })
@@ -182,15 +189,29 @@ export default {
         field: props.field,
         label: props.label,
         type: props.field.type,
-        showError: props.showError,
+        showError: props.showError
       }
 
       emit('fieldChange', fieldChange)
       emit('input', value)
     }
 
-    return { filteredValues, emitInput, error, formatDate, formatCurrency }
-  },
+    function getReferenceName() {
+      let fieldName = props.field.name
+      if (fieldName.endsWith('__c')) {
+        fieldName = fieldName.replace('__c', '__r')
+      } else {
+        fieldName = fieldName.substr(0, fieldName.length - 2)
+      }
+      if (props.obj[fieldName]) {
+        return props.obj[fieldName].Name
+      } else {
+        console.warn('referenced object name not found. Add ' + fieldName + ' to query.')
+        return props.value
+      }
+    }
+    return { filteredValues, emitInput, error, formatDate, formatCurrency, getReferenceName }
+  }
 }
 </script>
 
