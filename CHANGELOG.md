@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.10.0...v1.10.1) (2022-02-24)
+
+
+### Bug Fixes
+
+* config store fix ([a911d52](https://github.com/PitcherAG/pitcher-vue-sdk/commit/a911d52ba642b50d834e9e9d9826e8fd293675d8))
+
 # [1.10.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.9.1...v1.10.0) (2022-02-24)
 
 
