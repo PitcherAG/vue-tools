@@ -56,6 +56,7 @@
                   :label="item.label"
                   :data-debug-name="comp.details.name"
                   :class="fieldsClass"
+                  :obj="state.obj"
                   @input="emitUpdate"
                   @fieldChange="(v) => $emit('fieldChange', v)"
                 />
@@ -331,13 +332,18 @@ export default {
             )
           }
           if (layout) {
+            const readOnly = props.allFieldsReadOnly
+            const sections = readOnly ? layout.detailLayoutSections : layout.editLayoutSections
+
             layout.visibleEditLayoutSections = computed(() => {
               const result = []
+              let count = 0
 
-              for (const section of layout.editLayoutSections) {
-                if (section.fieldCount > 0) {
+              for (const section of sections) {
+                if (section.fieldCount > 0 && ((count > 1 && readOnly) || !readOnly)) {
                   result.push(section)
                 }
+                count++
               }
 
               return result
@@ -346,7 +352,7 @@ export default {
             const filed = []
             const fieldDict = {}
 
-            for (const section of layout.editLayoutSections) {
+            for (const section of sections) {
               let fieldCount = 0
 
               for (const row of section.layoutRows) {
@@ -354,6 +360,10 @@ export default {
                   for (const item of row.layoutItems) {
                     if (item.layoutComponents) {
                       for (const comp of item.layoutComponents) {
+                        if (!comp.details) {
+                          comp.exclude = true
+                          continue
+                        }
                         if (excludeFields.indexOf(comp.value) === -1) {
                           let field
 

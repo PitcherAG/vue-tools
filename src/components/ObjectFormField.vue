@@ -101,6 +101,10 @@
           <template v-else-if="field.type === 'date' || field.type === 'datetime'">
             {{ formatDate(value) }}
           </template>
+          <!-- Reference -->
+          <template v-else-if="field.type === 'reference'">
+            {{ getReferenceName() }}
+          </template>
           <!-- Default -->
           <template v-else>
             {{ value }}
@@ -147,6 +151,10 @@ export default {
     label: {
       type: String,
     },
+    obj: {
+      type: Object,
+      required: false,
+    },
   },
   setup(props, ctxt) {
     const emit = ctxt.emit
@@ -189,7 +197,24 @@ export default {
       emit('input', value)
     }
 
-    return { filteredValues, emitInput, error, formatDate, formatCurrency }
+    function getReferenceName() {
+      let fieldName = props.field.name
+
+      if (fieldName.endsWith('__c')) {
+        fieldName = fieldName.replace('__c', '__r')
+      } else {
+        fieldName = fieldName.substr(0, fieldName.length - 2)
+      }
+      if (props.obj[fieldName]) {
+        return props.obj[fieldName].Name
+      } else {
+        console.warn(`referenced object name not found. Add ${fieldName} to query.`)
+
+        return props.value
+      }
+    }
+
+    return { filteredValues, emitInput, error, formatDate, formatCurrency, getReferenceName }
   },
 }
 </script>
