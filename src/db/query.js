@@ -84,7 +84,13 @@ async function query(query, db = null, removeNull = false, source = 'modal') {
               column === 'user' ||
               column === 'userObject'
             ) {
-              const o = JSON.parse(fieldData)
+              let o = {}
+
+              try {
+                o = JSON.parse(fieldData)
+              } catch (error) {
+                continue
+              }
 
               for (const n in o) {
                 if (Object.prototype.hasOwnProperty.call(o, n) && n !== 'attributes') {

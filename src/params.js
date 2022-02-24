@@ -90,8 +90,6 @@ export function useParamsStore() {
 export async function loadParams() {
   const store = useParamsStore()
 
-  console.log(store.state.account)
-
   // for testing
   if (process.env.VUE_APP_PARAMS) {
     const preParams = JSON.parse(process.env.VUE_APP_PARAMS)
