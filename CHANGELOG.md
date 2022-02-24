@@ -1,3 +1,16 @@
+# [1.10.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.9.1...v1.10.0) (2022-02-24)
+
+
+### Bug Fixes
+
+* fixed empty extrafield data ([e4e8f4b](https://github.com/PitcherAG/pitcher-vue-sdk/commit/e4e8f4b279fd8807259220e1709dbe26fec26317))
+* user data is gathered from getSFInfo event ([6ba0507](https://github.com/PitcherAG/pitcher-vue-sdk/commit/6ba050723d2313fd4b4b8f7f5d421cae8b9560ac))
+
+
+### Features
+
+* object-form now supports correct layouts for view only ([82e583e](https://github.com/PitcherAG/pitcher-vue-sdk/commit/82e583ee27461f6fb1ed9195284afae9e5bba08b))
+
 ## [1.9.1](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.9.0...v1.9.1) (2022-01-18)
 
 
