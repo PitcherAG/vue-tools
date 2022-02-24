@@ -1,3 +1,10 @@
+## [1.10.2](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.10.1...v1.10.2) (2022-02-24)
+
+
+### Bug Fixes
+
+* fix imports ([32d00cd](https://github.com/PitcherAG/pitcher-vue-sdk/commit/32d00cde649679132bfb36211a370cb65a787311))
+
 ## [1.10.1](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.10.0...v1.10.1) (2022-02-24)
 
 
