@@ -1,7 +1,7 @@
 import { PLATFORM } from './platform'
 import { createStore } from './store'
 import { fireEvent } from './event'
-import { useParams } from '@/params'
+import { useParams } from './params'
 
 class ConfigStore {
   id = 'config'
