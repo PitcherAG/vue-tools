@@ -1,6 +1,7 @@
 import { PLATFORM } from './platform'
 import { createStore } from './store'
 import { fireEvent } from './event'
+import { useParams } from '@/params'
 
 class ConfigStore {
   id = 'config'
@@ -197,8 +198,16 @@ export async function loadConfig(source = 'modal') {
   const config = await fireEvent('getAppConfig', { source })
 
   if (typeof config.userAttrSpecificSettings !== 'undefined') {
-    const sfInfo = await fireEvent('getSFInfo', { source })
-    const user = sfInfo && sfInfo.user ? sfInfo.user : undefined
+    const params = useParams()
+    let user
+
+    if (params.user) {
+      user = params.user
+    } else {
+      const sfInfo = await fireEvent('getSFInfo', { source })
+
+      user = sfInfo && sfInfo.user ? sfInfo.user : undefined
+    }
 
     if (user) {
       config.userAttrSpecificSettings.forEach((custom) => {
