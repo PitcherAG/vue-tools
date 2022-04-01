@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.10.2...v1.11.0) (2022-04-01)
+
+
+### Features
+
+* add `forceCurrencyCode` property to ObjectForm APPS-3654 ([980d532](https://github.com/PitcherAG/pitcher-vue-sdk/commit/980d5320c4b1b47b56582298201363996d94f618))
+
 ## [1.10.2](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.10.1...v1.10.2) (2022-02-24)
 
 
