@@ -95,7 +95,7 @@
           </template>
           <!-- Currency -->
           <template v-else-if="field.type === 'currency'">
-            {{ formatCurrency(value) }}
+            {{ formatCurrency(value, forceCurrencyCode) }}
           </template>
           <!-- Date -->
           <template v-else-if="field.type === 'date' || field.type === 'datetime'">
@@ -132,6 +132,10 @@ export default {
     field: {
       type: Object,
       required: true,
+    },
+    forceCurrencyCode: {
+      default: '',
+      type: String,
     },
     index: {
       type: Number,
@@ -214,7 +218,14 @@ export default {
       }
     }
 
-    return { filteredValues, emitInput, error, formatDate, formatCurrency, getReferenceName }
+    return {
+      filteredValues,
+      emitInput,
+      error,
+      formatDate,
+      formatCurrency,
+      getReferenceName,
+    }
   },
 }
 </script>

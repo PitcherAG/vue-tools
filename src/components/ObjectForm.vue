@@ -31,6 +31,7 @@
         :valueLabel="toLabel(state.obj, field.name)"
         :field="field"
         :showError="state.showErrors"
+        :forceCurrencyCode="forceCurrencyCode"
         :hideHelpText="hideHelpText"
         @input="emitUpdate"
         @fieldChange="(v) => $emit('fieldChange', v)"
@@ -50,6 +51,7 @@
                   :key="compKey"
                   v-model="state.obj[comp.value]"
                   :valueLabel="toLabel(state.obj, comp.value, comp.field)"
+                  :forceCurrencyCode="forceCurrencyCode"
                   :field="comp.field"
                   :showError="state.showErrors"
                   :hideHelpText="hideHelpText"
@@ -94,6 +96,10 @@ export default {
     excludeFields: {
       default: () => [],
       type: Array,
+    },
+    forceCurrencyCode: {
+      default: '',
+      type: String,
     },
     readOnlyFields: {
       default: () => [],
