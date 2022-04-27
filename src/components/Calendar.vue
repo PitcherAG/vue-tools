@@ -333,7 +333,7 @@ export default {
       () => props.disableMonth,
       () => props.disableMinute,
       () => props.action,
-      () => props.settings,
+      () => props.setting,
       () => props.disableValueFormatting,
       () => props.valueFormatter,
       () => props.disableInputFormatting,
