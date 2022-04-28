@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.11.0...v1.11.1) (2022-04-28)
+
+
+### Bug Fixes
+
+* correct typo of the "setting" prop in the watchlist ([109df8a](https://github.com/PitcherAG/pitcher-vue-sdk/commit/109df8a716ca37e8b1bdee8c80398e708c4ea799))
+
 # [1.11.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.10.2...v1.11.0) (2022-04-01)
 
 
