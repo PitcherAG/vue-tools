@@ -1,4 +1,5 @@
 import { fireEvent } from '../../event'
+import { isStringifiedTruthy } from '../../utils'
 import { useFilesStore } from '../stores/index'
 
 const categoryActionMapping = {
@@ -120,6 +121,7 @@ function loadSurvey(file, parameters) {
     showBar: true,
     folderName: 'surveys',
     allowPortrait: true,
+    useWKView: isStringifiedTruthy(file.useWKView),
     parameters,
   })
 }
@@ -146,6 +148,7 @@ function loadInteractive(file, parameters) {
     showBar,
     folderName: 'zip',
     allowPortrait,
+    useWKView: isStringifiedTruthy(file.useWKView),
     parameters,
   })
 }
