@@ -9,6 +9,7 @@
         ref="input"
         :value="localValue"
         type="text"
+        :disabled="inputAttrs.class.disabled ? true : false"
         readonly="readonly"
         class="number-input"
         :style="inputAttrs.style"
@@ -493,7 +494,9 @@ $border-radius: 8.4px;
 
     input {
       text-align: right;
-
+      &:disabled {
+        opacity: 1;
+      }
       &:active,
       &:visited {
         border-color: #85b7d9;
