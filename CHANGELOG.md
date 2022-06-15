@@ -1,3 +1,11 @@
+# [1.12.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.11.1...v1.12.0) (2022-06-15)
+
+
+### Features
+
+* add 'disabled' html attribute to NumpadInput APPS-4470 ([73eca3d](https://github.com/PitcherAG/pitcher-vue-sdk/commit/73eca3d1a1999b5e0fe9b0fdee2e61f89cc6ec69))
+* update openContent to handle launching interactives and surveys in WKWebView on iOS [PLA-6726] ([19a068d](https://github.com/PitcherAG/pitcher-vue-sdk/commit/19a068d6796286b664a51ce804956a8c43987104))
+
 ## [1.11.1](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.11.0...v1.11.1) (2022-04-28)
 
 
