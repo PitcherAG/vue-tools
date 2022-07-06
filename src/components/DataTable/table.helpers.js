@@ -1,3 +1,4 @@
+import get from 'lodash/get'
 import orderBy from 'lodash/orderBy'
 import { renderContext } from '../../utils'
 
@@ -18,21 +19,24 @@ export function mapper(key, obj) {
   return obj[key]
 }
 
-export function sortBy(data, fields, by, order) {
+export function sortBy(data, fields, by, order, sortModifiers) {
   const field = fields.find((f) => f.dataField === by)
 
   if (!field) {
     return data
   }
 
+  const sortModifier = sortModifiers && sortModifiers[by]
+
   if (typeof field.sortType === 'undefined' || field.sortType === 'string') {
     // sortType: string or sortType: undefined
-    return orderBy(data, [by], [order])
+    return orderBy(data, sortModifier ? [(item) => sortModifier(get(item, by))] : [by], [order])
   } else if (field.sortType === 'number') {
     // sortType: number
     return orderBy(
       data,
       (item) => {
+        if (sortModifier) return sortModifier(item)
         const val = mapper(field.dataField, item) === '' ? -1 : mapper(field.dataField, item)
 
         return Number(val)
@@ -44,6 +48,7 @@ export function sortBy(data, fields, by, order) {
     return orderBy(
       data,
       (item) => {
+        if (sortModifier) return sortModifier(item)
         const val = mapper(field.dataField, item)
 
         if (!val) {
@@ -56,5 +61,5 @@ export function sortBy(data, fields, by, order) {
     )
   }
 
-  return orderBy(data, [by], [order])
+  return orderBy(data, sortModifier ? [(item) => sortModifier(get(item, by))] : [by], [order])
 }
