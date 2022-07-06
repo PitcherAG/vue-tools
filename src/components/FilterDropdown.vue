@@ -419,7 +419,7 @@ export default {
     }
 
     function selectAll() {
-      const notSelectedItems = listItems.value
+      const notSelectedItems = parsedItems.value
         .filter((i) => !i.disabled)
         .filter((i) => i.type.includes('item'))
         .filter((i) => !isSelected(i))
