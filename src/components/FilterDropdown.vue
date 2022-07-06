@@ -306,7 +306,17 @@ export default {
       }
 
       if (state.shouldSort) {
-        temp = temp.sort((a, b) => (isSelected(a) > isSelected(b) ? -1 : 1))
+        temp = temp.sort((a, b) => {
+          if (a.text > b.text) return -1
+          else if (a.text < b.text) return 1
+          else return 0
+        })
+
+        // move selected items on top
+        temp = temp.sort((a, b) => {
+          return isSelected(a) > isSelected(b) ? -1 : 1
+        })
+
         state.shouldSort = false
       }
 
