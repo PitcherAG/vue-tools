@@ -1,3 +1,4 @@
+import get from 'lodash/get'
 import orderBy from 'lodash/orderBy'
 import { renderContext } from '../../utils'
 
@@ -18,7 +19,7 @@ export function mapper(key, obj) {
   return obj[key]
 }
 
-export function sortBy(data, fields, by, order) {
+export function sortBy(data, fields, by, order, sortOptions) {
   const field = fields.find((f) => f.dataField === by)
 
   if (!field) {
@@ -27,7 +28,11 @@ export function sortBy(data, fields, by, order) {
 
   if (typeof field.sortType === 'undefined' || field.sortType === 'string') {
     // sortType: string or sortType: undefined
-    return orderBy(data, [by], [order])
+    const fieldWithSortingOptions = sortOptions && sortOptions.find((i) => i.fieldName === by)
+
+    if (fieldWithSortingOptions && fieldWithSortingOptions.ignoreCase)
+      return orderBy(data, [(item) => get(item, by).toLowerCase()], [order])
+    else return orderBy(data, [by], [order])
   } else if (field.sortType === 'number') {
     // sortType: number
     return orderBy(
