@@ -1,3 +1,16 @@
+# [1.13.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.12.0...v1.13.0) (2022-07-06)
+
+
+### Bug Fixes
+
+* "select all" should select all items APPS-4661 ([79674cc](https://github.com/PitcherAG/pitcher-vue-sdk/commit/79674cca5f100b96f8cd4a37323a16b66a64cea9))
+* filter-dropdown ensure correct alphabetical sorting APPS-4662 ([6f22bab](https://github.com/PitcherAG/pitcher-vue-sdk/commit/6f22bab6b7774f531f12f19f9cb26032fa13f70d))
+
+
+### Features
+
+* data-table add option to allow case insensitive sorting APPS-4663 ([3dc00e3](https://github.com/PitcherAG/pitcher-vue-sdk/commit/3dc00e304ca0046ba22fdf62a27c5b177714cdaa))
+
 # [1.12.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.11.1...v1.12.0) (2022-06-15)
 
 
