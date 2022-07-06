@@ -220,7 +220,7 @@ export default defineComponent({
         useExtendedSearch: true,
       }),
     },
-    sortOptions: Array,
+    sortModifiers: { type: Object },
     trClass: {
       type: [String, Function],
       default: undefined,
@@ -340,7 +340,7 @@ export default defineComponent({
 
       // sort
       if (state.sort.by) {
-        temp = sortBy(temp, props.fields, state.sort.by, state.sort.order, props.sortOptions)
+        temp = sortBy(temp, props.fields, state.sort.by, state.sort.order, props.sortModifiers)
       }
 
       // pagination active & paginate
