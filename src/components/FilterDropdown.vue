@@ -306,7 +306,14 @@ export default {
       }
 
       if (state.shouldSort) {
-        temp = temp.sort((a, b) => (isSelected(a) > isSelected(b) ? -1 : 1))
+        // alphabetically sort in asc order
+        temp = temp.sort((a, b) => b.text?.localeCompare(a.text))
+
+        // move selected items on top
+        temp = temp.sort((a, b) => {
+          return isSelected(a) > isSelected(b) ? -1 : 1
+        })
+
         state.shouldSort = false
       }
 
