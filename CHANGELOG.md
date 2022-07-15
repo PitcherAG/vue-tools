@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.13.0...v1.14.0) (2022-07-15)
+
+
+### Features
+
+* emit `focus` and `blur` events from `NumpadInput` APPS-4749 ([b4501f4](https://github.com/PitcherAG/pitcher-vue-sdk/commit/b4501f48e55278d4baf9e673a92d5c12402f6019))
+
 # [1.13.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.12.0...v1.13.0) (2022-07-06)
 
 
