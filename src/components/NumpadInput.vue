@@ -14,8 +14,14 @@
         class="number-input"
         :style="inputAttrs.style"
         :placeholder="placeholder"
-        @focus="focus(true)"
-        @blur="focus(false)"
+        @focus="() => {
+          $emit('focus')
+          return focus(true)
+        }"
+        @blur="() => {
+          $emit('blur')
+          return focus(false)
+        }"
         @keypress.prevent
         @keydown.prevent="handleKeydown"
         @touchstart.stop
@@ -167,7 +173,7 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ['input'],
+  emits: ['input', 'focus', 'blur'],
   setup(props, ctx) {
     const localState = reactive({
       numpadIsVisible: false,
