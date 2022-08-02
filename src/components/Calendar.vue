@@ -134,6 +134,10 @@ export default {
       type: String,
       validator: (val) => validateSize(val, 'Calendar.vue'),
     },
+    monthFirst: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ['input', 'onBeforeChange', 'onShow', 'onVisible', 'onHide', 'onHidden', 'onSelect'],
 
@@ -187,6 +191,7 @@ export default {
         touchReadonly: true,
         action: props.action,
         minTimeGap: props.minTimeGap,
+        monthFirst: props.monthFirst,
         on: 'click',
         text: {
           days: $gettext('S,M,T,W,T,F,S').split(','),
