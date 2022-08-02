@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.14.0...v1.15.0) (2022-08-02)
+
+
+### Features
+
+* Month and day value is swapped when user enters digit in "Date" field from Interaction Plan page ([5d304b9](https://github.com/PitcherAG/pitcher-vue-sdk/commit/5d304b94c4019f1cae6f8c51439ad4a2fe3976ef))
+
 # [1.14.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.13.0...v1.14.0) (2022-07-15)
 
 
