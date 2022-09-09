@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.15.0...v1.16.0) (2022-09-09)
+
+
+### Features
+
+* add debounceTime prop for search input APPS-5053 ([19b7976](https://github.com/PitcherAG/pitcher-vue-sdk/commit/19b7976f9a6ba4a73a20e0232df6da7306861974))
+
 # [1.15.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.14.0...v1.15.0) (2022-08-02)
 
 
