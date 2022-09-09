@@ -77,7 +77,7 @@
       <!-- Search container -->
       <div v-if="!hideSearch" class="s-container mb-4">
         <div class="ui fluid icon small input">
-          <input v-model="searchKey" type="text" :placeholder="$gettext('Search')" />
+          <input :value="searchKey" type="text" :placeholder="$gettext('Search')" @input="onSearch" />
           <i v-if="searchKey" class="times thin icon link" @click="searchKey = ''" />
         </div>
         <!-- No data text -->
@@ -133,6 +133,7 @@
 /* eslint-disable vue/no-unused-properties, vue/no-side-effects-in-computed-properties */
 import Checkbox from './Checkbox'
 import { computed, onMounted, reactive, ref, toRefs, watch } from '@vue/composition-api'
+import { debounce } from 'lodash'
 import { parsePxStyle, validateSize } from './mixins'
 import { search } from '../utils'
 
@@ -202,6 +203,10 @@ export default {
     itemsPerPage: {
       type: Number,
       default: null,
+    },
+    debounceTime: {
+      type: Number,
+      default: 0,
     },
   },
   emits: ['input'],
@@ -459,6 +464,10 @@ export default {
       return false
     })
 
+    const onSearch = debounce((e) => {
+      state.searchKey = e.target.value
+    }, props.debounceTime)
+
     onMounted(() => {
       // save initial button width
       if (!props.compact && !props.width) {
@@ -483,6 +492,7 @@ export default {
       selectAll,
       reset,
       loadMore,
+      onSearch,
       showLoadMore,
       isSelected,
       refresh,
