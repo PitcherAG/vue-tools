@@ -83,21 +83,28 @@ export function trans(msgid, n = 0, placeholders) {
   return translated
 }
 
-window.$gettext = function(msgid, context) {
-  return trans(msgid, 1, context)
+
+if (!window.$t && window.$gettext && window.$ngettext) {
+  Object.defineProperties(window, {
+    $t: {
+      writable: false,
+      value: (msgid, context) => trans(msgid, 1, context),
+    },
+    $gettext: {
+      writable: false,
+      value: (msgid, context) => trans(msgid, 1, context),
+    },
+    $ngettext: {
+      writable: false,
+      value: (msgid, n, context) => trans(msgid, n, context),
+    },
+  })
 }
 
 window._ = function(msgid, context) {
   return trans(msgid, 1, context)
 }
 
-window.$t = function(msgid, context) {
-  return trans(msgid, 1, context)
-}
-
-window.$ngettext = function(msgid, n, context) {
-  return trans(msgid, n, context)
-}
 
 window.translateUI = function(json) {
   console.warn('not implemented', JSON.parse(json))
