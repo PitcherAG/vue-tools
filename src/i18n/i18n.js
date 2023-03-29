@@ -84,7 +84,7 @@ export function trans(msgid, n = 0, placeholders) {
 }
 
 
-if (!window.$t && window.$gettext && window.$ngettext) {
+if (!window.$t && !window.$gettext && !window.$ngettext) {
   Object.defineProperties(window, {
     $t: {
       writable: false,
