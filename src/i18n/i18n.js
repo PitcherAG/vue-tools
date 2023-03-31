@@ -89,14 +89,14 @@ function registerRepeatingTranslator(name, callback) {
   if (!translationsRegistry[name]) {
     translationsRegistry[name] = new Set()
 
-    if (global[name]) {
-      translationsRegistry[name].add(global[name])
+    if (window[name]) {
+      translationsRegistry[name].add(window[name])
     }
   }
 
   translationsRegistry[name].add(callback)
 
-  global[name] = (msgid, ...rest) => {
+  window[name] = (msgid, ...rest) => {
     return Array.from(translationsRegistry[name]).reduce((prev, translate) => {
       if (prev === msgid) {
         return translate(msgid, ...rest)
