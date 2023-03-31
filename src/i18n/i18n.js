@@ -83,22 +83,42 @@ export function trans(msgid, n = 0, placeholders) {
   return translated
 }
 
+const translationsRegistry = {}
+
+function registerRepeatingTranslator(name, callback) {
+  if (!translationsRegistry[name]) {
+    translationsRegistry[name] = new Set()
+
+    if (global[name]) {
+      translationsRegistry[name].add(global[name])
+    }
+  }
+
+  translationsRegistry[name].add(callback)
+
+  global[name] = (msgid, ...rest) => {
+    return Array.from(translationsRegistry[name]).reduce((prev, translate) => {
+      if (prev === msgid) {
+        return translate(msgid, ...rest)
+      }
+
+      return prev
+    }, msgid)
+  }
+}
+
+const $t = (msgid, context) => trans(msgid, 1, context)
+const $gettext = (msgid, context) => trans(msgid, 1, context)
+const $ngettext = (msgid, n, context) => trans(msgid, n, context)
 
 if (!window.$t && !window.$gettext && !window.$ngettext) {
-  Object.defineProperties(window, {
-    $t: {
-      writable: false,
-      value: (msgid, context) => trans(msgid, 1, context),
-    },
-    $gettext: {
-      writable: false,
-      value: (msgid, context) => trans(msgid, 1, context),
-    },
-    $ngettext: {
-      writable: false,
-      value: (msgid, n, context) => trans(msgid, n, context),
-    },
-  })
+  window.$t = $t
+  window.$gettext = $gettext
+  window.$ngettext = $ngettext
+} else {
+  registerRepeatingTranslator('$t', $t)
+  registerRepeatingTranslator('$gettext', $gettext)
+  registerRepeatingTranslator('$ngettext', $ngettext)
 }
 
 window._ = function(msgid, context) {
