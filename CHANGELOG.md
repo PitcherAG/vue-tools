@@ -1,3 +1,17 @@
+# [1.17.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.16.0...v1.17.0) (2023-04-04)
+
+
+### Bug Fixes
+
+* change global with window ([7077f0b](https://github.com/PitcherAG/pitcher-vue-sdk/commit/7077f0bb9c6dcec4dd5ede8e4bf2d01c60fb1c11))
+* i18n conflicts with js platform ([184f263](https://github.com/PitcherAG/pitcher-vue-sdk/commit/184f263926bd62b1fab585016b12cfa8348831de))
+* if boolean check for function existence ([fab39df](https://github.com/PitcherAG/pitcher-vue-sdk/commit/fab39df1f97d91eebdfcbd0276342375d42eb961))
+
+
+### Features
+
+* allow multiple translators at the same time ([a6e1d7d](https://github.com/PitcherAG/pitcher-vue-sdk/commit/a6e1d7dca13c28dc13e937b2f963bdcaa5cc2ef2))
+
 # [1.16.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.15.0...v1.16.0) (2022-09-09)
 
 
