@@ -83,21 +83,48 @@ export function trans(msgid, n = 0, placeholders) {
   return translated
 }
 
-window.$gettext = function(msgid, context) {
-  return trans(msgid, 1, context)
+const translationsRegistry = {}
+
+function registerRepeatingTranslator(name, callback) {
+  if (!translationsRegistry[name]) {
+    translationsRegistry[name] = new Set()
+
+    if (window[name]) {
+      translationsRegistry[name].add(window[name])
+    }
+  }
+
+  translationsRegistry[name].add(callback)
+
+  window[name] = (msgid, ...rest) => {
+    return Array.from(translationsRegistry[name]).reduce((prev, translate) => {
+      if (prev === msgid) {
+        return translate(msgid, ...rest)
+      }
+
+      return prev
+    }, msgid)
+  }
+}
+
+const $t = (msgid, context) => trans(msgid, 1, context)
+const $gettext = (msgid, context) => trans(msgid, 1, context)
+const $ngettext = (msgid, n, context) => trans(msgid, n, context)
+
+if (!window.$t && !window.$gettext && !window.$ngettext) {
+  window.$t = $t
+  window.$gettext = $gettext
+  window.$ngettext = $ngettext
+} else {
+  registerRepeatingTranslator('$t', $t)
+  registerRepeatingTranslator('$gettext', $gettext)
+  registerRepeatingTranslator('$ngettext', $ngettext)
 }
 
 window._ = function(msgid, context) {
   return trans(msgid, 1, context)
 }
 
-window.$t = function(msgid, context) {
-  return trans(msgid, 1, context)
-}
-
-window.$ngettext = function(msgid, n, context) {
-  return trans(msgid, n, context)
-}
 
 window.translateUI = function(json) {
   console.warn('not implemented', JSON.parse(json))
