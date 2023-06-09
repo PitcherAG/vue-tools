@@ -1,3 +1,10 @@
+## [1.17.1](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.17.0...v1.17.1) (2023-06-09)
+
+
+### Bug Fixes
+
+* translation function conflicts ([fe58054](https://github.com/PitcherAG/pitcher-vue-sdk/commit/fe5805477a8ce8f70b49bad7fdd6a73a94844d84))
+
 # [1.17.0](https://github.com/PitcherAG/pitcher-vue-sdk/compare/v1.16.0...v1.17.0) (2023-04-04)
 
 
