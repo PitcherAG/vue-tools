@@ -39,6 +39,10 @@ class I18nStore {
     }
     this.state.locale = lang
   }
+
+  get isRTL() {
+    return ['ar', 'iw'].includes(this.state.locale)
+  }
 }
 
 export const useI18nStore = () => {
@@ -46,7 +50,8 @@ export const useI18nStore = () => {
 }
 
 export function trans(msgid, n = 0, placeholders) {
-  if (msgid === '') {
+  // eslint-disable-next-line eqeqeq
+  if (msgid == '') {
     return msgid
   }
 
@@ -83,48 +88,75 @@ export function trans(msgid, n = 0, placeholders) {
   return translated
 }
 
-const translationsRegistry = {}
-
-function registerRepeatingTranslator(name, callback) {
-  if (!translationsRegistry[name]) {
-    translationsRegistry[name] = new Set()
-
-    if (window[name]) {
-      translationsRegistry[name].add(window[name])
-    }
-  }
-
-  translationsRegistry[name].add(callback)
-
-  window[name] = (msgid, ...rest) => {
-    return Array.from(translationsRegistry[name]).reduce((prev, translate) => {
-      if (prev === msgid) {
-        return translate(msgid, ...rest)
-      }
-
-      return prev
-    }, msgid)
-  }
-}
-
 const $t = (msgid, context) => trans(msgid, 1, context)
 const $gettext = (msgid, context) => trans(msgid, 1, context)
 const $ngettext = (msgid, n, context) => trans(msgid, n, context)
 
-if (!window.$t && !window.$gettext && !window.$ngettext) {
-  window.$t = $t
-  window.$gettext = $gettext
-  window.$ngettext = $ngettext
-} else {
-  registerRepeatingTranslator('$t', $t)
-  registerRepeatingTranslator('$gettext', $gettext)
-  registerRepeatingTranslator('$ngettext', $ngettext)
+const translationsRegistry = {}
+const translationFunctions = {
+  $t,
+  $gettext,
+  $ngettext,
 }
 
-window._ = function(msgid, context) {
-  return trans(msgid, 1, context)
+function registerRepeatingTranslator(name, callback) {
+  if (typeof callback === 'function') {
+    if (!translationsRegistry[name]) {
+      translationsRegistry[name] = new Set()
+
+      if (translationFunctions[name]) {
+        translationsRegistry[name].add(translationFunctions[name])
+      }
+    }
+
+    translationsRegistry[name].add(callback)
+
+    translationFunctions[name] = (msgid, ...rest) => {
+      return Array.from(translationsRegistry[name]).reduce((prev, translate) => {
+        if (prev === msgid) {
+          return translate(msgid, ...rest)
+        }
+
+        return prev
+      }, msgid)
+    }
+  }
 }
 
+const originalTranslationsFunctions = {
+  $t: window.$t,
+  $gettext: window.$gettext,
+  $ngettext: window.$ngettext,
+}
+
+Object.defineProperty(window, '$t', {
+  get: () => translationFunctions.$t,
+  set: (v) => {
+    registerRepeatingTranslator('$t', v)
+  },
+})
+Object.defineProperty(window, '$gettext', {
+  get: () => translationFunctions.$gettext,
+  set: (v) => {
+    registerRepeatingTranslator('$gettext', v)
+  },
+})
+Object.defineProperty(window, '$ngettext', {
+  get: () => translationFunctions.$ngettext,
+  set: (v) => {
+    registerRepeatingTranslator('$ngettext', v)
+  },
+})
+
+if (
+  originalTranslationsFunctions.$t ||
+  originalTranslationsFunctions.$gettext ||
+  originalTranslationsFunctions.$ngettext
+) {
+  window.$t = originalTranslationsFunctions.$t
+  window.$gettext = originalTranslationsFunctions.$gettext
+  window.$ngettext = originalTranslationsFunctions.$ngettext
+}
 
 window.translateUI = function(json) {
   console.warn('not implemented', JSON.parse(json))
@@ -137,6 +169,7 @@ export function TranslationPlugin(_Vue, options = {}) {
     }
   })
 
+  // eslint-disable-next-line no-param-reassign
   options = Object.assign(defaultOptions, options)
 
   const store = useI18nStore()
