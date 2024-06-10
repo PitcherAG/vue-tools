@@ -33,7 +33,7 @@
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.11.6",
-    "@google-cloud/translate": "^6.0.0",
+    "@google-cloud/translate": "^8.3.0",
     "@pitcher/easygettext": "^2.12.5",
     "@pitcher/eslint-config": "^1.2.1",
     "@pitcher/fomantic-ui": "^2.8.5",
